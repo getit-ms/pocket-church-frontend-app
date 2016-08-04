@@ -1,0 +1,25 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>boletim.boletins</span>
+    </ion-nav-title>
+    <ion-content>
+        <calvin-pagination ng-model="boletins" searcher="searcher" cache="boletins">
+            <div class="boletins row row-wrap">
+                <div class="col col-50" ng-repeat="boletim in boletins">
+                    <div class="card boletim" ng-click='detalhar(boletim)'>
+                        <div class="item item-divider text-center">
+                            {{boletim.titulo}}
+                        </div>
+                        <div class="item item-complex"
+                             style="background-image: url({{server}}/rest/arquivo/download/{{boletim.paginas[0].id}}?{{headers}})">
+                            
+                        </div>
+                        <div class="item item-divider text-center">
+                            {{boletim.data | date:'dd/MM/yyyy'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </calvin-pagination>
+    </ion-content>
+</ion-view>

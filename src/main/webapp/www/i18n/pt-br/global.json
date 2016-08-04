@@ -1,0 +1,257 @@
+{
+    "config":{
+        "pattern":{
+            "date":"dd/MM/yyyy",
+            "dateHour":"dd/MM/yyyy HH:mm",
+            "hour":"HH:mm"
+        },
+        "mask":{
+            "date":"99/99/9999",
+            "hour":"99:99",
+            "telefone":"(99) 99999 999?9"
+        }
+    },
+    "global":{
+        "versao":"Versão",
+        "carregando":"Carregando...",
+        "home":"Início",
+        "salvar":"Salvar",
+        "busvar":"Buscar",
+        "cancelar":"Cancelar",
+        "buscar":"Buscar",
+        "voltar":"Voltar",
+        "enviar":"Enviar",
+        "sim":"Sim",
+        "nao":"Não",
+        "confirmar":"Confirmar",
+        "inicio":"Início",
+        "puxe_para_atualizar":"Puxe para atualizar",
+        "puxe_para_mais":"Buscar mais resultados",
+        "nenhum_registro_encontrado":"Nenhum registro encontrado.",
+        "title":{
+            "200":"Sucesso!",
+            "500":"Falha nossa!",
+            "302":"Sem acesso à Internet",
+            "400":"Dados inválidos!",
+            "403":"Não autorizado!",
+            "404":"Servidor fora do ar"
+        },
+        "menu":{
+            "CONSULTAR_CONTATOS_IGREJA":{
+                "state":"contato",
+                "label":"Contatos"
+            },
+            "REALIZAR_VOTACAO":{
+                "state":"votacao",
+                "label":"Votações"
+            },
+            "PEDIR_ORACAO":{
+                "state":"oracao",
+                "label":"Pedidos de Oração"
+            },
+            "AGENDAR_ACONSELHAMENTO":{
+                "state":"aconselhamento",
+                "label":"Aconselhamento"
+            },
+            "REALIZAR_INSCRICAO_EVENTO":{
+                "state":"evento",
+                "label":"Eventos"
+            }
+        },
+        "mes":{
+            "1":"Janeiro",
+            "2":"Fevereiro",
+            "3":"Março",
+            "4":"Abril",
+            "5":"Maio",
+            "6":"Junho",
+            "7":"Julho",
+            "8":"Agosto",
+            "9":"Setembro",
+            "10":"Outubro",
+            "11":"Novembro",
+            "12":"Dezembro"
+        },
+        "semana":{
+            "1":"Dom",
+            "2":"Seg",
+            "3":"Ter",
+            "4":"Qua",
+            "5":"Qui",
+            "6":"Sex",
+            "7":"Sáb"
+        }
+    },
+    "mensagens":{
+        "MSG-001":"Ação efetuada com sucesso.",
+        "MSG-002":"Alguns campos não foram preenchidos corretamente.",
+        "MSG-028":"As inscrições para esse evento foram encerradas.",
+        "MSG-029":"Solicitação enviada com sucesso. Você receberá uma confirmação do seu pastor em breve.",
+        "MSG-030":"A Confirmação da Senha não confere com a Nova Senha.",
+        "MSG-031":"Senha alterada com sucesso! Realize o login com sua nova senha.",
+        "MSG-032":"Quantidade de votos inválida.",
+        "MSG-033":"Não existem horários disponíveis para esse pastor.",
+        "MSG-034":"Não existem mais vagas disponíveis para esse evento.",
+        "MSG-035":"Deseja realmente cancelar o aconselhamento do dia {data} de {horaInicio} as {horaFim}? Essa ação não poderá ser desfeita.",
+        "MSG-037":"O registro para o e-mail informado não foi encontrado. Certifique-se de que o e-mail está correto e tente novamente.",
+        "MSG-038":"Sua solicitação foi enviada com sucesso. Você receberá um e-mail com os passos para redefinir sua senha",
+        "MSG-302":"Parece que você está sem acesso à Internet. Verifique sua conexão e tente novamente.",
+        "MSG-403":"Você não tem permissão para fazer isso.",
+        "MSG-404":"O servidor parece estar fora do ar. Aguarde alguns minutos e tente novamente.",
+        "MSG-600":"Membro inválido.",
+        "MSG-601":"Igreja inválida.",
+        "MSG-602":"Dispositivo inválido.",
+        "MSG-603":"Chave de autenticação inválida.",
+        "MSG-604":"Dados inválidos.",
+        "MSG-605":"Sem conexão",
+        "MSG-606":"E-mail e/ou senha inválido(s)"
+    },
+    "home":{
+        "inicio":"Início"
+    },
+    "login":{
+        "password":"Senha",
+        "username":"E-mail",
+        "autenticar":"Autenticar",
+        "nova_senha":"Nova Senha",
+        "confirmacao_senha":"Confirmação",
+        "alterar_senha":"Alterar Senha",
+        "esqueci_senha":"Esqueci minha senha",
+        "redefinir_senha":"Redefinir Senha",
+        "email":"E-mail"
+    },
+    "institucional":{
+        "institucional":"Institucional",
+        "email":"E-mail",
+        "site":"Site",
+        "telefones":"Telefones",
+        "endereco":"Endereço",
+        "quem_somos":"Quem Somos",
+        "contatos":"Contatos"
+    },
+    "contato":{
+        "contatos":"Contatos",
+        "pastor":"Pastor",
+        "visitante":"Visitante",
+        "adicionar_contato":"Adicionar Contato",
+        "contato":"Contato",
+        "nome":"Nome",
+        "email":"E-mail",
+        "telefones":"Telefone(s)",
+        "endereco":"Endereço"
+    },
+    "boletim":{
+        "boletins":"Boletins",
+        "boletim":"Boletim",
+        "paginacao":"{atual} de {total}"
+    },
+    "estudo":{
+        "estudo":"Estudo",
+        "estudos":"Estudos",
+        "detalhar":"Mais"
+    },
+    "votacao":{
+        "votar":"Votar",
+        "votacoes":"Votações",
+        "responder":"Responder",
+        "proximo":"Próximo",
+        "anterior":"Anterior",
+        "concluir":"Concluir",
+        "questao":{
+            "voto":"Voto",
+            "voto_index":"Voto {index}",
+            "votos":"{quantidadeVotos} votos",
+            "opcao":{
+                "opcao":"Opção",
+                "nulo":"Nulo",
+                "branco":"Branco"
+            }
+        }
+    },
+    "agenda":{
+        "telefones":"Telefones",
+        "agendar":"Agendar",
+        "confirmacao_cancelamento":"Confirmação de Cancelamento",
+        "agendamento":"Aconselhamento",
+        "agendamentos":"Aconselhamentos",
+        "sem_horarios_disponiveis":"Indisponibilidade de horários",
+        "proximos_agendamentos":"Próximos Aconselhamentos",
+        "pastor":"Pastor",
+        "cancelar_agendamento":"Cancelar Aconselhamento",
+        "novo_agendamento":"Novo Aconselhamento",
+        "horario":"Horário",
+        "nenhum_horario":"Nenhum horário disponível",
+        "status":{
+            "NAO_CONFIRMADO":"Não Confirmado",
+            "CONFIRMADO":"Confirmado",
+            "CONCLUIDO":"Concluído"
+        }
+    },
+    "oracao":{
+        "oracoes":"Pedidos de Oração",
+        "pedido":"Pedido de Oração",
+        "pedidos":"Pedidos de Oração",
+        "pendente":"Pendente",
+        "atendido":"Atendido",
+        "nome":"Nome",
+        "email":"E-mail",
+        "submeter":"Enviar",
+        "ultimos_pedidos":"Últimos Pedidos",
+        "data_pedido":"Pedido",
+        "data_atendimento":"Encaminhamento"
+    },
+    "evento":{
+        "vagas":"Vagas",
+        "dataHoraInicioInscricao":"Início",
+        "dataHoraTerminoInscricao":"Término",
+        "dataHoraInicio":"Início",
+        "dataHoraTermino":"Término",
+        "inscricao":"Inscrição",
+        "evento":"Evento",
+        "sem_vagas":"Vagas esgotadas",
+        "eventos":"Eventos",
+        "realizar_inscricao":"Realizar Inscrição",
+        "valor":"Valor (R$)",
+        "inscricoes_ainda_nao_disponiveis":"Inscrições ainda não disponíveis",
+        "inscricoes_encerradas":"Inscrições encerradas",
+        "vagas_restantes":"Vagas Restantes",
+        "inscrito":"Inscrito",
+        "nome":"Nome",
+        "email":"E-mail",
+        "valor_total":"Valor Total (R$)",
+        "total_inscricoes":"Total de Inscrições",
+        "telefone":"Telefone",
+        "adicionar_inscrito":"Adicionar Inscrito",
+        "concluir_inscricao":"Concluir Inscrição",
+        "minhas_inscricoes":"Minhas Inscrições",
+        "status_inscricao":{
+            "CONFIRMADA":"Confirmada",
+            "PENDENTE":"Pendente",
+            "CANCELADA":"Cancelada"
+        }
+    },
+    "hino":{
+        "hino":"Hino {numero}",
+        "hinos":"Hinário"
+    },
+    "preferencias":{
+        "preferencias":"Preferências",
+        "deseja_receber_versiculos":"Receber versículos diários",
+        "hora_versiculo":"Hora do Versículo Diário",
+        "ministerios_interesse":"Receber Notificações de:",
+        "logout":"Logout",
+        "efetuar_logout":"Efetuar Logout",
+        "hora":{
+            "_08_00":"08:00",
+            "_14_00":"14:00",
+            "_20_00":"20:00"
+        }
+    }
+}
+
+
+
+
+
+
+

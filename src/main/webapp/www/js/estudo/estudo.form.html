@@ -1,0 +1,17 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>estudo.estudo</span>
+    </ion-nav-title>
+    <ion-content>
+        <div class="item">
+            <h1>{{estudo.titulo}}</h1>
+            <h2>
+                {{estudo.autor}}
+                <span class='item-note'>{{estudo.dataPublicacao | date:'dd MMMM yyyy HH:mm'}}</span>
+            </h2>
+        </div>
+        <div class="item item-body">
+            <p ng-bind-html='estudo.texto'></p>
+        </div>
+    </ion-content>
+</ion-view>

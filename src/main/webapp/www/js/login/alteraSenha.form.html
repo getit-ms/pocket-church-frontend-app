@@ -1,0 +1,21 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>login.alterar_senha</span>
+    </ion-nav-title>
+    <ion-content>
+        <div class='item item-input' >
+            <label class='input-label' >{{'login.nova_senha' | translate }}</label>
+            <input type='password' ng-model='membro.novaSenha' />
+        </div>
+        <div class='item item-input' >
+            <label class='input-label' >{{'login.confirmacao_senha' | translate }}</label>
+            <input type='password' ng-model='membro.confirmacaoSenha' />
+        </div>
+        <div class='item' >
+            <button class='button button-block button-positive' 
+                    ng-click='alteraSenha()'>
+                {{'login.alterar_senha' | translate}}
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,30 @@
+<ion-view class="profile-view home">
+    <ion-nav-title>
+        <span></span>
+    </ion-nav-title>
+    <ion-content>
+        <div class="top-content row">
+            <div class="profile-container">
+                <div class="user-image-container">
+                    <img src='img/logo.png' />
+                </div>
+                <div class="social">
+                    <a class='fa fa-facebook' ng-click='open(institucional.redesSociais.facebook)'
+                       ng-if="institucional.redesSociais.facebook"></a>
+                    <a class='fa fa-twitter' ng-click='open(institucional.redesSociais.twitter)'
+                       ng-if="institucional.redesSociais.twitter"></a>
+                    <a class='fa fa-youtube-play' ng-click='open(institucional.redesSociais.youtube)'
+                       ng-if="institucional.redesSociais.youtube"></a>
+                    <a class='fa fa-pinterest' ng-click='open(institucional.redesSociais.pinterest)'
+                       ng-if="institucional.redesSociais.pinterest"></a>
+                    <a class='fa fa-google-plus' ng-click="open(institucional.redesSociais['google-plus'])"
+                       ng-if="institucional.redesSociais['google-plus']"></a>
+                    <a class='fa fa-instagram' ng-click='open(institucional.redesSociais.instagram)'
+                       ng-if="institucional.redesSociais.instagram"></a>
+                </div>
+            </div>
+        </div>
+        <div class="center-content" style="background-image: url({{server}}/rest/arquivo/download/{{institucional.divulgacao.id}}?{{headers}})">
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,38 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>agenda.agendamentos</span>
+    </ion-nav-title>
+    <ion-content>
+        <form ng-submit="solicitar(calendarioSelecionado)" >
+            <div class="item">
+                <h1>{{'agenda.novo_agendamento' | translate}}</h1>
+            </div>
+            
+            <label class="item item-input item-select">
+                <span class="input-label" translate>agenda.pastor</span>
+                <select ng-model="calendarioSelecionado" ng-change="calendarioModificado(calendarioSelecionado)"
+                        ng-options="calendario.pastor.nome for calendario in calendarios track by calendario.id">
+                    <option>{{'global.selecione' | translate}}</option>
+                </select>
+            </label>
+            <div class="item padding" ng-if="calendarioSelecionado && datepicker.highlights.length">
+                <onezone-datepicker datepicker-object="datepicker" ></onezone-datepicker>
+            </div>
+            <label class="item item-input item-select" ng-if="calendarioSelecionado && agendamento.data">
+                <span class="input-label" translate>agenda.horario</span>
+                <select ng-model="agendamento.horario" ng-if="horariosDia.length"
+                        ng-options="horario.horario.id as (horario.dataInicio | date:'HH:mm') + ' - ' + (horario.dataTermino | date:'HH:mm') for horario in horariosDia track by horario.horario.id">
+                    <option></option>
+                </select>
+                <select ng-if="!horariosDia.length" >
+                    <option>{{'agenda.nenhum_horario' | translate}}</option>
+                </select>
+            </label>
+            
+            <div class='item' ng-if="agendamento.horario && agendamento.data">
+                <input type="submit" class="button button-block button-positive" 
+                       value="{{'agenda.agendar' | translate}}" />
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

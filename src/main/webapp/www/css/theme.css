@@ -1,0 +1,117 @@
+.calvin .bar.app-top-bar {
+    background-color: #006fb7;
+}
+
+.profile-view .top-content,
+.calvin .bar.app-top-bar {
+    border-bottom-color: #262262;
+}
+
+.calvin .boletim {
+    
+}
+
+.onezone-datepicker-modal-item.onezone-datepicker-modal-item-active {
+    background-color: #006fb7 !important;
+}
+
+.onezone-datepicker-day.onezone-datepicker-active-day {
+    border-color: #006fb7 !important;
+    background-color: #006fb7 !important;
+    color: #fff !important;
+}
+
+.onezone-datepicker-button:after {
+    border-bottom: 6px solid #006fb7 !important;
+}
+
+.onezone-datepicker-button {
+    border-bottom: 1px solid #006fb7 !important;
+}
+
+.onezone-datepicker-navigation-arrow {
+    color: #006fb7 !important;
+}
+
+.onezone-datepicker-day.onezone-datepicker-current-day {
+    border-color: #006fb7 !important;
+}
+
+.onezone-datepicker-day.onezone-datepicker-disable-day {
+    background: none;
+    color: #999;
+}
+
+.onezone-datepicker.onezone-datepicker-show {
+    background: none !important;
+    border-bottom: none !important;
+}
+
+.icon {
+    color: #006fb7;
+}
+
+.calvin .item h1 {
+    white-space: initial;
+}
+
+.calvin .filter-bar .button,
+.calvin .filter-bar .button:hover,
+.calvin .filter-bar .button:disabled {
+    background-color: transparent;
+    color: inherit;
+}
+
+.calvin .button,
+.calvin .button:hover {
+    background-color: #006fb7;
+    color: #fff
+}
+
+.calvin .button:disabled {
+    background-color: #ccc;
+    color: #2d2d2d;
+}
+
+.calvin .main-menu.menu .scroll-content {
+    background-color: #006fb7;
+}
+
+.calvin .main-menu.menu .item,
+.calvin .main-menu.menu .item a {
+    background: transparent;
+}
+
+.calvin .menu.menu-left .item .icon:before {
+    background-color: #006fb7;
+}
+
+.calvin .menu.menu-left .item.user .icon:before {
+    background-color: #262262;
+    color: #fff;
+}
+.calvin .menu.menu-left .item.user,
+.calvin .menu.menu-left .item.user .icon.icon-right:before {
+    background-color: #262262;
+    color: #fff;
+}
+
+.calvin .item {
+    border-color: #afe0ff;
+}
+
+.calvin .main-menu.menu .menu-end,
+.calvin .main-menu.menu .item {
+    border-top-color: #ccc;
+    border-top-width: 2px;
+}
+.calvin .main-menu.menu .item h2 {
+    color: #fff;
+}
+
+.calvin .item.item-divider {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #dff2ff;
+    color: #006fb7;
+}

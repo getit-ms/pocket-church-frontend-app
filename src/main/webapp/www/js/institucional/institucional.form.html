@@ -1,0 +1,39 @@
+<ion-view class="profile-view">
+    <ion-nav-title>
+        <span translate>institucional.institucional</span>
+    </ion-nav-title>
+    <ion-content>
+        <div class="top-content row">
+            <div class="profile-container">
+                <div class="user-image-container">
+                    <img src='img/logo.png' />
+                </div>
+            </div>
+        </div>
+        <div class="bottom-content">
+            <ion-item ng-if="institucional.quemSomos" class='item-divider' translate>institucional.quem_somos</ion-item>
+            <ion-item ng-if="institucional.quemSomos" class='item-text-wrap white-space'>{{institucional.quemSomos}}</ion-item>
+            <ion-item ng-if="institucional.email || institucional.site || institucional.telefones.length || institucional.endereco.descricao" class='item-divider' translate>institucional.contatos</ion-item>
+            <ion-item class='item-icon-left' ng-if="institucional.email" ng-click="mailto(institucional.email)">
+                <i class='icon  fa fa-envelope-square'></i>
+                {{institucional.email}}
+            </ion-item>
+            <ion-item class='item-icon-left' ng-if="institucional.site" ng-click="site(institucional.site)">
+                <i class='icon fa fa-globe'></i>
+                {{institucional.site}}
+            </ion-item>
+            <ion-item class='item-icon-left' 
+                      ng-if="institucional.telefones.length"
+                      ng-repeat="telefone in institucional.telefones"
+                      ng-click="tel(telefone)">
+                <i class='icon fa fa-phone-square'></i>
+                {{telefone}}
+            </ion-item>
+            <ion-item ng-if="institucional.endereco.descricao" class='item-divider' translate>institucional.endereco</ion-item>
+            <ion-item ng-if="institucional.endereco.descricao" class='item-text-wrap item-icon-left'>
+                <i class='icon fa fa-map-marker'></i>
+                {{institucional.endereco.descricao}} - {{institucional.endereco.cidade}} - {{institucional.endereco.estado}} - {{institucional.endereco.cep}}
+            </ion-item>
+        </div>
+    </ion-content>
+</ion-view>

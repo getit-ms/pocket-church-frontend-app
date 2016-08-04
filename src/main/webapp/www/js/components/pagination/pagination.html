@@ -1,0 +1,18 @@
+<div>
+    <ion-refresher
+        pulling-text="{{'global.puxe_para_atualizar' | translate}}"
+        on-refresh='refresh()'></ion-refresher>
+    <ion-list>
+        <div ng-if="!ngModel.length && notFoundMessage" class="row row-center">
+            <div class="col col-center text-center">
+                <span translate>global.nenhum_registro_encontrado</span>
+            </div>
+        </div>
+        <ng-transclude></ng-transclude>
+    </ion-list>
+    <ion-infinite-scroll
+        ng-if="hasMore"
+        on-infinite="more()"
+        distance="1%">
+    </ion-infinite-scroll>
+</div>

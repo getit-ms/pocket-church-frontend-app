@@ -1,0 +1,242 @@
+/* Empty. Add your own CSS if you like */
+.scroll {
+    width:100%;
+    height:100%;
+}
+
+.home.profile-view .profile-container {
+    margin-top: 3%;
+}
+
+.bar.bar-assertive.bar-footer *{
+    color:white;
+}
+
+.login-view a,
+.login-view a:hover {
+    text-decoration: none;
+    color: #006fb7;
+}
+
+.bar.bar-assertive.bar-footer {
+    background-color:red;
+}
+.home .social a.disabled {
+    background-color: #666;
+}
+
+.home .social a {
+    text-decoration:none;
+    font-size: 22px;
+    background-color: #006fb7;
+    color: #262262;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px 0;
+    margin: 0 5px;
+}
+
+.home .scroll {
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/login.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* border-top: 3px solid #262262; */
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    border-width: 0px 0 0 0;
+}
+
+@media all and (orientation:portrait) {
+  .home .center-content {
+      background-size: auto 100%;
+      background-position: center center;
+  }
+}
+
+@media all and (orientation:landscape) {
+  .home .center-content {
+      background-size: 100% auto;
+      background-position: center center;
+  }
+}
+
+.home .center-content {
+    border: 0;
+    padding: 0;
+    width: 100%;
+    height:100%;
+    position:fixed;
+    background-repeat: no-repeat;
+}
+
+.home .top-content {
+    height: 130px;
+}
+
+.profile-view .profile-container {
+    margin-top: 8%;
+}
+
+.home .social {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.multi-bg-outer {
+    background-position: center center;
+}
+
+.white-space {
+    white-space: pre-line;
+}
+
+.profile-view .top-content {
+    margin-bottom: 0;
+}
+
+.header-item .right-buttons .icon:before {
+    font-size: 24px;
+}
+
+#loading-bar .bar {
+    padding: 0;
+}
+
+#loading-bar .bar {
+    background: #000;
+    height: 3px;
+}
+
+#loading-bar-spinner .spinner-icon {
+  border-top-color:  #000;
+  border-left-color: #000;
+}
+
+.bar.app-top-bar .title input {
+    color: #333 !important;
+}
+
+.calvin .boletins .col .card.boletim {
+    padding:0;
+    margin:0;
+}
+
+.calvin .boletim .item-complex{
+    height: 250px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 2px;
+}
+
+.boletim-page {
+    width:100%;
+    height:100%;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center center;
+}
+
+img.igreja-image {
+    width: 100%
+}
+
+.igreja-image-container {
+    width:100%;
+    display:block;
+    position:initial;
+}
+
+.slider {
+    width: 100%;
+    height: 100%;
+}
+
+.image {
+    width: 100%;
+    height: 600px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center, center;
+}
+
+.bar .title.title-left {
+    text-align: center;
+    right: 50px;
+}
+
+.bar.app-top-bar {
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+}
+
+.profile-view .top-content {
+    border-bottom-width: 4px;
+    border-bottom-style: solid;
+}
+
+.profile-view .user-image-container {
+    max-height: 75px;
+    max-width: 300px;
+}
+.main-menu .item.menu-header a {
+    text-align: center;
+    padding-top:22px;
+}
+.main-menu .item.menu-header a img {
+    width: 150px;
+}
+
+.profile-view .user-image-container img {
+    width: 100%;
+}
+
+.profile-view.home .user-image-container img {
+    height: 50px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.calvin .main-menu.menu .item.menu-header a {
+    height: 119px;
+    padding: 35px 8%;
+}
+
+.calvin .home .top-content {
+    background: none;
+}
+
+.calvin .top-content {
+    background-image: url(../img/banner.png);
+}
+
+.calvin .main-menu.menu .item.menu-header a {
+    background-image: url(../img/menu.png);
+}
+
+.calvin .top-content,
+.calvin .main-menu.menu .item.menu-header a {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.calvin .item h1 {
+    font-size: 22px;
+    color: #262262;
+}
+
+.calvin .item h2 {
+    font-size: 15px;
+    color: #006fb7;
+}
+

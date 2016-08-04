@@ -1,0 +1,20 @@
+<ion-view>
+    <ion-nav-title>
+        <span>{{boletim.titulo}}</span>
+    </ion-nav-title>
+    <ion-content>
+        <ion-slide-box ng-if="boletim.paginas.length" on-slide-changed="slideChanged(index)" active-slide="slide.activeSlide">
+            <ion-slide ng-repeat="pagina in boletim.paginas">
+                <ion-scroll scroll='false' zooming="true" direction="xy" scrollable-x="false"
+                            scrollable-y="false" min-zoom="1" style="width:100%;height:100%"
+                            delegate-handle="scrollHandle{{$index}}" on-scroll="updateSlideStatus($index)" 
+                            on-release="updateSlideStatus($index)" overflow-scroll="false">
+                    <div class="image" style="background-image: url( {{server}}/rest/arquivo/download/{{pagina.id}}?{{headers}} )"></div>
+                </ion-scroll>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+    <ion-footer-bar class="bar-stable" ng-if="boletim.paginas.length">
+        <h1 class="title">{{'boletim.paginacao' | translate:'{atual:'+(slide.activeSlide+1)+',total:'+ boletim.paginas.length +'}' }}</h1>
+    </ion-footer-bar>
+</ion-view>

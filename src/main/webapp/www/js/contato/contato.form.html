@@ -1,0 +1,28 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>contato.contato</span>
+    </ion-nav-title>
+    <ion-content>
+        <ion-item class="item-icon-left">
+            <span class="icon fa fa-user"></span>
+            <h2>{{contato.nome}}</h2>
+            <p>
+                {{contato.pastor ? ('contato.pastor' | translate) : ''}}
+                <span ng-if="contato.pastor && contato.visitante"> | </span>
+                {{contato.visitante ? ('contato.visitante' | translate) : ''}}
+            </p>
+        </ion-item>
+        <ion-item class="item-icon-left" ng-click="mailto(contato.email)">
+            <i class="icon fa fa-envelope-square"></i>
+            {{contato.email}}
+        </ion-item>
+        <ion-item class="item-icon-left" ng-repeat='telefone in contato.telefones' ng-click"tel(telefone)">
+            <i class="icon fa fa-phone-square"></i>
+            {{telefone}}
+        </ion-item>
+        <ion-item ng-if="contato.endereco.descricao" class="item-icon-left item-text-wrap">
+            <i class="icon fa fa-map-marker"></i>
+            {{contato.endereco.descricao}} - {{contato.endereco.cidade}} - {{contato.endereco.estado}}
+        </ion-item>
+    </ion-content>
+</ion-view>

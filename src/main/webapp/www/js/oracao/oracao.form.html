@@ -1,0 +1,48 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>oracao.oracoes</span>
+    </ion-nav-title>
+    <ion-content>
+        <div>
+            <div class="item item-divider">
+                {{'oracao.pedido' | translate}}
+            </div>
+            
+            <form ng-submit='submeter()'>
+                <label class='item item-input'>
+                    <span class='input-label' >{{'oracao.nome' | translate}}:</span>
+                    <input type="text" ng-model='pedido.nome' placeholder="{{'oracao.nome' | translate}}" />
+                </label>
+                <label class='item item-input'>
+                    <span class='input-label' >{{'oracao.email' | translate}}:</span>
+                    <input type="email" ng-model='pedido.email' placeholder="{{'oracao.email' | translate}}" />
+                </label>
+                <label class='item item-input'>
+                    <textarea rows="5" ng-model='pedido.pedido' placeholder="{{'oracao.pedido' | translate}}" ></textarea>
+                </label>
+                <div class='item'>
+                    <input type='submit' class='button button-block button-positive' value="{{'oracao.submeter' | translate}}" />
+                </div>
+                
+            </form>
+        </div>
+        
+        <calvin-pagination searcher='searcher' ng-model="pedidos" cache='pedidos' not-found-message="false">
+            <div class="item item-divider" ng-if="pedidos.length">
+                {{'oracao.ultimos_pedidos' | translate}}
+            </div>
+            <ion-item class="item-text-wrap" ng-repeat="p in pedidos">
+                <h2>
+                    {{p.pedido}}
+                    <span ng-if='p.pendente' class='item-note assertive'>{{'oracao.pendente' | translate}}</span>
+                    <span ng-if='!p.pendente' class='item-note positive'>{{'oracao.atendido' | translate}}</span>
+                </h2>
+                <p>{{p.nome}} - <a href="mailto:{{p.email}}">{{pedido.email}}</a></p>
+                <p>
+                    {{'oracao.data_pedido' | translate}}: {{p.dataSolicitacao | date:('config.pattern.dateHour' | translate)}} 
+                    <span ng-if="!p.pendente"> | {{'oracao.data_atendimento' | translate}}: {{p.dataAtendimento | date:('config.pattern.dateHour' | translate)}}</span>
+                </p>
+            </ion-item>
+        </calvin-pagination>
+    </ion-content>
+</ion-view>

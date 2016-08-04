@@ -1,0 +1,13 @@
+{
+  "name": "${nomeAplicativo.igreja}",
+  "app_id": "${ios.app_id}",
+  "gulpStartupTasks": [
+    "sass",
+    "templatecache",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

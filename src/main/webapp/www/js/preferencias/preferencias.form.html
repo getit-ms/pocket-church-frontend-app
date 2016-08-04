@@ -1,0 +1,25 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>preferencias.preferencias</span>
+    </ion-nav-title>
+    <ion-content>
+        <form id="preferencias_form" name="preferencias_form" ng-submit="salvar(this.preferencias_form)" novalidate>
+            <ion-toggle ng-model="preferencias.desejaReceberVersiculosDiarios" >
+                {{'preferencias.deseja_receber_versiculos' | translate}}
+            </ion-toggle>
+            <div ng-if='preferencias.desejaReceberVersiculosDiarios' class='item item-divider'>{{'preferencias.hora_versiculo' | translate}}</div>
+            <ion-radio ng-if='preferencias.desejaReceberVersiculosDiarios' ng-repeat="hora in horasVersiculoDiario" 
+                       ng-model="preferencias.horaVersiculoDiario" ng-value="hora">{{'preferencias.hora.' + hora | translate}}</ion-radio>
+            <div ng-if='ministerios.length' class="item item-divider">{{'preferencias.ministerios_interesse' | translate}}</div>
+            <ion-toggle ng-model="ministeriosSelecionados[min.id]" ng-repeat="min in ministerios" >
+                {{min.nome}}
+            </ion-toggle>
+            <ion-item>
+                <input type="submit" class='button button-block button-positive' value="{{'global.salvar' | translate}}" />
+            </ion-item>
+            <ion-item ng-if='usuario && funcionalidades'>
+                <a ui-sref="alteraSenha" class='button button-block button-positive' >{{'login.alterar_senha' | translate}}</a>
+            </ion-item>
+        </form>
+    </ion-content>
+</ion-view>
