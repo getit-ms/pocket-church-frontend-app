@@ -1,7 +1,7 @@
 calvinApp.directive('calvinPagination', function(){
     return {
         restrict: 'E',
-        replace: 'element',
+        replace: true,
         transclude: true,
         scope:{
             ngModel: '=',
