@@ -34,18 +34,26 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, boletimService, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
+                    controller: function(boletimService, $scope, boletimService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
                         $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
 						
                         boletimService.carrega($stateParams.id, function(boletim){
                             $scope.boletim = boletim;
 
-                            if (boletimService.progressoCache(boletim.id) != 1){
+                            if (!boletimService.progressoCache(boletim.id)){
                                 boletimService.cache(boletim, function(){
                                     $ionicLoading.hide();
                                 });
                             }else{
-                                $ionicLoading.hide();
+                                stopLoading();
+                                
+                                function stopLoading(){
+                                    if (boletimService.progressoCache(boletim.id) == 1){
+                                        $ionicLoading.hide();
+                                    }else{
+                                        $timeout(stopLoading, 1000);
+                                    }
+                                }
                             }
 						
                             $scope.slide = {activeSlide:null};
