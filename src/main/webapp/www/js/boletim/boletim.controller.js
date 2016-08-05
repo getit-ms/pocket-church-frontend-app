@@ -5,10 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.list.html',
-                controller: function(boletimService, $scope, $state, configService, $httpParamSerializer){
-                    var config = configService.load();
-                    $scope.server = config.server;
-                    $scope.headers = $httpParamSerializer(config.headers);
+                controller: function(boletimService, $scope, $state, arquivoService){
                     
                         $scope.searcher = function(page, callback){
                             boletimService.busca({
@@ -20,6 +17,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             $state.go('boletim.view', {id: boletim.id});
                         };
                         
+                        $scope.cache = function(id){
+                            if (!arquivoService.exists(id)){
+                                arquivoService.download(id, function(){}, cordova.file.cacheDirectory);
+                            }
+                            return id;
+                        };
+                        
                     }
                 }
             }
@@ -29,10 +33,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                controller: function($scope, boletim, $ionicScrollDelegate, configService, $httpParamSerializer, $ionicSlideBoxDelegate){
-                    var config = configService.load();
-                    $scope.server = config.server;
-                    $scope.headers = $httpParamSerializer(config.headers);
+                controller: function(boletimService, $scope, boletim, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate){
+                        if (!boletimService.progressoCache(boletim.id) == 1){
+                            $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
+                            boletimService.cache(boletim.id, function(){
+                                $ionicLoading.hide();
+                            });
+                        };
                     
                         $scope.boletim = boletim;
                         

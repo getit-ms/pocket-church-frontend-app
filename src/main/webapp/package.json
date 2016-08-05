@@ -53,7 +53,9 @@
       "locator": "phonegap-plugin-push",
       "id": "phonegap-plugin-push"
     },
-    "cordova-plugin-network-information"
+    "cordova-plugin-network-information",
+    "cordova-plugin-file-transfer",
+    "cordova-plugin-file"
   ],
   "cordovaPlatforms": [
     "android",

@@ -27,7 +27,7 @@ var calvinApp = angular.module('calvinApp', [
     'slugifier',
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, 
-        $ionicConfig, $timeout, configService, $cordovaDevice, $state) {
+        $ionicConfig, $timeout, configService, $cordovaDevice, $state, boletimService) {
 
 
     $ionicPlatform.on("deviceready", function () {
@@ -46,6 +46,8 @@ var calvinApp = angular.module('calvinApp', [
                 Dispositivo: $cordovaDevice.getUUID()
             }
         });
+        
+        boletimService.renovaCache();
 
         PushNotificationsService.register();
         
