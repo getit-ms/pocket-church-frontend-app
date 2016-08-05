@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.list.html',
-                controller: function(boletimService, $scope, $state, arquivoService){
+                    controller: function(boletimService, $scope, $state, arquivoService){
                     
                         $scope.searcher = function(page, callback){
                             boletimService.busca({
@@ -17,11 +17,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             $state.go('boletim.view', {id: boletim.id});
                         };
                         
-                        $scope.cache = function(id){
-                            if (!arquivoService.exists(id)){
+                        $scope.thumbnail = function(id){
+                            if (!arquivoService.exists(id, cordova.file.cacheDirectory)){
                                 arquivoService.download(id, function(){}, cordova.file.cacheDirectory);
                             }
-                            return id;
+							
+                            return cordova.file.cacheDirectory + 'arquivos/' + id + '.bin';
                         };
                         
                     }
@@ -33,31 +34,35 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                controller: function(boletimService, $scope, boletim, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate){
-                        if (!boletimService.progressoCache(boletim.id) == 1){
-                            $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
-                            boletimService.cache(boletim.id, function(){
+                    controller: function(boletimService, $scope, boletimService, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
+                        $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
+						
+                        boletimService.carrega($stateParams.id, function(boletim){
+                            $scope.boletim = boletim;
+
+                            if (boletimService.progressoCache(boletim.id) != 1){
+                                boletimService.cache(boletim, function(){
+                                    $ionicLoading.hide();
+                                });
+                            }else{
                                 $ionicLoading.hide();
-                            });
-                        };
-                    
-                        $scope.boletim = boletim;
-                        
-                        $scope.slide = {activeSlide:null};
-                        
-                        $scope.updateSlideStatus = function(index) {
-                            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
-                            if (zoomFactor == 1) {
-                                $ionicSlideBoxDelegate.enableSlide(true);
-                            } else {
-                                $ionicSlideBoxDelegate.enableSlide(false);
                             }
+						
+                            $scope.slide = {activeSlide:null};
+							
+                            $scope.updateSlideStatus = function(index) {
+                                var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+                                if (zoomFactor == 1) {
+                                    $ionicSlideBoxDelegate.enableSlide(true);
+                                } else {
+                                    $ionicSlideBoxDelegate.enableSlide(false);
+                                }
+                            };
+                        });
+						
+                        $scope.page = function(id){
+                            return cordova.file.dataDirectory + 'arquivos/' + id + '.bin';
                         };
-                    },
-                    resolve: {
-                        boletim: ['boletimService', '$stateParams', function(boletimService, $stateParams){
-                            return boletimService.carrega($stateParams.id);
-                        }]
                     }
                 }
             }

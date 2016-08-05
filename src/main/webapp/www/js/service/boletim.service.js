@@ -7,36 +7,40 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
             return this.api().all('publicados').get('', filtro).then(callback);
         };
         
-        this.carrega = function(id){
-            return this.api().one('' + id).get().$object;
+        this.carrega = function(id, callback){
+            this.api().one('' + id).get().then(callback);
         };
         
         this.timeout = 1000 * 60 * 60 * 24 * 5;
         
         this.cache = function(boletim, callback){
-            if (this.progressoCache(boletim.id)){
-                this.setCache(boletim.id, angular.toJson({boletim:boletim, paginas:0, timeout:new Date().getTime() + this.timeout}));
+            if (this.progressoCache(boletim.id) != 1){
+				var setCache = this.setCache;
+				var getCache = this.getCache;
+                setCache(boletim.id, {boletim:boletim, paginas:[], timeout:new Date().getTime() + this.timeout});
                 for (var i = 0;i<boletim.paginas.length;i++){
-                    arquivoService.download(boletim.paginas[i].id, function(){
-                        var cache = this.getCache(boletim.id);
-                        cache.paginas++;
-                        this.setCache(boletim.id, cache);
+                    arquivoService.download(boletim.paginas[i].id, function(id){
+                        var cache = getCache(boletim.id);
+						if (cache.paginas.indexOf(id) < 0){
+							cache.paginas.push(id);
+							setCache(boletim.id, cache);
                         
-                        if (callback && cache.paginas == boletim.paginas.length){
-                            callback(true);
+							if (callback && cache.paginas.length == boletim.paginas.length){
+								callback(true);
+							}
                         }
                     }, function(){
-                        callback(false);
+                        if (callback) callback(false);
                     });
                 }
             }
         };
         
         this.clearCacheAntigos = function(){
-            var keys = $window.localStorage.keys();
-            for (i=0;i<keys.length;i++){
-                if (keys[i].startsWith('boletim')){
-                    var id = keys[i].replace('boletim', '');
+            for (i=0;i<$window.localStorage.length;i++){
+				var key = $window.localStorage.key(i);
+                if (key.startsWith('boletim.')){
+                    var id = key.replace('boletim.', '');
                     var cache = this.getCache(id);
                     
                     if (cache){
@@ -49,18 +53,18 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
         };
         
         this.getCache = function(id){
-            return JSON.parse($window.localStorage.getItem('boletim' + id));
+            return angular.fromJson($window.localStorage.getItem('boletim.' + id));
         };
         
         this.setCache = function(id, cache){
-            $window.localStorage.setItem('boletim' + id, angular.toJson(cache));
+            $window.localStorage.setItem('boletim.' + id, angular.toJson(cache));
         };
         
         this.clearCache = function(id){
             var cache = this.getCache(id);
             
             if (cache){
-                $window.localStorage.setItem('boletim' + id, null);
+                $window.localStorage.setItem('boletim.' + id, null);
                 for (var i=0;i<cache.boletim.paginas.length;i++){
                     arquivoService.remove(cache.boletim.paginas[i].id);
                 }
@@ -71,21 +75,26 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
             var cache = this.getCache(id);
             
             if (cache){
-                return cache.paginas / cache.boletim.paginas.length;
+                return cache.paginas.length / cache.boletim.paginas.length;
             }
             
             return 0;
         };
         
-        this.verificaNovos = function(){
+        this.verificaNovos = function(){		
+			var self = this;
             this.busca({pagina:1,total:10}, function(boletins){
-                for (var i=0;i<boletins.resultados.length && i<5;i++){
-                    if (!this.progressoCache(boletins.resultados[i].id)){
-                        this.cache(boletins.resultados[i]);
-                    }
-                }
-            });
+				self.carregaNovos(boletins);
+			});
         };
+		
+		this.carregaNovos = function(boletins){
+			for (var i=0;i<boletins.resultados.length && i<5;i++){
+				if (this.progressoCache(boletins.resultados[i].id) != 1){
+					this.cache(boletins.resultados[i]);
+				}
+			}
+		};
         
         this.renovaCache = function(){
             this.clearCacheAntigos();

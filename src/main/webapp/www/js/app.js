@@ -18,13 +18,10 @@ var calvinApp = angular.module('calvinApp', [
     'toaster',
     'ui.mask',
     'restangular',
-    'pdf',
     'ngSanitize',
     'onezone-datepicker',
     'underscore',
-    'ngMap',
     'ngResource',
-    'slugifier',
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, 
         $ionicConfig, $timeout, configService, $cordovaDevice, $state, boletimService) {
