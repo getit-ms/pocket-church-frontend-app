@@ -47,15 +47,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     $ionicLoading.hide();
                                 });
                             }else{
-                                stopLoading();
-                                
-                                function stopLoading(){
-                                    if (boletimService.progressoCache(boletim.id) == 1){
-                                        $ionicLoading.hide();
-                                    }else{
-                                        $timeout(stopLoading, 1000);
-                                    }
-                                }
+                                $ionicLoading.hide();
                             }
 						
                             $scope.slide = {activeSlide:null};
