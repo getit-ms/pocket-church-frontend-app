@@ -18,10 +18,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         };
                         
                         $scope.thumbnail = function(id){
-                            if (!arquivoService.exists(id, cordova.file.cacheDirectory)){
-                                arquivoService.download(id, function(){}, cordova.file.cacheDirectory);
-                            }
-							
+                            arquivoService.exists(id, function(exists){
+                                if (!exists){
+                                    arquivoService.download(id, function(){}, cordova.file.cacheDirectory);
+                                }
+                            }, cordova.file.cacheDirectory);
+                            
                             return cordova.file.cacheDirectory + 'arquivos/' + id + '.bin';
                         };
                         

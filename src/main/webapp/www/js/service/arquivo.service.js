@@ -4,12 +4,12 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             var path = this.localPath(id);
             var url = this.remoteURL(id);
             
+            if (!dir) dir = cordova.file.dataDirectory;
+            
             $cordovaFile.checkDir(dir, "arquivos").then(function(){}, function(){
                 $cordovaFile.createDir(dir, "arquivos");
             });
             
-			if (!dir) dir = cordova.file.dataDirectory;
-			
             var retorno = {
                 path: path,
                 progresso: 0,
@@ -39,19 +39,17 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
         };
         
         this.remove = function(id, dir){
-			if (!dir) dir = cordova.file.dataDirectory;
+            if (!dir) dir = cordova.file.dataDirectory;
             $cordovaFile.removeFile(dir, this.localPath(id)).then(callback);
         };
         
-        this.exists = function(id, dir){
-            var exists;
-			
-			if (!dir) dir = cordova.file.dataDirectory;
-			
+        this.exists = function(id, callback, dir){
+            if (!dir) dir = cordova.file.dataDirectory;
+            
             $cordovaFile.checkFile(dir, this.localPath(id)).then(function(){
-                this.exists = true;
+                if (callback) callback(true);
+            }, function(){
+                if (callback) callback(false);
             });
-            return exists;
         };
-}]);
-        
+    }]);

@@ -21,20 +21,22 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
                 setCache(boletim.id, {boletim:boletim, paginas:[], timeout:new Date().getTime() + this.timeout});
                 var deveContinuar = true;
                 for (var i = 0;deveContinuar && i<boletim.paginas.length;i++){
-                    arquivoService.download(boletim.paginas[i].id, function(id){
-                        var cache = getCache(boletim.id);
-                        if (cache && cache.paginas.indexOf(id) < 0){
-                            cache.paginas.push(id);
-                            setCache(boletim.id, cache);
-                            
-                            if (callback && cache.paginas.length == boletim.paginas.length){
-                                callback(true);
+                    arquivoService.download(boletim.paginas[i].id, function(id, success){
+                        if (success){
+                            var cache = getCache(boletim.id);
+                            if (cache && cache.paginas.indexOf(id) < 0){
+                                cache.paginas.push(id);
+                                setCache(boletim.id, cache);
+
+                                if (callback && cache.paginas.length == boletim.paginas.length){
+                                    callback(true);
+                                }
                             }
+                        }else{
+                            clearCache(boletim.id);
+                            deveContinuar = false;
+                            if (callback) callback(false);
                         }
-                    }, function(){
-                        clearCache(boletim.id);
-                        deveContinuar = false;
-                        if (callback) callback(false);
                     });
                 }
             }
