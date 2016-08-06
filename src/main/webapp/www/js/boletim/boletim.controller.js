@@ -10,23 +10,26 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.searcher = function(page, callback){
                             boletimService.busca({
                                 pagina: page, total: 10
-                            }, callback);
+                            }, function(boletins){
+                                for (var boletim in boletins){
+                                    boletim.thumbnail.localPath = 'img/loading.gif';
+                                    arquivoService.exists(id, function(exists){
+                                        if (exists){
+                                            boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + id + '.bin';
+                                        }else{
+                                            arquivoService.download(id, function(){
+                                                boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + id + '.bin';
+                                            }, cordova.file.cacheDirectory);
+                                        }
+                                    }, cordova.file.cacheDirectory);
+                                }
+                                callback(boletins);
+                            });
                         };
                         
                         $scope.detalhar = function(boletim){
                             $state.go('boletim.view', {id: boletim.id});
                         };
-                        
-                        $scope.thumbnail = function(id){
-                            arquivoService.exists(id, function(exists){
-                                if (!exists){
-                                    arquivoService.download(id, function(){}, cordova.file.cacheDirectory);
-                                }
-                            }, cordova.file.cacheDirectory);
-                            
-                            return cordova.file.cacheDirectory + 'arquivos/' + id + '.bin';
-                        };
-                        
                     }
                 }
             }
@@ -36,7 +39,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, boletimService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
+                    controller: function(boletimService, $scope, boletimService, arquivoService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
                         $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
 						
                         boletimService.carrega($stateParams.id, function(boletim){
@@ -48,6 +51,25 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 });
                             }else{
                                 $ionicLoading.hide();
+                            }
+                            
+                            $scope.verificaExistencia = function(pagina){
+                                var doVerificaExistencia = function (){
+                                    arquivoService.exists(pagina.id, function(exists){
+                                        if (exists){
+                                            pagina.localPath = cordova.file.dataDirectory + 'arquivos/' + id + '.bin';
+                                        }else{
+                                            $timeout(doVerificaExistencia, 2000);
+                                        }
+                                    });
+                                };
+                                
+                                doVerificaExistencia();
+                            };
+                            
+                            for (var pagina in boletim.paginas){
+                                boletim.thumbnail.localPath = 'img/loading.gif';
+                                $scope.verificaExistencia(pagina);
                             }
 						
                             $scope.slide = {activeSlide:null};
@@ -61,10 +83,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
                             };
                         });
-						
-                        $scope.page = function(id){
-                            return cordova.file.dataDirectory + 'arquivos/' + id + '.bin';
-                        };
                     }
                 }
             }

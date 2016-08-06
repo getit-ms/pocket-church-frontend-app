@@ -1,14 +1,22 @@
 calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', 
     function($cordovaFileTransfer, $cordovaFile, config){
+        this.init = function(){
+            
+            $cordovaFile.checkDir(cordova.file.dataDirectory, "arquivos").then(function(){}, function(){
+                $cordovaFile.createDir(cordova.file.dataDirectory, "arquivos");
+            });
+            
+            $cordovaFile.checkDir(cordova.file.cacheDirectory, "arquivos").then(function(){}, function(){
+                $cordovaFile.createDir(cordova.file.cacheDirectory, "arquivos");
+            });
+        };
+        
         this.download = function(id, callback, dir){
             var path = this.localPath(id);
+            var temp = new Date().getTime() + '.' + id + '.bin';
             var url = this.remoteURL(id);
             
             if (!dir) dir = cordova.file.dataDirectory;
-            
-            $cordovaFile.checkDir(dir, "arquivos").then(function(){}, function(){
-                $cordovaFile.createDir(dir, "arquivos");
-            });
             
             var retorno = {
                 path: path,
@@ -17,9 +25,14 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 error: false
             };
             
-            $cordovaFileTransfer.download(url, dir + path).then(function(success){
-                retorno.success = true;
-                if (callback) callback(id, true);
+            $cordovaFileTransfer.download(url, cordova.file.tempDirectory + temp).then(function(success){
+                $cordovaFile.moveFile(cordova.file.tempDirectory, temp, dir, path).then(function(){
+                    retorno.success = true;
+                    if (callback) callback(id, true);
+                }, function(){
+                    retorno.error = true;
+                    if (callback) callback(id, false);
+                });
             }, function(error){
                 retorno.error = true;
                 if (callback) callback(id, false);
