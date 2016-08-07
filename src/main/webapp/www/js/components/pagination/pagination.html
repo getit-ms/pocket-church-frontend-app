@@ -1,16 +1,19 @@
-<ion-content class="has-header">
-    <ion-refresher
-        pulling-text="{{'global.puxe_para_atualizar' | translate}}"
-        on-refresh='refresh()'></ion-refresher>
-    <div ng-if="!ngModel.length && notFoundMessage" class="row row-center">
-        <div class="col col-center text-center">
-            <span translate>global.nenhum_registro_encontrado</span>
+<div>
+    
+    <ion-content class="has-header">
+        <ion-refresher
+            pulling-text="{{'global.puxe_para_atualizar' | translate}}"
+            on-refresh='refresh()'></ion-refresher>
+        <div ng-if="!ngModel.length && notFoundMessage" class="row row-center">
+            <div class="col col-center text-center">
+                <span translate>global.nenhum_registro_encontrado</span>
+            </div>
         </div>
-    </div>
-    <ng-transclude></ng-transclude>
-    <ion-infinite-scroll
-        ng-if="hasMore"
-        on-infinite="more()"
-        distance="1%">
-    </ion-infinite-scroll>
-</ion-content>
+        <ng-transclude></ng-transclude>
+        <ion-infinite-scroll
+            ng-if="hasMore"
+            on-infinite="more()"
+            distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+</div>
