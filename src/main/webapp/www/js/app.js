@@ -15,7 +15,6 @@ var calvinApp = angular.module('calvinApp', [
     'pascalprecht.translate',
     'ngCordova',
     'angularUtils.directives.uiBreadcrumbs',
-    'toaster',
     'ui.mask',
     'restangular',
     'ngSanitize',
