@@ -21,7 +21,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     
                     $scope.open = function(link){
                         if (!link) return;
-                        if (link.indexOf('http://') < 0){
+                        if (link.indexOf('http://') < 0 &&
+                                link.indexOf('https://') < 0){
                             link = 'http://' + link;
                         }
                         $window.open(link, '_system');

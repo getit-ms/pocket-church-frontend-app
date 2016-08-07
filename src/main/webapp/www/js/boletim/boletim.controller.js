@@ -11,18 +11,19 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             boletimService.busca({
                                 pagina: page, total: 10
                             }, function(boletins){
-                                for (var boletim in boletins){
+								boletins.resultados.forEach(function(boletim){
                                     boletim.thumbnail.localPath = 'img/loading.gif';
-                                    arquivoService.exists(id, function(exists){
+                                    arquivoService.exists(boletim.thumbnail.id, function(exists){
                                         if (exists){
-                                            boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + id + '.bin';
+                                            boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
                                         }else{
-                                            arquivoService.download(id, function(){
-                                                boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + id + '.bin';
+                                            arquivoService.download(boletim.thumbnail.id, function(){
+                                                boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
                                             }, cordova.file.cacheDirectory);
                                         }
                                     }, cordova.file.cacheDirectory);
-                                }
+								});
+								
                                 callback(boletins);
                             });
                         };
@@ -54,10 +55,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                             
                             $scope.verificaExistencia = function(pagina){
+                                pagina.localPath = 'img/loading.gif';
                                 var doVerificaExistencia = function (){
                                     arquivoService.exists(pagina.id, function(exists){
                                         if (exists){
-                                            pagina.localPath = cordova.file.dataDirectory + 'arquivos/' + id + '.bin';
+                                            pagina.localPath = cordova.file.dataDirectory + 'arquivos/' + pagina.id + '.bin';
                                         }else{
                                             $timeout(doVerificaExistencia, 2000);
                                         }
@@ -67,10 +69,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 doVerificaExistencia();
                             };
                             
-                            for (var pagina in boletim.paginas){
-                                boletim.thumbnail.localPath = 'img/loading.gif';
+							boletim.paginas.forEach(function(pagina){
                                 $scope.verificaExistencia(pagina);
-                            }
+							});
 						
                             $scope.slide = {activeSlide:null};
 							

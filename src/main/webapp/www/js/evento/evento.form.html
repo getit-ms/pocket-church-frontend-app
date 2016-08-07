@@ -2,13 +2,14 @@
     <ion-nav-title>
         <span translate>evento.evento</span>
     </ion-nav-title>
-    <ion-content>
+    <calvin-pagination searcher='searcherInscricoes' ng-model="inscricoes" 
+                       ng-show="inscricoes.length" not-found-message="false">
         <div class="item">
             <h1>
                 {{evento.nome }}
             </h1>
         </div>
-        
+            
         <div class='item item-text-wrap white-space'>{{evento.descricao}}</div>
         <div class='item item-input'>
             <label class='input-label' translate>evento.dataHoraInicio</label>
@@ -37,7 +38,7 @@
             <label class='input-label' translate>evento.valor</label>
             {{evento.valor | currency:'R$ '}}
         </div>
-        
+            
         <div class='item' ng-if='evento.inscricoesAbertas && evento.vagasRestantes > 0' >
             <button class='button button-block button-positive' 
                     ng-click='inscricao()'>
@@ -62,13 +63,10 @@
         <div class="item item-divider" ng-show="inscricoes.length">
             {{'evento.minhas_inscricoes' | translate}}
         </div>
-        <calvin-pagination searcher='searcherInscricoes' ng-model="inscricoes" 
-                           ng-show="inscricoes.length">
-            <ion-item ng-repeat="inscricao in inscricoes">
-                <span class="item-note">{{'evento.status_inscricao.' + inscricao.status | translate}}</span>
-                <h2>{{inscricao.nomeInscrito}}</h1>
+        <ion-item ng-repeat="inscricao in inscricoes">
+            <span class="item-note">{{'evento.status_inscricao.' + inscricao.status | translate}}</span>
+            <h2>{{inscricao.nomeInscrito}}</h1>
                 <p>{{inscricao.emailInscrito}}</p>
-            </ion-item>
-        </calvin-pagination>
-    </ion-content>
+        </ion-item>
+    </calvin-pagination>
 </ion-view>

@@ -2,14 +2,12 @@
     <ion-nav-title>
         <span translate>evento.eventos</span>
     </ion-nav-title>
-    <ion-content>
-        <calvin-pagination searcher='searcher' ng-model="eventos" cache='eventos'>
-            <ion-item class="item-button-right" 
-                      ng-repeat="evento in eventos"
-                      ng-click="detalhar(evento)">
-                <h2>{{evento.nome}}</h1>
+    <calvin-pagination searcher='searcher' ng-model="eventos" cache='eventos'>
+        <ion-item class="item-button-right" 
+                  ng-repeat="evento in eventos"
+                  ng-click="detalhar(evento)">
+            <h2>{{evento.nome}}</h1>
                 <p>{{evento.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}} - {{evento.dataHoraTermino | date:'dd MMMM yyyy HH:mm'}}</p>
-            </ion-item>
-        </calvin-pagination>
-    </ion-content>
+        </ion-item>
+    </calvin-pagination>
 </ion-view>

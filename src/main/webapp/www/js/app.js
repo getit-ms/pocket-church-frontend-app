@@ -24,7 +24,7 @@ var calvinApp = angular.module('calvinApp', [
     'ngResource',
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, 
-        $ionicConfig, $timeout, configService, $cordovaDevice, $state, boletimService) {
+        $ionicConfig, $timeout, configService, $cordovaDevice, $state, boletimService, arquivoService) {
 
 
     $ionicPlatform.on("deviceready", function () {
@@ -44,6 +44,8 @@ var calvinApp = angular.module('calvinApp', [
             }
         });
         
+		arquivoService.init();
+		
         boletimService.renovaCache();
 
         PushNotificationsService.register();
@@ -106,7 +108,7 @@ var calvinApp = angular.module('calvinApp', [
         };
 
         this.save = function (cfg) {
-            $window.localStorage.setItem('config', angular.toJson(angular.merge(config, cfg), false));
+            $window.localStorage.setItem('config', angular.toJson(angular.merge(config, cfg)));
         };
     }]).value('cache', {}).service('cacheService', ['$window', 'cache', function ($window, cache) {
         this.load = function () {
@@ -118,7 +120,7 @@ var calvinApp = angular.module('calvinApp', [
         };
 
         this.save = function (che) {
-            $window.localStorage.setItem('cache', angular.toJson(angular.extend(cache, che), false));
+            $window.localStorage.setItem('cache', angular.toJson(angular.extend(cache, che)));
         };
     }]);
 

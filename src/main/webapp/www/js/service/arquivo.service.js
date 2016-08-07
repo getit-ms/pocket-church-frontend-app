@@ -1,7 +1,6 @@
 calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', 
     function($cordovaFileTransfer, $cordovaFile, config){
         this.init = function(){
-            
             $cordovaFile.checkDir(cordova.file.dataDirectory, "arquivos").then(function(){}, function(){
                 $cordovaFile.createDir(cordova.file.dataDirectory, "arquivos");
             });
@@ -9,11 +8,15 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             $cordovaFile.checkDir(cordova.file.cacheDirectory, "arquivos").then(function(){}, function(){
                 $cordovaFile.createDir(cordova.file.cacheDirectory, "arquivos");
             });
+			
+			$cordovaFile.removeRecursively(cordova.file.cacheDirectory, 'tmp').then(function(){
+				$cordovaFile.createDir(cordova.file.cacheDirectory, "tmp");
+			});
         };
         
         this.download = function(id, callback, dir){
             var path = this.localPath(id);
-            var temp = new Date().getTime() + '.' + id + '.bin';
+            var temp = 'tmp/' + new Date().getTime() + '.' + id + '.bin';
             var url = this.remoteURL(id);
             
             if (!dir) dir = cordova.file.dataDirectory;
@@ -25,8 +28,8 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 error: false
             };
             
-            $cordovaFileTransfer.download(url, cordova.file.tempDirectory + temp).then(function(success){
-                $cordovaFile.moveFile(cordova.file.tempDirectory, temp, dir, path).then(function(){
+            $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){
+                $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, dir, path).then(function(){
                     retorno.success = true;
                     if (callback) callback(id, true);
                 }, function(){
@@ -51,7 +54,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             return config.server + '/rest/arquivo/download/' + id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
         };
         
-        this.remove = function(id, dir){
+        this.remove = function(id, callback, dir){
             if (!dir) dir = cordova.file.dataDirectory;
             $cordovaFile.removeFile(dir, this.localPath(id)).then(callback);
         };

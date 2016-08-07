@@ -1,7 +1,6 @@
 calvinApp.directive('calvinPagination', function(){
     return {
         restrict: 'E',
-        replace: true,
         transclude: true,
         scope:{
             ngModel: '=',
@@ -50,7 +49,7 @@ calvinApp.directive('calvinPagination', function(){
                 $scope.search(1, function(data){
                     $scope.ngModel = data.resultados;
                     var cache = {};
-                    cache[$scope.cache] = $scope.boletins;
+                    cache[$scope.cache] = $scope.ngModel;
                     cacheService.save(cache);
                 });
             };

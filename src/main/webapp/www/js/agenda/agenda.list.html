@@ -2,35 +2,33 @@
     <ion-nav-title>
         <span translate>agenda.agendamentos</span>
     </ion-nav-title>
-    <ion-content>
+    <calvin-pagination searcher="searcher" ng-model="agendamentos" cache="agendamentos" not-found-message="false">
         <div class="item" ng-if='agendamentos.length'>
             <h1>{{'agenda.proximos_agendamentos' | translate}}</h1>
         </div>
-        <calvin-pagination searcher="searcher" ng-model="agendamentos" cache="agendamentos" not-found-message="false">
-            <div ng-repeat="agendamento in agendamentos" ng-click='$parent.aselecionado = agendamento.id'>
-                <div class="item item-body" ng-class="{'light':agendmento.id == aselecionado,'item-button-right':!agendamento.concluido}">
-                    <h2>
-                        {{agendamento.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}}
-                        - {{agendamento.dataHoraFim | date:'HH:mm'}}
-                    </h2>
-                    <p>
-                        {{agendamento.calendario.pastor.nome}} 
-                        <span ng-if='!agendamento.concluido && !agendamento.confirmado' class='item-note assertive'>{{'agenda.status.NAO_CONFIRMADO' | translate}}</span>
-                        <span ng-if='!agendamento.concluido && agendamento.confirmado' class='item-note positive'>{{'agenda.status.CONFIRMADO' | translate}}</span>
-                        <span ng-if='agendamento.concluido' class='item-note'>{{'agenda.status.CONCLUIDO' | translate}}</span>
-                    </p>
-                    
-                    <a ng-if="!agendamento.concluido" ng-click='cancela(agendamento)'
-                       title="{{'agenda.cancelar_agendamento' | translate}}" 
-                       class='button icon pull-right fa fa-trash'>
-                    </a>
-                </div>
+        <div ng-repeat="agendamento in agendamentos" ng-click='$parent.aselecionado = agendamento.id'>
+            <div class="item item-body" ng-class="{'light':agendmento.id == aselecionado,'item-button-right':!agendamento.concluido}">
+                <h2>
+                    {{agendamento.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}}
+                    - {{agendamento.dataHoraFim | date:'HH:mm'}}
+                </h2>
+                <p>
+                    {{agendamento.calendario.pastor.nome}} 
+                    <span ng-if='!agendamento.concluido && !agendamento.confirmado' class='item-note assertive'>{{'agenda.status.NAO_CONFIRMADO' | translate}}</span>
+                    <span ng-if='!agendamento.concluido && agendamento.confirmado' class='item-note positive'>{{'agenda.status.CONFIRMADO' | translate}}</span>
+                    <span ng-if='agendamento.concluido' class='item-note'>{{'agenda.status.CONCLUIDO' | translate}}</span>
+                </p>
+                        
+                <a ng-if="!agendamento.concluido" ng-click='cancela(agendamento)'
+                   title="{{'agenda.cancelar_agendamento' | translate}}" 
+                   class='button icon pull-right fa fa-trash'>
+                </a>
             </div>
-        </calvin-pagination>
+        </div>
         <div class='item'>
             <button class='button button-block' ui-sref='agenda.novo'>
                 {{'agenda.novo_agendamento' | translate}}
             </button>
         </div>
-    </ion-content>
+    </calvin-pagination>
 </ion-view>

@@ -2,13 +2,11 @@
     <ion-nav-title>
         <span translate>estudo.estudos</span>
     </ion-nav-title>
-    <ion-content>
-        <calvin-pagination searcher="searcher" ng-model="estudos" cache="estudos">
-            <ion-item ng-click="detalhar(estudo)" collection-repeat="estudo in estudos">
-                <h2>{{estudo.titulo}}</h2>
-                <p>{{estudo.autor}}</p>
-                <p ng-if="estudo.dataPublicacao" >{{estudo.dataPublicacao | date:'dd MMM yyyy'}}</p>
-            </ion-item>
-        </calvin-pagination>
-    </ion-content>
+    <calvin-pagination searcher="searcher" ng-model="estudos" cache="estudos">
+        <ion-item ng-click="detalhar(estudo)" collection-repeat="estudo in estudos">
+            <h2>{{estudo.titulo}}</h2>
+            <p>{{estudo.autor}}</p>
+            <p ng-if="estudo.dataPublicacao" >{{estudo.dataPublicacao | date:'dd MMM yyyy'}}</p>
+        </ion-item>
+    </calvin-pagination>
 </ion-view>

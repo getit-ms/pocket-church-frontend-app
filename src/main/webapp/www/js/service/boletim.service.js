@@ -19,28 +19,32 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
                 var getCache = this.getCache;
                 var clearCache = this.clearCache;
                 setCache(boletim.id, {boletim:boletim, paginas:[], timeout:new Date().getTime() + this.timeout});
-                var deveContinuar = true;
-                for (var i = 0;deveContinuar && i<boletim.paginas.length;i++){
+                
+				var self = this;
+                for (var i = 0;i<boletim.paginas.length;i++){
                     arquivoService.download(boletim.paginas[i].id, function(id, success){
-                        if (success){
-                            var cache = getCache(boletim.id);
-                            if (cache && cache.paginas.indexOf(id) < 0){
-                                cache.paginas.push(id);
-                                setCache(boletim.id, cache);
-
-                                if (callback && cache.paginas.length == boletim.paginas.length){
-                                    callback(true);
-                                }
-                            }
-                        }else{
-                            clearCache(boletim.id);
-                            deveContinuar = false;
-                            if (callback) callback(false);
-                        }
+                        self.trataPagina(boletim, id, success, callback);
                     });
                 }
             }
         };
+		
+		this.trataPagina = function(boletim, id, success, callback){
+			if (success){
+				var cache = this.getCache(boletim.id);
+				if (cache && cache.paginas.indexOf(id) < 0){
+					cache.paginas.push(id);
+					this.setCache(boletim.id, cache);
+
+					if (callback && cache.paginas.length == boletim.paginas.length){
+						callback(true);
+					}
+				}
+			}else{
+				this.clearCache(boletim.id);
+				if (callback) callback(false);
+			}
+		};
         
         this.clearCacheAntigos = function(){
             for (i=0;i<$window.localStorage.length;i++){
