@@ -20,6 +20,7 @@
         <server.url>http://localhost:8080/app</server.url>
         <gcm.sender.id>calvin-app-server</gcm.sender.id>
         <ios.app_id>aeiou</ios.app_id>
+        <pacote.app>br.com.getit.calvin.${chave.igreja}</pacote.app>
     </properties>
     
     <dependencies>
