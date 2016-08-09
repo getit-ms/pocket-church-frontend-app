@@ -6,7 +6,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/contato/contato.list.html',
                 controller: function(contatoService, $state, $scope, $ionicActionSheet, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig){
-                    $scope.filtro = {nome:'',total:10};
+                    $scope.filtro = {nome:'',total:50};
                     $scope.hasFilters = false;
                     
                     $scope.searcher = function(page, callback){

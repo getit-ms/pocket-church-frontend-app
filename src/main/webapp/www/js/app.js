@@ -42,12 +42,12 @@ var calvinApp = angular.module('calvinApp', [
                 Dispositivo: $cordovaDevice.getUUID()
             }
         });
+
+        PushNotificationsService.register();
         
 		arquivoService.init();
 		
         boletimService.renovaCache();
-
-        PushNotificationsService.register();
         
         $state.reload();
     });
