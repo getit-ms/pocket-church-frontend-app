@@ -84,29 +84,29 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
         this.progressoCache = function(id, boletim){
             var cache = this.getCache(id);
             
-            if (boletim){
-                for (var i=0;i<cache.paginas.length;){
-                    var pag = cache.paginas[i];
-                    var index = -1;
-                    
-                    boletim.paginas.forEach(function(pagina, idx){
-                        if (pagina.id == pag){
-                            index = idx;
-                        }
-                    });
-                    
-                    if (index < 0){
-                        arquivoService.remove(pag);
-                        cache.paginas.splice(i, 1);
-                    }else{
-                        i++;
-                    }
-                }
-            }else{
-                boletim = cache.boletim;
-            }
-            
             if (cache){
+                if (boletim){
+                    for (var i=0;i<cache.paginas.length;){
+                        var pag = cache.paginas[i];
+                        var index = -1;
+
+                        boletim.paginas.forEach(function(pagina, idx){
+                            if (pagina.id == pag){
+                                index = idx;
+                            }
+                        });
+
+                        if (index < 0){
+                            arquivoService.remove(pag);
+                            cache.paginas.splice(i, 1);
+                        }else{
+                            i++;
+                        }
+                    }
+                }else{
+                    boletim = cache.boletim;
+                }
+                
                 return cache.paginas.length / boletim.paginas.length;
             }
             
