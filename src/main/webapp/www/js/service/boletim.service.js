@@ -20,7 +20,7 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
                 var clearCache = this.clearCache;
                 setCache(boletim.id, {boletim:boletim, paginas:[], timeout:new Date().getTime() + this.timeout});
                 
-				var self = this;
+                var self = this;
                 for (var i = 0;i<boletim.paginas.length;i++){
                     arquivoService.download(boletim.paginas[i].id, function(id, success){
                         self.trataPagina(boletim, id, success, callback);
@@ -29,22 +29,22 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
             }
         };
 		
-		this.trataPagina = function(boletim, id, success, callback){
-			if (success){
-				var cache = this.getCache(boletim.id);
-				if (cache && cache.paginas.indexOf(id) < 0){
-					cache.paginas.push(id);
-					this.setCache(boletim.id, cache);
+        this.trataPagina = function(boletim, id, success, callback){
+            if (success){
+                var cache = this.getCache(boletim.id);
+                if (cache && cache.paginas.indexOf(id) < 0){
+                    cache.paginas.push(id);
+                    this.setCache(boletim.id, cache);
 
-					if (callback && cache.paginas.length == boletim.paginas.length){
-						callback(true);
-					}
-				}
-			}else{
-				this.clearCache(boletim.id);
-				if (callback) callback(false);
-			}
-		};
+                    if (callback && cache.paginas.length == boletim.paginas.length){
+                        callback(true);
+                    }
+                }
+            }else{
+                this.clearCache(boletim.id);
+                if (callback) callback(false);
+            }
+        };
         
         this.clearCacheAntigos = function(){
             for (i=0;i<$window.localStorage.length;i++){
@@ -81,11 +81,33 @@ calvinApp.service('boletimService', ['Restangular', '$window', 'arquivoService',
             }
         };
         
-        this.progressoCache = function(id){
+        this.progressoCache = function(id, boletim){
             var cache = this.getCache(id);
             
+            if (boletim){
+                for (var i=0;i<cache.paginas.length;){
+                    var pag = cache.paginas[i];
+                    var index = -1;
+                    
+                    boletim.paginas.forEach(function(pagina, idx){
+                        if (pagina.id == pag){
+                            index = idx;
+                        }
+                    });
+                    
+                    if (index < 0){
+                        arquivoService.remove(pag);
+                        cache.paginas.splice(i, 1);
+                    }else{
+                        i++;
+                    }
+                }
+            }else{
+                boletim = cache.boletim;
+            }
+            
             if (cache){
-                return cache.paginas.length / cache.boletim.paginas.length;
+                return cache.paginas.length / boletim.paginas.length;
             }
             
             return 0;
