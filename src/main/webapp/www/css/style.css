@@ -258,3 +258,10 @@ img.igreja-image {
 .html-div ol {
     list-style-type: decimal;
 }
+
+.calvin .item .html-div h1,
+.calvin .item .html-div h2,
+.calvin .item .html-div h1 span,
+.calvin .item .html-div h2 span {
+    color: inherit;
+}
