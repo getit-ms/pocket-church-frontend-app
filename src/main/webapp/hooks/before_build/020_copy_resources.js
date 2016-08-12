@@ -7,8 +7,20 @@ var exec = require('child_process').exec;
 // Native resources to copy
 var resources = [
     {
-        from: 'resources/native/android/',
-        to: 'platforms/android/res/'
+        from: 'resources/native/android/drawable/',
+        to: 'platforms/android/res/drawable-hdpi-v4/'
+    },
+    {
+        from: 'resources/native/android/drawable/',
+        to: 'platforms/android/res/drawable-mdpi-v4/'
+    },
+    {
+        from: 'resources/native/android/drawable/',
+        to: 'platforms/android/res/drawable-xhdpi-v4/'
+    },
+    {
+        from: 'resources/native/android/drawable/',
+        to: 'platforms/android/res/drawable-xxhdpi-v4/'
     }
 ];
 
