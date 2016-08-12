@@ -34,7 +34,6 @@
     <splash src="resources/android/splash/drawable-port-mdpi-screen.png" density="port-mdpi"/>
     <splash src="resources/android/splash/drawable-port-hdpi-screen.png" density="port-hdpi"/>
     <splash src="resources/android/splash/drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
-    <resource-file src="resources/push.png" target="res/drawable/push.png" />
   </platform>
   <platform name="ios">
 	<preference name="KeyboardDisplayRequiresUserAction" value="false" />

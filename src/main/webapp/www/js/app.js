@@ -330,7 +330,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                 var push = PushNotification.init({
                     android:{
                         senderID: config.android.gcmSenderId,
-                        icon: 'push'
+                        icon: 'push',
+                        iconColor: '#006fb7'
                     },
                     ios:{
                         badge: true,
