@@ -5,12 +5,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/contato/contato.list.html',
-                controller: function(contatoService, $state, $scope, $ionicActionSheet, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig){
+                controller: function(contatoService, $state, $scope, $ionicScrollDelegate, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig){
                     $scope.filtro = {nome:'',total:50};
                     $scope.hasFilters = false;
                     
                     $scope.searcher = function(page, callback){
                         contatoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
+                        $ionicScrollDelegate.scrollTop();
                     };
                    
                     $scope.showSearch = function(){
