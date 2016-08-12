@@ -14,7 +14,7 @@ var resources = [
 
 function copyAndroidResources() {
     resources.forEach(function(resource){
-        exec('cp -Rf ' + resouce.from + '* ' + resource.to);
+        exec('cp -Rf ' + resoruce.from + '* ' + resource.to);
     });
     
     process.stdout.write('Copied android native resources');
