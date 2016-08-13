@@ -36,8 +36,8 @@ $ionicConfig, $timeout, configService, $cordovaDevice, $state, boletimService, a
             StatusBar.styleDefault();
         }
         
-        if ($_version != configService.load().version){
-            window.cache.clear(function(){}, function(){});
+        if (window.cache && $_version != configService.load().version){
+            window.cache.clear();
         }
         
         configService.save({
