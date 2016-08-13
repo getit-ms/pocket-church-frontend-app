@@ -10,7 +10,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     
                     $scope.searcher = function(page, callback){
                         hinoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
-                        $ionicScrollDelegate.scrollTop();
                     };
 
                     $scope.detalhar = function(hino){
@@ -25,6 +24,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             },
                             expression: function(filterText){
                                 if (filterText != $scope.filtro.filtro){
+                                    $ionicScrollDelegate.scrollTop();
                                     $scope.filtro.filtro = filterText;
                                     $scope.filtra();
                                 }

@@ -11,7 +11,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     
                     $scope.searcher = function(page, callback){
                         contatoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
-                        $ionicScrollDelegate.scrollTop();
                     };
                    
                     $scope.showSearch = function(){
@@ -22,6 +21,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             },
                             expression: function(filterText){
                                 if (filterText != $scope.filtro.filtro){
+                                    $ionicScrollDelegate.scrollTop();
                                     $scope.filtro.nome = filterText;
                                     $scope.filtra();
                                 }
