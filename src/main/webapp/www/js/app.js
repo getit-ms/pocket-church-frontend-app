@@ -36,10 +36,6 @@ $ionicConfig, $timeout, configService, $cordovaDevice, $state, boletimService, a
             StatusBar.styleDefault();
         }
         
-        if (window.cache && $_version != configService.load().version){
-            window.cache.clear();
-        }
-        
         configService.save({
             version: $_version,
             tipo: ionic.Platform.isAndroid() ? 0 : 1,

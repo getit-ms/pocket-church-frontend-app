@@ -55,11 +55,7 @@
     },
     "cordova-plugin-network-information",
     "cordova-plugin-file-transfer",
-    "cordova-plugin-file",
-    {
-      "locator": "https://github.com/tiltshiftfocus/cordova-plugin-cache.git",
-      "id": "org.apache.cordova.plugin.cache"
-    }
+    "cordova-plugin-file"
   ],
   "cordovaPlatforms": [
     "android",
