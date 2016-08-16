@@ -43,11 +43,11 @@ calvinApp.service('acessoService', ['Restangular', 'config', function(Restangula
         };
         
         this.registerPushToken = function(token){
-            this.api().one('registerPush').customPOST(token);
+            this.api().one('registerPush').customPOST(token).then(function(){});
         };
         
         this.unregisterPushToken = function(regId){
-            this.api().one('unregisterPush').customPOST(regId);
+            this.api().one('unregisterPush').customPOST(regId).then(function(){});
         };
 }]);
         

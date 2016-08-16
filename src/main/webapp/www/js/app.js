@@ -3,7 +3,7 @@
 angular.module('underscore', [])
         .factory('_', function () {
             return window._; // assumes underscore has already been loaded on the page
-        });
+});
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -38,6 +38,7 @@ var calvinApp = angular.module('calvinApp', [
         }
 
         configService.save({
+            version: $_version,
             tipo: ionic.Platform.isAndroid() ? 0 : 1,
             headers:{
                 Dispositivo: $cordovaDevice.getUUID()
@@ -88,10 +89,6 @@ var calvinApp = angular.module('calvinApp', [
 
 }).value('config', {
     server: $_serverUrl,
-    version: $_version,
-    android: {
-        gcmSenderId: $_gcmSenderId
-    },
     ios: {
         name: $_serverCode
     },
@@ -196,7 +193,7 @@ function configureHttpInterceptors($httpProvider) {
                             });
                             $rootScope.$broadcast('scroll.infiniteScrollComplete');
                         },
-                        default: function (rejection) { // INTERNAL SERVER ERROR
+                    default: function (rejection) { // INTERNAL SERVER ERROR
                             $injector.get('message')({
                                 title: 'global.title.default',
                                 template: 'mensagens.MSG-1000'
@@ -212,8 +209,7 @@ function configureHttpInterceptors($httpProvider) {
                     return $q.reject(rejection);
                 }
             }
-        }]
-            );
+        }]);
 
     $httpProvider.defaults.transformResponse.push(function (responseData) {
         convertDateStringsToDates(responseData);
@@ -246,9 +242,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                 mainTranslatePartialLoader: ['$translate', function ($translate) {
                         return $translate.refresh();
                     }]
-            },
-            controller: ['$scope', function ($scope) {
-                }]
+            }
         });
 
         // Configuranto Restangular
@@ -276,8 +270,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 
         .run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $cordovaNetwork, $ionicSideMenuDelegate) {
             var config = configService.load();
-            $rootScope.usuario = config.usuario;
-            $rootScope.funcionalidades = config.funcionalidades;
+    $rootScope.usuario = config.usuario;
+    $rootScope.funcionalidades = config.funcionalidades;
 
             if (config.headers['Authorization']) {
                 acessoService.carrega(function (acesso) {
@@ -290,65 +284,71 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                 });
             }
 
-            $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
-                $rootScope.offline = false;
+        });
+    }
+            
+    $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+        $rootScope.offline = false;
+    });
+            
+    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+        $rootScope.offline = true;
+    });
+
+    $rootScope.logout = function () {
+        var cb = function(){
+            $rootScope.usuario = null;
+            $rootScope.funcionalidades = null;
+            configService.save({usuario: '', funcionalidades: '', headers: {Authorization: ''}});
+            $ionicViewService.nextViewOptions({
+                disableBack: true
             });
+            $ionicSideMenuDelegate.toggleLeft();
+            $state.go('login');
+        };
+        
+        acessoService.logout(cb,function(response){
+            if (response.status == 403){
+                cb();
+            }
+        });
+    };
+})
 
-            $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-                $rootScope.offline = true;
-            });
-
-            $rootScope.logout = function () {
-                var cb = function(){
-                    $rootScope.usuario = null;
-                    $rootScope.funcionalidades = null;
-                    configService.save({usuario: '', funcionalidades: '', headers: {Authorization: ''}});
-                    $ionicViewService.nextViewOptions({
-                        disableBack: true
-                    });
-                    $ionicSideMenuDelegate.toggleLeft();
-                    $state.go('login');
-                };
-                acessoService.logout(cb,function(response){
-                    if (response.status == 403){
-                        cb();
-                    }
-                });
-            };
-        })
-
-        .factory('NodePushServer', function (acessoService) {
-            return {
-                storeDeviceToken: function (regId) {
-                    acessoService.registerPushToken(regId);
-                },
-                removeDeviceToken: function (regId) {
-                    acessoService.unregisterPushToken(regId);
-                }
-            };
-        })
+.factory('NodePushServer', function (acessoService) {
+    return {
+        storeDeviceToken: function (regId) {
+            acessoService.registerPushToken(regId);
+        },
+        removeDeviceToken: function (regId) {
+            acessoService.unregisterPushToken(regId);
+        }
+    };
+})
 
 // PUSH NOTIFICATIONS
-        .service('PushNotificationsService', function (message, NodePushServer, config) {
-            this.register = function () {
-                var push = PushNotification.init({
-                    android:{
-                        senderID: config.android.gcmSenderId
-                    },
-                    ios:{
-                        badge: true,
-                        sound: true,
-                        alert: true
-                    }
-                });
+.service('PushNotificationsService', function (message, NodePushServer, config) {
+    this.register = function () {
+        var push = PushNotification.init({
+            android:{
+                senderID: $_gcmSenderId,
+                icon: 'push',
+                iconColor: '#006fb7'
+            },
+            ios:{
+                badge: true,
+                sound: true,
+                alert: true
+            }
+        });
 
-                push.on('registration', function(data){
-                        NodePushServer.storeDeviceToken({
-                            token: data.registrationId,
-                            version: config.version,
-                            tipoDispositivo: config.tipo
-                        });
-                });
+        push.on('registration', function(data){
+            NodePushServer.storeDeviceToken({
+                token: data.registrationId,
+                version: config.version,
+                tipoDispositivo: config.tipo
+            });
+        });
 
                 push.on('notification', function(data){
                     if (data.additionalData.foreground ||
@@ -358,6 +358,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                 });
             };
         });
+    };
+});
 
 var regexDate = /^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}.+$/;
 

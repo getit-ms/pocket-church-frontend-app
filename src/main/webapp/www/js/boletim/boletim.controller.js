@@ -11,7 +11,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             boletimService.busca({
                                 pagina: page, total: 10
                             }, function(boletins){
-								boletins.resultados.forEach(function(boletim){
+                                boletins.resultados.forEach(function(boletim){
                                     boletim.thumbnail.localPath = 'img/loading.gif';
                                     arquivoService.exists(boletim.thumbnail.id, function(exists){
                                         if (exists){
@@ -22,7 +22,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                             }, cordova.file.cacheDirectory);
                                         }
                                     }, cordova.file.cacheDirectory);
-								});
+                                });
 
                                 callback(boletins);
                             });
@@ -69,9 +69,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 doVerificaExistencia();
                             };
 
-							boletim.paginas.forEach(function(pagina){
+                            boletim.paginas.forEach(function(pagina){
                                 $scope.verificaExistencia(pagina);
-							});
+                            });
 
                             $scope.slide = {activeSlide:null};
 

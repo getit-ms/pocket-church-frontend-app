@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/hino/hino.list.html',
-                controller: function(hinoService, $state, $scope, $ionicFilterBar, $filter, $ionicFilterBarConfig, $ionicConfig){
+                controller: function(hinoService, $state, $scope, $ionicFilterBar, $filter, $ionicScrollDelegate, $ionicFilterBarConfig, $ionicConfig){
                     $scope.filtro = {total:50};
                     
                     $scope.searcher = function(page, callback){
@@ -24,6 +24,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             },
                             expression: function(filterText){
                                 if (filterText != $scope.filtro.filtro){
+                                    $ionicScrollDelegate.scrollTop();
                                     $scope.filtro.filtro = filterText;
                                     $scope.filtra();
                                 }

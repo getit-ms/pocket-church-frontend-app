@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/contato/contato.list.html',
-                controller: function(contatoService, $state, $scope, $ionicActionSheet, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig){
+                controller: function(contatoService, $state, $scope, $ionicScrollDelegate, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig){
                     $scope.filtro = {nome:'',total:50};
                     $scope.hasFilters = false;
                     
@@ -21,6 +21,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             },
                             expression: function(filterText){
                                 if (filterText != $scope.filtro.filtro){
+                                    $ionicScrollDelegate.scrollTop();
                                     $scope.filtro.nome = filterText;
                                     $scope.filtra();
                                 }
