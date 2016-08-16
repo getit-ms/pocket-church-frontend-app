@@ -22,8 +22,9 @@ var calvinApp = angular.module('calvinApp', [
     'underscore',
     'ngResource',
     'jett.ionic.filter.bar'
-]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, 
-        $ionicConfig, $timeout, configService, $cordovaDevice, $state, boletimService, arquivoService) {
+]).run(function ($ionicPlatform, PushNotificationsService, $rootScope,
+        $ionicConfig, $timeout, configService, $cordovaDevice, $state,
+                 boletimService, arquivoService, cifraService) {
 
 
     $ionicPlatform.on("deviceready", function () {
@@ -35,7 +36,7 @@ var calvinApp = angular.module('calvinApp', [
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
-        
+
         configService.save({
             tipo: ionic.Platform.isAndroid() ? 0 : 1,
             headers:{
@@ -44,11 +45,13 @@ var calvinApp = angular.module('calvinApp', [
         });
 
         PushNotificationsService.register();
-        
-		arquivoService.init();
-		
+
+		    arquivoService.init();
+
         boletimService.renovaCache();
-        
+
+        cifraService.renovaCache();
+
         $state.reload();
     });
 
@@ -93,7 +96,8 @@ var calvinApp = angular.module('calvinApp', [
         name: $_serverCode
     },
     headers: {
-        Igreja: $_serverCode
+        Igreja: $_serverCode,
+        Dispositivo: 'undefined'
     }
 }).service('configService', ['config', '$window', '$cordovaDevice', function (config, $window, $cordovaDevice) {
         this.load = function () {
@@ -133,7 +137,7 @@ function configureHttpInterceptors($httpProvider) {
                         request.headers['Content-Type'] = 'application/json;charset=UTF-8';
                         request.data = '';
                     }
-                    
+
                     angular.extend(request.headers, configService.load().headers);
 
                     return request;
@@ -274,7 +278,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
             var config = configService.load();
             $rootScope.usuario = config.usuario;
             $rootScope.funcionalidades = config.funcionalidades;
-            
+
             if (config.headers['Authorization']) {
                 acessoService.carrega(function (acesso) {
                     $rootScope.usuario = acesso.membro;
@@ -285,11 +289,11 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                     });
                 });
             }
-            
+
             $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
                 $rootScope.offline = false;
             });
-            
+
             $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
                 $rootScope.offline = true;
             });
@@ -347,7 +351,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                 });
 
                 push.on('notification', function(data){
-                    if (data.additionalData.foreground){
+                    if (data.additionalData.foreground ||
+                          data.additionalData.coldstart){
                         message({title: data.title,template: data.message});
                     }
                 });

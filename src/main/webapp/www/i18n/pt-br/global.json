@@ -145,6 +145,11 @@
         "boletim":"Boletim",
         "paginacao":"{atual} de {total}"
     },
+    "cifra":{
+      "cifras":"Cifras",
+      "cifra":"Cifra",
+      "paginacao":"{atual} de {total}"
+    },
     "estudo":{
         "estudo":"Estudo",
         "estudos":"Estudos",

@@ -6,7 +6,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/boletim/boletim.list.html',
                     controller: function(boletimService, $scope, $state, arquivoService){
-                    
+
                         $scope.searcher = function(page, callback){
                             boletimService.busca({
                                 pagina: page, total: 10
@@ -23,11 +23,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         }
                                     }, cordova.file.cacheDirectory);
 								});
-								
+
                                 callback(boletins);
                             });
                         };
-                        
+
                         $scope.detalhar = function(boletim){
                             $state.go('boletim.view', {id: boletim.id});
                         };
@@ -40,20 +40,20 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, boletimService, arquivoService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
+                    controller: function(boletimService, $scope, boletimService, pdfService, arquivoService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
                         $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
-						
+
                         boletimService.carrega($stateParams.id, function(boletim){
                             $scope.boletim = boletim;
 
-                            if (!boletimService.progressoCache(boletim.id)){
-                                boletimService.cache(boletim, function(){
+                            if (!pdfService.progressoCache('boletim', boletim.id)){
+                                pdfService.cache('boletim', boletim, function(){
                                     $ionicLoading.hide();
                                 });
                             }else{
                                 $ionicLoading.hide();
                             }
-                            
+
                             $scope.verificaExistencia = function(pagina){
                                 pagina.localPath = 'img/loading.gif';
                                 var doVerificaExistencia = function (){
@@ -65,16 +65,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         }
                                     });
                                 };
-                                
+
                                 doVerificaExistencia();
                             };
-                            
+
 							boletim.paginas.forEach(function(pagina){
                                 $scope.verificaExistencia(pagina);
 							});
-						
+
                             $scope.slide = {activeSlide:null};
-							
+
                             $scope.updateSlideStatus = function(index) {
                                 var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
                                 if (zoomFactor == 1) {
@@ -87,5 +87,5 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     }
                 }
             }
-        });         
+        });
     }]);
