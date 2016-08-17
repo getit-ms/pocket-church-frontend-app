@@ -104,7 +104,8 @@
         "MSG-603":"Chave de autenticação inválida.",
         "MSG-604":"Dados inválidos.",
         "MSG-605":"Sem conexão",
-        "MSG-606":"E-mail e/ou senha inválido(s)"
+        "MSG-606":"E-mail e/ou senha inválido(s)",
+        "MSG-607":"Sistema PagSeguro indisponível. Tente novamente mais tarde."
     },
     "home":{
         "inicio":"Início"
