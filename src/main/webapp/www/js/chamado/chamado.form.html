@@ -1,0 +1,19 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>chamado.novo_chamado</span>
+    </ion-nav-title>
+    <ion-content>
+      <form id="chamado_form" name="chamado_form" ng-submit="cadastrar(this.chamado_form)" novalidate>
+        <div class='item item-divider'>{{'chamado.tipo' | translate}}</div>
+        <ion-radio required  ng-model="chamado.tipo" ng-value="'SUGESTAO'">{{'chamado.tipo.SUGESTAO' | translate}}</ion-radio>
+        <ion-radio required  ng-model="chamado.tipo" ng-value="'REPORTE_ERRO'">{{'chamado.tipo.REPORTE_ERRO' | translate}}</ion-radio>
+        <ion-radio required  ng-model="chamado.tipo" ng-value="'RECLAMACAO'">{{'chamado.tipo.RECLAMACAO' | translate}}</ion-radio>
+        <label class='item item-input'>
+          <textarea rows="5" required ng-model='chamado.descricao' placeholder="{{'chamado.descricao' | translate}}" ></textarea>
+        </label>
+        <div class='item'>
+          <input type='submit' class='button button-block button-positive' value="{{'chamado.submeter' | translate}}" />
+        </div>
+      </form>
+    </ion-content>
+</ion-view>

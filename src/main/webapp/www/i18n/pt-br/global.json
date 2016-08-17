@@ -146,8 +146,8 @@
         "paginacao":"{atual} de {total}"
     },
     "cifra":{
-      "cifras":"Cifras",
-      "cifra":"Cifra",
+      "cifras":"Cânticos",
+      "cifra":"Cântico",
       "paginacao":"{atual} de {total}"
     },
     "estudo":{
@@ -235,6 +235,28 @@
             "CANCELADA":"Cancelada"
         }
     },
+  "chamado":{
+    "chamado":"Sugestão/Reclamação",
+    "chamados":"Sugestões e Reclamações",
+    "descricao":"Descrição",
+    "status":{
+      "NOVO":"Novo",
+      "EM_ANALISE":"Em Análise",
+      "ACEITO":"Aceito",
+      "REJEITADO":"Rejeitado",
+      "EM_ATENDIMENTO":"Em Atendimento",
+      "CONCLUIDO":"Concluído",
+      "CANCELADO":"Cancelado",
+    },
+    "tipo":{
+      "tipo":"Tipo",
+      "SUGESTAO":"Sugestão",
+      "REPORTE_ERRO":"Reporte de Erro",
+      "RECLAMACAO":"Reclamação"
+    },
+    "novo_chamado":"Nova Sugestão/Reclamação",
+    "submeter":"Submeter"
+  },
     "hino":{
         "hino":"Hino {numero}",
         "hinos":"Hinário"

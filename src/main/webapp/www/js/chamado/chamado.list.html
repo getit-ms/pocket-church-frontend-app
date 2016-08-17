@@ -1,0 +1,26 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>chamado.chamados</span>
+    </ion-nav-title>
+    <calvin-pagination searcher="searcher" ng-model="chamados" cache="chamados" not-found-message="false">
+        <div class="item" ng-if='chamados.length'>
+            <h1>{{'chamado.chamados' | translate}}</h1>
+        </div>
+        <div ng-repeat="chamado in chamados" ng-click='$parent.aselecionado = chamado.id'>
+            <div class="item item-body item-text-wrap" >
+              <h2>{{'chamado.tipo.' + chamado.tipo | translate}}</h1>
+              {{chamado.descricao}}
+              <p>
+                <span class='item-note assertive'>{{'chamado.status.' + chamado.status | translate}}</span>
+                {{'chamado.solicitacao'}}: {{chamado.dataSolicitacao | date:'dd MMMM yyyy HH:mm'}}
+                <span ng-show="chamado.concluido">{{'chamado.atendimento'}}: {{chamado.dataConclusao | date:'dd MMMM yyyy HH:mm'}}</span>
+              </p>
+            </div>
+        </div>
+        <div class='item'>
+            <button class='button button-block' ui-sref='chamado.novo'>
+                {{'chamado.novo_chamado' | translate}}
+            </button>
+        </div>
+    </calvin-pagination>
+</ion-view>
