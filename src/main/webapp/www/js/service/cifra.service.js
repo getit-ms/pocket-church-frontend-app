@@ -4,7 +4,7 @@ calvinApp.service('cifraService', ['Restangular', 'pdfService', function(Restang
         };
 
         this.busca = function(filtro, callback){
-            return this.api().all('publicados').get('', filtro).then(callback);
+            return this.api().get('', filtro).then(callback);
         };
 
         this.carrega = function(id, callback){

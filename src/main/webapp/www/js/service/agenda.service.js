@@ -22,5 +22,9 @@ calvinApp.service('agendaService', ['Restangular', '$filter', function(Restangul
         this.cancela = function(id, agendamento, callback){
             this.api().one(id + '/cancelar/' + agendamento).post().then(callback);
         };
+        
+        this.confirma = function(id, agendamento, callback){
+            this.api().one(id + '/confirmar/' + agendamento).post().then(callback);
+        };
 }]);
         

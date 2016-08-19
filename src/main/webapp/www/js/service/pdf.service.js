@@ -8,32 +8,32 @@ calvinApp.service('pdfService', ['$window', 'arquivoService', function($window, 
                 var clearCache = this.clearCache;
                 var cache = {paginas:[], timeout:new Date().getTime() + this.timeout};
                 cache[chave] = pdf;
-                setCache(chave, pdf.id, chave);
+                setCache(chave, pdf.id, cache);
 
-				        var self = this;
-                    for (var i = 0;i<pdf.paginas.length;i++){
-                        arquivoService.download(pdf.paginas[i].id, function(id, success){
-                            self.trataPagina(chave, pdf, id, success, callback);
-                        });
-                    }
+                var self = this;
+                for (var i = 0;i<pdf.paginas.length;i++){
+                    arquivoService.download(pdf.paginas[i].id, function(id, success){
+                        self.trataPagina(chave, pdf, id, success, callback);
+                    });
                 }
+            }
         };
 
         this.trataPagina = function(chave, pdf, id, success, callback){
-          if (success){
-            var cache = this.getCache(chave, pdf.id);
-            if (cache && cache.paginas.indexOf(id) < 0){
-              cache.paginas.push(id);
-              this.setCache(chave, pdf.id, cache);
+            if (success){
+                var cache = this.getCache(chave, pdf.id);
+                if (cache && cache.paginas.indexOf(id) < 0){
+                    cache.paginas.push(id);
+                    this.setCache(chave, pdf.id, cache);
 
-              if (callback && cache.paginas.length == pdf.paginas.length){
-                callback(true);
-              }
+                    if (callback && cache.paginas.length == pdf.paginas.length){
+                        callback(true);
+                    }
+                }
+            }else{
+                this.clearCache(chave, pdf.id);
+                if (callback) callback(false);
             }
-          }else{
-            this.clearCache(chave, pdf.id);
-            if (callback) callback(false);
-          }
         };
 
         this.clearCacheAntigos = function(chave){

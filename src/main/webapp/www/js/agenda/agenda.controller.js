@@ -8,7 +8,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     controller: function(agendaService, $scope, message, $ionicPopup, $filter, $ionicViewService, $state){
                         $scope.searcher = function(page, callback){
                             agendaService.busca({pagina:page,total:10}, function(agendamentos){
-                                if (agendamentos.totalResultados){
+                                if ($scope.usuario.pastor || agendamentos.totalResultados){
                                     callback(agendamentos);
                                 }else{
                                     $ionicViewService.nextViewOptions({
@@ -16,6 +16,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     });
                                     $state.go('agenda.novo');
                                 }
+                            });
+                        };
+                        
+                        $scope.confirma = function(agendamento){
+                            agendaService.confirma(agendamento.calendario.id, agendamento.id, function(dados){
+                                message({title:'global.title.200',template:'mensagens.MSG-001'});
+                                $scope.$broadcast('pagination.refresh');
                             });
                         };
                         

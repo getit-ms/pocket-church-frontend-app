@@ -9,19 +9,21 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.filtro = {total: 10};
 
                         $scope.searcher = function(page, callback){
-                            cifraService.busca(angular.extend(filtro, {pagina: page}), function(cifras){
-                                cifras.resultados.forEach(function(cifra){
-                                    cifra.thumbnail.localPath = 'img/loading.gif';
-                                    arquivoService.exists(cifra.thumbnail.id, function(exists){
-                                        if (exists){
-                                            cifra.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + cifra.thumbnail.id + '.bin';
-                                        }else{
-                                            arquivoService.download(cifra.thumbnail.id, function(){
+                            cifraService.busca(angular.extend($scope.filtro, {pagina: page}), function(cifras){
+                                if (cifras.resultados){
+                                    cifras.resultados.forEach(function(cifra){
+                                        cifra.thumbnail.localPath = 'img/loading.gif';
+                                        arquivoService.exists(cifra.thumbnail.id, function(exists){
+                                            if (exists){
                                                 cifra.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + cifra.thumbnail.id + '.bin';
-                                            }, cordova.file.cacheDirectory);
-                                        }
-                                    }, cordova.file.cacheDirectory);
-                                });
+                                            }else{
+                                                arquivoService.download(cifra.thumbnail.id, function(){
+                                                    cifra.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + cifra.thumbnail.id + '.bin';
+                                                }, cordova.file.cacheDirectory);
+                                            }
+                                        }, cordova.file.cacheDirectory);
+                                    });
+                                }
 
                                 callback(cifras);
                             });

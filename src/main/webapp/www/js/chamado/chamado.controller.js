@@ -39,8 +39,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             return;
                           }
 
-                            chamadoService.chamado($scope.chamado, function(){
-                                message({title:'global.title.200',template:'mensagens.MSG-029'});
+                            chamadoService.cadastra($scope.chamado, function(){
+                                message({title:'global.title.200',template:'mensagens.MSG-001'});
                                 $ionicViewService.nextViewOptions({
                                     disableBack: true
                                 });

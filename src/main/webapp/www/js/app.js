@@ -23,8 +23,8 @@ var calvinApp = angular.module('calvinApp', [
     'ngResource',
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope,
-        $ionicConfig, $timeout, configService, $cordovaDevice, $state,
-                 boletimService, arquivoService, cifraService) {
+$ionicConfig, $timeout, configService, $cordovaDevice, $state,
+boletimService, arquivoService, cifraService) {
 
 
     $ionicPlatform.on("deviceready", function () {
@@ -47,7 +47,7 @@ var calvinApp = angular.module('calvinApp', [
 
         PushNotificationsService.register();
 
-		    arquivoService.init();
+        arquivoService.init();
 
         boletimService.renovaCache();
 
@@ -273,20 +273,17 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
 
-            if (config.headers['Authorization']) {
-                acessoService.carrega(function (acesso) {
-                    $rootScope.usuario = acesso.membro;
-                    $rootScope.funcionalidades = acesso.funcionalidades;
-                    configService.save({
-                        usuario: $rootScope.usuario,
-                        funcionalidades: $rootScope.funcionalidades
-                    });
-                });
-            }
-
+    if (config.headers['Authorization']) {
+        acessoService.carrega(function (acesso) {
+            $rootScope.usuario = acesso.membro;
+            $rootScope.funcionalidades = acesso.funcionalidades;
+            configService.save({
+                usuario: $rootScope.usuario,
+                funcionalidades: $rootScope.funcionalidades
+            });
         });
     }
-            
+
     $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
         $rootScope.offline = false;
     });
@@ -315,10 +312,10 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
     };
 })
 
-.factory('NodePushServer', function (acessoService) {
-    return {
-        storeDeviceToken: function (regId) {
-            acessoService.registerPushToken(regId);
+        .factory('NodePushServer', function (acessoService) {
+            return {
+                storeDeviceToken: function (regId) {
+                    acessoService.registerPushToken(regId);
         },
         removeDeviceToken: function (regId) {
             acessoService.unregisterPushToken(regId);
@@ -327,11 +324,11 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config) {
-    this.register = function () {
-        var push = PushNotification.init({
-            android:{
-                senderID: $_gcmSenderId,
+        .service('PushNotificationsService', function (message, NodePushServer, config) {
+            this.register = function () {
+                var push = PushNotification.init({
+                    android:{
+                        senderID: $_gcmSenderId,
                 icon: 'push',
                 iconColor: '#006fb7'
             },
@@ -350,13 +347,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
             });
         });
 
-                push.on('notification', function(data){
-                    if (data.additionalData.foreground ||
-                          data.additionalData.coldstart){
-                        message({title: data.title,template: data.message});
-                    }
-                });
-            };
+        push.on('notification', function(data){
+            message({title: data.title,template: data.message});
         });
     };
 });
@@ -409,3 +401,5 @@ function formatDate(date) {
         return null;
     return moment(date).format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
 }
+
+

@@ -7,13 +7,14 @@
             <h1>{{'agenda.proximos_agendamentos' | translate}}</h1>
         </div>
         <div ng-repeat="agendamento in agendamentos" ng-click='$parent.aselecionado = agendamento.id'>
-            <div class="item item-body" ng-class="{'light':agendmento.id == aselecionado,'item-button-right':!agendamento.concluido}">
+            <div class="item item-body" ng-class="{'item-button-right':!agendamento.concluido}">
                 <h2>
                     {{agendamento.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}}
                     - {{agendamento.dataHoraFim | date:'HH:mm'}}
                 </h2>
                 <p>
-                    {{agendamento.calendario.pastor.nome}} 
+                    <span ng-if='!usuario.pastor'>{{agendamento.calendario.pastor.nome}} </span>
+                    <span ng-if='usuario.pastor'>{{agendamento.membro.nome}} </span>
                     <span ng-if='!agendamento.concluido && !agendamento.confirmado' class='item-note assertive'>{{'agenda.status.NAO_CONFIRMADO' | translate}}</span>
                     <span ng-if='!agendamento.concluido && agendamento.confirmado' class='item-note positive'>{{'agenda.status.CONFIRMADO' | translate}}</span>
                     <span ng-if='agendamento.concluido' class='item-note'>{{'agenda.status.CONCLUIDO' | translate}}</span>
@@ -23,9 +24,13 @@
                    title="{{'agenda.cancelar_agendamento' | translate}}" 
                    class='button icon pull-right fa fa-trash'>
                 </a>
+                <a ng-if="!agendamento.confirmado" ng-click='confirma(agendamento)'
+                   title="{{'agenda.confirmar_agendamento' | translate}}" 
+                   class='button icon pull-right fa fa-check'>
+                </a>
             </div>
         </div>
-        <div class='item'>
+        <div class='item' ng-if='!usuario.pastor'>
             <button class='button button-block' ui-sref='agenda.novo'>
                 {{'agenda.novo_agendamento' | translate}}
             </button>
