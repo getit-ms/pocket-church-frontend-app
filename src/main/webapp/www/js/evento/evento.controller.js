@@ -46,7 +46,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/evento/inscricao.form.html',
-                controller: function(eventoService, $scope, evento, $state, message){
+                controller: function(eventoService, $scope, evento, $state, message, $window, $ionicViewService){
                     $scope.evento = evento;
                     
                     $scope.clear = function(){
@@ -77,8 +77,21 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.conclui = function(){
                         if ($scope.inscricoes.length){
                             eventoService.inscricao($scope.evento.id, $scope.inscricoes, function(resposta){
-                                message({title: 'global.title.200',template: 'mensagens.MSG-001'});
-                                $state.go('evento');
+                                if (resposta.devePagar && resposta.checkoutPagSeguro){
+                                    message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
+                                        $ionicViewService.nextViewOptions({
+                                            disableBack: true
+                                        });
+                                        $state.go('evento');
+                                        $window.open('https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + resposta.checkoutPagSeguro, '_system');
+                                    });
+                                }else{
+                                    message({title: 'global.title.200',template: 'mensagens.MSG-001'});
+                                    $ionicViewService.nextViewOptions({
+                                        disableBack: true
+                                    });
+                                    $state.go('evento');
+                                }
                             });
                         }
                     };

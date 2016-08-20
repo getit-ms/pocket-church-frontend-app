@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/cifra/cifra.list.html',
-                    controller: function(cifraService, $scope, $state, arquivoService){
+                    controller: function(cifraService, $scope, $state, arquivoService, $ionicFilterBar, $ionicFilterBarConfig, $filter, $ionicConfig){
                         $scope.filtro = {total: 10};
 
                         $scope.searcher = function(page, callback){

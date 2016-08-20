@@ -1,5 +1,5 @@
 calvinApp.factory('message', ['$ionicPopup', '$filter', '$rootScope', function($ionicPopup, $filter, $rootScope){
-    return function(alert){
+    return function(alert, callback){
         if (!$rootScope.popupShown){
             $rootScope.popupShown = true;
 
@@ -8,6 +8,7 @@ calvinApp.factory('message', ['$ionicPopup', '$filter', '$rootScope', function($
                 template: $filter('translate')(alert.template)
             }).then(function(){
                 $rootScope.popupShown = false;
+                if (callback) callback();
             });
         }
     };

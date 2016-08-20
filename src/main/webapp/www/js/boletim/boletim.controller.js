@@ -7,25 +7,25 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     templateUrl: 'js/boletim/boletim.list.html',
                     controller: function(boletimService, $scope, $state, arquivoService){
 
+                        $scope.boletins = [];
+                        
+                        $scope.$watch('boletins', function(boletins){
+                            boletim.thumbnail.localPath = 'img/loading.gif';
+                            arquivoService.exists(boletim.thumbnail.id, function(exists){
+                                if (exists){
+                                    boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
+                                }else{
+                                    arquivoService.download(boletim.thumbnail.id, function(){
+                                        boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
+                                    }, cordova.file.cacheDirectory);
+                                }
+                            }, cordova.file.cacheDirectory);
+                        });
+
                         $scope.searcher = function(page, callback){
                             boletimService.busca({
                                 pagina: page, total: 10
-                            }, function(boletins){
-                                boletins.resultados.forEach(function(boletim){
-                                    boletim.thumbnail.localPath = 'img/loading.gif';
-                                    arquivoService.exists(boletim.thumbnail.id, function(exists){
-                                        if (exists){
-                                            boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
-                                        }else{
-                                            arquivoService.download(boletim.thumbnail.id, function(){
-                                                boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
-                                            }, cordova.file.cacheDirectory);
-                                        }
-                                    }, cordova.file.cacheDirectory);
-                                });
-
-                                callback(boletins);
-                            });
+                            }, callback);
                         };
 
                         $scope.detalhar = function(boletim){
