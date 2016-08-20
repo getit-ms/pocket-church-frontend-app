@@ -10,16 +10,18 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.boletins = [];
                         
                         $scope.$watch('boletins', function(boletins){
-                            boletim.thumbnail.localPath = 'img/loading.gif';
-                            arquivoService.exists(boletim.thumbnail.id, function(exists){
-                                if (exists){
-                                    boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
-                                }else{
-                                    arquivoService.download(boletim.thumbnail.id, function(){
+                            boletins.forEach(function(boletim){
+                                boletim.thumbnail.localPath = 'img/loading.gif';
+                                arquivoService.exists(boletim.thumbnail.id, function(exists){
+                                    if (exists){
                                         boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
-                                    }, cordova.file.cacheDirectory);
-                                }
-                            }, cordova.file.cacheDirectory);
+                                    }else{
+                                        arquivoService.download(boletim.thumbnail.id, function(){
+                                            boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
+                                        }, cordova.file.cacheDirectory);
+                                    }
+                                }, cordova.file.cacheDirectory);
+                            });
                         });
 
                         $scope.searcher = function(page, callback){
