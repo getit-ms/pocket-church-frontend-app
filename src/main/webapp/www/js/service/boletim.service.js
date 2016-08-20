@@ -11,9 +11,9 @@ calvinApp.service('boletimService', ['Restangular', 'pdfService', function(Resta
             var cache = pdfService.getCache('boletim', id);
             if (cache){
                 callback(cache.boletim);
+            }else{
+                this.api().one('' + id).get().then(callback);
             }
-            
-            this.api().one('' + id).get().then(callback);
         };
 
         this.verificaNovos = function(){

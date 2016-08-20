@@ -11,11 +11,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         
                         $scope.$watch('boletins', function(boletins){
                             boletins.forEach(function(boletim){
-                                boletim.thumbnail.localPath = 'img/loading.gif';
                                 arquivoService.exists(boletim.thumbnail.id, function(exists){
                                     if (exists){
                                         boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
                                     }else{
+                                        boletim.thumbnail.localPath = 'img/loading.gif';
                                         arquivoService.download(boletim.thumbnail.id, function(){
                                             boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
                                         }, cordova.file.cacheDirectory);
