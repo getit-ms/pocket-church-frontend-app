@@ -139,6 +139,13 @@ function configureHttpInterceptors($httpProvider) {
 
                     return request;
                 },
+                response: function(response){
+                    if (response.headers('Set-Authorization')){
+                        configService.save({headers:{Authorization:response.headers('Set-Authorization')}});
+                    }
+                    
+                    return response;
+                },
                 responseError: function (rejection) {
                     var responseInterceptors = {
                         400: function (rejection) { // BAD REQUEST
@@ -268,8 +275,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-        .run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $cordovaNetwork, $ionicSideMenuDelegate) {
-            var config = configService.load();
+.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $cordovaNetwork, $ionicSideMenuDelegate) {
+    var config = configService.load();
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
 

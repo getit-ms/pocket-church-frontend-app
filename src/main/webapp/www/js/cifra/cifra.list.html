@@ -9,8 +9,9 @@
     <calvin-pagination searcher="searcher" ng-model="cifras" cache="cifras">
         <ion-item ng-click="detalhar(cifra)" ng-repeat="cifra in cifras">
             <h2>
-                <b  style="margin-right: 15px;">{{cifra.numero}}</b> {{cifra.titulo}}
+                {{cifra.titulo}}
             </h2>
+            <p>{{cifra.autor}}</p>
         </ion-item>
     </calvin-pagination>
 </ion-view>

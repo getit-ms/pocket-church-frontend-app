@@ -17,9 +17,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             $rootScope.usuario = acesso.membro;
                             $rootScope.funcionalidades = acesso.funcionalidades;
                             configService.save({
-                                headers:{
-                                    Authorization: acesso.auth
-                                },
                                 usuario:$rootScope.usuario,
                                 funcionalidades:acesso.funcionalidades
                             });
@@ -52,9 +49,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             $rootScope.usuario = null;
                             $rootScope.funcionalidades = null;
                             configService.save({
-                                headers:{
-                                    Authorization: ''
-                                },
                                 usuario:'',
                                 funcionalidades:''
                             });
