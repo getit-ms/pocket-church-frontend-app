@@ -241,6 +241,7 @@
         "chamado":"Sugestão",
         "chamados":"Sugestões",
         "descricao":"Descrição",
+        "enunciado":"Colabore com a evolução do nosso aplicativo ${nomeAplicativo.igreja}",
         "descricao_explicacao":"Descreva o problema, sugestão ou reclamação.",
         "status":{
             "NOVO":"Novo",
@@ -258,7 +259,7 @@
             "RECLAMACAO":"Reclamação"
         },
         "novo_chamado":"Nova Sugestão",
-        "submeter":"Submeter",
+        "submeter":"Enviar",
         "solicitacao":"Solicitação",
         "atendimento":"Atendimento"
     },

@@ -2,10 +2,7 @@
     <ion-nav-title>
         <span translate>agenda.agendamentos</span>
     </ion-nav-title>
-    <calvin-pagination searcher="searcher" ng-model="agendamentos" cache="agendamentos" not-found-message="false">
-        <div class="item" ng-if='agendamentos.length'>
-            <h1>{{'agenda.proximos_agendamentos' | translate}}</h1>
-        </div>
+    <calvin-pagination searcher="searcher" ng-model="agendamentos" cache="agendamentos" >
         <div ng-repeat="agendamento in agendamentos" ng-click='$parent.aselecionado = agendamento.id'>
             <div class="item item-body" ng-class="{'item-button-right':!agendamento.concluido}">
                 <h2>
@@ -19,15 +16,17 @@
                     <span ng-if='!agendamento.concluido && agendamento.confirmado' class='item-note positive'>{{'agenda.status.CONFIRMADO' | translate}}</span>
                     <span ng-if='agendamento.concluido' class='item-note'>{{'agenda.status.CONCLUIDO' | translate}}</span>
                 </p>
-                        
-                <a ng-if="!agendamento.concluido" ng-click='cancela(agendamento)'
-                   title="{{'agenda.cancelar_agendamento' | translate}}" 
-                   class='button icon pull-right fa fa-trash'>
-                </a>
-                <a ng-if="!agendamento.confirmado" ng-click='confirma(agendamento)'
-                   title="{{'agenda.confirmar_agendamento' | translate}}" 
-                   class='button icon pull-right fa fa-check'>
-                </a>
+
+                <div class="buttons">
+                    <a ng-if="!agendamento.concluido" ng-click='cancela(agendamento)'
+                       title="{{'agenda.cancelar_agendamento' | translate}}"
+                       class='button icon fa fa-trash'>
+                    </a>
+                    <a ng-if="usuario.pastor &&   !agendamento.confirmado" ng-click='confirma(agendamento)'
+                       title="{{'agenda.confirmar_agendamento' | translate}}"
+                       class='button icon fa fa-check'>
+                    </a>
+                </div>
             </div>
         </div>
         <div class='item' ng-if='!usuario.pastor'>
