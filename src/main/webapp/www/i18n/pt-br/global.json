@@ -254,7 +254,7 @@
         "tipo":{
             "tipo":"Tipo",
             "SUGESTAO":"Sugestão",
-            "REPORTE_ERRO":"Reporte de Erro",
+            "ERRO":"Erro",
             "RECLAMACAO":"Reclamação"
         },
         "novo_chamado":"Nova Sugestão",
