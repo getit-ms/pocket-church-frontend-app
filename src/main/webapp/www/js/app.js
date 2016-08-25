@@ -37,6 +37,8 @@ boletimService, arquivoService, cifraService) {
             StatusBar.styleDefault();
         }
 
+        var novaVersao = $_version == configService.load().version;
+
         configService.save({
             version: $_version,
             tipo: ionic.Platform.isAndroid() ? 0 : 1,
@@ -45,7 +47,9 @@ boletimService, arquivoService, cifraService) {
             }
         });
 
-        PushNotificationsService.register();
+        if (novaVersao){
+            PushNotificationsService.register();
+        }
 
         arquivoService.init();
 
@@ -81,10 +85,6 @@ boletimService, arquivoService, cifraService) {
             }
             console.log("enabling swipe back and restoring transition to platform default", $ionicConfig.views.transition());
         }
-    });
-
-    $ionicPlatform.on("resume", function () {
-        PushNotificationsService.register();
     });
 
 }).value('config', {

@@ -48,7 +48,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         boletimService.carrega($stateParams.id, function(boletim){
                             $scope.boletim = boletim;
 
-                            if (!pdfService.progressoCache('boletim', boletim.id)){
+                            if (!pdfService.progressoCache('boletim', boletim)){
                                 pdfService.cache('boletim', boletim, function(){
                                     $ionicLoading.hide();
                                 });

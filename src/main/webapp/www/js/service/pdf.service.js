@@ -2,7 +2,7 @@ calvinApp.service('pdfService', ['$window', 'arquivoService', function($window, 
         this.timeout = 1000 * 60 * 60 * 24 * 5;
 
         this.cache = function(chave, pdf, callback){
-            if (!this.progressoCache(pdf.id)){
+            if (!this.progressoCache(pdf)){
                 var setCache = this.setCache;
                 var getCache = this.getCache;
                 var clearCache = this.clearCache;
@@ -71,11 +71,34 @@ calvinApp.service('pdfService', ['$window', 'arquivoService', function($window, 
             }
         };
 
-        this.progressoCache = function(chave, id){
-            var cache = this.getCache(chave, id);
+        this.progressoCache = function(chave, pdf){
+            var cache = this.getCache(chave, pdf.id);
+            
+            if (pdf){
+                for (var i=0;i<cache.paginas.length;){
+                    var pag = cache.paginas[i];
+                    var index = -1;
+                    
+                    pdf.paginas.forEach(function(pagina, idx){
+                        if (pagina.id == pag){
+                            index = idx;
+                        }
+                    });
+                    
+                    if (index < 0){
+                        arquivoService.remove(pag);
+                        cache.paginas.splice(i, 1);
+                    }else{
+                        i++;
+                    }
+                }
+            }else{
+                pdf = cache[chave];
+            }
+            
 
             if (cache){
-                return cache.paginas.length / cache[chave].paginas.length;
+                return cache.paginas.length / pdf.paginas.length;
             }
 
             return 0;
@@ -83,7 +106,7 @@ calvinApp.service('pdfService', ['$window', 'arquivoService', function($window, 
 
         this.carregaNovos = function(chave, pdfs){
             for (var i=0;i<pdfs.length && i<5;i++){
-                if (!this.progressoCache(chave, pdfs[i].id)){
+                if (!this.progressoCache(chave, pdfs[i])){
                     this.cache(chave, pdfs[i]);
                 }
             }

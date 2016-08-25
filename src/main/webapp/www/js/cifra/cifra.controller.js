@@ -86,7 +86,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         cifraService.carrega($stateParams.id, function(cifra){
                             $scope.cifra = cifra;
 
-                            if (!pdfService.progressoCache('cifra', cifra.id)){
+                            if (!pdfService.progressoCache('cifra', cifra)){
                                 pdfService.cache('cifra', cifra, function(){
                                     $ionicLoading.hide();
                                 });
