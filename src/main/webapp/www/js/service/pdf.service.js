@@ -2,7 +2,7 @@ calvinApp.service('pdfService', ['$window', 'arquivoService', function($window, 
         this.timeout = 1000 * 60 * 60 * 24 * 5;
 
         this.cache = function(chave, pdf, callback){
-            if (!this.progressoCache(pdf)){
+            if (!this.progressoCache(chave, pdf)){
                 var setCache = this.setCache;
                 var getCache = this.getCache;
                 var clearCache = this.clearCache;

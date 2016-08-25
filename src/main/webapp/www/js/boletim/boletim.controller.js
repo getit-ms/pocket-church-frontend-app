@@ -11,13 +11,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         
                         $scope.$watch('boletins', function(boletins){
                             boletins.forEach(function(boletim){
+                                var path = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
                                 arquivoService.exists(boletim.thumbnail.id, function(exists){
                                     if (exists){
-                                        boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
+                                        if (boletim.thumbnail.localPath != path){
+                                            boletim.thumbnail.localPath = path;
+                                        }
                                     }else{
                                         boletim.thumbnail.localPath = 'img/loading.gif';
                                         arquivoService.download(boletim.thumbnail.id, function(){
-                                            boletim.thumbnail.localPath = cordova.file.cacheDirectory + 'arquivos/' + boletim.thumbnail.id + '.bin';
+                                            boletim.thumbnail.localPath = path;
                                         }, cordova.file.cacheDirectory);
                                     }
                                 }, cordova.file.cacheDirectory);
@@ -57,12 +60,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
 
                             $scope.verificaExistencia = function(pagina){
-                                pagina.localPath = 'img/loading.gif';
+                                var path = cordova.file.dataDirectory + 'arquivos/' + pagina.id + '.bin';
+                                pagina.localPath = path;
                                 var doVerificaExistencia = function (){
                                     arquivoService.exists(pagina.id, function(exists){
                                         if (exists){
-                                            pagina.localPath = cordova.file.dataDirectory + 'arquivos/' + pagina.id + '.bin';
+                                            if (pagina.localPath != path){
+                                                pagina.localPath = path;
+                                            }
                                         }else{
+                                            pagina.localPath = 'img/loading.gif';
                                             $timeout(doVerificaExistencia, 2000);
                                         }
                                     });
