@@ -37,7 +37,7 @@ arquivoService, cacheService) {
             StatusBar.styleDefault();
         }
 
-        var novaVersao = $_version == configService.load().version;
+        var versaoAtualizada = $_version == configService.load().version;
 
         configService.save({
             version: $_version,
@@ -47,7 +47,7 @@ arquivoService, cacheService) {
             }
         });
 
-        if (novaVersao){
+        if (versaoAtualizada){
             PushNotificationsService.register();
         }
 
