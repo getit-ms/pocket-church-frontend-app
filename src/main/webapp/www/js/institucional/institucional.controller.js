@@ -6,14 +6,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/institucional/institucional.form.html',
                 controller: function(institucionalService, $scope, cacheService, $window){
-                    $scope.institucional = cacheService.load().institucional;
-                    
-                    $scope.carrega = function(){
+                    function carrega(callback){
                         institucionalService.carrega(function(institucional){
-                            $scope.institucional = institucional;
-                            cacheService.save({institucional:institucional});
+                            callback(institucional);
                         });
                     };
+
+                    cacheService.get('institucional', function(institucional){
+                        $scope.institucional = institucional;
+                    }, carrega);
                     
                     $scope.mailto = function(email){
                         $window.open('mailto:' + email, '_system');
@@ -29,8 +30,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         }
                         $window.open(site, '_system');
                     };
-
-                    $scope.carrega();
                 }
             }
         }

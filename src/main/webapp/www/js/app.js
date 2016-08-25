@@ -110,18 +110,6 @@ boletimService, arquivoService, cifraService) {
         this.save = function (cfg) {
             $window.localStorage.setItem('config', angular.toJson(angular.merge(config, cfg)));
         };
-    }]).value('cache', {}).service('cacheService', ['$window', 'cache', function ($window, cache) {
-        this.load = function () {
-            if (!$window.localStorage.getItem('cache')) {
-                this.save({});
-            }
-
-            return angular.extend(cache, angular.fromJson($window.localStorage.getItem('cache')));
-        };
-
-        this.save = function (che) {
-            $window.localStorage.setItem('cache', angular.toJson(angular.extend(cache, che)));
-        };
     }]);
 
 function configureHttpInterceptors($httpProvider) {

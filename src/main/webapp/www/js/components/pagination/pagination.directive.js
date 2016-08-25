@@ -45,18 +45,18 @@ calvinApp.directive('calvinPagination', function(){
                 
                 $scope.init = function(){
                     if ($scope.cache){
-                        $scope.ngModel = cacheService.load()[$scope.cache];
+                        cacheService.get($scope.cache, function(data){
+                            $scope.ngModel = data;
+                        }, function(callback){
+                            $scope.search(1, function(data){
+                                callback(data.resultados);
+                            });
+                        });
+                    }else{
+                        $scope.search(1, function(data){
+                            $scope.ngModel = data.resultados;
+                        });
                     }
-                    
-                    $scope.search(1, function(data){
-                        $scope.ngModel = data.resultados;
-                        
-                        if ($scope.cache){				
-                            var cache = {};
-                            cache[$scope.cache] = $scope.ngModel;
-                            cacheService.save(cache);
-                        }
-                    });
                 };
                 
                 $scope.$on('pagination.search', function() {

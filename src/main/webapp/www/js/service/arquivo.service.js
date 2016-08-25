@@ -1,5 +1,7 @@
-calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', 
-    function($cordovaFileTransfer, $cordovaFile, config){
+calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', '$window', '$cordovaNetwork',
+    function($cordovaFileTransfer, $cordovaFile, config, $window, $cordovaNetwork){
+        this.timeout = 1000 * 60 * 60 * 24 * 5;
+        
         this.init = function(){
             $cordovaFile.checkDir(cordova.file.dataDirectory, "arquivos").then(function(){}, function(){
                 $cordovaFile.createDir(cordova.file.dataDirectory, "arquivos");
@@ -9,63 +11,80 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 $cordovaFile.createDir(cordova.file.cacheDirectory, "arquivos");
             });
 			
-			$cordovaFile.removeRecursively(cordova.file.cacheDirectory, 'tmp').then(function(){
-				$cordovaFile.createDir(cordova.file.cacheDirectory, "tmp");
-			});
+            $cordovaFile.removeRecursively(cordova.file.cacheDirectory, 'tmp').then(function(){
+                    $cordovaFile.createDir(cordova.file.cacheDirectory, "tmp");
+            });
         };
         
-        this.download = function(id, callback, dir){
-            var path = this.localPath(id);
+        this.get = function(id, callback){
+            if (!id || !callback) console.error("arquivoService.get: id and callback are required");
+            
+            var cache = load(id);
+            if (cache){
+                cache.access = new Date().getTime();
+                save(id, cache);
+                callback({success:true, file:cache.file});
+            }else{
+                callback({loading:true, file:'img/loading.gif'});
+                download(id, callback);
+            }
+        };
+        
+        this.clean = function(){
+            for (i=0;i<$window.localStorage.length;i++){
+                var key = $window.localStorage.key(i);
+                if (key.startsWith('arquivo.')){
+                    var cache = $window.localStorage.getItem(key);
+
+                    if (cache){
+                        if (cache.access < new Date().getTime()){
+                            remove(chave, id);
+                        }
+                    }
+                }
+            }
+        };
+        
+        function load(id){
+            return angular.fromJson($window.localStorage.getItem('arquivo.'+id));
+        }
+        
+        function save(id, cache){
+            $window.localStorage.setItem('arquivo.' + id, angular.toJson(cache));
+        }
+        
+        function remove(id){
+            $window.localStorage.removeItem('arquivo.' + id);
+        }
+        
+        function download(id, callback){
+            var path = 'arquivos/' + id + '.bin';
             var temp = 'tmp/' + new Date().getTime() + '.' + id + '.bin';
-            var url = this.remoteURL(id);
+            var url = config.server + '/rest/arquivo/download/' + id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
             
-            if (!dir) dir = cordova.file.dataDirectory;
-            
-            var retorno = {
-                path: path,
-                progresso: 0,
-                success: false,
-                error: false
-            };
-            
-            $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){
-                $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, dir, path).then(function(){
-                    retorno.success = true;
-                    if (callback) callback(id, true);
-                }, function(){
-                    retorno.error = true;
-                    if (callback) callback(id, false);
-                });
-            }, function(error){
-                retorno.error = true;
-                if (callback) callback(id, false);
-            }, function(progresso){
-                retorno.progresso = progresso.loaded / progresso.total;
-            });
-            
-            return retorno;
-        };
-        
-        this.localPath = function(id){
-            return 'arquivos/' + id + ".bin";
-        };
-        
-        this.remoteURL = function(id){
-            return config.server + '/rest/arquivo/download/' + id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
-        };
-        
-        this.remove = function(id, callback, dir){
-            if (!dir) dir = cordova.file.dataDirectory;
-            $cordovaFile.removeFile(dir, this.localPath(id)).then(callback);
-        };
-        
-        this.exists = function(id, callback, dir){
-            if (!dir) dir = cordova.file.dataDirectory;
-            
-            $cordovaFile.checkFile(dir, this.localPath(id)).then(function(){
-                if (callback) callback(true);
-            }, function(){
-                if (callback) callback(false);
-            });
-        };
+            try{
+                if ($cordovaNetwork.isOnline()){
+                    $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){
+                        $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, dir, path).then(function(){
+                            save(id, {file:path,access:new Date().getTime()});
+                            callback({success:true, file:path});
+                        }, function(error){
+                            callback({error:true, file:'img/fail.png'});
+                            console.error(error);
+                        });
+                    }, function(error){
+                        callback({error:true, file:'img/fail.png'});
+                        remove(id);
+                        console.error(error);
+                    });
+                }else{
+                    callback({error:true, file:'img/fail.png'});
+                    remove(id);
+                }
+            }catch(e){
+                callback({error:true, file:'img/fail.png'});
+                remove(id);
+                console.error(e);
+            }
+        }
     }]);
