@@ -24,7 +24,7 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope,
 $ionicConfig, $timeout, configService, $cordovaDevice, $state,
-boletimService, arquivoService, cifraService) {
+arquivoService, cacheService) {
 
 
     $ionicPlatform.on("deviceready", function () {
@@ -53,9 +53,9 @@ boletimService, arquivoService, cifraService) {
 
         arquivoService.init();
 
-        boletimService.renovaCache();
+        cacheService.clean();
 
-        cifraService.renovaCache();
+        arquivoService.clean();
 
         $state.reload();
     });

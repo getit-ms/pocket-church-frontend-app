@@ -54,7 +54,9 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
         }
         
         function remove(id){
-            $window.localStorage.removeItem('arquivo.' + id);
+            $cordovaFile.remove(cordova.file.cacheDirectory, 'arquivos/' + id + '.bin').then(function(){
+                $window.localStorage.removeItem('arquivo.' + id);
+            });
         }
         
         function download(id, callback){
@@ -65,8 +67,8 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             try{
                 if ($cordovaNetwork.isOnline()){
                     $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){
-                        $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, dir, path).then(function(){
-                            save(id, {file:path,access:new Date().getTime()});
+                        $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, cordova.file.cacheDirectory, path).then(function(){
+                            save(id, {file:cordova.file.cacheDirectory + path,access:new Date().getTime()});
                             callback({success:true, file:path});
                         }, function(error){
                             callback({error:true, file:'img/fail.png'});
