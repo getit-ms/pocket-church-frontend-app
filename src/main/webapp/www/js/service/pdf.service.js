@@ -74,30 +74,29 @@ calvinApp.service('pdfService', ['$window', 'arquivoService', function($window, 
         this.progressoCache = function(chave, pdf){
             var cache = this.getCache(chave, pdf.id);
             
-            if (pdf){
-                for (var i=0;i<cache.paginas.length;){
-                    var pag = cache.paginas[i];
-                    var index = -1;
-                    
-                    pdf.paginas.forEach(function(pagina, idx){
-                        if (pagina.id == pag){
-                            index = idx;
-                        }
-                    });
-                    
-                    if (index < 0){
-                        arquivoService.remove(pag);
-                        cache.paginas.splice(i, 1);
-                    }else{
-                        i++;
-                    }
-                }
-            }else{
-                pdf = cache[chave];
-            }
-            
-
             if (cache){
+                if (pdf){
+                    for (var i=0;i<cache.paginas.length;){
+                        var pag = cache.paginas[i];
+                        var index = -1;
+
+                        pdf.paginas.forEach(function(pagina, idx){
+                            if (pagina.id == pag){
+                                index = idx;
+                            }
+                        });
+
+                        if (index < 0){
+                            arquivoService.remove(pag);
+                            cache.paginas.splice(i, 1);
+                        }else{
+                            i++;
+                        }
+                    }
+                }else{
+                    pdf = cache[chave];
+                }
+                
                 return cache.paginas.length / pdf.paginas.length;
             }
 
