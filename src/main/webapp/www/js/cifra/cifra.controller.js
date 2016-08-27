@@ -5,11 +5,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/cifra/cifra.list.html',
-                    controller: function(cifraService, $scope, $state, arquivoService, $ionicFilterBar, $ionicFilterBarConfig, $filter, $ionicConfig){
+                    controller: function(cifraService, $scope, $state, $ionicFilterBar, $ionicFilterBarConfig, $filter, $ionicConfig){
                         $scope.filtro = {total: 10};
 
                         $scope.searcher = function(page, callback){
-                            cifraService.busca(angular.extend($scope.filtro, {pagina: page}), callback);
+                            cifraService.busca(angular.extend({pagina: page}, $scope.filtro), callback);
                         };
 
                         $scope.showSearch = function(){
@@ -20,6 +20,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 },
                                 expression: function(filterText){
                                     if (filterText != $scope.filtro.filtro){
+                                        $ionicScrollDelegate.scrollTop();
                                         $scope.filtro.filtro = filterText;
                                         $scope.filtra();
                                     }
@@ -64,51 +65,24 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/cifra/cifra.form.html',
                     controller: function(cifraService, $scope, cifraService, pdfService, arquivoService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
-                        cifraService.carrega($stateParams.id, function(cifra){
+                        pdfService.get('cifra', function(cifra){
                             $scope.cifra = cifra;
-
-                            if (!pdfService.progressoCache('cifra', cifra)){
-                                pdfService.cache('cifra', cifra, function(){
-                                    $ionicLoading.hide();
-                                });
-                            }else{
-                                $ionicLoading.hide();
-                            }
-
-                            $scope.verificaExistencia = function(pagina){
-                                var path = cordova.file.dataDirectory + 'arquivos/' + pagina.id + '.bin';
-                                pagina.localPath = path;
-                                var doVerificaExistencia = function (){
-                                    arquivoService.exists(pagina.id, function(exists){
-                                        if (exists){
-                                            if (pagina.localPath != path){
-                                                pagina.localPath = path;
-                                            }
-                                        }else{
-                                            pagina.localPath = 'img/loading.gif';
-                                            $timeout(doVerificaExistencia, 2000);
-                                        }
-                                    });
-                                };
-
-                                doVerificaExistencia();
-                            };
-
-                            cifra.paginas.forEach(function(pagina){
-                                $scope.verificaExistencia(pagina);
+                        }, function(id, callback){
+                            cifraService.carrega(id, function(cifra){
+                                callback(cifra);
                             });
+                        }, $stateParams.id);
+                        
+                        $scope.slide = {activeSlide:null};
 
-                            $scope.slide = {activeSlide:null};
-
-                            $scope.updateSlideStatus = function(index) {
-                                var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
-                                if (zoomFactor == 1) {
-                                    $ionicSlideBoxDelegate.enableSlide(true);
-                                } else {
-                                    $ionicSlideBoxDelegate.enableSlide(false);
-                                }
-                            };
-                        });
+                        $scope.updateSlideStatus = function(index) {
+                            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+                            if (zoomFactor == 1) {
+                                $ionicSlideBoxDelegate.enableSlide(true);
+                            } else {
+                                $ionicSlideBoxDelegate.enableSlide(false);
+                            }
+                        };
                     }
                 }
             }

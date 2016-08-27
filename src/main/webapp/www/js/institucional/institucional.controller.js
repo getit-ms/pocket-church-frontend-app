@@ -24,6 +24,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $window.open('tel:' + tel, '_system');
                     };
                     
+                    $scope.geo = function(endereco){
+                        $window.open('geo:0,0?q=' + endereco.descricao + ' ' + endereco.cidade + ' ' + endereco.estado, '_system');
+                    };
+                    
                     $scope.site = function(site){
                         if (site.indexOf('http://') < 0){
                             site = 'http://' + site;
