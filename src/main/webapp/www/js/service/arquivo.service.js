@@ -69,7 +69,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                     $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){
                         $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, cordova.file.cacheDirectory, path).then(function(){
                             save(id, {file:cordova.file.cacheDirectory + path,access:new Date().getTime()});
-                            callback({success:true, file:path});
+                            callback({success:true, file:cordova.file.cacheDirectory + path});
                         }, function(error){
                             callback({error:true, file:'img/fail.png'});
                             console.error(error);

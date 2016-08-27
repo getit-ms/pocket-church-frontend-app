@@ -1,10 +1,10 @@
 calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cacheService, arquivoService){
         this.get = function (chave, id, supplier){
-            cacheService.get(chave, id, function(pdf){
+            cacheService.get(chave, function(pdf){
                 for (var i = 0;i<pdf.paginas.length;i++){
                     trata(pdf.paginas[i]);
                 }
-            }, supplier);
+            }, supplier, id);
         };
         
         function trata(pagina){
