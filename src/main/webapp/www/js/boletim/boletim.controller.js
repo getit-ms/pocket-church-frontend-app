@@ -8,16 +8,17 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     controller: function(boletimService, $scope, $state, arquivoService){
                         
                         $scope.searcher = function(page, callback){
-                            boletimService.busca({
-                                pagina: page, total: 10
-                            }, function(boletins){
-                                boletins.forEach(function(boletim){
-                                    arquivoService.get(boletim.thumbnail.id, function(file){
-                                        boletim.thumbnail.localPath = file.file;
-                                    });
+                            boletimService.busca({pagina: page, total: 10}, callback);
+                        };
+                        
+                        $scope.thumbnail = function(boletim){
+                            if (!boletim.thumbnail.localPath){
+                                boletim.thumbnail.localPath = '#';
+                                arquivoService.get(boletim.thumbnail.id, function(file){
+                                    boletim.thumbnail.localPath = file.file;
                                 });
-                                callback(boletins);
-                            });
+                            }
+                            return boletim.thumbnail.localPath;
                         };
 
                         $scope.detalhar = function(boletim){

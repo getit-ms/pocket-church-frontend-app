@@ -2,12 +2,16 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
         this.get = function (chave, id, supplier){
             cacheService.get(chave, id, function(pdf){
                 for (var i = 0;i<pdf.paginas.length;i++){
-                    arquivoService.get(pdf.paginas[i].id, function(data){
-                        pdf.paginas[i].localPath = data.file;
-                    });
+                    trata(pdf.paginas[i]);
                 }
             }, supplier);
         };
+        
+        function trata(pagina){
+            arquivoService.get(pagina.id, function(data){
+                pagina.localPath = data.file;
+            });
+        }
         
         this.load = function(chave, pdfs){
             for (var i=0;i<pdfs.length && i<5;i++){
