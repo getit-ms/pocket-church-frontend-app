@@ -34,13 +34,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
                     controller: function(boletimService, $scope, boletimService, pdfService, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
-                        pdfService.get('boletim', function(boletim){
+                        pdfService.get('boletim', $stateParams.id, function(boletim){
                             $scope.boletim = boletim;
                         }, function(id, callback){
                             boletimService.carrega(id, function(boletim){
                                 callback(boletim);
                             });
-                        }, $stateParams.id);
+                        });
 
                         $scope.slide = {activeSlide:null};
 
