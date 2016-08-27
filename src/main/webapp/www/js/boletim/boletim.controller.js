@@ -36,11 +36,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     controller: function(boletimService, $scope, boletimService, pdfService, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
                         pdfService.get('boletim', $stateParams.id, function(boletim){
                             $scope.boletim = boletim;
-                        }, function(id, callback){
-                            boletimService.carrega(id, function(boletim){
-                                callback(boletim);
-                            });
-                        });
+                        }, boletimService.carrega);
 
                         $scope.slide = {activeSlide:null};
 
