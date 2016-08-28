@@ -1,9 +1,10 @@
 <ion-view cache-view="false">
-    <ion-nav-title>
+    <ion-nav-title hide-nav-bar="zoom">
         <span>{{boletim.titulo}}</span>
     </ion-nav-title>
-    <ion-content class="has-footer has-header">
-        <ion-slide-box show-pager="false" ng-if="boletim.paginas.length" on-slide-changed="slideChanged(index)" active-slide="slide.activeSlide">
+    <ion-content ng-class="{'has-footer': !zoom && boletim.paginas.length > 1,'has-header':!zoom}">
+        <ion-slide-box show-pager="false" ng-if="boletim.paginas.length" 
+                       on-slide-changed="slideChanged(index)" active-slide="slide.activeSlide">
             <ion-slide ng-repeat="pagina in boletim.paginas">
                 <ion-scroll scroll='false' zooming="true" direction="xy" scrollable-x="false"
                             scrollable-y="false" min-zoom="1" style="width:100%;height:100%"
@@ -14,7 +15,7 @@
             </ion-slide>
         </ion-slide-box>
     </ion-content>
-    <ion-footer-bar class="bar-stable" ng-if="boletim.paginas.length" align-title="center">
+    <ion-footer-bar hide-nav-bar="zoom || boletim.paginas.length <= 1" class="bar-stable" align-title="center">
         <h1 class="title">{{'boletim.paginacao' | translate:'{atual:'+(slide.activeSlide+1)+',total:'+ boletim.paginas.length +'}' }}</h1>
     </ion-footer-bar>
 </ion-view>

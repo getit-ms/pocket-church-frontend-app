@@ -1,8 +1,8 @@
 <ion-view cache-view="false">
-    <ion-nav-title>
+    <ion-nav-title hide-nav-bar="zoom">
         <span>{{cifra.titulo}}</span>
     </ion-nav-title>
-    <ion-content class="has-footer has-header">
+    <ion-content ng-class="{'has-footer': !zoom¨&& cifra.paginas.length > 1,'has-header':!zoom">
         <ion-slide-box show-pager="false" ng-if="cifra.paginas.length" on-slide-changed="slideChanged(index)" active-slide="slide.activeSlide">
             <ion-slide ng-repeat="pagina in cifra.paginas">
                 <ion-scroll scroll='false' zooming="true" direction="xy" scrollable-x="false"
@@ -14,7 +14,7 @@
             </ion-slide>
         </ion-slide-box>
     </ion-content>
-    <ion-footer-bar class="bar-stable" ng-if="cifra.paginas.length" align-title="center">
+    <ion-footer-bar hide-nav-bar="zoom || cifra.paginas.length <= 1" class="bar-stable" align-title="center">
         <h1 class="title">{{'cifra.paginacao' | translate:'{atual:'+(slide.activeSlide+1)+',total:'+ cifra.paginas.length +'}' }}</h1>
     </ion-footer-bar>
 </ion-view>

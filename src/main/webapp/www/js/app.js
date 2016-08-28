@@ -263,8 +263,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $cordovaNetwork, $ionicSideMenuDelegate) {
-    var config = configService.load();
+        .run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $cordovaNetwork, $ionicSideMenuDelegate) {
+            var config = configService.load();
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
 
@@ -307,10 +307,10 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
     };
 })
 
-        .factory('NodePushServer', function (acessoService) {
-            return {
-                storeDeviceToken: function (regId) {
-                    acessoService.registerPushToken(regId);
+.factory('NodePushServer', function (acessoService) {
+    return {
+        storeDeviceToken: function (regId) {
+            acessoService.registerPushToken(regId);
         },
         removeDeviceToken: function (regId) {
             acessoService.unregisterPushToken(regId);
@@ -319,11 +319,11 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 })
 
 // PUSH NOTIFICATIONS
-        .service('PushNotificationsService', function (message, NodePushServer, config) {
-            this.register = function () {
-                var push = PushNotification.init({
-                    android:{
-                        senderID: $_gcmSenderId,
+.service('PushNotificationsService', function (message, NodePushServer, config) {
+    this.register = function () {
+        var push = PushNotification.init({
+            android:{
+                senderID: $_gcmSenderId,
                 icon: 'push',
                 iconColor: '#006fb7'
             },
