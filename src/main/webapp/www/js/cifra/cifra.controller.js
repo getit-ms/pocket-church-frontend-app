@@ -67,7 +67,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     controller: function(cifraService, $scope, cifraService, pdfService, arquivoService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
                         pdfService.get('cifra', $stateParams.id, function(cifra){
                             $scope.cifra = cifra;
-                        }, cifraService.carrega);
+                        }, function(id, callback){
+                            cifraService.carrega(id, callback);
+                        });
                         
                         $scope.slide = {activeSlide:null};
 
@@ -75,8 +77,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
                             if (zoomFactor == 1) {
                                 $ionicSlideBoxDelegate.enableSlide(true);
+                                $scope.zoom = false;
                             } else {
                                 $ionicSlideBoxDelegate.enableSlide(false);
+                                $scope.zoom = true;
                             }
                         };
                     }

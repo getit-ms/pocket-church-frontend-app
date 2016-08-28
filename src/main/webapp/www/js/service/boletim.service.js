@@ -11,14 +11,4 @@ calvinApp.service('boletimService', ['Restangular', 'pdfService', function(Resta
             this.api().one('' + id).get().then(callback);
         };
 
-        this.verificaNovos = function(){
-            this.busca({pagina:1,total:10}, function(boletins){
-              pdfService.carregaNovos('boletim', boletins.resultados);
-            });
-        };
-
-        this.renovaCache = function(){
-            pdfService.clearCacheAntigos('boletim');
-            this.verificaNovos();
-        };
     }]);

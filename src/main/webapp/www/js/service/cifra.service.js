@@ -10,8 +10,4 @@ calvinApp.service('cifraService', ['Restangular', 'pdfService', function(Restang
         this.carrega = function(id, callback){
             this.api().one('' + id).get().then(callback);
         };
-
-        this.renovaCache = function(){
-            pdfService.clearCacheAntigos('cifra');
-        };
     }]);

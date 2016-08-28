@@ -2,11 +2,27 @@
     <ion-nav-title>
         <span translate>chamado.chamados</span>
     </ion-nav-title>
+    <div class="item item-text-wrap">{{'chamado.enunciado' | translate}}</div>
+    <ion-item class="item-divider">{{'chamado.novo_chamados' | translate'}}</ion-item>
+    <form id="chamado_form" name="chamado_form" ng-submit="cadastrar(this.chamado_form)" novalidate>
+        <div class='item item-divider'>{{'chamado.tipo' | translate}}</div>
+        <ion-radio required  ng-model="chamado.tipo" ng-value="'SUGESTAO'">{{'chamado.tipo.SUGESTAO' | translate}}</ion-radio>
+        <ion-radio required  ng-model="chamado.tipo" ng-value="'ERRO'">{{'chamado.tipo.ERRO' | translate}}</ion-radio>
+        <ion-radio required  ng-model="chamado.tipo" ng-value="'RECLAMACAO'">{{'chamado.tipo.RECLAMACAO' | translate}}</ion-radio>
+        <div class='item item-divider'>{{'chamado.descricao' | translate}}</div>
+        <label class='item item-input'>
+            <textarea rows="5" required ng-model='chamado.descricao' placeholder="{{'chamado.descricao_explicacao' | translate}}" ></textarea>
+        </label>
+        <div class='item'>
+            <input type='submit' class='button button-block button-positive' value="{{'chamado.submeter' | translate}}" />
+        </div>
+    </form>
+    <ion-item class="item-divider">{{'chamado.chamados' | translate'}}</ion-item>
     <calvin-pagination searcher="searcher" ng-model="chamados" cache="chamados" not-found-message="false">
         <div class="item" ng-if='chamados.length'>
             <h1>{{'chamado.chamados' | translate}}</h1>
         </div>
-        <div ng-repeat="chamado in chamados" ng-click='$parent.aselecionado = chamado.id'>
+        <div ng-repeat="chamado in chamados" >
             <div class="item item-body item-text-wrap" >
                 <h2>
                     {{'chamado.tipo.' + chamado.tipo | translate}}
@@ -18,11 +34,6 @@
                     <span ng-show="chamado.concluido">{{'chamado.atendimento' | translate}}: {{chamado.dataConclusao | date:'dd MMMM yyyy HH:mm'}}</span>
                 </p>
             </div>
-        </div>
-        <div class='item'>
-            <button class='button button-block' ui-sref='chamado.novo'>
-                {{'chamado.novo_chamado' | translate}}
-            </button>
         </div>
     </calvin-pagination>
 </ion-view>

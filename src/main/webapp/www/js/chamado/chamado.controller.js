@@ -19,16 +19,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             });
                         };
 
-                    }
-                }
-            }
-        }).state('chamado.novo', {
-            parent: 'chamado',
-            url: '/chamado/novo',
-            views:{
-                'content@':{
-                    templateUrl: 'js/chamado/chamado.form.html',
-                    controller: function(chamadoService, $scope, message, $state, $ionicViewService, $filter, $ionicLoading){
                         $scope.clear = function(){
                             $scope.chamado = {};
                         };
@@ -49,7 +39,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         };
 
                         $scope.clear();
-
                     }
                 }
             }
