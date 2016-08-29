@@ -33,9 +33,28 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, boletimService, pdfService, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
+                    controller: function(boletimService, $scope, boletimService, pdfService, $state, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
                         pdfService.get('boletim', $stateParams.id, function(boletim){
-                            $scope.boletim = boletim;
+                            if (!$scope.boletim){
+                                var diff = $scope.boletim.paginas.length != boletim.paginas.length;
+                                for (var i=0;i<boletim.paginas.length;i++){
+                                    var found = false;
+                                    for (var j=0;j<$scope.boletim.paginas.length;j++){
+                                        if ($scope.boletim.paginas[j].id == boletim.paginas[i].id){
+                                            found = true;
+                                        }
+                                    }
+                                    if (!found){
+                                        diff = true;
+                                    }
+                                }
+                                
+                                if (diff){
+                                    $state.reload();
+                                }
+                            }else{
+                                $scope.boletim = boletim;
+                            }
                         }, function(id, callback){
                             boletimService.carrega(id, callback);
                         });

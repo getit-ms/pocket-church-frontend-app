@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/chamado/chamado.list.html',
-                    controller: function(chamadoService, $scope, $ionicViewService, $state){
+                    controller: function(chamadoService, $scope, message){
                         $scope.searcher = function(page, callback){
                             chamadoService.busca({pagina:page,total:10}, callback);
                         };
