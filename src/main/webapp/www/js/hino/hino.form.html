@@ -2,7 +2,7 @@
     <ion-nav-title>
         <span>{{'hino.hino' | translate:hino }}</span>
     </ion-nav-title>
-    <ion-content>
+    <ion-content class='hino'>
         <div class="item">
             <h1>{{hino.nome}}</h1>
             <h2>
@@ -10,7 +10,7 @@
                 <span class='item-note'>{{hino.categoria}}</span>
             </h2>
         </div>
-        <div class="item item-body" style="font-size: 37px !important;line-height: 40px">
+        <div class="item item-body" >
             <p ng-bind-html='hino.texto'></p>
         </div>
     </ion-content>

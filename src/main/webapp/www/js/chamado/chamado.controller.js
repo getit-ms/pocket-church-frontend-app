@@ -22,7 +22,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                             chamadoService.cadastra($scope.chamado, function(){
                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
-                                $state.reload();
+                                $scope.clear();
                             });
                         };
 

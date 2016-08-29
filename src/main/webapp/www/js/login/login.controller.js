@@ -21,7 +21,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 funcionalidades:acesso.funcionalidades
                             });
                             $ionicViewService.nextViewOptions({
-                                historyRoot: true
+                                historyRoot: true,
+                                disableBack: true
                             });
                             $state.go('home');
                         });
@@ -53,7 +54,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 funcionalidades:''
                             });
                             $ionicViewService.nextViewOptions({
-                                historyRoot: true
+                                historyRoot: true,
+                                disableBack: true
                             });
                             $state.go('login');
                             message({title:'global.title.200',template:'mensagens.MSG-031'});
@@ -81,7 +83,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         acessoService.solicitarRedefinicaoSenha($scope.dados.email, function(dados){
                             message({title:'global.title.200',template:'mensagens.MSG-038'});
                             $ionicViewService.nextViewOptions({
-                                historyRoot: true
+                                historyRoot: true,
+                                disableBack: true
                             });
                             $state.go('login');
                         });

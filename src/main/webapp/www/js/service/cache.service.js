@@ -32,7 +32,8 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                     });
                     if (req.errorState){
                         $ionicViewService.nextViewOptions({
-                            historyRoot: true
+                            historyRoot: true,
+                            disableBack: true
                         });
                         $state.go(req.errorState);
                     }
@@ -45,7 +46,8 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                     });
                     if (req.errorState){
                         $ionicViewService.nextViewOptions({
-                            historyRoot: true
+                            historyRoot: true,
+                            disableBack: true
                         });
                         $state.go(req.errorState);
                     }

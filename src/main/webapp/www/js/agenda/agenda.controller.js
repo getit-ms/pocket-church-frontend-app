@@ -161,7 +161,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             agendaService.agenda(calendario.id, $scope.agendamento, function(){
                                 message({title:'global.title.200',template:'mensagens.MSG-029'});
                                 $ionicViewService.nextViewOptions({
-                                    historyRoot: true
+                                    historyRoot: true,
+                                    disableBack: true
                                 });
                                 $state.go('agenda',{},{reload:true});
                             });

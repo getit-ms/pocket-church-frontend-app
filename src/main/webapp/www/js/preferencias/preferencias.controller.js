@@ -35,7 +35,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             
                             acessoService.salvaPreferencias($scope.preferencias, function(){
                                 message({title: 'global.title.200',template: 'mensagens.MSG-001'});
-                                $state.reload();
                             });
                         };
                         
@@ -44,7 +43,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $rootScope.usuario = null;
                                 $rootScope.funcionalidades = null;
                                 $ionicViewService.nextViewOptions({
-                                    historyRoot: true
+                                    historyRoot: true,
+                                    disableBack: true
                                 });
                                 $state.go('site');
                             });

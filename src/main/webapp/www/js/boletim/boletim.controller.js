@@ -39,11 +39,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             id:$stateParams.id, 
                             errorState:'boletim',
                             callback:function(boletim){
-                                if ($scope.boletim || 
+                                if (!$scope.boletim || !boletim.ultimaAlteracao ||
                                         boletim.ultimaAlteracao.getTime() != 
                                         $scope.ultimaAlteracao.getTime()){
-                                    $state.reload();
-                                }else{
                                     $scope.boletim = boletim;
                                 }
                             }, 

@@ -52,17 +52,17 @@
 }
 
 @media all and (orientation:portrait) {
-  .home .center-content {
-      background-size: auto 100%;
-      background-position: center center;
-  }
+    .home .center-content {
+        background-size: auto 100%;
+        background-position: center center;
+    }
 }
 
 @media all and (orientation:landscape) {
-  .home .center-content {
-      background-size: 100% auto;
-      background-position: center center;
-  }
+    .home .center-content {
+        background-size: 100% auto;
+        background-position: center center;
+    }
 }
 
 .home .center-content {
@@ -118,12 +118,17 @@
 }
 
 #loading-bar-spinner .spinner-icon {
-  border-top-color:  #000;
-  border-left-color: #000;
+    border-top-color:  #000;
+    border-left-color: #000;
 }
 
 .bar.app-top-bar .title input {
     color: #333 !important;
+}
+
+.calvin .hino .item p {
+    font-size: 18px;
+    line-height: 28px;
 }
 
 .calvin .boletins .col .card.boletim {
@@ -131,25 +136,35 @@
     margin:0;
 }
 
-.calvin .item-divider{
-    opacity: 0.9;
+.calvin .boletins .item-divider{
+    opacity: 0.75;
     z-index:999;
+    position:absolute;
+    width: 100%;
 }
 
-.calvin .item-divider:first-child {
-    margin-bottom: -50px;
+.calvin .boletins .item-divider:first-child {
+    top:0;
 }
 
-.calvin .item-divider:last-child {
-    margin-top: -50px;
+.calvin .boletins .item-divider:last-child {
+    bottom:0;
 }
 
-.calvin .boletim .item-complex{
-    height: 300px;
+.calvin .boletins .item-complex{
+    background: transparent;
+}
+
+.calvin .boletins .col-50{
+    padding:2px;
+}
+
+.calvin .boletins .card {
+    height: 250px;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
-    margin: 2px;
+    position:relative;
 }
 
 .boletim-page {
