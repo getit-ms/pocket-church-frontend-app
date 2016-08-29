@@ -5,7 +5,6 @@
     <calvin-pagination searcher="searcher" ng-model="chamados" cache="chamados" not-found-message="false">
         <div class="item item-text-wrap">{{'chamado.enunciado' | translate}}</div>
         
-        <ion-item class="item-divider">{{'chamado.novo_chamados' | translate'}}</ion-item>
         <form id="chamado_form" name="chamado_form" ng-submit="cadastrar(this.chamado_form)" novalidate>
             <div class='item item-divider'>{{'chamado.tipo' | translate}}</div>
             <ion-radio required  ng-model="chamado.tipo" ng-value="'SUGESTAO'">{{'chamado.tipo.SUGESTAO' | translate}}</ion-radio>
@@ -20,10 +19,7 @@
             </div>
         </form>
         
-        <ion-item class="item-divider">{{'chamado.chamados' | translate'}}</ion-item>
-        <div class="item" ng-if='chamados.length'>
-            <h1>{{'chamado.chamados' | translate}}</h1>
-        </div>
+        <ion-item ng-if='chamados.length' class="item-divider">{{'chamado.chamados' | translate}}</ion-item>
         <div ng-repeat="chamado in chamados" >
             <div class="item item-body item-text-wrap" >
                 <h2>
