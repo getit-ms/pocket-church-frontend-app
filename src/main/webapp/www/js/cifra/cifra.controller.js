@@ -65,10 +65,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/cifra/cifra.form.html',
                     controller: function(cifraService, $scope, cifraService, pdfService, arquivoService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
-                        pdfService.get('cifra', $stateParams.id, function(cifra){
-                            $scope.cifra = cifra;
-                        }, function(id, callback){
-                            cifraService.carrega(id, callback);
+                        pdfService.get({
+                            chave:'cifra',
+                            id:$stateParams.id,
+                            errorState:'cifra',
+                            callback:function(cifra){
+                                $scope.cifra = cifra;
+                            },
+                            supplier:function(id, callback){
+                                cifraService.carrega(id, callback);
+                            }
                         });
                         
                         $scope.slide = {activeSlide:null};

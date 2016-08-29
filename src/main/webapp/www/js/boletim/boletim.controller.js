@@ -34,29 +34,22 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
                     controller: function(boletimService, $scope, boletimService, pdfService, $state, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
-                        pdfService.get('boletim', $stateParams.id, function(boletim){
-                            if ($scope.boletim){
-                                var diff = $scope.boletim.paginas.length != boletim.paginas.length;
-                                for (var i=0;i<boletim.paginas.length;i++){
-                                    var found = false;
-                                    for (var j=0;j<$scope.boletim.paginas.length;j++){
-                                        if ($scope.boletim.paginas[j].id == boletim.paginas[i].id){
-                                            found = true;
-                                        }
-                                    }
-                                    if (!found){
-                                        diff = true;
-                                    }
-                                }
-                                
-                                if (diff){
+                        pdfService.get({
+                            chave:'boletim', 
+                            id:$stateParams.id, 
+                            errorState:'boletim',
+                            callback:function(boletim){
+                                if ($scope.boletim || 
+                                        boletim.ultimaAlteracao.getTime() != 
+                                        $scope.ultimaAlteracao.getTime()){
                                     $state.reload();
+                                }else{
+                                    $scope.boletim = boletim;
                                 }
-                            }else{
-                                $scope.boletim = boletim;
+                            }, 
+                            supplier:function(id, callback){
+                                boletimService.carrega(id, callback);
                             }
-                        }, function(id, callback){
-                            boletimService.carrega(id, callback);
                         });
 
                         $scope.slide = {activeSlide:null};

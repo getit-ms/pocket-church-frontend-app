@@ -221,8 +221,6 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 
         $ionicConfigProvider.backButton.text('');
 
-        $ionicConfigProvider.views.maxCache(0);
-
         // Configurando UI-ROUTER
         $urlRouterProvider.otherwise('/home');
         $stateProvider.state('site', {

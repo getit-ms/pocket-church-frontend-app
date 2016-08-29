@@ -1,28 +1,28 @@
-calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message',
-    function($window, $cordovaNetwork, message){
+calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$state', '$ionicViewService',
+    function($window, $cordovaNetwork, message, $state, $ionicViewService){
         this.timeout = 1000 * 60 * 60 * 24 * 5;
         
-        this.get = function(chave, callback, supplier, id){
-            if (!chave || !callback || !supplier) console.error("cacheService.single: chave, callback and supplier are required");
+        this.get = function(req){
+            if (!req.chave || !req.callback || !req.supplier) console.error("cacheService.single: req.chave, req.callback and req.supplier are required");
             
-            var cache = load(chave, id);
+            var cache = load(req.chave, req.id);
             if (cache){
                 cache.access = new Date().getTime();
-                save(chave, id, cache);
-                callback(cache.value);
+                save(req.chave, req.id, cache);
+                req.callback(cache.value);
             }
             
             try{
                 if ($cordovaNetwork.isOnline()){
-                    if (id) {
-                        supplier(id, function(value){
-                            save(chave, id, {access:new Date().getTime(),value:value});
-                            callback(value);
+                    if (req.id) {
+                        req.supplier(req.id, function(value){
+                            save(req.chave, req.id, {access:new Date().getTime(),value:value});
+                            req.callback(value);
                         });
                     }else{
-                        supplier(function(value){
-                            save(chave, id, {access:new Date().getTime(),value:value});
-                            callback(value);
+                        req.supplier(function(value){
+                            save(req.chave, req.id, {access:new Date().getTime(),value:value});
+                            req.callback(value);
                         });
                     }
                 }else if (!cache){
@@ -30,6 +30,12 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message',
                         title: 'global.title.404',
                         template: 'mensagens.MSG-404'
                     });
+                    if (req.errorState){
+                        $ionicViewService.nextViewOptions({
+                            historyRoot: true
+                        });
+                        $state.go(req.errorState);
+                    }
                 }
             }catch (e){
                 if (!cache){
@@ -37,6 +43,12 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message',
                         title: 'global.title.404',
                         template: 'mensagens.MSG-404'
                     });
+                    if (req.errorState){
+                        $ionicViewService.nextViewOptions({
+                            historyRoot: true
+                        });
+                        $state.go(req.errorState);
+                    }
                 }
                 console.error(e);
             }
@@ -51,7 +63,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message',
 
                     if (cache){
                         if (cache.access + this.timeout < now){
-                            remove(chave, id);
+                            $window.localStorage.removeItem(key);
                         }
                     }
                 }

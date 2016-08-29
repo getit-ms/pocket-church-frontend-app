@@ -1,4 +1,4 @@
-calvinApp.service('boletimService', ['Restangular', 'pdfService', function(Restangular, pdfService){
+calvinApp.service('boletimService', ['Restangular', function(Restangular){
         this.api = function(){
             return Restangular.one('boletim');
         };

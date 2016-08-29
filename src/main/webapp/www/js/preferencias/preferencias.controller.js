@@ -43,6 +43,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             acessoService.logout(function(){
                                 $rootScope.usuario = null;
                                 $rootScope.funcionalidades = null;
+                                $ionicViewService.nextViewOptions({
+                                    historyRoot: true
+                                });
                                 $state.go('site');
                             });
                         };

@@ -6,25 +6,23 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/home/home.form.html',
                 controller: function($scope, configService, $httpParamSerializer, cacheService, institucionalService, $window, arquivoService){
-                    var config = configService.load();
-                    $scope.server = config.server;
-                    $scope.headers = $httpParamSerializer(config.headers);
-                    
-                    function carrega(callback){
-                        institucionalService.carrega(function(institucional){
-                            callback(institucional);
-                        });
-                    };
+                    cacheService.get({
+                        chave:'institucional',
+                        callback:function(institucional){
+                            $scope.institucional = institucional;
 
-                    cacheService.get('institucional', function(institucional){
-                        $scope.institucional = institucional;
-                        
-                        if ($scope.institucional.divulgacao){
-                            arquivoService.get($scope.institucional.divulgacao.id, function(arquivo){
-                                $scope.institucional.divulgacao.localPath = arquivo.file;
+                            if ($scope.institucional.divulgacao){
+                                arquivoService.get($scope.institucional.divulgacao.id, function(arquivo){
+                                    $scope.institucional.divulgacao.localPath = arquivo.file;
+                                });
+                            }
+                        }, 
+                        supplier:function(callback){
+                            institucionalService.carrega(function(institucional){
+                                callback(institucional);
                             });
                         }
-                    }, carrega);
+                    });
                     
                     $scope.open = function(link){
                         if (!link) return;

@@ -6,15 +6,17 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/institucional/institucional.form.html',
                 controller: function(institucionalService, $scope, cacheService, $window){
-                    function carrega(callback){
-                        institucionalService.carrega(function(institucional){
-                            callback(institucional);
-                        });
-                    };
-
-                    cacheService.get('institucional', function(institucional){
-                        $scope.institucional = institucional;
-                    }, carrega);
+                    cacheService.get({
+                        chave:'institucional',
+                        callback:function(institucional){
+                            $scope.institucional = institucional;
+                        }, 
+                        supplier:function(callback){
+                            institucionalService.carrega(function(institucional){
+                                callback(institucional);
+                            });
+                        }
+                    });
                     
                     $scope.mailto = function(email){
                         $window.open('mailto:' + email, '_system');

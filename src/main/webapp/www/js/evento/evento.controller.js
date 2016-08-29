@@ -80,17 +80,17 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 if (resposta.devePagar && resposta.checkoutPagSeguro){
                                     message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
                                         $ionicViewService.nextViewOptions({
-                                            disableBack: true
+                                            historyRoot: true
                                         });
-                                        $state.go('evento');
+                                        $state.go('evento', {id: $scope.evento.id},{reload:true});
                                         $window.open('https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + resposta.checkoutPagSeguro, '_system');
                                     });
                                 }else{
                                     message({title: 'global.title.200',template: 'mensagens.MSG-001'});
                                     $ionicViewService.nextViewOptions({
-                                        disableBack: true
+                                        historyRoot: true
                                     });
-                                    $state.go('evento');
+                                    $state.go('evento',{},{reload:true});
                                 }
                             });
                         }

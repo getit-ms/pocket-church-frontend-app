@@ -131,8 +131,21 @@
     margin:0;
 }
 
+.calvin .item-divider{
+    opacity: 0.9;
+    z-index:999;
+}
+
+.calvin .item-divider:first-child {
+    margin-bottom: -50px;
+}
+
+.calvin .item-divider:last-child {
+    margin-top: -50px;
+}
+
 .calvin .boletim .item-complex{
-    height: 250px;
+    height: 300px;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;

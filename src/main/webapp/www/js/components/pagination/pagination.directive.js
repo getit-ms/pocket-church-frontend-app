@@ -45,12 +45,16 @@ calvinApp.directive('calvinPagination', function(){
                 
                 $scope.init = function(){
                     if ($scope.cache){
-                        cacheService.get($scope.cache, function(data){
-                            $scope.ngModel = data;
-                        }, function(callback){
-                            $scope.search(1, function(data){
-                                callback(data.resultados);
-                            });
+                        cacheService.get({
+                            chave:$scope.cache,
+                            callback: function(data){
+                                $scope.ngModel = data;
+                            },
+                            supplier: function(callback){
+                                $scope.search(1, function(data){
+                                    callback(data.resultados);
+                                });
+                            }
                         });
                     }else{
                         $scope.search(1, function(data){

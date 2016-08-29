@@ -1,6 +1,6 @@
-calvinApp.service('cifraService', ['Restangular', 'pdfService', function(Restangular, pdfService){
+calvinApp.service('cifraService', ['Restangular', function(Restangular){
         this.api = function(){
-            return Restangular.one('cifra');
+            return Restangular.all('cifra');
         };
 
         this.busca = function(filtro, callback){
