@@ -77,10 +77,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
                             if (zoomFactor == 1) {
                                 $ionicSlideBoxDelegate.enableSlide(true);
-                                $scope.zoom = false;
                             } else {
                                 $ionicSlideBoxDelegate.enableSlide(false);
-                                $scope.zoom = true;
                             }
                         };
                     }
