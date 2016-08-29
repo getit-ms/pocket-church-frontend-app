@@ -23,8 +23,7 @@ var calvinApp = angular.module('calvinApp', [
     'ngResource',
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope,
-$ionicConfig, $timeout, configService, $cordovaDevice, $state,
-arquivoService, cacheService) {
+$ionicConfig, $timeout, configService, $cordovaDevice, arquivoService, cacheService) {
 
 
     $ionicPlatform.on("deviceready", function () {
@@ -56,8 +55,6 @@ arquivoService, cacheService) {
         cacheService.clean();
 
         arquivoService.clean();
-
-        $state.reload();
     });
 
     // This fixes transitions for transparent background views
@@ -268,7 +265,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
 
-    if (config.headers['Authorization']) {
+    if (config.usuario && config.funcionalidades) {
         acessoService.carrega(function (acesso) {
             $rootScope.usuario = acesso.membro;
             $rootScope.funcionalidades = acesso.funcionalidades;

@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/chamado/chamado.list.html',
-                    controller: function(chamadoService, $scope, message){
+                    controller: function(chamadoService, $state, $scope, message){
                         $scope.searcher = function(page, callback){
                             chamadoService.busca({pagina:page,total:10}, callback);
                         };
@@ -22,7 +22,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                             chamadoService.cadastra($scope.chamado, function(){
                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
-                                $scope.clear();
+                                $state.reload();
                             });
                         };
 
