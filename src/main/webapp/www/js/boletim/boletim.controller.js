@@ -35,7 +35,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     templateUrl: 'js/boletim/boletim.form.html',
                     controller: function(boletimService, $scope, boletimService, pdfService, $state, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
                         pdfService.get('boletim', $stateParams.id, function(boletim){
-                            if (!$scope.boletim){
+                            if ($scope.boletim){
                                 var diff = $scope.boletim.paginas.length != boletim.paginas.length;
                                 for (var i=0;i<boletim.paginas.length;i++){
                                     var found = false;
