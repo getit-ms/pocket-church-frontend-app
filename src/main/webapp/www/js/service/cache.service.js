@@ -5,24 +5,32 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
         this.get = function(req){
             if (!req.chave || !req.callback || !req.supplier) console.error("cacheService.single: req.chave, req.callback and req.supplier are required");
             
-            var cache = load(req.chave, req.id);
-            if (cache){
-                cache.access = new Date().getTime();
-                save(req.chave, req.id, cache);
-                req.callback(cache.value);
+            var cache = null;
+            
+            try{
+                cache = load(req.chave, req.id);
+                if (cache){
+                    cache.access = new Date().getTime();
+                    save(req.chave, req.id, cache);
+                    req.callback(cache.value);
+                }
+            }catch(e){
+                console.error(e);
             }
             
             try{
                 if ($cordovaNetwork.isOnline()){
                     if (req.id) {
                         req.supplier(req.id, function(value){
-                            save(req.chave, req.id, {access:new Date().getTime(),value:value});
+                            cache = {access:new Date().getTime(),value:value};
                             req.callback(value);
+                            save(req.chave, req.id, cache);
                         });
                     }else{
                         req.supplier(function(value){
-                            save(req.chave, req.id, {access:new Date().getTime(),value:value});
+                            cache = {access:new Date().getTime(),value:value};
                             req.callback(value);
+                            save(req.chave, req.id, cache);
                         });
                     }
                 }else if (!cache){
