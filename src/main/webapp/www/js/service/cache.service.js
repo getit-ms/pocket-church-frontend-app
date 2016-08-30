@@ -5,6 +5,11 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
         this.get = function(req){
             if (!req.chave || !req.callback || !req.supplier) console.error("cacheService.single: req.chave, req.callback and req.supplier are required");
             
+            if (!$rootScope.deviceReady){
+                req.supplier(req.callback);
+                return;
+            }
+            
             var cache = null;
             
             try{
@@ -33,7 +38,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                             save(req.chave, req.id, cache);
                         });
                     }
-                }else if ($rootScope.deviceReady && !cache){
+                }else if (!cache){
                     message({
                         title: 'global.title.404',
                         template: 'mensagens.MSG-404'
@@ -47,7 +52,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                     }
                 }
             }catch (e){
-                if ($rootScope.deviceReady && !cache){
+                if (!cache){
                     message({
                         title: 'global.title.404',
                         template: 'mensagens.MSG-404'

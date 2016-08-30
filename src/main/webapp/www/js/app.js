@@ -24,7 +24,7 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, 
                             $ionicConfig, $timeout, configService, $cordovaDevice, 
-                            arquivoService, cacheService, $window) {
+                            arquivoService, cacheService) {
                         
     $ionicPlatform.on("deviceready", function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -57,8 +57,6 @@ var calvinApp = angular.module('calvinApp', [
         arquivoService.clean();
         
         $rootScope.deviceReady = true;
-        
-        $window.location.href = '#/home';
     });
 
     // This fixes transitions for transparent background views
