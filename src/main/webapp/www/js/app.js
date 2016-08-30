@@ -37,7 +37,7 @@ var calvinApp = angular.module('calvinApp', [
             StatusBar.styleDefault();
         }
 
-        var versaoAtualizada = $_version == configService.load().version;
+        var versaoAtualizada = $_version != configService.load().version;
 
         configService.save({
             version: $_version,
@@ -324,8 +324,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         var push = PushNotification.init({
             android:{
                 senderID: $_gcmSenderId,
-                icon: 'push',
-                iconColor: '#006fb7'
+                icon: 'push'
             },
             ios:{
                 badge: true,
