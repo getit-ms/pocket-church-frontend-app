@@ -6,6 +6,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/home/home.form.html',
                 controller: function($scope, cacheService, institucionalService, $window, arquivoService){
+                    angular.extend($scope, linkService);
+                    
                     cacheService.get({
                         chave:'institucional',
                         callback:function(institucional){
@@ -24,14 +26,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         }
                     });
                     
-                    $scope.open = function(link){
-                        if (!link) return;
-                        if (link.indexOf('http://') < 0 &&
-                                link.indexOf('https://') < 0){
-                            link = 'http://' + link;
-                        }
-                        $window.open(link, '_system');
-                    };
                 }
             }
         }
