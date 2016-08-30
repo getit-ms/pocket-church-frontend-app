@@ -1,5 +1,5 @@
-calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$state', '$ionicViewService',
-    function($window, $cordovaNetwork, message, $state, $ionicViewService){
+calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$state', '$ionicViewService', '$rootScope',
+    function($window, $cordovaNetwork, message, $state, $ionicViewService, $rootScope){
         this.timeout = 1000 * 60 * 60 * 24 * 5;
         
         this.get = function(req){
@@ -33,7 +33,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                             save(req.chave, req.id, cache);
                         });
                     }
-                }else if (!cache){
+                }else if ($rootScope.deviceReady && !cache){
                     message({
                         title: 'global.title.404',
                         template: 'mensagens.MSG-404'
@@ -47,7 +47,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                     }
                 }
             }catch (e){
-                if (!cache){
+                if ($rootScope.deviceReady && !cache){
                     message({
                         title: 'global.title.404',
                         template: 'mensagens.MSG-404'

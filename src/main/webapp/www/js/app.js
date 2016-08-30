@@ -22,8 +22,9 @@ var calvinApp = angular.module('calvinApp', [
     'underscore',
     'ngResource',
     'jett.ionic.filter.bar'
-]).run(function ($ionicPlatform, PushNotificationsService, $rootScope,
-$ionicConfig, $timeout, configService, $cordovaDevice, arquivoService, cacheService) {
+]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, $state,
+                            $ionicConfig, $timeout, configService, $cordovaDevice, 
+                            arquivoService, cacheService) {
 
 
     $ionicPlatform.on("deviceready", function () {
@@ -55,6 +56,10 @@ $ionicConfig, $timeout, configService, $cordovaDevice, arquivoService, cacheServ
         cacheService.clean();
 
         arquivoService.clean();
+        
+        $rootScope.deviceReady = true;
+        
+        $state.reload();
     });
 
     // This fixes transitions for transparent background views
