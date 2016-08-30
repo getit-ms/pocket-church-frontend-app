@@ -76,20 +76,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/contato/contato.form.html',
-                controller: function($scope, contato, $window){
+                controller: function($scope, contato, linkService){
                     $scope.contato = contato;
                     
-                    $scope.mailto = function(email){
-                        $window.open('mailto:' + email, '_system');
-                    };
-                    
-                    $scope.tel = function(tel){
-                        $window.open('tel:' + tel, '_system');
-                    };
-                    
-                    $scope.geo = function(endereco){
-                        $window.open('geo:0,0?q=' + endereco.descricao + ' ' + endereco.cidade + ' ' + endereco.estado, '_system');
-                    };
+                    angular.extend($scope, linkService);
                 },
                 resolve: {
                     contato: ['contatoService', '$stateParams', function(contatoService, $stateParams){

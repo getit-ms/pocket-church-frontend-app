@@ -5,7 +5,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/institucional/institucional.form.html',
-                controller: function(institucionalService, $scope, cacheService, $window){
+                controller: function(institucionalService, linkService, $scope, cacheService){
+                    angular.extend($scope, linkService);
+                    
                     cacheService.get({
                         chave:'institucional',
                         callback:function(institucional){
@@ -17,25 +19,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             });
                         }
                     });
-                    
-                    $scope.mailto = function(email){
-                        $window.open('mailto:' + email, '_system');
-                    };
-                    
-                    $scope.tel = function(tel){
-                        $window.open('tel:' + tel, '_system');
-                    };
-                    
-                    $scope.geo = function(endereco){
-                        $window.open('geo:0,0?q=' + endereco.descricao + ' ' + endereco.cidade + ' ' + endereco.estado, '_system');
-                    };
-                    
-                    $scope.site = function(site){
-                        if (site.indexOf('http://') < 0){
-                            site = 'http://' + site;
-                        }
-                        $window.open(site, '_system');
-                    };
                 }
             }
         }
