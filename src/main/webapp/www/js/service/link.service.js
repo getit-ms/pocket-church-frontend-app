@@ -6,7 +6,7 @@ calvinApp.service('linkService', ['$window', function($window){
 
         this.tel = function(tel){
             if (!tel) return;
-            $window.open('tel: ' + tel.replace(/[^0-9]/g, ''), '_system');
+            $window.open('tel:' + tel.replace(/[^0-9]/g, ''), '_system');
         };
 
         this.geo = function(endereco){
