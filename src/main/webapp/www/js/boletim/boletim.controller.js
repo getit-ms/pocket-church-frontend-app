@@ -34,6 +34,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
                     controller: function(boletimService, $scope, boletimService, pdfService, $state, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
+                        $scope.totalPaginas = 0;
                         pdfService.get({
                             chave:'boletim', 
                             id:$stateParams.id, 
@@ -43,6 +44,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         boletim.ultimaAlteracao.getTime() != 
                                         $scope.ultimaAlteracao.getTime()){
                                     $scope.boletim = boletim;
+                                    $scope.totalPaginas = boletim.paginas.length;
                                 }
                             }, 
                             supplier:function(id, callback){
