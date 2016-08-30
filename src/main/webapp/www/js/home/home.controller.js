@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/home/home.form.html',
-                controller: function($scope, configService, $httpParamSerializer, cacheService, institucionalService, $window, arquivoService){
+                controller: function($scope, cacheService, institucionalService, $window, arquivoService){
                     cacheService.get({
                         chave:'institucional',
                         callback:function(institucional){

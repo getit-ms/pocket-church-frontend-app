@@ -11,6 +11,7 @@
   <access origin="*"/>
   <access origin="tel:*" launch-external="yes" />
   <access origin="mailto:*" launch-external="yes" />
+  <access origin="maps:*" launch-external="yes" />
   <access origin="http:*" launch-external="yes" />
   <access origin="https:*" launch-external="yes" />
   <preference name="webviewbounce" value="false"/>
@@ -47,6 +48,10 @@
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
   <allow-navigation href="*"/>
   <allow-intent href="*"/>
+  <allow-intent href="mailto:*"/>
+  <allow-intent href="maps:*"/>
+  <allow-intent href="tel:*"/>
+  <allow-intent href="geo:*"/>
   <plugin name="cordova-plugin-device" spec="^1.1.1"/>
   <plugin name="cordova-plugin-console" spec="^1.0.2"/>
   <plugin name="cordova-plugin-whitelist" spec="^1.2.1"/>
