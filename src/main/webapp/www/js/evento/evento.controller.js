@@ -50,6 +50,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 message, $window, $ionicHistory){
                     $scope.evento = evento;
                     
+                    $scope.$on('$ionicView.enter', function(){
+                        $scope.clear();
+                    });
+                    
                     $scope.clear = function(){
                         $scope.inscricoes = [];
                         $scope.addInscricao();
@@ -80,14 +84,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             eventoService.inscricao($scope.evento.id, $scope.inscricoes, function(resposta){
                                 if (resposta.devePagar && resposta.checkoutPagSeguro){
                                     message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
-                                        $state.go('evento',{id: $scope.evento.id}, {reload:true});
-                                        $ionicHistory.clearCache();
+                                        $ionicHistory.goBack();
                                         $window.open('https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + resposta.checkoutPagSeguro, '_system');
                                     });
                                 }else{
                                     message({title: 'global.title.200',template: 'mensagens.MSG-001'});
-                                    $state.go('evento',{id: $scope.evento.id}, {reload:true});
-                                    $ionicHistory.clearCache();
+                                    $ionicHistory.goBack();
                                 }
                             });
                         }

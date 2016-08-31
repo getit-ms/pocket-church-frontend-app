@@ -18,11 +18,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
                             });
                         };
-                        
+						
+                        $scope.carrega = function(){
+                            $scope.$broadcast('pagination.refresh');
+                        };
+						
                         $scope.confirma = function(agendamento){
                             agendaService.confirma(agendamento.calendario.id, agendamento.id, function(dados){
                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
-                                $scope.$broadcast('pagination.refresh');
+                                $scope.carrega();
                             });
                         };
                         
@@ -31,11 +35,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 title:$filter('translate')('agenda.confirmacao_cancelamento'),
                                 template:$filter('translate')('mensagens.MSG-035', {
                                     data:$filter('date')(agendamento.dataHoraInicio, 
-                                        $filter('translate')('config.pattern.date')),
+                                    $filter('translate')('config.pattern.date')),
                                     horaInicio:$filter('date')(agendamento.dataHoraInicio, 
-                                        $filter('translate')('config.pattern.hour')),
+                                    $filter('translate')('config.pattern.hour')),
                                     horaFim:$filter('date')(agendamento.dataHoraFim, 
-                                        $filter('translate')('config.pattern.hour'))
+                                    $filter('translate')('config.pattern.hour'))
                                 }),
                                 okText:$filter('translate')('global.sim'),
                                 cancelText:$filter('translate')('global.nao')
@@ -43,7 +47,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 if (resp){
                                     agendaService.cancela(agendamento.calendario.id, agendamento.id, function(dados){
                                         message({title:'global.title.200',template:'mensagens.MSG-001'});
-                                        $scope.$broadcast('pagination.refresh');
+                                        $scope.carrega();
                                     });
                                 }
                             });
@@ -58,8 +62,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/agenda/agenda.form.html',
-                    controller: function(agendaService, $scope, message, $state, 
-                    $ionicViewService, $filter, $ionicLoading, $ionicHistory){
+                    controller: function(agendaService, $scope, message, $ionicHistory, $filter, $state, $ionicLoading){
+                        $scope.$on('$ionicView.enter', function(){
+                            $scope.clear();
+                        });
+						
                         $scope.clear = function(){
                             $scope.agendamento = {};
                             $scope.calendarioSelecionado = null;
@@ -161,8 +168,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.solicitar = function(calendario){
                             agendaService.agenda(calendario.id, $scope.agendamento, function(){
                                 message({title:'global.title.200',template:'mensagens.MSG-029'});
-                                $state.go('agenda', {}, {reload:true});
-                                $ionicHistory.clearCache();
+                                $ionicHistory.nextViewOptions({
+                                    disableBack: true
+                                });
+                                $state.go('agenda');
                             });
                         };
                         
