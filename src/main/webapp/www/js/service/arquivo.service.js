@@ -1,5 +1,5 @@
-calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', '$window', '$cordovaNetwork',
-    function($cordovaFileTransfer, $cordovaFile, config, $window, $cordovaNetwork){
+calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', '$window', '$cordovaNetwork', 'config',
+    function($cordovaFileTransfer, $cordovaFile, config, $window, $cordovaNetwork, config){
         this.timeout = 1000 * 60 * 60 * 24 * 5;
         
         this.init = function(){
@@ -7,12 +7,8 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 $cordovaFile.createDir(cordova.file.dataDirectory, "arquivos");
             });
             
-            $cordovaFile.checkDir(cordova.file.cacheDirectory, "arquivos").then(function(){}, function(){
-                $cordovaFile.createDir(cordova.file.cacheDirectory, "arquivos");
-            });
-			
             $cordovaFile.removeRecursively(cordova.file.cacheDirectory, 'tmp').then(function(){
-                    $cordovaFile.createDir(cordova.file.cacheDirectory, "tmp");
+                $cordovaFile.createDir(cordova.file.cacheDirectory, "tmp");
             });
         };
         
@@ -37,7 +33,8 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                     var cache = $window.localStorage.getItem(key);
 
                     if (cache){
-                        if (cache.access < new Date().getTime()){
+                        if (config.headers.Dispositivo != cache.uuid
+                                && cache.access < new Date().getTime()){
                             remove(chave, id);
                         }
                     }
@@ -67,9 +64,9 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             try{
                 if ($cordovaNetwork.isOnline()){
                     $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){
-                        $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, cordova.file.cacheDirectory, path).then(function(){
-                            save(id, {file:cordova.file.cacheDirectory + path,access:new Date().getTime()});
-                            callback({success:true, file:cordova.file.cacheDirectory + path});
+                        $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, cordova.file.dataDirectory, path).then(function(){
+                            save(id, {uuid:config.headers.Dispositivo,file:cordova.file.dataDirectory + path,access:new Date().getTime()});
+                            callback({success:true, file:cordova.file.dataDirectory + path});
                         }, function(error){
                             callback({error:true, file:'img/fail.png'});
                             console.error(error);

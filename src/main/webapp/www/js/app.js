@@ -95,7 +95,7 @@ var calvinApp = angular.module('calvinApp', [
         Igreja: $_serverCode,
         Dispositivo: 'undefined'
     }
-}).service('configService', ['config', '$window', '$cordovaDevice', function (config, $window, $cordovaDevice) {
+}).service('configService', ['config', '$window', function (config, $window) {
         this.load = function () {
             var cfg = $window.localStorage.getItem('config');
             if (!cfg) {
