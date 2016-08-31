@@ -58,7 +58,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/agenda/agenda.form.html',
-                    controller: function(agendaService, $scope, message, $state, $ionicViewService, $filter, $ionicLoading){
+                    controller: function(agendaService, $scope, message, $state, 
+                    $ionicViewService, $filter, $ionicLoading, $ionicHistory){
                         $scope.clear = function(){
                             $scope.agendamento = {};
                             $scope.calendarioSelecionado = null;
@@ -160,11 +161,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.solicitar = function(calendario){
                             agendaService.agenda(calendario.id, $scope.agendamento, function(){
                                 message({title:'global.title.200',template:'mensagens.MSG-029'});
-                                $ionicViewService.nextViewOptions({
-                                    historyRoot: true,
-                                    disableBack: true
-                                });
-                                $state.go('agenda',{},{reload:true,inherit:false});
+                                $ionicHistory.clearCache();
+                                $state.go('agenda');
                             });
                         };
                         

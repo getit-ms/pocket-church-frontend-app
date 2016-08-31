@@ -22,7 +22,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/votacao/votacao.form.html',
-                controller: function(votacaoService, $scope, $stateParams, $state, message){
+                controller: function(votacaoService, $scope, $stateParams, $state, message, $ionicHistory){
                     $scope.clear = function(){
                         votacaoService.carrega($stateParams.id, function(votacao){
                             $scope.resposta = {
@@ -63,7 +63,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.conclui = function(){
                         if (!$scope.hasProximo()){
                             votacaoService.submete($scope.parse($scope.resposta), function(){
-                                $state.go('votacao',{},{reload:true});
+                                $ionicHistory.clearCache();
+                                $state.go('votacao');
                                 message({title: 'global.title.200',template: 'mensagens.MSG-001'});
                             });
                         }

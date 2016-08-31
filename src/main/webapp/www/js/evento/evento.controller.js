@@ -46,7 +46,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/evento/inscricao.form.html',
-                controller: function(eventoService, $scope, evento, $state, message, $window, $ionicViewService){
+                controller: function(eventoService, $scope, evento, $state, 
+                                message, $window, $ionicHistory){
                     $scope.evento = evento;
                     
                     $scope.clear = function(){
@@ -79,20 +80,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             eventoService.inscricao($scope.evento.id, $scope.inscricoes, function(resposta){
                                 if (resposta.devePagar && resposta.checkoutPagSeguro){
                                     message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
-                                        $ionicViewService.nextViewOptions({
-                                            historyRoot: true,
-                                            disableBack: true
-                                        });
-                                        $state.go('evento',{id: $scope.evento.id},{reload:true});
+                                        $ionicHistory.clearCache();
+                                        $state.go('evento',{id: $scope.evento.id});
                                         $window.open('https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + resposta.checkoutPagSeguro, '_system');
                                     });
                                 }else{
                                     message({title: 'global.title.200',template: 'mensagens.MSG-001'});
-                                    $ionicViewService.nextViewOptions({
-                                        historyRoot: true,
-                                        disableBack: true
-                                    });
-                                    $state.go('evento',{id: $scope.evento.id},{reload:true});
+                                    $ionicHistory.clearCache();
+                                    $state.go('evento',{id: $scope.evento.id});
                                 }
                             });
                         }
