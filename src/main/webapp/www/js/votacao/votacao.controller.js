@@ -63,8 +63,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.conclui = function(){
                         if (!$scope.hasProximo()){
                             votacaoService.submete($scope.parse($scope.resposta), function(){
+                                $state.go('votacao', {}, {reload:true});
                                 $ionicHistory.clearCache();
-                                $state.go('votacao');
                                 message({title: 'global.title.200',template: 'mensagens.MSG-001'});
                             });
                         }

@@ -161,8 +161,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.solicitar = function(calendario){
                             agendaService.agenda(calendario.id, $scope.agendamento, function(){
                                 message({title:'global.title.200',template:'mensagens.MSG-029'});
+                                $state.go('agenda', {}, {reload:true});
                                 $ionicHistory.clearCache();
-                                $state.go('agenda');
                             });
                         };
                         
