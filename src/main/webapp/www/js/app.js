@@ -46,9 +46,7 @@ var calvinApp = angular.module('calvinApp', [
             }
         });
 
-        if (versaoAtualizada){
-            PushNotificationsService.register();
-        }
+        PushNotificationsService.register(versaoAtualizada);
 
         arquivoService.init();
 
@@ -319,7 +317,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 
 // PUSH NOTIFICATIONS
 .service('PushNotificationsService', function (message, NodePushServer, config) {
-    this.register = function () {
+    this.register = function (novaVersao) {
         var push = PushNotification.init({
             android:{
                 senderID: $_gcmSenderId,
@@ -331,14 +329,17 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                 alert: true
             }
         });
-
-        push.on('registration', function(data){
-            NodePushServer.storeDeviceToken({
-                token: data.registrationId,
-                version: config.version,
-                tipoDispositivo: config.tipo
+        
+        if (novaVersao){
+            push.on('registration', function(data){
+                NodePushServer.storeDeviceToken({
+                    token: data.registrationId,
+                    version: config.version,
+                    tipoDispositivo: config.tipo
+                });
             });
-        });
+        }
+
 
         push.on('notification', function(data){
             message({title: data.title,template: data.message});

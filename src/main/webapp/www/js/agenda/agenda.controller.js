@@ -164,7 +164,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     historyRoot: true,
                                     disableBack: true
                                 });
-                                $state.go('agenda',{},{reload:true});
+                                $state.go('agenda',{},{reload:true,inherit:false});
                             });
                         };
                         
