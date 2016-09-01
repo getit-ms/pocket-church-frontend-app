@@ -16,10 +16,10 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             if (!id || !callback) console.error("arquivoService.get: id and callback are required");
             
             var cache = load(id);
-            if (cache && cache.file.startwWith(cordova.file.dataDirectory)){
+            if (cache && cache.uuid == config.headers.Dispositivo){
                 cache.access = new Date().getTime();
                 save(id, cache);
-                callback({success:true, file:cache.file});
+                callback({success:true, file:cordova.file.dataDirectory + cache.file});
             }else{
                 callback({loading:true, file:'img/loading.gif'});
                 download(id, callback);
@@ -33,8 +33,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                     var cache = $window.localStorage.getItem(key);
 
                     if (cache){
-                        if (!cache.file || !cache.access ||
-                                !cache.file.startwWith(cordova.file.dataDirectory)
+                        if (!cache.access || cache.uuid != config.headers.Dispositivo
                                 || cache.access + this.timeout < new Date().getTime()){
                             remove(chave, id);
                         }
@@ -66,7 +65,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 if ($cordovaNetwork.isOnline()){
                     $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){
                         $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, cordova.file.dataDirectory, path).then(function(){
-                            save(id, {file:cordova.file.dataDirectory + path,access:new Date().getTime()});
+                            save(id, {file:path,access:new Date().getTime(),uuid:config.headers.Dispositivo});
                             callback({success:true, file:cordova.file.dataDirectory + path});
                         }, function(error){
                             callback({error:true, file:'img/fail.png'});

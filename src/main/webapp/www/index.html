@@ -6,19 +6,19 @@
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
         <meta name="format-detection" content="telephone=no">   
         <title></title>
-
+        
         <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
         <link href="lib/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
         <link href="js/components/pace/pace.css" rel="stylesheet">
         <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="lib/angular-loading-bar/build/loading-bar.min.css" rel="stylesheet">
         <link href="lib/ionic-filter-bar/dist/ionic.filter.bar.min.css" rel="stylesheet">
-
+        
         <!-- compiled css output -->
         <link href="css/ionic.app.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/theme.css" rel="stylesheet">
-
+        
         <!-- ionic/angularjs js -->
         <script src="lib/ionic/js/ionic.bundle.js"></script>
         <script src="lib/angular/angular.min.js"></script>
@@ -30,7 +30,7 @@
         <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
         <script src="lib/moment/min/moment.min.js"></script>
         <script src="lib/angular-moment/angular-moment.min.js"></script>
-
+        
         <script src="lib/angular-animate/angular-animate.min.js"></script>
         <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -47,11 +47,11 @@
         <script src="lib/angular-loading-bar/build/loading-bar.min.js"></script>
         <script src="lib/ionic-filter-bar/dist/ionic.filter.bar.min.js"></script>
         <script src="lib/angular-ui-mask/dist/mask.min.js"></script>
-
+        
         <!-- cordova script (this will be a 404 during development) -->
         <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
         <script src="cordova.js"></script>
-
+        
         <!-- your app's js -->
         <script src="js/config.js"></script>
         <script src="js/app.js"></script>
@@ -59,7 +59,7 @@
         <script src="js/components/pagination/pagination.directive.js"></script>
         <script src="js/components/pace/pace.js"></script>
         <script src="js/components/template/template.js"></script>
-
+        
         <script src="js/institucional/institucional.controller.js"></script>
         <script src="js/boletim/boletim.controller.js"></script>
         <script src="js/estudo/estudo.controller.js"></script>
@@ -72,9 +72,9 @@
         <script src="js/hino/hino.controller.js"></script>
         <script src="js/evento/evento.controller.js"></script>
         <script src="js/home/home.controller.js"></script>
-      <script src="js/cifra/cifra.controller.js"></script>
-      <script src="js/chamado/chamado.controller.js"></script>
-
+        <script src="js/cifra/cifra.controller.js"></script>
+        <script src="js/chamado/chamado.controller.js"></script>
+        
         <script src="js/service/link.service.js"></script>
         <script src="js/service/boletim.service.js"></script>
         <script src="js/service/institucional.service.js"></script>
@@ -93,7 +93,7 @@
         <script src="js/service/cache.service.js"></script>
     </head>
     <body ng-app="calvinApp" class="calvin" ng-init>
-
+        
     <ion-side-menus>
         <ion-side-menu-content class="post-size-14px">
             <ion-nav-bar class="bar app-top-bar">
@@ -117,20 +117,20 @@
                 </h1>
             </ion-footer-bar>
         </ion-side-menu-content>
-
+        
         <ion-side-menu side="left" class="main-menu" expose-aside-when="large">
             <ion-content>
                 <ion-list>
                     <ion-item href='' class='menu-header'>
                         <img class="igreja-image" ng-src="img/logo.png">
                     </ion-item>
-
+                    
                     <ion-item ng-if="usuario" class="item item-icon-left item-icon-right user" >
                         <span nav-clear menu-close ui-sref="alteraSenha" class='icon ion-person'></span>
                         <h2 nav-clear menu-close ui-sref="alteraSenha" class='menu-text'>{{usuario.nome}}</h2>
                         <span ng-click='logout()' class='icon icon-right fa fa-power-off'></span>
                     </ion-item>
-
+                    
                     <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="home">
                         <span class='icon fa fa-home'></span>
                         <h2 class="menu-text">{{'home.inicio' | translate}}</h2>
@@ -143,10 +143,6 @@
                         <span class='icon fa fa-file-text'></span>
                         <h2 class="menu-text">{{'boletim.boletins' | translate}}</h2>
                     </ion-item>
-                  <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="cifra">
-                    <span class='icon fa fa-file-audio-o'></span>
-                    <h2 class="menu-text">{{'cifra.cifras' | translate}}</h2>
-                  </ion-item>
                     <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="estudo">
                         <span class='icon fa fa-book'></span>
                         <h2 class="menu-text">{{'estudo.estudos' | translate}}</h2>
@@ -155,7 +151,11 @@
                         <span class='icon fa fa-music'></span>
                         <h2 class="menu-text">{{'hino.hinos' | translate}}</h2>
                     </ion-item>
-
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="cifra">
+                        <span class='icon fa fa-file-audio-o'></span>
+                        <h2 class="menu-text">{{'cifra.cifras' | translate}}</h2>
+                    </ion-item>
+                    
                     <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="contato"
                               ng-if="funcionalidades.indexOf('CONSULTAR_CONTATOS_IGREJA') >= 0">
                         <span class='icon fa fa-users'></span>
@@ -178,19 +178,19 @@
                         <h2 class="menu-text">{{'evento.eventos' | translate}}</h2>
                     </ion-item>
                     <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="chamado">
-                      <span class='icon fa fa-comment'></span>
-                      <h2 class="menu-text">{{'chamado.chamados' | translate}}</h2>
+                        <span class='icon fa fa-comment'></span>
+                        <h2 class="menu-text">{{'chamado.chamados' | translate}}</h2>
                     </ion-item>
                     <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="preferencias">
                         <span class='icon fa fa-cog'></span>
                         <h2 class="menu-text">{{'preferencias.preferencias' | translate}}</h2>
                     </ion-item>
-
+                    
                     <div class='menu-end'></div>
                 </ion-list>
             </ion-content>
         </ion-side-menu>
     </ion-side-menus>
-
+    
 </body>
 </html>

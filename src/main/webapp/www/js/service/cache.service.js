@@ -6,7 +6,11 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
             if (!req.chave || !req.callback || !req.supplier) console.error("cacheService.single: req.chave, req.callback and req.supplier are required");
             
             if (!$rootScope.deviceReady){
-                req.supplier(req.callback);
+                if (req.id){
+                    req.supplier(req.id, req.callback);
+                }else{
+                    req.supplier(req.callback);
+                }
                 return;
             }
             

@@ -74,6 +74,8 @@ calvinApp.directive('calvinPagination', function(){
                 $scope.$on('pagination.more', function() {
                     $scope.more();
                 });
+                
+                $scope.init();
             }]
     };
 });

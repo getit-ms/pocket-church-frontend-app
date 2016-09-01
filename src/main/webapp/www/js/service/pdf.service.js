@@ -17,10 +17,18 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
         }
         
         this.load = function(chave, pdfs){
-            for (var i=0;i<pdfs.length && i<5;i++){
-                this.get(chave, pdfs[i].id, function(id, callback){
-                    callback(pdfs[i]);
-                });
-            }
+            try{
+                for (var i=0;i<pdfs.length && i<5;i++){
+                    var pdf = pdfs[i];
+                    this.get({
+                        chave: chave,
+                        id: pdf.id,
+                        supplier: function(id, callback){
+                            callback(pdf);
+                        },
+                        callback: function(){}
+                    });
+                }
+            }catch(e){}
         };
     }]);

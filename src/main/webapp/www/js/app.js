@@ -24,7 +24,7 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, 
                             $ionicConfig, $timeout, configService, $cordovaDevice, 
-                            arquivoService, cacheService, $injector) {
+                            arquivoService, cacheService, $injector, boletimService) {
                         
     $ionicPlatform.on("deviceready", function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -49,6 +49,8 @@ var calvinApp = angular.module('calvinApp', [
         PushNotificationsService.register(versaoAtualizada);
 
         arquivoService.init();
+        
+        boletimService.cache();
 
         cacheService.clean();
 
