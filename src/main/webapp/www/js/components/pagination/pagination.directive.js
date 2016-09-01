@@ -62,11 +62,7 @@ calvinApp.directive('calvinPagination', function(){
                         });
                     }
                 };
-                    
-                $scope.$parent.$parent.$on('$ionicView.enter', function(){
-                    $scope.init();
-                });
-                
+
                 $scope.$on('pagination.search', function() {
                     $scope.init();
                 });

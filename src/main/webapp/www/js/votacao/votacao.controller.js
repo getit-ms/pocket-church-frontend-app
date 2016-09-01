@@ -13,6 +13,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.votar = function(votacao){
                         $state.go('votacao.votar', {id: votacao.id});
                     };
+                    
+                    $scope.$on('$ionicView.enter', function(){
+                        $scope.$broadcast('pagination.search');
+                    });
                 }
             }
         }

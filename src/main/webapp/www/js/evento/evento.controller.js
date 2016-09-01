@@ -29,6 +29,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         eventoService.buscaMinhasInscricoes(evento.id, {pagina:page,total:10}, callback);
                     };
                     
+                    $scope.$on('$ionicView.enter', function(){
+                        $scope.$broadcast('pagination.search');
+                    });
+                    
                     $scope.inscricao = function(){
                         $state.go('evento.inscricao', {id: $scope.evento.id});
                     };

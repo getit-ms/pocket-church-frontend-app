@@ -17,7 +17,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     $state.go('agenda.novo');
                                 }
                             });
-                        };
+                        }; 
+                        
+                        $scope.$on('$ionicView.enter', function(){
+                            $scope.$broadcast('pagination.search');
+                        });
 						
                         $scope.carrega = function(){
                             $scope.$broadcast('pagination.refresh');

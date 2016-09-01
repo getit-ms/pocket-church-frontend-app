@@ -316,8 +316,19 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config) {
+.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork) {
     this.register = function (novaVersao) {
+        if ($cordovaNetwork.isOnline()){
+            pushRegister(novaVersao);
+        }else{
+            var stop = $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+                pushRegister(novaVersao);
+                stop();
+            });
+        }
+    };
+    
+    function pushRegister(novaVersao){
         var push = PushNotification.init({
             android:{
                 senderID: $_gcmSenderId,
@@ -344,7 +355,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         push.on('notification', function(data){
             message({title: data.title,template: data.message});
         });
-    };
+    }
 });
 
 var regexDate = /^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}.+$/;

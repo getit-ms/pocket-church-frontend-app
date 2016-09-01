@@ -16,7 +16,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             if (!id || !callback) console.error("arquivoService.get: id and callback are required");
             
             var cache = load(id);
-            if (cache && config.headers.Dispositivo === cache.uuid){
+            if (cache && cache.file.startwWith(cordova.file.dataDirectory)){
                 cache.access = new Date().getTime();
                 save(id, cache);
                 callback({success:true, file:cache.file});
@@ -33,8 +33,9 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                     var cache = $window.localStorage.getItem(key);
 
                     if (cache){
-                        if (config.headers.Dispositivo !== cache.uuid
-                                && cache.access < new Date().getTime()){
+                        if (!cache.file || !cache.access ||
+                                !cache.file.startwWith(cordova.file.dataDirectory)
+                                || cache.access + this.timeout < new Date().getTime()){
                             remove(chave, id);
                         }
                     }
@@ -65,7 +66,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 if ($cordovaNetwork.isOnline()){
                     $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){
                         $cordovaFile.moveFile(cordova.file.cacheDirectory, temp, cordova.file.dataDirectory, path).then(function(){
-                            save(id, {uuid:config.headers.Dispositivo,file:cordova.file.dataDirectory + path,access:new Date().getTime()});
+                            save(id, {file:cordova.file.dataDirectory + path,access:new Date().getTime()});
                             callback({success:true, file:cordova.file.dataDirectory + path});
                         }, function(error){
                             callback({error:true, file:'img/fail.png'});
