@@ -22,9 +22,8 @@ var calvinApp = angular.module('calvinApp', [
     'underscore',
     'ngResource',
     'jett.ionic.filter.bar'
-]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, 
-                            $ionicConfig, $timeout, configService, $cordovaDevice, 
-                            arquivoService, cacheService, $injector, boletimService) {
+]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, 
+                    $cordovaDevice, arquivoService, cacheService, $injector, boletimService) {
                         
     $ionicPlatform.on("deviceready", function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -48,45 +47,23 @@ var calvinApp = angular.module('calvinApp', [
 
         PushNotificationsService.register(versaoAtualizada);
 
-        arquivoService.init();
-        
-        boletimService.cache();
-
-        cacheService.clean();
-
-        arquivoService.clean();
-        
         $rootScope.deviceReady = true;
+
+        try{
+            arquivoService.init();
+
+            boletimService.cache();
+
+            cacheService.clean();
+
+            arquivoService.clean();
+        }catch(e){
+            console.error(e);
+        }
         
         $injector.get('$state').reload();
     });
 
-    // This fixes transitions for transparent background views
-    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-        if (toState.name.indexOf('auth.walkthrough') > -1)
-        {
-            // set transitions to android to avoid weird visual effect in the walkthrough transitions
-            $timeout(function () {
-                $ionicConfig.views.transition('android');
-                $ionicConfig.views.swipeBackEnabled(false);
-                console.log("setting transition to android and disabling swipe back");
-            }, 0);
-        }
-    });
-
-    $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
-        if (toState.name.indexOf('app.feeds-categories') > -1)
-        {
-            // Restore platform default transition. We are just hardcoding android transitions to auth views.
-            $ionicConfig.views.transition('platform');
-            // If it's ios, then enable swipe back again
-            if (ionic.Platform.isIOS())
-            {
-                $ionicConfig.views.swipeBackEnabled(true);
-            }
-            console.log("enabling swipe back and restoring transition to platform default", $ionicConfig.views.transition());
-        }
-    });
 
 }).value('config', {
     server: $_serverUrl,
