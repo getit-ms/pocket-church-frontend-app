@@ -20,6 +20,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
             try{
                 for (var i=0;i<pdfs.length && i<5;i++){
                     var pdf = pdfs[i];
+                    arquivoService.get(pdf.thumbnail.id, function(){});
                     this.get({
                         chave: chave,
                         id: pdf.id,
