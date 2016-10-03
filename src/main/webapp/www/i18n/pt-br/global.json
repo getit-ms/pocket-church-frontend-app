@@ -241,6 +241,9 @@
         "chamado":"Sugestão",
         "chamados":"Sugestões",
         "descricao":"Descrição",
+        "solicitante":"Solicitante",
+        "nome_solicitante":"Nome do solicitante",
+        "email_solicitante":"E-mail do solicitante",
         "enunciado":"Colabore com a evolução do nosso aplicativo ${nomeAplicativo.igreja}",
         "descricao_explicacao":"Descreva o problema, sugestão ou reclamação.",
         "status":{

@@ -6,6 +6,19 @@
         <div class="item item-text-wrap">{{'chamado.enunciado' | translate}}</div>
         
         <form id="chamado_form" name="chamado_form" ng-submit="cadastrar(this.chamado_form)" novalidate>
+            <div class='item item-divider'>{{'chamado.solicitante' | translate}}</div>
+            <label class='item item-input' ng-if="!usuario">
+                <input type="text" required ng-model='chamado.nomeSolicitante' maxlength="150" ng-disabled="usuario" placeholder="{{'chamado.nome_solicitante' | translate}}" />
+            </label>
+            <label class='item item-input' ng-if="!usuario">
+                <input type="email" required ng-model='chamado.emailSolicitante' maxlength="150" ng-disabled="usuario" placeholder="{{'chamado.email_solicitante' | translate}}" />
+            </label>
+            <label class='item' ng-if="usuario">
+                {{chamado.nomeSolicitante}}
+            </label>
+            <label class='item' ng-if="usuario">
+                {{chamado.emailSolicitante}}
+            </label>
             <div class='item item-divider'>{{'chamado.tipo' | translate}}</div>
             <ion-radio required  ng-model="chamado.tipo" ng-value="'SUGESTAO'">{{'chamado.tipo.SUGESTAO' | translate}}</ion-radio>
             <ion-radio required  ng-model="chamado.tipo" ng-value="'ERRO'">{{'chamado.tipo.ERRO' | translate}}</ion-radio>

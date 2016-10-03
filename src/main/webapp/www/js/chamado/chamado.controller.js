@@ -12,6 +12,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                         $scope.clear = function(){
                             $scope.chamado = {};
+                            if ($scope.usuario){
+                                $scope.chamado.nomeSolicitante = $scope.usuario.nome;
+                                $scope.chamado.emailSolicitante = $scope.usuario.email;
+                            }
                         };
 
                         $scope.cadastrar = function(form){
