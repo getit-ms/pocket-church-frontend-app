@@ -17,6 +17,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $scope.chamado.emailSolicitante = $scope.usuario.email;
                             }
                         };
+                        
+                        $scope.$on('$ionicView.enter', function(){
+                            $scope.clear();
+                        });
 
                         $scope.cadastrar = function(form){
                             if (form.$invalid){
