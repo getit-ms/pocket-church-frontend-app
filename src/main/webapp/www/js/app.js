@@ -50,6 +50,11 @@ var calvinApp = angular.module('calvinApp', [
         $rootScope.deviceReady = true;
 
         try{
+            var notifications = cacheService.load('notifications');
+            if (notifications){
+                $rootScope.notifications = notifications.unread;
+            }
+            
             arquivoService.init();
 
             boletimService.cache();
@@ -295,7 +300,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork) {
+.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, cacheService) {
     this.register = function (novaVersao) {
         if ($cordovaNetwork.isOnline()){
             pushRegister(novaVersao);
@@ -333,6 +338,15 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 
         push.on('notification', function(data){
             message({title: data.title,template: data.message});
+            
+            var notifications = cacheService.load('notifications');
+            if (!notifications){
+                notifications = {unread:0,messages:[]};
+            }
+            $rootScope.notifications++;
+            notifications.unread++;
+            notifications.messages.splice(0, 0, data);
+            cacheService.save('notifications', null, notifications);
         });
     }
 });

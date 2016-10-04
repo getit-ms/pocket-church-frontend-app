@@ -74,6 +74,7 @@
         <script src="js/home/home.controller.js"></script>
         <script src="js/cifra/cifra.controller.js"></script>
         <script src="js/chamado/chamado.controller.js"></script>
+        <script src="js/notificacao/notificacao.controller.js"></script>
         
         <script src="js/service/link.service.js"></script>
         <script src="js/service/boletim.service.js"></script>
@@ -176,6 +177,11 @@
                     <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="evento" ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EVENTO') >= 0">
                         <span class='icon fa fa-calendar'></span>
                         <h2 class="menu-text">{{'evento.eventos' | translate}}</h2>
+                    </ion-item>
+                    <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="notificacao">
+                        <span class='icon fa fa-exclamation-circle'></span>
+                        <h2 class="menu-text">{{'notificacao.notificacoes' | translate}}</h2>
+                        <span class="badge badge-assertive" ng-show="notifications">{{notifications}}</span>
                     </ion-item>
                     <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="chamado">
                         <span class='icon fa fa-comment'></span>
