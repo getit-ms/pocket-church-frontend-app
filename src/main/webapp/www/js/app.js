@@ -53,6 +53,8 @@ var calvinApp = angular.module('calvinApp', [
             var notifications = cacheService.load('notifications');
             if (notifications){
                 $rootScope.notifications = notifications.unread;
+            }else{
+                $rootScope.notifications = 0;
             }
             
             arquivoService.init();
