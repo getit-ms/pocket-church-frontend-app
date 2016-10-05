@@ -5,16 +5,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
-                    controller: function(cacheService, $scope, $rootScope){
+                    controller: function(notificacaoService, $scope, $rootScope){
+                        $scope.refresh = function(){
+                            $rootScope.notifications = notificacaoService.count(0);
+                            $scope.messages = notificacaoService.get();
+                        };
+                        
                         $scope.$on('$ionicView.enter', function(){
-                            var notifications = cacheService.load('notifications');
-                            if (!notifications){
-                                notifications = {unread:0,messages:[]};
-                            }
-                            $rootScope.notifications = 0;
-                            notifications.unread = 0;
-                            $scope.messages = notifications.messages;
-                            cacheService.save('notifications', null, notifications);
+                            $scope.refresh();
                         });
                     }
                 }

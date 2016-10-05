@@ -3,6 +3,9 @@
         <span translate>notificacao.notificacoes</span>
     </ion-nav-title>
     <ion-content class="has-header">
+        <ion-refresher
+            pulling-text="{{'global.puxe_para_atualizar' | translate}}"
+            on-refresh='refresh()'></ion-refresher>
         <div ng-if="!messages.length" class="row row-center">
             <div class="col col-center text-center">
                 <span translate>global.nenhum_registro_encontrado</span>

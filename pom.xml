@@ -107,7 +107,9 @@
                     <execution>
                         <id>bower-install</id>
                         <phase>prepare-package</phase>
-                        <goals><goal>exec</goal></goals>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
                         <configuration>
                             <workingDirectory>src/main/webapp</workingDirectory>
                             <executable>bower</executable>
@@ -136,7 +138,7 @@
         <profile>
             <id>prod</id>
             <properties>
-				<android.sender.id>65118528623</android.sender.id>
+                <android.sender.id>65118528623</android.sender.id>
                 <server.url>https://getitmobilesolutions.com/app</server.url>
             </properties>
         </profile>

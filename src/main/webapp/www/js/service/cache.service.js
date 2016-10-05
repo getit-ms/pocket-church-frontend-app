@@ -22,6 +22,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                     cache.access = new Date().getTime();
                     save(req.chave, req.id, cache);
                     req.callback(cache.value);
+                    if (req.cachePriority) return;
                 }
             }catch(e){
                 console.error(e);
