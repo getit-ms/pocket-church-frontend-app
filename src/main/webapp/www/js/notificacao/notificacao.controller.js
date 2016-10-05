@@ -9,6 +9,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.refresh = function(){
                             $rootScope.notifications = notificacaoService.count(0);
                             $scope.messages = notificacaoService.get();
+                            $scope.$broadcast('scroll.refreshComplete');
                         };
                         
                         $scope.$on('$ionicView.enter', function(){
