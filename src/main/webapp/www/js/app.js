@@ -22,7 +22,7 @@ var calvinApp = angular.module('calvinApp', [
     'underscore',
     'ngResource',
     'jett.ionic.filter.bar'
-]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, 
+]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService,
                     $cordovaDevice, arquivoService, cacheService, $injector, boletimService) {
                         
     $ionicPlatform.on("deviceready", function () {
@@ -50,12 +50,7 @@ var calvinApp = angular.module('calvinApp', [
         $rootScope.deviceReady = true;
 
         try{
-            var notifications = cacheService.load('notifications');
-            if (notifications){
-                $rootScope.notifications = notifications.unread;
-            }else{
-                $rootScope.notifications = 0;
-            }
+            $rootScope.notifications = notificacaoService.count();
             
             arquivoService.init();
 
