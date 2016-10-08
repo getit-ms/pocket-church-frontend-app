@@ -6,14 +6,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
                     controller: function(notificacaoService, $scope, $rootScope){
-                        $scope.refresh = function(){
-                            $rootScope.notifications = notificacaoService.count(0);
-                            $scope.messages = notificacaoService.get();
-                            $scope.$broadcast('scroll.refreshComplete');
+                        $scope.searcher = function(page, callback){
+                            notificacaoService.busca({pagina: page, total: 10}, callback);
+                            $rootScope.notifications = 0;
                         };
                         
                         $scope.$on('$ionicView.enter', function(){
-                            $scope.refresh();
+                            $scope.$broadcast('pagination.search');
                         });
                     }
                 }

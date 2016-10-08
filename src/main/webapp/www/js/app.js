@@ -24,7 +24,13 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService,
                     $cordovaDevice, arquivoService, cacheService, $injector, boletimService) {
-                        
+                    
+    $ionicPlatform.on("resume", function(){
+        notificacaoService.count(function(dados){
+            $rootScope.notifications = dados.count;
+        });
+    });
+    
     $ionicPlatform.on("deviceready", function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -44,14 +50,16 @@ var calvinApp = angular.module('calvinApp', [
                 Dispositivo: $cordovaDevice.getUUID()
             }
         });
-
+        
         PushNotificationsService.register(versaoAtualizada);
 
         $rootScope.deviceReady = true;
 
+        notificacaoService.count(function(dados){
+            $rootScope.notifications = dados.count;
+        });
+        
         try{
-            $rootScope.notifications = notificacaoService.count();
-            
             arquivoService.init();
 
             boletimService.cache();
@@ -335,9 +343,6 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 
         push.on('notification', function(data){
             message({title: data.title,template: data.message});
-            
-            notificacaoService.add(data);
-            $rootScope.notifications = notificacaoService.count();
         });
     }
 });
