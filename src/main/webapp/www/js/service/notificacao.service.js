@@ -4,7 +4,7 @@ calvinApp.service('notificacaoService', ['Restangular', function(Restangular){
         };
         
         this.busca = function(filtro, callback){
-            this.api().get('', filtro).then(callback);
+            this.api().get(filtro).then(callback);
         };
         
         this.count = function(success, error){
