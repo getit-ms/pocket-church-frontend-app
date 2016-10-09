@@ -310,7 +310,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state) {
+.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService) {
     this.register = function (novaVersao) {
         if ($cordovaNetwork.isOnline()){
             pushRegister(novaVersao);
@@ -350,6 +350,9 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
             if (data.additionalData.foreground){
                 message({title: data.title,template: data.message});
             }else if (data.additionalData.coldstart){
+                $ionicViewService.nextViewOptions({
+                    disableBack: true
+                });
                 $state.go('notificacao');
             }
         });

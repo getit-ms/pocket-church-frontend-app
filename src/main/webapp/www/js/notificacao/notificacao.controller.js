@@ -14,7 +14,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 });
                                 $cordovaBadge.set(0);
                                 $rootScope.notifications = 0;
-                                callback(angular.extend(notificacoes, ns));
+                                callback(angular.extend(notificacoes, {resultados:ns}));
                             });
                         };
                         
