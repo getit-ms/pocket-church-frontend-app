@@ -5,13 +5,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
-                    controller: function(notificacaoService, $scope, $rootScope){
+                    controller: function(notificacaoService, $scope, $rootScope, $cordovaBadge){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
                                 var ns = [];
                                 notificacoes.resultados.forEach(function(n){
                                     ns.push(angular.toJson(n));
                                 });
+                                $cordovaBadge.set(0);
                                 $rootScope.notifications = 0;
                                 callback(angular.extend(notificacoes, ns));
                             });

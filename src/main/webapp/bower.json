@@ -5,7 +5,8 @@
     "ionic": "driftyco/ionic-bower#1.2.4",
     "ionic-platform-web-client": "~0.7.1",
     "ionic-service-core": "~0.1.10",
-    "ionic-service-push": "~0.1.13"
+    "ionic-service-push": "~0.1.13",
+    "cordova-plugin-badge": "https://github.com/katzer/cordova-plugin-badge.git#~0.7.3"
   },
   "dependencies": {
     "chance": "~1.0.0",

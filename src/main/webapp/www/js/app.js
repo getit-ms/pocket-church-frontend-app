@@ -22,13 +22,20 @@ var calvinApp = angular.module('calvinApp', [
     'underscore',
     'ngResource',
     'jett.ionic.filter.bar'
-]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService,
-                    $cordovaDevice, arquivoService, cacheService, $injector, boletimService) {
+]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
+                    $cordovaDevice, arquivoService, cacheService, $injector, boletimService, $cordovaBadge) {
                     
-    $ionicPlatform.on("resume", function(){
+    
+    function countNotificacoes(){
         notificacaoService.count(function(dados){
             $rootScope.notifications = dados.count;
-        });
+            $cordovaBadge.set(dados.count);
+        }, function(){});
+    }
+                    
+    $ionicPlatform.on("resume", function(){
+        countNotificacoes();
+        $cordovaLocalNotification.clearAll();
     });
     
     $ionicPlatform.on("deviceready", function () {
@@ -55,9 +62,7 @@ var calvinApp = angular.module('calvinApp', [
 
         $rootScope.deviceReady = true;
 
-        notificacaoService.count(function(dados){
-            $rootScope.notifications = dados.count;
-        });
+        countNotificacoes();
         
         try{
             arquivoService.init();
@@ -305,7 +310,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, notificacaoService) {
+.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state) {
     this.register = function (novaVersao) {
         if ($cordovaNetwork.isOnline()){
             pushRegister(novaVersao);
@@ -342,7 +347,11 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 
 
         push.on('notification', function(data){
-            message({title: data.title,template: data.message});
+            if (data.additionalData.foreground){
+                message({title: data.title,template: data.message});
+            }else if (data.additionalData.coldstart){
+                $state.go('notificacao');
+            }
         });
     }
 });

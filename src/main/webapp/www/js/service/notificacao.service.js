@@ -7,8 +7,8 @@ calvinApp.service('notificacaoService', ['Restangular', function(Restangular){
             this.api().get('', filtro).then(callback);
         };
         
-        this.count = function(callback){
-            return this.api().one('count').get().then(callback);
+        this.count = function(success, error){
+            return this.api().one('count').get().then(success, error);
         };
 }]);
         
