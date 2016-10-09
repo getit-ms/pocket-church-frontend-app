@@ -2,6 +2,10 @@
     <ion-nav-title>
         <span translate>notificacao.notificacoes</span>
     </ion-nav-title>
+    <ion-nav-buttons side="right" >
+        <a data-tap-disabled="true" ng-click="clear()" href=""
+           class="button button-icon icon positive fa fa-trash" ></a>
+    </ion-nav-buttons>
     <calvin-pagination ng-model="messages" searcher="searcher" cache="messages">
         <ion-item ng-repeat="message in messages">
             <h2>

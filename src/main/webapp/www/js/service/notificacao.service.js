@@ -10,5 +10,9 @@ calvinApp.service('notificacaoService', ['Restangular', function(Restangular){
         this.count = function(success, error){
             return this.api().one('count').get().then(success, error);
         };
+        
+        this.clear = function(success){
+            return this.api().one('clear').delete().then(success);
+        };
 }]);
         
