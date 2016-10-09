@@ -9,12 +9,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
                                 var ns = [];
-                                notificacoes.forEach(function(n){
+                                notificacoes.resultados.forEach(function(n){
                                     ns.push(angular.toJson(n));
                                 });
-                                callback(ns);
+                                $rootScope.notifications = 0;
+                                callback(angular.extend(notificacoes, ns));
                             });
-                            $rootScope.notifications = 0;
                         };
                         
                         $scope.$on('$ionicView.enter', function(){
