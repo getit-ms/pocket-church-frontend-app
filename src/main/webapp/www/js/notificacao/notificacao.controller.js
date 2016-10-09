@@ -10,7 +10,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
                                 var ns = [];
                                 notificacoes.resultados.forEach(function(n){
-                                    ns.push(angular.toJson(n));
+                                    ns.push(angular.fromJson(n));
                                 });
                                 $cordovaBadge.set(0);
                                 $rootScope.notifications = 0;
