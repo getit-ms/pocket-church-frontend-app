@@ -96,7 +96,7 @@
         "MSG-037":"O registro para o e-mail informado não foi encontrado. Certifique-se de que o e-mail está correto e tente novamente.",
         "MSG-038":"Sua solicitação foi enviada com sucesso. Você receberá um e-mail com os passos para redefinir sua senha",
         "MSG-042":"Sua inscrição está quase concluída. Agora você será direcionado para o PagSeguro onde poderá realizar o pagamento da inscrição.",
-        "MSG-043":"Deseja realmente excluir todos as notificações?",
+        "MSG-043":"Deseja realmente excluir todas as notificações?",
         "MSG-302":"Parece que você está sem acesso à Internet. Verifique sua conexão e tente novamente.",
         "MSG-403":"Você não tem permissão para fazer isso.",
         "MSG-404":"O servidor parece estar fora do ar. Aguarde alguns minutos e tente novamente.",
@@ -286,7 +286,10 @@
     },
     "notificacao":{
         "notificacoes":"Notificações",
-        "confirmacao_exclusao":"Confirmação de Exclusão"
+        "confirmacao_exclusao":"Confirmação de Exclusão",
+        "data_pattern":"dd MMMM yyyy",
+        "hoje":"Hoje",
+        "ontem":"Ontem"
     }
 }
 
