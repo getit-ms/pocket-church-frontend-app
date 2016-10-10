@@ -20,22 +20,24 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             });
                         };
                         
-                        var dayMillis = 1000 * 60 * 60 * 24;
-                        
                         $scope.showData = function(message, messages){
                             var idx = messages.indexOf(message);
-                            return idx == 0 || diferenca(messages[idx - 1].data, message.data) >= 1;
+                            return idx == 0 || diferenca(messages[idx - 1].data, message.data) > 0;
                         };
                         
                         function diferenca(d1, d2){
-                            return (d1.getTime() - d2.getTime()) / dayMillis;
+                            return day(d1) - day(d2);
+                        }
+                        
+                        function day(d){
+                            return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate();
                         }
                         
                         $scope.data = function(message){
                             var diff = diferenca(new Date(), message.data);
-                            if (diff < 1){
+                            if (diff == 0){
                                 return $filter('translate')('notificacao.hoje');
-                            }else if (diff < 2){
+                            }else if (diff == 1){
                                 return $filter('translate')('notificacao.ontem');
                             }
                             
