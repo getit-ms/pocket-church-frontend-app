@@ -24,7 +24,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         
                         $scope.showData = function(message, messages){
                             var idx = messages.indexOf(message);
-                            return idx == 0 || diferenca(messages[idx - 1].data, message.data) > 0;
+                            return idx == 0 || diferenca(messages[idx - 1].data, message.data) >= 1;
                         };
                         
                         function diferenca(d1, d2){
@@ -33,9 +33,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         
                         $scope.data = function(message){
                             var diff = diferenca(new Date(), message.data);
-                            if (diff == 0){
+                            if (diff < 1){
                                 return $filter('translate')('notificacao.hoje');
-                            }else if (diff == 1){
+                            }else if (diff < 2){
                                 return $filter('translate')('notificacao.ontem');
                             }
                             
