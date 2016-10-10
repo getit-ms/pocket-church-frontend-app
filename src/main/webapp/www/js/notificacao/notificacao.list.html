@@ -8,7 +8,7 @@
     </ion-nav-buttons>
     <calvin-pagination ng-model="messages" searcher="searcher" cache="messages">
         <div class="item item-divider" ng-repeat-start="message in messages" ng-if="showData(message, messages)">
-            {{message.data | date:('config.pattern.date' | translate)}}
+            {{data(message.data)}}
         </div>
         <ion-item class="item-text-wrap" ng-repeat-end>
             <h2>
