@@ -9,26 +9,28 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
                                 var ns = [];
-                                notificacoes.resultados.forEach(function(n){
-                                    ns.push(angular.extend(n, angular.fromJson(n.notificacao)));
-                                });
+                                if (notificacoes.resultados){
+                                    notificacoes.resultados.forEach(function(n){
+                                        ns.push(angular.extend(n, angular.fromJson(n.notificacao)));
+                                    });
+                                }
                                 $cordovaBadge.set(0);
                                 $rootScope.notifications = 0;
                                 callback(angular.extend(notificacoes, {resultados:ns}));
                             });
                         };
                         
+                        $scope.showData = function(message, messages){
+                            var idx = messages.indexOf(message);
+                            return idx == 0 || message.data.getFullYear() != messages[idx - 1].data.getFullYear() ||
+                                    message.data.getMonth() != messages[idx - 1].data.getMonth() ||
+                                    message.data.getDate() != messages[idx - 1].data.getDate();
+                        };
+                        
                         $scope.clear = function(){
                             $ionicPopup.confirm({
                                 title:$filter('translate')('notificacao.confirmacao_exclusao'),
-                                template:$filter('translate')('mensagens.MSG-043', {
-                                    data:$filter('date')(agendamento.dataHoraInicio, 
-                                    $filter('translate')('config.pattern.date')),
-                                    horaInicio:$filter('date')(agendamento.dataHoraInicio, 
-                                    $filter('translate')('config.pattern.hour')),
-                                    horaFim:$filter('date')(agendamento.dataHoraFim, 
-                                    $filter('translate')('config.pattern.hour'))
-                                }),
+                                template:$filter('translate')('mensagens.MSG-043'),
                                 okText:$filter('translate')('global.sim'),
                                 cancelText:$filter('translate')('global.nao')
                             }).then(function(resp){

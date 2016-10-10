@@ -35,7 +35,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                     if (cache){
                         if (!cache.access || cache.uuid != config.headers.Dispositivo
                                 || cache.access + this.timeout < new Date().getTime()){
-                            remove(chave, id);
+                            remove(key.substring(key.indexOf('.') + 1));
                         }
                     }
                 }
