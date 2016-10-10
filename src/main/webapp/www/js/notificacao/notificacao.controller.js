@@ -41,7 +41,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 return $filter('translate')('notificacao.ontem');
                             }
                             
-                            return $filter('date')(message.data, $filter('translate')('notificacao.confirmacao_exclusao'));
+                            return $filter('date')(message.data, $filter('translate')('notificacao.data_pattern'));
                         };
                         
                         $scope.clear = function(){
@@ -53,6 +53,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }).then(function(resp){
                                 if (resp){
                                     notificacaoService.clear(function(){
+                                        message({title:'global.title.200',template:'mensagens.MSG-001'});
                                         $scope.$broadcast('pagination.search');
                                     });
                                 }
