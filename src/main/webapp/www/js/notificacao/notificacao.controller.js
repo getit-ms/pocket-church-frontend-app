@@ -54,14 +54,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 if (resp){
                                     notificacaoService.clear(function(){
                                         message({title:'global.title.200',template:'mensagens.MSG-001'});
-                                        $scope.$broadcast('pagination.search');
+                                        $scope.$broadcast('pagination.refresh');
                                     });
                                 }
                             });
                         };
                         
                         $scope.$on('$ionicView.enter', function(){
-                            $scope.$broadcast('pagination.search');
+                            $scope.$broadcast('pagination.refresh');
                         });
                     }
                 }
