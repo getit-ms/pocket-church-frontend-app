@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
-                    controller: function(notificacaoService, $scope, $rootScope, $cordovaBadge, $ionicPopup, $filter){
+                    controller: function(notificacaoService, $scope, $rootScope, $cordovaBadge, $ionicPopup, $filter, message){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
                                 var ns = [];
@@ -33,15 +33,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate();
                         }
                         
-                        $scope.data = function(message){
-                            var diff = diferenca(new Date(), message.data);
+                        $scope.data = function(msg){
+                            var diff = diferenca(new Date(), msg.data);
                             if (diff == 0){
                                 return $filter('translate')('notificacao.hoje');
                             }else if (diff == 1){
                                 return $filter('translate')('notificacao.ontem');
                             }
                             
-                            return $filter('date')(message.data, $filter('translate')('notificacao.data_pattern'));
+                            return $filter('date')(msg.data, $filter('translate')('notificacao.data_pattern'));
                         };
                         
                         $scope.clear = function(){
@@ -54,14 +54,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 if (resp){
                                     notificacaoService.clear(function(){
                                         message({title:'global.title.200',template:'mensagens.MSG-001'});
-                                        $scope.$broadcast('pagination.refresh');
+                                        $scope.$broadcast('pagination.search');
                                     });
                                 }
                             });
                         };
                         
                         $scope.$on('$ionicView.enter', function(){
-                            $scope.$broadcast('pagination.refresh');
+                            $scope.$broadcast('pagination.search');
                         });
                     }
                 }
