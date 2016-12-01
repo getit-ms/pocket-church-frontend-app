@@ -4,7 +4,8 @@
     </ion-nav-title>
     <ion-content>
         <form id="preferencias_form" name="preferencias_form" ng-submit="salvar(this.preferencias_form)" novalidate>
-            <ion-toggle class="item-text-wrap" ng-model="preferencias.dadosDisponiveis" >
+            <ion-toggle class="item-text-wrap" ng-model="preferencias.dadosDisponiveis"
+                        ng-if='usuario && funcionalidades'>
                 {{'preferencias.deseja_disponibilizar_dados' | translate}}
             </ion-toggle>
             <ion-toggle ng-model="preferencias.desejaReceberVersiculosDiarios" >
