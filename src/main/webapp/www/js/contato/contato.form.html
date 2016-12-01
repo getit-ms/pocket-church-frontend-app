@@ -16,9 +16,9 @@
             <i class="icon fa fa-envelope-square"></i>
             {{contato.email}}
         </ion-item>
-        <ion-item class="item-icon-left" ng-repeat='telefone in contato.telefones' ng-click="tel(telefone)">
+        <ion-item class="item-icon-left" ng-repeat='tele in contato.telefones' ng-click="tel(tele)">
             <i class="icon fa fa-phone-square"></i>
-            {{telefone}}
+            {{tele | telefone}}
         </ion-item>
         <ion-item ng-if="contato.endereco.descricao" class="item-icon-left item-text-wrap" ng-click="geo(contato.endereco)">
             <i class="icon fa fa-map-marker"></i>

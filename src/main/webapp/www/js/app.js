@@ -23,8 +23,18 @@ var calvinApp = angular.module('calvinApp', [
     'ngResource',
     'jett.ionic.filter.bar'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-                    $cordovaDevice, arquivoService, cacheService, $injector, boletimService, $cordovaBadge) {
-                    
+                    $cordovaDevice, arquivoService, cacheService, $injector, boletimService, $cordovaBadge, acessoService) {
+    
+    $rootScope.funcionalidadesPublicas = [];
+    cacheService.get({
+        chave: 'funcionalidadesPublicas',
+        supplier: function(callback){
+            acessoService.buscaFuncionalidadesPublicas(callback);
+        },
+        callback: function(funcs){
+            $rootScope.funcionalidadesPublicas = funcs;
+        }
+    });                
     
     function countNotificacoes(){
         notificacaoService.count(function(dados){
@@ -78,7 +88,6 @@ var calvinApp = angular.module('calvinApp', [
         
         $injector.get('$state').reload();
     });
-
 
 }).value('config', {
     server: $_serverUrl,

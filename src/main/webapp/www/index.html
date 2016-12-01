@@ -58,6 +58,7 @@
         <script src="js/components/pagination/pagination.directive.js"></script>
         <script src="js/components/pace/pace.js"></script>
         <script src="js/components/template/template.js"></script>
+        <script src="js/components/mask/mask.filter.js"></script>
         
         <script src="js/institucional/institucional.controller.js"></script>
         <script src="js/boletim/boletim.controller.js"></script>
@@ -140,19 +141,23 @@
                         <span class='icon fa fa-cube'></span>
                         <h2 class="menu-text">{{'institucional.institucional' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="boletim">
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="boletim"
+                              ng-if="funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0">
                         <span class='icon fa fa-file-text'></span>
                         <h2 class="menu-text">{{'boletim.boletins' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="estudo">
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="estudo"
+                              ng-if="funcionalidadesPublicas.indexOf('LISTAR_ESTUDOS') >= 0">
                         <span class='icon fa fa-book'></span>
                         <h2 class="menu-text">{{'estudo.estudos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="hino">
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="hino"
+                              ng-if="funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0">
                         <span class='icon fa fa-music'></span>
                         <h2 class="menu-text">{{'hino.hinos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="cifra">
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="cifra"
+                              ng-if="funcionalidadesPublicas.indexOf('CONSULTAR_CIFRAS') >= 0">
                         <span class='icon fa fa-file-audio-o'></span>
                         <h2 class="menu-text">{{'cifra.cifras' | translate}}</h2>
                     </ion-item>
@@ -162,19 +167,23 @@
                         <span class='icon fa fa-users'></span>
                         <h2 class="menu-text">{{'contato.contatos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="votacao" ng-if="funcionalidades.indexOf('REALIZAR_VOTACAO') >= 0">
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="votacao" 
+                              ng-if="funcionalidades.indexOf('REALIZAR_VOTACAO') >= 0">
                         <span class='icon fa fa-check-square'></span>
                         <h2 class="menu-text">{{'votacao.votacoes' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="oracao" ng-if="funcionalidades.indexOf('PEDIR_ORACAO') >= 0">
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="oracao" 
+                              ng-if="funcionalidades.indexOf('PEDIR_ORACAO') >= 0">
                         <span class='icon fa fa-heart'></span>
                         <h2 class="menu-text">{{'oracao.pedidos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="agenda" ng-if="funcionalidades.indexOf('AGENDAR_ACONSELHAMENTO') >= 0">
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="agenda" 
+                              ng-if="funcionalidades.indexOf('AGENDAR_ACONSELHAMENTO') >= 0">
                         <span class='icon fa fa-comments'></span>
                         <h2 class="menu-text">{{'agenda.agendamentos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="evento" ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EVENTO') >= 0">
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="evento"
+                              ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EVENTO') >= 0">
                         <span class='icon fa fa-calendar'></span>
                         <h2 class="menu-text">{{'evento.eventos' | translate}}</h2>
                     </ion-item>

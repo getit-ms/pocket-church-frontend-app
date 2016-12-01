@@ -24,15 +24,15 @@
             </ion-item>
             <ion-item class='item-icon-left' 
                       ng-if="institucional.telefones.length"
-                      ng-repeat="telefone in institucional.telefones"
-                      ng-click="tel(telefone)">
+                      ng-repeat="tele in institucional.telefones"
+                      ng-click="tel(tle)">
                 <i class='icon fa fa-phone-square'></i>
-                {{telefone}}
+                {{tele | telefone}}
             </ion-item>
             <ion-item ng-if="institucional.endereco.descricao" class='item-divider' translate>institucional.endereco</ion-item>
             <ion-item ng-if="institucional.endereco.descricao" class='item-text-wrap item-icon-left' ng-click="geo(institucional.endereco)">
                 <i class='icon fa fa-map-marker'></i>
-                {{institucional.endereco.descricao}} - {{institucional.endereco.cidade}} - {{institucional.endereco.estado}} - {{institucional.endereco.cep}}
+                {{institucional.endereco.descricao}} - {{institucional.endereco.cidade}} - {{institucional.endereco.estado}} - {{institucional.endereco.cep | mask:('config.mask.cep' | translate)}}
             </ion-item>
         </div>
     </ion-content>

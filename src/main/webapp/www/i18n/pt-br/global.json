@@ -8,7 +8,8 @@
         "mask":{
             "date":"99/99/9999",
             "hour":"99:99",
-            "telefone":"(99) 99999 999?9"
+            "telefone":"(99) 99999 999?9",
+            "cep":"99.999-999"
         }
     },
     "global":{
@@ -273,6 +274,7 @@
     },
     "preferencias":{
         "preferencias":"Preferências",
+        "deseja_disponibilizar_dados":"Permitir que outros membros vejam meus dados",
         "deseja_receber_versiculos":"Receber versículos diários",
         "hora_versiculo":"Hora do Versículo Diário",
         "ministerios_interesse":"Receber Notificações de:",
