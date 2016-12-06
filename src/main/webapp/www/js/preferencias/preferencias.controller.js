@@ -5,17 +5,21 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/preferencias/preferencias.form.html',
-                    controller: function($scope, message, acessoService, $rootScope, $state){
-                        acessoService.buscaPreferencias(function(preferencias){
-                            $scope.preferencias = preferencias;
-                            $scope.ministeriosSelecionados = [];
-                            if ($scope.preferencias.ministeriosInteresse){
-                                for (var i=0;i<$scope.preferencias.ministeriosInteresse.length;i++){
-                                    var min = $scope.preferencias.ministeriosInteresse[i];
-                                    $scope.ministeriosSelecionados[min.id] = true;
+                    controller: function($scope, message, acessoService, $rootScope, $state, $ionicViewService){
+                        $scope.$on('$ionicView.enter', function(){
+                            acessoService.buscaPreferencias(function(preferencias){
+                                $scope.preferencias = preferencias;
+                                
+                                $scope.ministeriosSelecionados = [];
+                                if ($scope.preferencias.ministeriosInteresse){
+                                    for (var i=0;i<$scope.preferencias.ministeriosInteresse.length;i++){
+                                        var min = $scope.preferencias.ministeriosInteresse[i];
+                                        $scope.ministeriosSelecionados[min.id] = true;
+                                    }
                                 }
-                            }
+                            });
                         });
+                        
                         $scope.ministerios = acessoService.buscaMinisterios();
                         $scope.horasVersiculoDiario = acessoService.buscaHorasVersiculoDiario();
                         
