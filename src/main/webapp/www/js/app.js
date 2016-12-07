@@ -50,11 +50,20 @@ var calvinApp = angular.module('calvinApp', [
 
         configService.save({
             version: $_version,
-            tipo: ionic.Platform.isAndroid() ? 0 : 1,
-            headers:{
-                Dispositivo: $cordovaDevice.getUUID()
-            }
+            tipo: ionic.Platform.isAndroid() ? 0 : 1
         });
+        
+        if (!configService.load().headers.Dispositivo ||
+                configService.load().headers.Dispositivo == 'undefined'){
+            configService.save({
+                headers:{
+                    Dispositivo: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                        return v.toString(16);
+                    })
+                }
+            });
+        }
         
         PushNotificationsService.register(versaoAtualizada);
         
