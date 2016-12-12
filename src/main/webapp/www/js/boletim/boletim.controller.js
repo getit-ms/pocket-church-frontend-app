@@ -51,6 +51,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 boletimService.carrega(id, callback);
                             }
                         });
+                        
+                        $scope.show = function(pagina, index){
+                            var idx = $scope.boletim.paginas.indexOf(pagina);
+                            return Math.abs(idx - index) <= 1;
+                        };
 
                         $scope.slide = {activeSlide:null};
 
