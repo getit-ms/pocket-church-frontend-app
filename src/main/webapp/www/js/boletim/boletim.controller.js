@@ -52,11 +52,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                         });
                         
-                        $scope.show = function(pagina, index){
-                            var idx = $scope.boletim.paginas.indexOf(pagina);
-                            return Math.abs(idx - index) <= 1;
-                        };
-
                         $scope.slide = {activeSlide:null};
 
                         $scope.updateSlideStatus = function(index) {

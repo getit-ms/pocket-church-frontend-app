@@ -4,12 +4,12 @@
     </ion-nav-title>
     <ion-content ng-class="{'has-footer': boletim.paginas.length > 1}" class='has-header'>
         <ion-slide-box show-pager="false" ng-if="boletim.paginas.length" on-slide-changed="slideChanged(index)" active-slide="slide.activeSlide">
-            <ion-slide ng-repeat="pagina in boletim.paginas">
+            <ion-slide collection-repeat="pagina in boletim.paginas">
                 <ion-scroll scroll='false' zooming="true" direction="xy" scrollable-x="false"
                             scrollable-y="false" min-zoom="1" style="width:100%;height:100%"
                             delegate-handle="scrollHandle{{$index}}" on-scroll="updateSlideStatus($index)" 
                             on-release="updateSlideStatus($index)" overflow-scroll="false">
-                    <div ng-if="show(pagina, $index)" class="image" style="background-image: url( {{pagina.localPath}} )"></div>
+                    <div class="image" style="background-image: url( {{pagina.localPath}} )"></div>
                 </ion-scroll>
             </ion-slide>
         </ion-slide-box>
