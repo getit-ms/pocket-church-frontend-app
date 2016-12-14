@@ -21,11 +21,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             return boletim.thumbnail.localPath;
                         };
                         
-                        $scope.show = function(pagina, index){
-                            var idx = $scope.boletim.paginas.indexOf(pagina);
-                            return Math.abs(idx - index) <= 1;
-                        };
-
                         $scope.detalhar = function(boletim){
                             $state.go('boletim.view', {id: boletim.id});
                         };
@@ -58,6 +53,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         });
                         
                         $scope.slide = {activeSlide:null};
+
+                        $scope.show = function(pagina){
+                            return Math.abs($scope.boletim.paginas.indexOf(pagina) - $scope.slide.activeSlide) <= 1;
+                        };
 
                         $scope.updateSlideStatus = function(index) {
                             var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
