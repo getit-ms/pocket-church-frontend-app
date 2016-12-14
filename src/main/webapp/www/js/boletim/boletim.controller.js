@@ -20,6 +20,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                             return boletim.thumbnail.localPath;
                         };
+                        
+                        $scope.show = function(pagina, index){
+                            var idx = $scope.boletim.paginas.indexOf(pagina);
+                            return Math.abs(idx - index) <= 1;
+                        };
 
                         $scope.detalhar = function(boletim){
                             $state.go('boletim.view', {id: boletim.id});
