@@ -65,18 +65,7 @@ var calvinApp = angular.module('calvinApp', [
             });
         }
         
-        PushNotificationsService.register(versaoAtualizada);
-        
-        $rootScope.funcionalidadesPublicas = [];
-        cacheService.get({
-            chave: 'funcionalidadesPublicas',
-            supplier: function(callback){
-                acessoService.buscaFuncionalidadesPublicas(callback);
-            },
-            callback: function(funcs){
-                $rootScope.funcionalidadesPublicas = funcs;
-            }
-        });  
+        PushNotificationsService.register(versaoAtualizada); 
 
         $rootScope.deviceReady = true;
 
@@ -271,21 +260,46 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-        .run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $cordovaNetwork, $ionicSideMenuDelegate) {
-            var config = configService.load();
+.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicPlatform, $ionicSideMenuDelegate) {
+    var config = configService.load();
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
-
-    if (config.usuario && config.funcionalidades) {
-        acessoService.carrega(function (acesso) {
-            $rootScope.usuario = acesso.membro;
-            $rootScope.funcionalidades = acesso.funcionalidades;
-            configService.save({
-                usuario: $rootScope.usuario,
-                funcionalidades: $rootScope.funcionalidades
-            });
+    $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
+          
+    if (!config.timeout){
+        acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
+            $rootScope.funcionalidadesPublicas = funcionalidades;
         });
     }
+    
+    $ionicPlatform.on("resume", function(){
+        var time = new Date().getTime();
+        
+        if (!config.timeout || config.timeout < time) {
+            acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
+                $rootScope.funcionalidadesPublicas = funcionalidades;
+                
+                if (config.usuario && config.funcionalidades){
+                    acessoService.carrega(function (acesso) {
+                        $rootScope.usuario = acesso.membro;
+                        $rootScope.funcionalidades = acesso.funcionalidades;
+
+                        configService.save({
+                            usuario: $rootScope.usuario,
+                            funcionalidades: $rootScope.funcionalidades,
+                            funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
+                            timeout: time + 3600000
+                        });
+                    });
+                }else{
+                    configService.save({
+                        funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
+                        timeout: time + 3600000
+                    });
+                }
+            });
+        }
+    });
 
     $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
         $rootScope.offline = false;

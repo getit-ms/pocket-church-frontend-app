@@ -9,6 +9,7 @@
                 <div class="card login-container" content-tabs tabsdata='tabsdata'>
                     <form id="login_form" name="login_form" ng-submit="efetuarLogin(this.login_form)" novalidate ng-cloak>
                         <div class="list">
+                            <label class="item item-text-wrap" translate>login.mensagem_autenticacao</label>
                             <label class="item item-input">
                                 <input placeholder="{{'login.username' | translate}}" type="email" ng-model="auth.username">
                             </label>

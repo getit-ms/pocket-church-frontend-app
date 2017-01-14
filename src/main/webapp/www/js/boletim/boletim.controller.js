@@ -33,8 +33,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, boletimService, pdfService, $state, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
-                        $scope.totalPaginas = 0;
+                    controller: function(boletimService, $scope, boletimService, pdfService, $stateParams){
                         pdfService.get({
                             chave:'boletim', 
                             id:$stateParams.id, 
@@ -44,27 +43,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         boletim.ultimaAlteracao.getTime() != 
                                         $scope.ultimaAlteracao.getTime()){
                                     $scope.boletim = boletim;
-                                    $scope.totalPaginas = boletim.paginas.length;
                                 }
                             }, 
                             supplier:function(id, callback){
                                 boletimService.carrega(id, callback);
                             }
                         });
-                        
-                        $scope.slide = {activeSlide:null};
-
-                        $scope.show = function(pagina){
-                            return Math.abs($scope.boletim.paginas.indexOf(pagina) - $scope.slide.activeSlide) <= 1;
-                        };
-
-                        $scope.updateSlideStatus = function(index) {
-                            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
-                            if (zoomFactor == 1) {
-                                $ionicSlideBoxDelegate.enableSlide(true);
-                            } else {
-                                $ionicSlideBoxDelegate.enableSlide(false);
-                            }
+                        $scope.toggleFullScreen = function(){
+                            $scope.fullscreen = !$scope.fullscreen;
                         };
                     }
                 }

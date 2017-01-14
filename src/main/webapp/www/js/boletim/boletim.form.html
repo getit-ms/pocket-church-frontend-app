@@ -1,21 +1,12 @@
-<ion-view>
-    <ion-nav-title>
+<ion-view ng-class="{'fullscreen' : fullscreen}" hide-nav-bar="{{fullscreen}}">
+    <ion-nav-title ng-show="fullscreen">
         <span>{{boletim.titulo}}</span>
     </ion-nav-title>
-    <ion-content ng-class="{'has-footer': boletim.paginas.length > 1}" class='has-header'>
-        <ion-slide-box show-pager="false" ng-if="boletim.paginas.length" on-slide-changed="slideChanged(index)" active-slide="slide.activeSlide">
-            <ion-slide ng-repeat="pagina in boletim.paginas">
-                <ion-scroll ng-if="show(pagina)"
-                            scroll='false' zooming="true" direction="xy" scrollable-x="false"
-                            scrollable-y="false" min-zoom="1" style="width:100%;height:100%"
-                            delegate-handle="scrollHandle{{$index}}" on-scroll="updateSlideStatus($index)" 
-                            on-release="updateSlideStatus($index)" overflow-scroll="false">
-                    <div class="image" style="background-image: url( {{pagina.localPath}} )"></div>
-                </ion-scroll>
-            </ion-slide>
-        </ion-slide-box>
+    <ion-content ng-class="{'has-header': !fullscreen}"
+                 zooming="true" direction="xy" scrollable-x="false" 
+                 scrollable-y="true" min-zoom="1" style="width:100%;height:100%"
+                 overflow-scroll="false">
+        <div ng-repeat="pagina in boletim.paginas" class="image" ng-click="toggleFullScreen()"
+             style="background-color:red;background-image: url( {{pagina.localPath}} )"></div>
     </ion-content>
-    <ion-footer-bar ng-hide="boletim.paginas.length <= 1" class="bar-stable" align-title="center">
-        <h1 class="title">{{'boletim.paginacao' | translate:'{atual:'+(slide.activeSlide+1)+',total:'+ totalPaginas +'}' }}</h1>
-    </ion-footer-bar>
 </ion-view>

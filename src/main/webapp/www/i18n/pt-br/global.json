@@ -57,7 +57,9 @@
             "REALIZAR_INSCRICAO_EVENTO":{
                 "state":"evento",
                 "label":"Eventos"
-            }
+            },
+            "menu":"Menu do aplicativo",
+            "login":"Página de Autenticação"
         },
         "mes":{
             "1":"Janeiro",
@@ -111,7 +113,13 @@
         "MSG-607":"Sistema PagSeguro indisponível. Tente novamente mais tarde."
     },
     "home":{
-        "inicio":"Início"
+        "inicio":"Início",
+        "facebook":"Acessar página do Facebook da igreja",
+        "twitter":"Acessar página do Twitter da igreja",
+        "youtube":"Acessar página do YouTube da igreja",
+        "pinterest":"Acessar página do Pinterest da igreja",
+        "google_plus":"Acessar página do Google Plus da igreja",
+        "instagram":"Acessar página do Instagram da igreja"
     },
     "login":{
         "password":"Senha",
@@ -122,7 +130,8 @@
         "alterar_senha":"Alterar Senha",
         "esqueci_senha":"Esqueci minha senha",
         "redefinir_senha":"Redefinir Senha",
-        "email":"E-mail"
+        "email":"E-mail",
+        "mensagem_autenticacao":"O acesso é disponibilizado apenas aos membros cadastrados. Entre em contato com a administração da igreja para solicitar o seu cadastro."
     },
     "institucional":{
         "institucional":"Institucional",

@@ -289,3 +289,7 @@ img.igreja-image {
 .calvin .item .html-div h2 span {
     color: inherit;
 }
+
+.fullscreen {
+    background-color: #000 !important;
+}
