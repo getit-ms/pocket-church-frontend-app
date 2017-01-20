@@ -1,0 +1,72 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>ebd.ebd</span>
+    </ion-nav-title>
+    <calvin-pagination searcher='searcherInscricoes' ng-model="inscricoes"
+                       not-found-message="false">
+        <div class="item">
+            <h1>
+                {{ebd.nome }}
+            </h1>
+        </div>
+
+        <div class='item item-text-wrap white-space'>{{ebd.descricao}}</div>
+        <div class='item item-input'>
+            <label class='input-label' translate>ebd.dataHoraInicio</label>
+            {{ebd.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}}
+        </div>
+        <div class='item item-input'>
+            <label class='input-label' translate>ebd.dataHoraTermino</label>
+            {{ebd.dataHoraTermino | date:'dd MMMM yyyy HH:mm'}}
+        </div>
+        <div class='item item-divider'>
+            {{'ebd.inscricao' | translate}}
+        </div>
+        <div class='item item-input'>
+            <label class='input-label' translate>ebd.vagas</label>
+            {{ebd.limiteInscricoes}}
+        </div>
+        <div class='item item-input'>
+            <label class='input-label' translate>ebd.dataHoraInicioInscricao</label>
+            {{ebd.dataInicioInscricao | date:'dd MMMM yyyy HH:mm'}}
+        </div>
+        <div class='item item-input'>
+            <label class='input-label' translate>ebd.dataHoraTerminoInscricao</label>
+            {{ebd.dataTerminoInscricao | date:'dd MMMM yyyy HH:mm'}}
+        </div>
+        <div class='item item-input' ng-if='ebd.exigePagamento'>
+            <label class='input-label' translate>ebd.valor</label>
+            {{ebd.valor | currency:'R$ '}}
+        </div>
+
+        <div class='item' ng-if='ebd.inscricoesAbertas && ebd.vagasRestantes > 0' >
+            <button class='button button-block button-positive'
+                    ng-click='inscricao()'>
+                {{'ebd.realizar_inscricao' | translate}}
+            </button>
+        </div>
+        <div class='item' ng-if='ebd.inscricoesAbertas && ebd.vagasRestantes == 0' >
+            <button class='button button-block button-positive' disabled="true">
+                {{'ebd.sem_vagas' | translate}}
+            </button>
+        </div>
+        <div class='item' ng-if='!ebd.inscricoesAbertas && ebd.inscricoesFuturas' >
+            <button class='button button-block' disabled="true" >
+                {{'ebd.inscricoes_ainda_nao_disponiveis' | translate}}
+            </button>
+        </div>
+        <div class='item' ng-if='!ebd.inscricoesAbertas && ebd.inscricoesPassadas' >
+            <button class='button button-block' disabled="true" >
+                {{'ebd.inscricoes_encerradas' | translate}}
+            </button>
+        </div>
+        <div class="item item-divider" ng-show="inscricoes.length">
+            {{'ebd.minhas_inscricoes' | translate}}
+        </div>
+        <ion-item ng-repeat="inscricao in inscricoes">
+            <span class="item-note">{{'ebd.status_inscricao.' + inscricao.status | translate}}</span>
+            <h2>{{inscricao.nomeInscrito}}</h1>
+                <p>{{inscricao.emailInscrito}}</p>
+        </ion-item>
+    </calvin-pagination>
+</ion-view>

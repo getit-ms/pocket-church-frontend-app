@@ -1,0 +1,62 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>ebd.inscricao</span>
+    </ion-nav-title>
+    <ion-content>
+        <div class="item">
+            <h2>
+                {{ebd.nome }}
+            </h2>
+        </div>
+        <div class='item item-input' >
+            <label class='input-label'>{{'ebd.vagas_restantes' | translate}}</label>
+            {{ebd.vagasRestantes - inscricoes.length}}
+        </div>
+
+        <div ng-repeat="inscricao in inscricoes">
+            <div class='item item-divider item-icon-right'>
+                {{'ebd.inscrito' | translate:{index:inscricoes.indexOf(inscricao) + 1} }}
+                <a class="icon" ng-if='inscricoes.length > 1' ng-click='removeInscricao(inscricao)'>
+                    <i class='fa fa-trash'></i>
+                </a>
+            </div>
+
+            <div class='item item-input' >
+                <label class='input-label' >{{'ebd.nome' | translate }}</label>
+                <input type='text' ng-model='inscricao.nomeInscrito' />
+            </div>
+            <div class='item item-input' >
+                <label class='input-label' >{{'ebd.email' | translate }}</label>
+                <input type='email' ng-model='inscricao.emailInscrito' />
+            </div>
+            <div class='item item-input' >
+                <label class='input-label' >{{'ebd.telefone' | translate }}</label>
+                <input type='tel' ui-mask="{{'config.mask.telefone' | translate}}" ng-model='inscricao.telefoneInscrito' />
+            </div>
+        </div>
+
+        <div class='item' >
+            <button class='button button-block button-positive icon ion-plus-circled'
+                    ng-if='inscricoes.length < ebd.vagasRestantes' ng-click='addInscricao()'>
+                {{'ebd.adicionar_inscrito' | translate}}
+            </button>
+        </div>
+
+        <div class='item item-divider' >
+            {{'ebd.concluir_inscricao' | translate}}
+        </div>
+        <div class='item item-input' >
+            <label class='input-label'>{{'ebd.total_inscricoes' | translate}}</label>
+            {{inscricoes.length}}
+        </div>
+        <div class='item item-input' ng-if='ebd.exigePagamento'>
+            <label class='input-label'>{{'ebd.valor_total' | translate}}</label>
+            {{ebd.valor * inscricoes.length | currency:'R$ '}}
+        </div>
+        <div class='item'>
+            <button class='button button-block button-positive' ng-click='conclui()'>
+                {{'ebd.concluir_inscricao' | translate}}
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

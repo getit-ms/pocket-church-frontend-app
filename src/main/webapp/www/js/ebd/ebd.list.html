@@ -1,0 +1,13 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>ebd.ebds</span>
+    </ion-nav-title>
+    <calvin-pagination searcher='searcher' ng-model="ebds" cache='ebds'>
+        <ion-item class="item-button-right"
+                  ng-repeat="ebd in ebds"
+                  ng-click="detalhar(ebd)">
+            <h2>{{ebd.nome}}</h2>
+                <p>{{ebd.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}} - {{ebd.dataHoraTermino | date:'dd MMMM yyyy HH:mm'}}</p>
+        </ion-item>
+    </calvin-pagination>
+</ion-view>

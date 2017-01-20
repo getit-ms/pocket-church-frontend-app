@@ -29,6 +29,7 @@
         "puxe_para_atualizar":"Puxe para atualizar",
         "puxe_para_mais":"Buscar mais resultados",
         "nenhum_registro_encontrado":"Nenhum registro encontrado.",
+        "caracteres_restantes":"Restam {{quantidade}} caracteres.",
         "title":{
             "200":"Sucesso!",
             "500":"Falha nossa!",
@@ -57,6 +58,10 @@
             "REALIZAR_INSCRICAO_EVENTO":{
                 "state":"evento",
                 "label":"Eventos"
+            },
+            "REALIZAR_INSCRICAO_EBD":{
+                "state":"ebd",
+                "label":"EBD"
             },
             "menu":"Menu do aplicativo",
             "login":"Página de Autenticação"
@@ -228,6 +233,36 @@
         "evento":"Evento",
         "sem_vagas":"Vagas esgotadas",
         "eventos":"Eventos",
+        "realizar_inscricao":"Realizar Inscrição",
+        "valor":"Valor (R$)",
+        "inscricoes_ainda_nao_disponiveis":"Inscrições ainda não disponíveis",
+        "inscricoes_encerradas":"Inscrições encerradas",
+        "vagas_restantes":"Vagas Restantes",
+        "inscrito":"Inscrito",
+        "nome":"Nome",
+        "email":"E-mail",
+        "valor_total":"Valor Total (R$)",
+        "total_inscricoes":"Total de Inscrições",
+        "telefone":"Telefone",
+        "adicionar_inscrito":"Adicionar Inscrito",
+        "concluir_inscricao":"Concluir Inscrição",
+        "minhas_inscricoes":"Minhas Inscrições",
+        "status_inscricao":{
+            "CONFIRMADA":"Confirmada",
+            "PENDENTE":"Pendente",
+            "CANCELADA":"Cancelada"
+        }
+    },
+    "ebd":{
+        "vagas":"Vagas",
+        "dataHoraInicioInscricao":"Início",
+        "dataHoraTerminoInscricao":"Término",
+        "dataHoraInicio":"Início",
+        "dataHoraTermino":"Término",
+        "inscricao":"Inscrição",
+        "ebd":"Curso",
+        "sem_vagas":"Vagas esgotadas",
+        "ebds":"Escola Bíblica Dominical",
         "realizar_inscricao":"Realizar Inscrição",
         "valor":"Valor (R$)",
         "inscricoes_ainda_nao_disponiveis":"Inscrições ainda não disponíveis",
