@@ -300,7 +300,11 @@
         "confirmacao_exclusao":"Confirmação de Exclusão",
         "data_pattern":"dd MMMM yyyy",
         "hoje":"Hoje",
-        "ontem":"Ontem"
+        "ontem":"Ontem",
+        "excluir":"Excluir",
+        "cancelar":"Cancelar",
+        "selecionar_todos":"Selecionar Todos",
+        "excluir_notificacoes":"Excluir notificações"
     }
 }
 

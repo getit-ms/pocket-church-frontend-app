@@ -11,6 +11,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 var ns = [];
                                 if (notificacoes.resultados){
                                     notificacoes.resultados.forEach(function(n){
+                                        var diff = diferenca(new Date(), msg.data);
+                                        if (diff == 0){
+                                            n.dataFormatada = $filter('translate')('notificacao.hoje');
+                                        }else if (diff == 1){
+                                            n.dataFormatada = $filter('translate')('notificacao.ontem');
+                                        }else{
+                                            n.dataFormatada = $filter('date')(msg.data, $filter('translate')('notificacao.data_pattern'));
+                                        }
+                                        
                                         ns.push(angular.extend(n, angular.fromJson(n.notificacao)));
                                     });
                                 }
@@ -33,31 +42,57 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate();
                         }
                         
-                        $scope.data = function(msg){
-                            var diff = diferenca(new Date(), msg.data);
-                            if (diff == 0){
-                                return $filter('translate')('notificacao.hoje');
-                            }else if (diff == 1){
-                                return $filter('translate')('notificacao.ontem');
-                            }
-                            
-                            return $filter('date')(msg.data, $filter('translate')('notificacao.data_pattern'));
+                        $scope.clear = function(){
+                            $scope.excluir = [];
                         };
                         
-                        $scope.clear = function(){
-                            $ionicPopup.confirm({
-                                title:$filter('translate')('notificacao.confirmacao_exclusao'),
-                                template:$filter('translate')('mensagens.MSG-043'),
-                                okText:$filter('translate')('global.sim'),
-                                cancelText:$filter('translate')('global.nao')
-                            }).then(function(resp){
-                                if (resp){
-                                    notificacaoService.clear(function(){
-                                        message({title:'global.title.200',template:'mensagens.MSG-001'});
-                                        $scope.$broadcast('pagination.search');
-                                    });
-                                }
-                            });
+                        $scope.confirmarExclusao = function(){
+                            if ($scope.excluir && $scope.excluir.length){
+                                $ionicPopup.confirm({
+                                    title:$filter('translate')('notificacao.confirmacao_exclusao'),
+                                    template:$filter('translate')('mensagens.MSG-043'),
+                                    okText:$filter('translate')('global.sim'),
+                                    cancelText:$filter('translate')('global.nao')
+                                }).then(function(resp){
+                                    if (resp){
+                                        if ($scope.excluirTodos){
+                                            notificacaoService.clear(function(){
+                                                message({title:'global.title.200',template:'mensagens.MSG-001'});
+                                                $scope.$broadcast('pagination.search');
+                                            });
+                                        }else{
+                                            $scope.excluir.forEach(function(e){
+                                                notificacaoService.remove(e.id);
+                                            });
+                                            
+                                            message({title:'global.title.200',template:'mensagens.MSG-001'});
+                                            $scope.$broadcast('pagination.search');
+                                        }
+                                        $scope.cancelarExclusao();
+                                    }
+                                });
+                            }
+                        };
+                        
+                        $scope.toggleExcluir = function(message){
+                            if ($scope.excluir.indexOf(message) >= 0){
+                                $scope.splice($scope.excluir.indexOf(message), 1);
+                            }else{
+                                $scope.excluir.push(message);
+                            }
+                        };
+                        
+                        $scope.atualizaExcluirTodos = function(){
+                            $scope.excluir.clear();
+                            if ($scope.excluirTodos){
+                                $scope.messages.forEach(function(m){
+                                    $scope.excluir.push(m);
+                                });
+                            }
+                        };
+                        
+                        $scope.cancelarExclusao = function(){
+                            $scope.excluir = undefined;
                         };
                         
                         $scope.$on('$ionicView.enter', function(){
