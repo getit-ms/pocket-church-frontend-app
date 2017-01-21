@@ -33,7 +33,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, boletimService, pdfService, $stateParams){
+                    controller: function(boletimService, $scope, boletimService, pdfService, $stateParams, shareService, config){
                         pdfService.get({
                             chave:'boletim', 
                             id:$stateParams.id, 
@@ -49,6 +49,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 boletimService.carrega(id, callback);
                             }
                         });
+                        
+                        $scope.share = function(){
+                            shareService.share({subject:$scope.boletim.titulo,file:config.server + '/rest/arquivo/download/' + 
+                                        $scope.boletim.boletim.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja});
+                        };
+                        
                         $scope.toggleFullScreen = function(){
                             $scope.fullscreen = !$scope.fullscreen;
                         };

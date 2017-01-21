@@ -7,7 +7,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 templateUrl: 'js/evento/evento.list.html',
                 controller: function(eventoService, $state, $scope){
                     $scope.searcher = function(page, callback){
-                        eventoService.busca({pagina:page,total:10}, callback);
+                        eventoService.busca({tipo:'EVENTO',pagina:page,total:10}, callback);
                     };
                     
                     $scope.detalhar = function(evento){

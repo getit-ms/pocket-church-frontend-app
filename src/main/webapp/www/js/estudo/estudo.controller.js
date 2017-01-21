@@ -24,8 +24,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/estudo/estudo.form.html',
-                controller: function(estudo, $scope){
+                controller: function(estudo, $scope, shareService){
                     $scope.estudo = estudo;
+                    
+                    $scope.share = function(){
+                        shareService.share({subject:$scope.estudo.titulo,message:$scope.estudo.texto});
+                    };
                 },
                 resolve:{
                     estudo: ['estudoService', '$stateParams', function(estudoService, $stateParams){

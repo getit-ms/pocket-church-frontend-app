@@ -14,13 +14,15 @@
         <div class="item item-divider" ng-repeat-start="message in messages" ng-if="showData(message, messages)">
             {{message.dataFormatada}}
         </div>
-        <ion-item class="item-text-wrap" ng-repeat-end>
+        <ion-item class="item-text-wrap" ng-repeat-end ng-click="acessar(message)">
             <h2>
                 {{message.title}}
-                <ion-checkbox ng-if='excluir' ng-checked="excluir.indexOf(message)" ng-click="toggleExcluir(message)" ></ion-checkbox>
                 <span class="item-note">{{message.data | date:('config.pattern.hour' | translate)}}</span>
             </h2>
             <p>{{message.message}}</p>
+            <ion-checkbox item-left ng-if='excluir' ng-checked="excluir.indexOf(message)" ng-click="toggleExcluir(message)" ></ion-checkbox>
+            <a class="ion icon-share" ng-if="!excluir && message.data.compartilhavel" 
+               ng-click="share(message)" title="'global.compartilhar' | translate"></a>
         </ion-item>
     </calvin-pagination>
     <ion-footer-bar ng-hide="!excluir" class="bar-stable" align-title="center">

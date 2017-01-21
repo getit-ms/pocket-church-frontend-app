@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
-                    controller: function(notificacaoService, $scope, $rootScope, $cordovaBadge, $ionicPopup, $filter, message){
+                    controller: function(notificacaoService, $scope, $rootScope, $cordovaBadge, $ionicPopup, $filter, message, $state, shareService){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
                                 var ns = [];
@@ -44,6 +44,29 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         
                         $scope.clear = function(){
                             $scope.excluir = [];
+                        };
+                        
+                        $scope.share = function(message){
+                            shareService.share({message:message.message, subject:message.title});
+                        };
+                        
+                        $scope.acessar = function(message){
+                            if (message.data){
+                                switch (message.data.tipo){
+                                    case 'ACONSELHAMENTO':
+                                        $state.go('aconselhamento');
+                                        break;
+                                    case 'BOLETIM':
+                                        $state.go('boletim');
+                                        break;
+                                    case 'EVENTO':
+                                        $state.go('evento');
+                                        break;
+                                    case 'PEDIDO_ORACAO':
+                                        $state.go('oracao');
+                                        break;
+                                }
+                            }
                         };
                         
                         $scope.confirmarExclusao = function(){

@@ -64,7 +64,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/cifra/cifra.form.html',
-                    controller: function(cifraService, $scope, cifraService, pdfService, arquivoService, $timeout, $stateParams, $ionicScrollDelegate, $ionicLoading, $ionicSlideBoxDelegate, $filter){
+                    controller: function(cifraService, $scope, cifraService, pdfService, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate, shareService, config){
                         $scope.totalPaginas = 0;
                         
                         pdfService.get({
@@ -81,6 +81,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         });
                         
                         $scope.slide = {activeSlide:null};
+                        
+                        $scope.share = function(){
+                            shareService.share({subject:$scope.cifra.titulo,file:config.server + '/rest/arquivo/download/' + 
+                                        $scope.cifra.cifra.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja});
+                        };
 
                         $scope.updateSlideStatus = function(index) {
                             var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;

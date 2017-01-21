@@ -7,7 +7,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 templateUrl: 'js/ebd/ebd.list.html',
                 controller: function(ebdService, $state, $scope){
                     $scope.searcher = function(page, callback){
-                        ebdService.busca({pagina:page,total:10}, callback);
+                        ebdService.busca({tipo:'EBD',pagina:page,total:10}, callback);
                     };
 
                     $scope.detalhar = function(ebd){

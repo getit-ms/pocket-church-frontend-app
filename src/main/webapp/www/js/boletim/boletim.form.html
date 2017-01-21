@@ -2,6 +2,11 @@
     <ion-nav-title ng-show="fullscreen">
         <span>{{boletim.titulo}}</span>
     </ion-nav-title>
+    <ion-nav-buttons side="right" >
+        <a data-tap-disabled="true" ng-click="share()" href="" 
+           class="button button-icon icon positive ion icon-share"
+           title="'global.compartilhar' | translate"></a>
+    </ion-nav-buttons>
     <ion-content ng-class="{'has-header': !fullscreen}"
                  zooming="true" direction="xy" scrollable-x="false" 
                  scrollable-y="true" min-zoom="1" style="width:100%;height:100%"

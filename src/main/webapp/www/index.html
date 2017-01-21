@@ -75,6 +75,7 @@
         <script src="js/cifra/cifra.controller.js"></script>
         <script src="js/chamado/chamado.controller.js"></script>
         <script src="js/notificacao/notificacao.controller.js"></script>
+        <script src="js/ebd/ebd.controller.js"></script>
         
         <script src="js/service/link.service.js"></script>
         <script src="js/service/boletim.service.js"></script>
@@ -93,6 +94,7 @@
         <script src="js/service/chamado.service.js"></script>
         <script src="js/service/cache.service.js"></script>
         <script src="js/service/notificacao.service.js"></script>
+        <script src="js/service/share.service.js"></script>
     </head>
     <body ng-app="calvinApp" class="calvin" ng-init>
         
@@ -188,6 +190,11 @@
                               ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EVENTO') >= 0">
                         <span class='icon fa fa-calendar'></span>
                         <h2 class="menu-text">{{'evento.eventos' | translate}}</h2>
+                    </ion-item>
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="ebd"
+                              ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EBD') >= 0">
+                        <span class='icon fa fa-file-text-o'></span>
+                        <h2 class="menu-text">{{'ebd.ebd' | translate}}</h2>
                     </ion-item>
                     <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="notificacao">
                         <span class='icon fa fa-exclamation-circle'></span>

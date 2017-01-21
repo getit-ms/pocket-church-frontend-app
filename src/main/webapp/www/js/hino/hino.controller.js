@@ -64,8 +64,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/hino/hino.form.html',
-                controller: function($scope, hino){
+                controller: function($scope, hino, shareService){
                     $scope.hino = hino;
+                    
+                    $scope.share = function(){
+                        shareService.share({subject:$scope.hino.nome,message:$scope.hino.texto});
+                    };
                 },
                 resolve: {
                     hino: ['hinoService', '$stateParams', function(hinoService, $stateParams){
