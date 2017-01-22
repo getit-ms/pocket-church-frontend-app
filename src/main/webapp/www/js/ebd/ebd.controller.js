@@ -5,9 +5,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/ebd/ebd.list.html',
-                controller: function(ebdService, $state, $scope){
+                controller: function(eventoService, $state, $scope){
                     $scope.searcher = function(page, callback){
-                        ebdService.busca({tipo:'EBD',pagina:page,total:10}, callback);
+                        eventoService.busca({tipo:'EBD',pagina:page,total:10}, callback);
                     };
 
                     $scope.detalhar = function(ebd){
@@ -22,11 +22,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/ebd/ebd.form.html',
-                controller: function($scope, ebd, $state, ebdService){
+                controller: function($scope, ebd, $state, eventoService){
                     $scope.ebd = ebd;
 
                     $scope.searcherInscricoes = function(page, callback){
-                        ebdService.buscaMinhasInscricoes(ebd.id, {pagina:page,total:10}, callback);
+                        eventoService.buscaMinhasInscricoes(ebd.id, {pagina:page,total:10}, callback);
                     };
 
                     $scope.$on('$ionicView.enter', function(){
@@ -38,8 +38,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     };
                 },
                 resolve: {
-                    ebd: ['ebdService', '$stateParams', function(ebdService, $stateParams){
-                        return ebdService.carrega($stateParams.id);
+                    ebd: ['eventoService', '$stateParams', function(eventoService, $stateParams){
+                        return eventoService.carrega($stateParams.id);
                     }]
                 }
             }
@@ -50,7 +50,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/ebd/inscricao.form.html',
-                controller: function(ebdService, $scope, ebd, $state,
+                controller: function(eventoService, $scope, ebd, $state,
                                 message, $window, $ionicHistory){
                     $scope.ebd = ebd;
 
@@ -85,7 +85,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                     $scope.conclui = function(){
                         if ($scope.inscricoes.length){
-                            ebdService.inscricao($scope.ebd.id, $scope.inscricoes, function(resposta){
+                            eventoService.inscricao($scope.ebd.id, $scope.inscricoes, function(resposta){
                                 if (resposta.devePagar && resposta.checkoutPagSeguro){
                                     message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
                                         $ionicHistory.goBack();
@@ -102,8 +102,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.clear();
                 },
                 resolve: {
-                    ebd: ['ebdService', '$stateParams', function(ebdService, $stateParams){
-                        return ebdService.carrega($stateParams.id);
+                    ebd: ['eventoService', '$stateParams', function(eventoService, $stateParams){
+                        return eventoService.carrega($stateParams.id);
                     }]
                 }
             }

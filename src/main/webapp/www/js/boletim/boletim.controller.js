@@ -33,7 +33,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, boletimService, pdfService, $stateParams, shareService, config){
+                    controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config, $ionicSlideBoxDelegate, $ionicScrollDelegate){
+                        $scope.totalPaginas = 0;
+                        
                         pdfService.get({
                             chave:'boletim', 
                             id:$stateParams.id, 
@@ -43,6 +45,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         boletim.ultimaAlteracao.getTime() != 
                                         $scope.ultimaAlteracao.getTime()){
                                     $scope.boletim = boletim;
+                                    $scope.totalPaginas = boletim.paginas.length;
                                 }
                             }, 
                             supplier:function(id, callback){
@@ -54,9 +57,20 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             shareService.share({subject:$scope.boletim.titulo,file:config.server + '/rest/arquivo/download/' + 
                                         $scope.boletim.boletim.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja});
                         };
-                        
-                        $scope.toggleFullScreen = function(){
-                            $scope.fullscreen = !$scope.fullscreen;
+                        $scope.show = function(pagina, index){
+                            var idx = $scope.boletim.paginas.indexOf(pagina);
+                            return Math.abs(idx - index) <= 1;
+                        };
+
+                        $scope.slide = {activeSlide:null};
+
+                        $scope.updateSlideStatus = function(index) {
+                            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+                            if (zoomFactor == 1) {
+                                $ionicSlideBoxDelegate.enableSlide(true);
+                            } else {
+                                $ionicSlideBoxDelegate.enableSlide(false);
+                            }
                         };
                     }
                 }

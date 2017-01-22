@@ -51,7 +51,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
         }
         
         function remove(id){
-            $cordovaFile.remove(cordova.file.dataDirectory, 'arquivos/' + id + '.bin').then(function(){
+            $cordovaFile.removeFile(cordova.file.dataDirectory, 'arquivos/' + id + '.bin').then(function(){
                 $window.localStorage.removeItem('arquivo.' + id);
             });
         }

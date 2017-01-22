@@ -262,7 +262,7 @@
         "dataHoraInicio":"Início",
         "dataHoraTermino":"Término",
         "inscricao":"Inscrição",
-        "ebd":"Curso",
+        "ebd":"EBD",
         "sem_vagas":"Vagas esgotadas",
         "ebds":"Escola Bíblica Dominical",
         "realizar_inscricao":"Realizar Inscrição",
@@ -343,6 +343,9 @@
         "cancelar":"Cancelar",
         "selecionar_todos":"Selecionar Todos",
         "excluir_notificacoes":"Excluir notificações"
+    },
+    "youtube":{
+        "videos":"Vídeos"
     }
 }
 

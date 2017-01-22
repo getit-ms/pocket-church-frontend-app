@@ -28,7 +28,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.estudo = estudo;
                     
                     $scope.share = function(){
-                        shareService.share({subject:$scope.estudo.titulo,message:$scope.estudo.texto});
+                        shareService.share({
+                            subject:$scope.estudo.titulo,
+                            message:$scope.estudo.texto
+                        });
                     };
                 },
                 resolve:{

@@ -68,7 +68,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.hino = hino;
                     
                     $scope.share = function(){
-                        shareService.share({subject:$scope.hino.nome,message:$scope.hino.texto});
+                        shareService.share({
+                            subject:$scope.hino.nome,
+                            message:$scope.hino.texto.replace(/<br.?>/, '\n').replace(/<.+>/, '')
+                        });
                     };
                 },
                 resolve: {
