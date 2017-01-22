@@ -167,6 +167,11 @@
                         <span class='icon fa fa-file-audio-o'></span>
                         <h2 class="menu-text">{{'cifra.cifras' | translate}}</h2>
                     </ion-item>
+                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="cifra"
+                              ng-if="funcionalidadesPublicas.indexOf('YOUTUBE') >= 0">
+                        <span class='icon fa fa-youtube-square'></span>
+                        <h2 class="menu-text">{{'youtube.youtube' | translate}}</h2>
+                    </ion-item>
                     
                     <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="contato"
                               ng-if="funcionalidades.indexOf('CONSULTAR_CONTATOS_IGREJA') >= 0">
