@@ -1,0 +1,32 @@
+<ion-view>
+    <ion-nav-title >
+        <span translate>youtube.youtube</span>
+    </ion-nav-title>
+    <ion-content class="has-header">
+        <ion-refresher
+            pulling-text="{{'global.puxe_para_atualizar' | translate}}"
+            on-refresh='refresh()'></ion-refresher>
+        <div ng-if="!videos.length" class="row row-center">
+            <div class="col col-center text-center">
+                <span translate>global.nenhum_registro_encontrado</span>
+            </div>
+        </div>
+        <div ng-repeat="video in videos" class="card">
+            <a class="item item-thumbnail-left" 
+               ng-click="openModal(video)"
+               ng-if="video.aoVivo">
+                <img src="{{video.thumbnail}}" />
+                <h2>{{video.titulo}}</h2>
+                <p>{{video.descricao}}</p>
+            </a>
+            <div class="item item-avatar" ng-if="video.aoVivo">
+              <h2>{{video.titulo}}</h2>
+            </div>
+            <div class="item item-body" ng-if="video.aoVivo">
+                <img class="full-image" src="{{video.thumbnail}}" />
+                <span class="badge badge-positive pull-right" translate>youtube.ao_vivo</span>
+                <p>{{video.descricao}}</p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

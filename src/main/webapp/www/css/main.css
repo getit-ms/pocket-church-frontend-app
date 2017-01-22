@@ -1,0 +1,22 @@
+.transparent {
+    background: rgba(0,0,0,0.9) !important;
+}
+.video-modal {
+    width: 100% !important;
+    height: 100%;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+@media (max-width: 679px) {
+    .active .modal-backdrop-bg {
+        opacity: .9;
+    }
+    
+    .modal-backdrop-bg {
+        -webkit-transition: opacity 300ms ease-in-out;
+        transition: opacity 300ms ease-in-out;
+        background-color: rgba(0,0,0,0.9);
+        opacity: 0;
+    }
+}
