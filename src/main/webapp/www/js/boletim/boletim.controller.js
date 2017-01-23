@@ -33,7 +33,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config, $ionicSlideBoxDelegate, $ionicScrollDelegate){
+                    controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config, $ionicSlideBoxDelegate, $ionicScrollDelegate, $ionicLoading){
                         $scope.totalPaginas = 0;
                         
                         pdfService.get({
@@ -54,8 +54,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         });
                         
                         $scope.share = function(){
+                            $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
+                            
                             shareService.share({subject:$scope.boletim.titulo,file:config.server + '/rest/arquivo/download/' + 
                                         $scope.boletim.boletim.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja});
+                            
+                            $ionicLoading.hide();
                         };
                         $scope.show = function(pagina, index){
                             var idx = $scope.boletim.paginas.indexOf(pagina);

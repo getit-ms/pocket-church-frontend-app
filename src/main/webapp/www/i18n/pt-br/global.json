@@ -30,7 +30,7 @@
         "puxe_para_atualizar":"Puxe para atualizar",
         "puxe_para_mais":"Buscar mais resultados",
         "nenhum_registro_encontrado":"Nenhum registro encontrado.",
-        "caracteres_restantes":"Restam {{quantidade}} caracteres.",
+        "caracteres_restantes":"Restam {quantidade} caracteres.",
         "title":{
             "200":"Sucesso!",
             "500":"Falha nossa!",

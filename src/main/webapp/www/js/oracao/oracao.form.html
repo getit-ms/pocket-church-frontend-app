@@ -22,7 +22,7 @@
                     <textarea rows="5" ng-model='pedido.pedido' placeholder="{{'oracao.pedido' | translate}}" maxlength="500" ></textarea>
                 </label>
                 <label class='item item-text-wrap text-right'>
-                  <p>{{'global.caracteres_restantes' | translate:({quantidade:500-pedido.pedido.length}) }}</p>
+                  <p>{{'global.caracteres_restantes' | translate:{quantidade:500-pedido.pedido.length} }}</p>
                 </label>
                 <div class='item'>
                     <input type='submit' class='button button-block button-positive' value="{{'oracao.submeter' | translate}}" />

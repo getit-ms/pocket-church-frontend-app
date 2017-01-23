@@ -11,13 +11,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 var ns = [];
                                 if (notificacoes.resultados){
                                     notificacoes.resultados.forEach(function(n){
-                                        var diff = diferenca(new Date(), msg.data);
+                                        var diff = diferenca(new Date(), n.data);
                                         if (diff == 0){
                                             n.dataFormatada = $filter('translate')('notificacao.hoje');
                                         }else if (diff == 1){
                                             n.dataFormatada = $filter('translate')('notificacao.ontem');
                                         }else{
-                                            n.dataFormatada = $filter('date')(msg.data, $filter('translate')('notificacao.data_pattern'));
+                                            n.dataFormatada = $filter('date')(n.data, $filter('translate')('notificacao.data_pattern'));
                                         }
                                         
                                         ns.push(angular.extend(n, angular.fromJson(n.notificacao)));
