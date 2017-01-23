@@ -23,7 +23,7 @@
             <p>{{message.message}}</p>
             <ion-checkbox item-left ng-if='excluir' ng-checked="excluir.indexOf(message)" ng-click="toggleExcluir(message)" ></ion-checkbox>
             <a class="icon ion-android-share-alt" ng-if="!excluir && message.data.compartilhavel" 
-               ng-click="share(message)" title="'global.compartilhar' | translate"></a>
+               ng-click="share(message)" title="{{'global.compartilhar' | translate}}"></a>
         </ion-item>
     </calvin-pagination>
     <ion-footer-bar ng-hide="!excluir" class="bar-stable" align-title="center">

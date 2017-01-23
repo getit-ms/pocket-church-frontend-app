@@ -110,12 +110,12 @@
                 </ion-nav-back-button>
                 <ion-nav-buttons side="left">
                     <button class="button button-icon button-clear ion-navicon" menu-toggle="left"
-                            title="{{'menu.menu' | translate}}">
+                            title="{{'global.menu.menu' | translate}}">
                     </button>
                 </ion-nav-buttons>
                 <ion-nav-buttons side="right" >
                     <button ng-if="!usuario" class="button button-icon" nav-clear ui-sref="login"
-                            titel="{{'menu.login' | translate}}">
+                            titel="{{'global.menu.login' | translate}}">
                         <span class='fa fa-lock'></span>
                     </button>
                 </ion-nav-buttons>
@@ -133,89 +133,107 @@
             <ion-content>
                 <ion-list>
                     <ion-item href='' class='menu-header'>
-                        <img class="igreja-image" ng-src="img/logo.png">
+                        <img class="igreja-image" alt='${nome.igreja}' ng-src="img/logo.png">
                     </ion-item>
                     
                     <ion-item ng-if="usuario" class="item item-icon-left item-icon-right user" >
                         <span nav-clear menu-close ui-sref="alteraSenha" class='icon ion-person'></span>
-                        <h2 nav-clear menu-close ui-sref="alteraSenha" class='menu-text'>{{usuario.nome}}</h2>
-                        <span ng-click='logout()' class='icon icon-right fa fa-power-off'></span>
+                        <h2 nav-clear menu-close ui-sref="alteraSenha" class='menu-text'
+                            title="{{'global.menu.alterar_senha' | translate}}">{{usuario.nome}}</h2>
+                        <span ng-click='logout()' class='icon icon-right fa fa-power-off'
+                              title="{{'global.menu.logut' | translat}}"></span>
                     </ion-item>
                     
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="home">
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="home" title="{{'home.inicio' | translate}}">
                         <span class='icon fa fa-home'></span>
                         <h2 class="menu-text">{{'home.inicio' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="institucional">
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="institucional" title="{{'institucional.institucional' | translate}}">
                         <span class='icon fa fa-cube'></span>
                         <h2 class="menu-text">{{'institucional.institucional' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="boletim"
+                    <ion-item nav-clear menu-close class="item item-icon-left"
+                              ui-sref="boletim" title="{{'boletim.boletins' | translate}}"
                               ng-if="funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0">
                         <span class='icon fa fa-file-text'></span>
                         <h2 class="menu-text">{{'boletim.boletins' | translate}}</h2>
                     </ion-item>
                     <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="estudo"
+                              title="{{'estudo.estudos' | translate}}"
                               ng-if="funcionalidadesPublicas.indexOf('LISTAR_ESTUDOS') >= 0">
                         <span class='icon fa fa-book'></span>
                         <h2 class="menu-text">{{'estudo.estudos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="hino"
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="hino" title="{{'hino.hinos' | translate}}"
                               ng-if="funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0">
                         <span class='icon fa fa-music'></span>
                         <h2 class="menu-text">{{'hino.hinos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="cifra"
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="cifra" title="{{'cifra.cifras' | translate}}"
                               ng-if="funcionalidadesPublicas.indexOf('CONSULTAR_CIFRAS') >= 0">
                         <span class='icon fa fa-file-audio-o'></span>
                         <h2 class="menu-text">{{'cifra.cifras' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="youtube"
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="youtube" title="{{'youtube.videos' | translate}}"
                               ng-if="funcionalidadesPublicas.indexOf('YOUTUBE') >= 0">
                         <span class='icon fa fa-youtube-play'></span>
                         <h2 class="menu-text">{{'youtube.videos' | translate}}</h2>
                     </ion-item>
                     
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="contato"
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="contato" title="{{'contato.contatos' | translate}}"
                               ng-if="funcionalidades.indexOf('CONSULTAR_CONTATOS_IGREJA') >= 0">
                         <span class='icon fa fa-users'></span>
                         <h2 class="menu-text">{{'contato.contatos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="votacao" 
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="votacao" title="{{'votacao.votacoes' | translate}}"
                               ng-if="funcionalidades.indexOf('REALIZAR_VOTACAO') >= 0">
                         <span class='icon fa fa-check-square'></span>
                         <h2 class="menu-text">{{'votacao.votacoes' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="oracao" 
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="oracao" title="{{'oracao.pedidos' | translate}}"
                               ng-if="funcionalidades.indexOf('PEDIR_ORACAO') >= 0">
                         <span class='icon fa fa-heart'></span>
                         <h2 class="menu-text">{{'oracao.pedidos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="agenda" 
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="agenda" title="{{'agenda.agendamentos' | translate}}"
                               ng-if="funcionalidades.indexOf('AGENDAR_ACONSELHAMENTO') >= 0">
                         <span class='icon fa fa-comments'></span>
                         <h2 class="menu-text">{{'agenda.agendamentos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="evento"
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="evento" title="{{'evento.eventos' | translate}}"
                               ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EVENTO') >= 0">
                         <span class='icon fa fa-calendar'></span>
                         <h2 class="menu-text">{{'evento.eventos' | translate}}</h2>
                     </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="ebd"
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="ebd" title="{{'ebd.ebd' | translate}}"
                               ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EBD') >= 0">
                         <span class='icon fa fa-file-text-o'></span>
                         <h2 class="menu-text">{{'ebd.ebd' | translate}}</h2>
                     </ion-item>
-                    <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="notificacao">
+                    <ion-item class="item item-icon-left" nav-clear menu-close 
+                              ui-sref="notificacao" title="{{'notificacao.notificacoes' | translate}}"> 
                         <span class='icon fa fa-exclamation-circle'></span>
                         <h2 class="menu-text">{{'notificacao.notificacoes' | translate}}</h2>
                         <span class="badge badge-stable" ng-show="notifications">{{notifications}}</span>
                     </ion-item>
-                    <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="chamado">
+                    <ion-item class="item item-icon-left" nav-clear menu-close 
+                              ui-sref="chamado" title="{{'chamado.chamados' | translate}}">
                         <span class='icon fa fa-comment'></span>
                         <h2 class="menu-text">{{'chamado.chamados' | translate}}</h2>
                     </ion-item>
-                    <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="preferencias">
+                    <ion-item class="item item-icon-left" nav-clear menu-close 
+                              ui-sref="preferencias" title="{{'preferencias.preferencias' | translate}}">
                         <span class='icon fa fa-cog'></span>
                         <h2 class="menu-text">{{'preferencias.preferencias' | translate}}</h2>
                     </ion-item>

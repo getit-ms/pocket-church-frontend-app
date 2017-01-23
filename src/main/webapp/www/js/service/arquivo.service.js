@@ -27,7 +27,9 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
         };
         
         this.clean = function(){
-            for (i=0;i<$window.localStorage.length;i++){
+            var self = this;
+            var count = 0;
+            for (var i=0;i<$window.localStorage.length;i++){
                 var key = $window.localStorage.key(i);
                 if (key.startsWith('arquivo.')){
                     var cache = $window.localStorage.getItem(key);
@@ -35,7 +37,14 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                     if (cache){
                         if (!cache.access || cache.uuid != config.headers.Dispositivo
                                 || cache.access + this.timeout < new Date().getTime()){
-                            remove(key.substring(key.indexOf('.') + 1));
+                            if (++count >= 5){
+                                remove(key.substring(key.indexOf('.') + 1), function(){
+                                    self.clean();
+                                });
+                                return;
+                            }else{
+                                remove(key.substring(key.indexOf('.') + 1));
+                            }
                         }
                     }
                 }
@@ -50,9 +59,12 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             $window.localStorage.setItem('arquivo.' + id, angular.toJson(cache));
         }
         
-        function remove(id){
+        function remove(id, callback){
             $cordovaFile.removeFile(cordova.file.dataDirectory, 'arquivos/' + id + '.bin').then(function(){
                 $window.localStorage.removeItem('arquivo.' + id);
+                if (callback){
+                    callback();
+                }
             });
         }
         

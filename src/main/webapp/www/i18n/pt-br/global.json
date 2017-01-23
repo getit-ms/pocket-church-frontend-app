@@ -65,7 +65,9 @@
                 "label":"EBD"
             },
             "menu":"Menu do aplicativo",
-            "login":"Página de Autenticação"
+            "login":"Página de Autenticação",
+            "logut":"Realizar logout do aplicativo",
+            "alterar_senha":"Clique para alterar sua senha"
         },
         "mes":{
             "1":"Janeiro",
