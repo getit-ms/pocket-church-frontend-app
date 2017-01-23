@@ -1,4 +1,9 @@
 <div class="modal video-modal transparent" ng-click="closeModal()">
-    <iframe id="ytplayer" type="text/html" width="100%" height="360"
-            src="http://www.youtube.com/embed/{{video.id}}?autoplay=1" frameborder="0"></iframe>
+    <div class="header-item">
+        <a data-tap-disabled="true" ng-click="share()" href="" 
+           class="button-icon pull-right icon ion-android-share-alt"
+           title="'global.compartilhar' | translate"></a>
+    </div>
+    
+    <youtube-video video-id="video.id" player-vars="{autoplay:1}"></youtube-video>
 </div>

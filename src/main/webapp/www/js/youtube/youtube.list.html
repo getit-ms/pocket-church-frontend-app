@@ -5,7 +5,7 @@
     <ion-content class="has-header">
         <ion-refresher
             pulling-text="{{'global.puxe_para_atualizar' | translate}}"
-            on-refresh='refresh()'></ion-refresher>
+            on-refresh='busca()'></ion-refresher>
         <div ng-if="!videos.length" class="row row-center">
             <div class="col col-center text-center">
                 <span translate>global.nenhum_registro_encontrado</span>
@@ -18,6 +18,7 @@
                 <img src="{{video.thumbnail}}" />
                 <h2>{{video.titulo}}</h2>
                 <p>{{video.descricao}}</p>
+                <p>{{video.publicacao | date:'dd MMMM yyyy'}}</p>
             </a>
             <div class="item item-avatar" ng-if="video.aoVivo">
               <h2>{{video.titulo}}</h2>

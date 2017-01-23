@@ -21,7 +21,8 @@ var calvinApp = angular.module('calvinApp', [
     'onezone-datepicker',
     'underscore',
     'ngResource',
-    'jett.ionic.filter.bar'
+    'jett.ionic.filter.bar',
+    'youtube-embed'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
                     $cordovaDevice, arquivoService, cacheService, $injector, boletimService, $cordovaBadge, acessoService) {
     function countNotificacoes(){
