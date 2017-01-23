@@ -346,7 +346,11 @@
         "excluir_notificacoes":"Excluir notificações"
     },
     "youtube":{
-        "videos":"Vídeos"
+        "videos":"Cultos e Vídeos",
+        "ao_vivo":"AO VIVO",
+        "clique_para_assistir":"Clique para assistir",
+        "proximos_videos_cultos":"Próximos Cultos e Vídeos ",
+        "historico_videos_cultos":"Histórico de Cultos e Vídeos"
     }
 }
 

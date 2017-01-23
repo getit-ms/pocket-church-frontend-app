@@ -7,8 +7,20 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     templateUrl: 'js/youtube/youtube.list.html',
                     controller: function(youtubeService, $scope, $ionicModal){
                         $scope.busca = function(){
+                            $scope.futuros = [];
+                            $scope.presentes = [];
+                            $scope.passados = [];
                             youtubeService.busca(function(videos){
-                                $scope.videos = videos;
+                                videos.forEach(function(v){
+                                    if (v.aoVivo){
+                                        $scope.presentes.push(v);
+                                    }else if (v.agendamento){
+                                        $scope.futuros.push(v);
+                                    }else{
+                                        $scope.passados.push(v);
+                                    }
+                                });
+                                
                                 $scope.$broadcast('scroll.refreshComplete');
                             });
                         };
