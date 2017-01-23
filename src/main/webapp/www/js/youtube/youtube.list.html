@@ -14,7 +14,7 @@
         <div ng-repeat="video in videos" class="card">
             <a class="item item-thumbnail-left" 
                ng-click="openModal(video)"
-               ng-if="video.aoVivo">
+               ng-if="!video.aoVivo">
                 <img src="{{video.thumbnail}}" />
                 <h2>{{video.titulo}}</h2>
                 <p>{{video.descricao}}</p>
