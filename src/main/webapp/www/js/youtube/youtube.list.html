@@ -18,7 +18,7 @@
                     <span class="badge badge-positive pull-right" translate>youtube.ao_vivo</span>
                 </div>
                 <div class="item item-body">
-                    <img class="full-image" src="{{video.thumbnail}}" 
+                    <img class="full-image" src="{{video.thumbnail}}"
                          title="{{'youtube.clique_para_assistir' | translate}}" />
                     <p>{{video.descricao}}</p>
                 </div>
@@ -28,7 +28,7 @@
             youtube.proximos_videos_cultos
         </div>
         <div ng-repeat="video in futuros">
-            <div class="item item-thumbnail-left" 
+            <div class="item item-thumbnail-left item-text-wrap"
                  ng-click="openModal(video)" >
                 <img src="{{video.thumbnail}}"
                      title="{{'youtube.clique_para_assistir' | translate}}" />
@@ -43,7 +43,7 @@
         <div ng-repeat="video in passados">
             <div class="item item-thumbnail-left"
                  ng-click="openModal(video)" >
-                <img src="{{video.thumbnail}}" 
+                <img src="{{video.thumbnail}}"
                      title="{{'youtube.clique_para_assistir' | translate}}" />
                 <h2>{{video.titulo}}</h2>
                 <p>{{video.descricao}}</p>

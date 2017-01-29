@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/youtube/youtube.list.html',
-                    controller: function(youtubeService, $scope, $ionicModal){
+                    controller: function(youtubeService, $scope, $ionicModal, shareService){
                         $scope.busca = function(){
                             $scope.futuros = [];
                             $scope.presentes = [];
@@ -36,6 +36,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $scope.modal.show();
                             });
                         };
+
+                        $scope.share = function(){
+                            if ($scope.video){
+                                shareService.share({subject:$scope.video.titulo,link:'https://www.youtube.com/watch?v=' + $scope.video.id});
+                            }
+                        };
                         
                         $scope.$on('$ionicView.leave', function() {
                             $scope.$scope.closeModal();
@@ -53,5 +59,5 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     }
                 }
             }
-        });         
+        });
     }]);
