@@ -80,6 +80,7 @@
         <script src="js/notificacao/notificacao.controller.js"></script>
         <script src="js/ebd/ebd.controller.js"></script>
         <script src="js/youtube/youtube.controller.js"></script>
+        <script src="js/biblia/biblia.controller.js"></script>
         
         <script src="js/service/link.service.js"></script>
         <script src="js/service/boletim.service.js"></script>
@@ -100,6 +101,8 @@
         <script src="js/service/notificacao.service.js"></script>
         <script src="js/service/share.service.js"></script>
         <script src="js/service/youtube.service.js"></script>
+        <script src="js/service/database.service.js"></script>
+        <script src="js/service/biblia.service.js"></script>
     </head>
     <body ng-app="calvinApp" class="calvin" ng-init>
         
@@ -141,7 +144,7 @@
                         <h2 nav-clear menu-close ui-sref="alteraSenha" class='menu-text'
                             title="{{'global.menu.alterar_senha' | translate}}">{{usuario.nome}}</h2>
                         <span ng-click='logout()' class='icon icon-right fa fa-power-off'
-                              title="{{'global.menu.logut' | translat}}"></span>
+                              title="{{'global.menu.logout' | translate}}"></span>
                     </ion-item>
                     
                     <ion-item nav-clear menu-close class="item item-icon-left" 
@@ -177,6 +180,12 @@
                               ng-if="funcionalidadesPublicas.indexOf('CONSULTAR_CIFRAS') >= 0">
                         <span class='icon fa fa-file-audio-o'></span>
                         <h2 class="menu-text">{{'cifra.cifras' | translate}}</h2>
+                    </ion-item>
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="biblia" title="{{'biblia.biblia' | translate}}"
+                              ng-if="funcionalidadesPublicas.indexOf('BIBLIA') >= 0">
+                        <span class='icon fa fa-plus-square'></span>
+                        <h2 class="menu-text">{{'biblia.biblia' | translate}}</h2>
                     </ion-item>
                     <ion-item nav-clear menu-close class="item item-icon-left" 
                               ui-sref="youtube" title="{{'youtube.videos' | translate}}"

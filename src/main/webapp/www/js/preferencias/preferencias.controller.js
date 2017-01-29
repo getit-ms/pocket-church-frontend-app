@@ -17,8 +17,36 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         $scope.ministeriosSelecionados[min.id] = true;
                                     }
                                 }
+                                $scope.verifyTodosMinisterios();
                             });
                         });
+                        
+                        $scope.toggleTodosMinisterios = function(){
+                            if ($scope.ministerios){
+                                if ($scope.todosMinisterios){
+                                    $scope.ministeriosSelecionados = [];
+                                    $scope.todosMinisterios = false;
+                                }else{
+                                    $scope.ministerios.forEach(function(min){
+                                        $scope.ministeriosSelecionados[min.id] = true;
+                                    });
+                                    $scope.todosMinisterios = true;
+                                }
+                            }
+                        };
+                        
+                        $scope.verifyTodosMinisterios = function(){
+                            if ($scope.ministerios){
+                                $scope.todosMinisterios = true;
+                                for (var i=0;i<$scope.ministerios.length;i++){
+                                    var min = $scope.ministerios[i];
+                                    if (!$scope.ministeriosSelecionados[min.id]){
+                                        $scope.todosMinisterios = false;
+                                        break;
+                                    }
+                                };
+                            }
+                        };
                         
                         $scope.ministerios = acessoService.buscaMinisterios();
                         $scope.horasVersiculoDiario = acessoService.buscaHorasVersiculoDiario();

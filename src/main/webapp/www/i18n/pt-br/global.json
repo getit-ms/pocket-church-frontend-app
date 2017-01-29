@@ -109,7 +109,7 @@
         "MSG-042":"Sua inscrição está quase concluída. Agora você será direcionado para o PagSeguro onde poderá realizar o pagamento da inscrição.",
         "MSG-043":"Deseja realmente excluir todas as notificações?",
         "MSG-046":"Houve um problema ao tentar conectar com o YouTube. Tente novamente e se o problema persistir conecte o administrador do sistema.",
-        "MSG-047":"Deseja realmente excluir as notificações selecionadas?",
+        "MSG-047":"Deseja realmente excluir as {quantidade} notificações selecionadas?",
         "MSG-302":"Parece que você está sem acesso à Internet. Verifique sua conexão e tente novamente.",
         "MSG-403":"Você não tem permissão para fazer isso.",
         "MSG-404":"O servidor parece estar fora do ar. Aguarde alguns minutos e tente novamente.",
@@ -323,6 +323,7 @@
     },
     "preferencias":{
         "preferencias":"Preferências",
+        "todos_ministerios":"Todos os Ministérios",
         "deseja_disponibilizar_dados":"Permitir que outros membros vejam meus dados",
         "deseja_receber_versiculos":"Receber versículos diários",
         "hora_versiculo":"Hora do Versículo Diário",
@@ -345,7 +346,8 @@
         "excluir":"Excluir",
         "cancelar":"Cancelar",
         "selecionar_todos":"Selecionar Todos",
-        "excluir_notificacoes":"Excluir notificações"
+        "excluir_notificacoes":"Excluir notificações",
+        "excluir_todos":"Excluir Todos"
     },
     "youtube":{
         "videos":"Cultos e Vídeos",
@@ -353,6 +355,11 @@
         "clique_para_assistir":"Clique para assistir",
         "proximos_videos_cultos":"Próximos Cultos e Vídeos ",
         "historico_videos_cultos":"Histórico de Cultos e Vídeos"
+    },
+    "biblia":{
+        "biblia":"Bíblia",
+        "velho_testamento":"Velho Testamento",
+        "novo_testamento":"Novo Testamento"
     }
 }
 

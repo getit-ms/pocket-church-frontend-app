@@ -1,0 +1,18 @@
+<ion-view>
+    <ion-nav-title>
+        <span>{{livro.aberviacao}} - {{capitulo}}</span>
+    </ion-nav-title>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-text-wrap" ng-repeat="versiculo in versiculos">
+                <p>{{versiculo.texto}}</p>
+                <p>
+                  <a href="" class="subdued">
+                      {{versiculo.livro.nome}} 
+                      {{versiculo.capitulo}}:{{versiculo.versiculo}}
+                  </a>
+                </p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

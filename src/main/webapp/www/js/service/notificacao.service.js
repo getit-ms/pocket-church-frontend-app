@@ -14,5 +14,9 @@ calvinApp.service('notificacaoService', ['Restangular', function(Restangular){
         this.clear = function(success){
             return this.api().one('clear').remove().then(success);
         };
+        
+        this.remove = function(id, success){
+            return this.api().one('/' + id).remove().then(success);
+        };
 }]);
         

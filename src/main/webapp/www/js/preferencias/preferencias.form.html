@@ -15,7 +15,10 @@
             <ion-radio ng-if='preferencias.desejaReceberVersiculosDiarios' ng-repeat="hora in horasVersiculoDiario" 
                        ng-model="preferencias.horaVersiculoDiario" ng-value="hora">{{'preferencias.hora.' + hora | translate}}</ion-radio>
             <div ng-if='ministerios.length' class="item item-divider">{{'preferencias.ministerios_interesse' | translate}}</div>
-            <ion-toggle ng-model="ministeriosSelecionados[min.id]" ng-repeat="min in ministerios" >
+            <ion-toggle ng-if='ministerios.length' ng-checked="todosMinisterios" ng-click="toggleTodosMinisterios()" >
+                {{'preferencias.todos_ministerios' | translate}}
+            </ion-toggle>
+            <ion-toggle ng-model="ministeriosSelecionados[min.id]" ng-change="verifyTodosMinisterios()" ng-repeat="min in ministerios" >
                 {{min.nome}}
             </ion-toggle>
             <ion-item>

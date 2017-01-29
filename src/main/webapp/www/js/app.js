@@ -24,7 +24,7 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar',
     'youtube-embed'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-                    $cordovaDevice, arquivoService, cacheService, $injector, boletimService, $cordovaBadge, acessoService) {
+                    arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService) {
     function countNotificacoes(){
         notificacaoService.count(function(dados){
             $rootScope.notifications = dados.count;
@@ -71,6 +71,8 @@ var calvinApp = angular.module('calvinApp', [
         $rootScope.deviceReady = true;
 
         countNotificacoes();
+        
+        bibliaService.sincroniza();
         
         try{
             arquivoService.init();
