@@ -6,10 +6,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/biblia/livro.list.html',
                 controller: function(bibliaService, $scope){                    
-                    $scope.$on('$ionicView.enter', function(){
-                        $scope.novoTestamento = bibliaService.buscaLivros('NOVO');
-                        $scope.velhoTestamento = bibliaService.buscaLivros('VELHO');
-                    });
+                    $scope.novoTestamento = bibliaService.buscaLivros('NOVO');
+                    $scope.velhoTestamento = bibliaService.buscaLivros('VELHO');
                 }
             }
         }
