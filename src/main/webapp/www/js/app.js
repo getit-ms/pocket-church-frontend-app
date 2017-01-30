@@ -24,7 +24,7 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar',
     'youtube-embed'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-                    arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService) {
+arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, databaseService) {
     function countNotificacoes(){
         notificacaoService.count(function(dados){
             $rootScope.notifications = dados.count;
@@ -72,9 +72,11 @@ var calvinApp = angular.module('calvinApp', [
 
         countNotificacoes();
         
-        bibliaService.sincroniza();
-        
         try{
+            databaseService.init();
+        
+            bibliaService.sincroniza();
+			
             arquivoService.init();
 
             boletimService.cache();
@@ -263,8 +265,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicPlatform, $ionicSideMenuDelegate) {
-    var config = configService.load();
+        .run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicPlatform, $ionicSideMenuDelegate) {
+            var config = configService.load();
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
     $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
@@ -332,10 +334,10 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
     };
 })
 
-.factory('NodePushServer', function (acessoService) {
-    return {
-        storeDeviceToken: function (regId) {
-            acessoService.registerPushToken(regId);
+        .factory('NodePushServer', function (acessoService) {
+            return {
+                storeDeviceToken: function (regId) {
+                    acessoService.registerPushToken(regId);
         },
         removeDeviceToken: function (regId) {
             acessoService.unregisterPushToken(regId);
@@ -344,10 +346,10 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService) {
-    this.register = function (novaVersao) {
-        if ($cordovaNetwork.isOnline()){
-            pushRegister(novaVersao);
+        .service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService) {
+            this.register = function (novaVersao) {
+                if ($cordovaNetwork.isOnline()){
+                    pushRegister(novaVersao);
         }else{
             var stop = $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
                 pushRegister(novaVersao);

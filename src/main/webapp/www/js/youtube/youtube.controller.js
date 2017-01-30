@@ -44,7 +44,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         };
                         
                         $scope.$on('$ionicView.leave', function() {
-                            $scope.$scope.closeModal();
+                            $scope.closeModal();
                         });
 
                         $scope.closeModal = function() {

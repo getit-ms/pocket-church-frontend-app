@@ -1,18 +1,19 @@
 calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPlatform, $q){
-        $ionicPlatform.on("deviceready", function () {
+				
+        this.init = function () {
             this.db = window.sqlitePlugin.openDatabase({name: 'pocket-church.db', location: 'default'});
             
             this.db.transaction(function(tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS livro_biblia(id, nome, ordem, abreviacao, ultima_atualizacao, testamento)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS versiculo_biblia(id, capitulo, versiculo, texto, id_livro)');
             });
-        });
+        };
         
-        this.findUltimaAlteracaoLivroBiblia = function(callback){
+        this.findUltimaAlteracaoLivroBiblia  = function(callback){
             this.db.transaction(function(tx) {
-                tx.executeSql('SELECT max(ultima_alteracao) as ultimaAlteracao FROM livro_biblia', [], function(tx, rs) {
+                tx.executeSql('SELECT max(ultima_atualizacao) as ultimaAtualizacao FROM livro_biblia', [], function(tx, rs) {
                     if (rs.rows && rs.rows.length){
-                        callback(rs.rows.item(0).ultimaAlteracao);
+                        callback(rs.rows.item(0).ultimaAtualizacao);
                     }else{
                         callback(undefined);
                     }
@@ -27,12 +28,12 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
                 tx.executeSql('delete from versiculo_biblia where id_livro = ?', [livro.id]);
                 tx.executeSql('delete from livro_biblia where id = ?', [livro.id]);
                 
-                tx.executeSql('insert into livro_biblia(id, nome, ordem, abreviacao, ultima_alteracao, testamento) values(?,?,?,?,?,?)',
-                    [livro.id, livro.nome, livro.ordem, livro.abreviacao, livro.ultimaAlteracao, livro.testamento]);
+                tx.executeSql('insert into livro_biblia(id, nome, ordem, abreviacao, ultima_atualizacao, testamento) values(?,?,?,?,?,?)',
+                [livro.id, livro.nome, livro.ordem, livro.abreviacao, livro.ultimaAtualizacao, livro.testamento]);
                 
                 livro.versiculos.forEach(function(versiculo){
                     tx.executeSql('insert into versiculo_biblia(id, capitulo, versiculo, texto, id_livro) values(?,?,?,?,?)',
-                        [versiculo.id, versiculo.capitulo, versiculo.versiculo, versiculo.texto, livro.id]);
+                    [versiculo.id, versiculo.capitulo, versiculo.versiculo, versiculo.texto, livro.id]);
                 });
             });
         };
@@ -58,7 +59,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
                 });
             });
             
-            return deferred.resolve;
+            return deferred.promise;
         };
         
         this.findCapitulosLivroBiblia = function(livro){
@@ -78,7 +79,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
                 });
             });
             
-            return deferred.resolve;
+            return deferred.promise;
         };
         
         this.findLivroBiblia = function(livro){
@@ -101,7 +102,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
                 });
             });
             
-            return deferred.resolve;
+            return deferred.promise;
         };
         
         this.findVersiculosByLivroCapituloBiblia = function(livro, capitulo){
@@ -127,7 +128,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
                 });
             });
             
-            return deferred.resolve;
+            return deferred.promise;
         };
         
     }]);

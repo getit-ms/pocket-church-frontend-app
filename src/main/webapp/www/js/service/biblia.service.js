@@ -3,25 +3,47 @@ calvinApp.service('bibliaService', ['Restangular', 'databaseService', function(R
             return Restangular.all('biblia');
         };
         
+        this.sincronizacao = {porcentagem:100};
+        
         this.sincroniza = function(){
             var api = this.api;
-            databaseService.findUltimaAlteracaoLivroBiblia(function(ultimaAlteracao){
-                var busca = function(page){
-                    api.customGET('', {
-                        ultimaAlteracao:ultimaAlteracao,
-                        page:page,
-                        total:1
-                    }).then(function(livros){
-                        livros.resultados.forEach(databaseService.mergeLivroBiblia);
-                        
-                        if (livros.hasProxima){
-                            busca(page + 1);
-                        }
-                    });
+            var sincronizacao = this.sincronizacao;
+            
+            var busca = function(pagina, ultimaAtualizacao){
+                var filtro = {
+                    ultimaAtualizacao:formatDate(ultimaAtualizacao),
+                    pagina:pagina,
+                    total:1
                 };
                 
-                busca(1);
-            });
+                window.localStorage.setItem('filtro_incompleto_biblia', angular.toJson(filtro));
+                
+                sincronizacao.porcentagem = 0;
+                
+                api().customGET('', filtro).then(function(livros){
+                    livros.resultados.forEach(databaseService.mergeLivroBiblia);
+                    
+                    sincronizacao.porcentagem = 100 * livros.pagina / livros.totalPaginas;
+                    
+                    if (livros.hasProxima){
+                        busca(pagina + 1, ultimaAtualizacao);
+                    }else{
+                        window.localStorage.removeItem('filtro_incompleto_biblia');
+                    }
+                }, function(){
+                    sincronizacao.porcentagem = 100;
+                });
+            };
+            
+            var filtro = window.localStorage.getItem('filtro_incompleto_biblia');
+            
+            if (filtro){
+                busca(1, angular.fromJson(filtro).ultimaAtualizacao);
+            }else{
+                databaseService.findUltimaAlteracaoLivroBiblia(function(ultimaAtualizacao){
+                    busca(1, ultimaAtualizacao);
+                });
+            }
         };
         
         this.buscaLivros = function(testamento){

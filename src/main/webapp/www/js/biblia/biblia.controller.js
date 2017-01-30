@@ -6,8 +6,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/biblia/livro.list.html',
                 controller: function(bibliaService, $scope){                    
-                    $scope.novoTestamento = bibliaService.buscaLivros('NOVO');
-                    $scope.velhoTestamento = bibliaService.buscaLivros('VELHO');
+                    $scope.sincronizacao = bibliaService.sincronizacao;
+                    
+                    $scope.$on('$ionicView.enter', function(){
+                        $scope.novoTestamento = bibliaService.buscaLivros('NOVO');
+                        $scope.velhoTestamento = bibliaService.buscaLivros('VELHO');
+                    });
                 }
             }
         }
@@ -18,8 +22,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/biblia/capitulo.list.html',
                 controller: function(bibliaService, $scope, $stateParams){
-                    $scope.livro = bibliaService.buscaLivro($stateParams.livro);
-                    $scope.capitulos = bibliaService.buscaCapitulos($stateParams.livro);
+                    $scope.$on('$ionicView.enter', function(){
+                        $scope.livro = bibliaService.buscaLivro($stateParams.livro);
+                        $scope.capitulos = bibliaService.buscaCapitulos($stateParams.livro);
+                    });
                 }
             }
         }
@@ -30,9 +36,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/biblia/capitulo.list.html',
                 controller: function(bibliaService, $scope, $stateParams){
-                    $scope.livro = bibliaService.buscaLivro($stateParams.livro);
-                    $scope.capitulo = $stateParams.capitulo;
-                    $scope.versiculos = bibliaService.buscaVersiculos($stateParams.livro, $stateParams.capitulo);
+                    $scope.$on('$ionicView.enter', function(){
+                        $scope.livro = bibliaService.buscaLivro($stateParams.livro);
+                        $scope.capitulo = $stateParams.capitulo;
+                        $scope.versiculos = bibliaService.buscaVersiculos($stateParams.livro, $stateParams.capitulo);
+                    });
                 }
             }
         }

@@ -3,7 +3,11 @@
         <span>{{'biblia.biblia' | translate:hino }}</span>
     </ion-nav-title>
     <ion-content>
-        <ion-tabs>
+        <ion-item class="text-center" ng-if="sincronizacao.porcentagem != 100">
+            <p>{{'biblia.sincronizando' | translate:{porcentagem:sincronizacao.porcentagem} }}</p>
+        </ion-item>
+        
+        <ion-tabs ng-if="sincronizacao.porcentagem == 100">
             <ion-tab title="{{'biblia.velho_testamento' | translate}}" >
                 <ion-list>
                     <ion-item ui-sref="biblia.livro({livro:livro.id})" ng-repeat='livro in velhoTestamento'>
@@ -12,7 +16,7 @@
                 </ion-list>
             </ion-tab>
             
-            <ion-tab title="{{'biblia.novo_testamento'}}" >
+            <ion-tab title="{{'biblia.novo_testamento' | translate}}" >
                 <ion-list>
                     <ion-item ui-sref="biblia.livro({livro:livro.id})" ng-repeat='livro in novoTestamento'>
                         <h2>{{livro.nome}}</h2>
