@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
-                    controller: function(notificacaoService, $scope, $rootScope, $cordovaBadge, 
+                    controller: function(notificacaoService, $scope, $rootScope, $cordovaBadge,
                         $ionicPopup, $filter, message, $state, shareService, $ionicPlatform){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
@@ -20,9 +20,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         }else{
                                             n.dataFormatada = $filter('date')(n.data, $filter('translate')('notificacao.data_pattern'));
                                         }
-                                        
+
                                         ns.push(angular.extend(n, angular.fromJson(n.notificacao)));
-                                        
+
                                         if (n.customData){
                                             switch (n.customData.tipo){
                                                 case 'ACONSELHAMENTO':
@@ -46,45 +46,45 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 callback(angular.extend(notificacoes, {resultados:ns}));
                             });
                         };
-                        
+
                         $scope.showData = function(message, messages){
                             var idx = messages.indexOf(message);
                             return idx == 0 || diferenca(messages[idx - 1].data, message.data) > 0;
                         };
-                        
+
                         function diferenca(d1, d2){
                             return day(d1) - day(d2);
                         }
-                        
+
                         function day(d){
                             return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate();
                         }
-                        
+
                         $scope.clear = function(){
                             $scope.excluir = {todos:false,selecionados:[]};
-                            
+
                             $scope.deregisterHardBack = $ionicPlatform.
                                     registerBackButtonAction(function(){
                                 $scope.cancelarExclusao();
                             });
-                            
+
                             $scope.$on('$destroy', function() {
                                 $scope.cancelarExclusao();
                             });
-                            
+
                             $scope.$on('$ionicView.leave', function(){
                                 $scope.cancelarExclusao();
                             });
                         };
-                        
+
                         $scope.acessar = function(message){
                             if (message.state){
                                 $state.go(message.state);
-                            }else if (message.customData && message.compartilhavel){
+                            }else if (message.customData && message.customData.compartilhavel){
                                 shareService.share({message:message.message, subject:message.title});
                             }
                         };
-                        
+
                         $scope.confirmarExclusao = function(){
                             if ($scope.excluir && ($scope.excluir.todos || $scope.excluir.selecionados.length)){
                                 var mensagemConfirmacao;
@@ -93,7 +93,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }else{
                                     mensagemConfirmacao = $filter('translate')('mensagens.MSG-047', {quantidade:$scope.excluir.selecionados.length});
                                 }
-                                
+
                                 $ionicPopup.confirm({
                                     title:$filter('translate')('notificacao.confirmacao_exclusao'),
                                     template: mensagemConfirmacao,
@@ -119,7 +119,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 });
                             }
                         };
-                        
+
                         $scope.toggleExcluir = function(message){
                             var idx = $scope.excluir.selecionados.indexOf(message);
                             if (idx >= 0){
@@ -128,7 +128,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $scope.excluir.selecionados.push(message);
                             }
                         };
-                        
+
                         $scope.atualizaExcluirTodos = function(){
                             $scope.excluir.clear();
                             if ($scope.excluir.todos){
@@ -137,15 +137,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 });
                             }
                         };
-                        
+
                         $scope.cancelarExclusao = function(){
                             $scope.excluir = undefined;
-                            
+
                             if ($scope.deregisterHardBack){
                                 $scope.deregisterHardBack();
                             }
                         };
-                        
+
                         $scope.$on('$ionicView.enter', function(){
                             $scope.$broadcast('pagination.search');
                         });
