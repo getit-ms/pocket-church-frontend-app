@@ -48,10 +48,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         });
 
                         $scope.closeModal = function() {
-                            if ($scope.modal){
-                                $scope.modal.close();
-                                $scope.modal.dismiss();
+                            if ($scope.player){
+                                $scope.player.stopVideo();
                             }
+
+                            if ($scope.modal){
+                                $scope.modal.hide();
+                                $scope.modal.remove();
+                            }
+
                             $scope.video = undefined;
                         };
 

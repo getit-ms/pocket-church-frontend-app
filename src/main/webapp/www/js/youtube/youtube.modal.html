@@ -1,9 +1,9 @@
 <div class="modal video-modal transparent" ng-click="closeModal()">
     <div class="header-item">
-        <a data-tap-disabled="true" ng-click="share()" href="" 
+        <a data-tap-disabled="true" ng-click="share()" href=""
            class="button-icon pull-right icon ion-android-share-alt"
            title="{{'global.compartilhar' | translate}}"></a>
     </div>
-    
-    <youtube-video video-id="video.id" player-vars="{autoplay:1}"></youtube-video>
+
+    <youtube-video player="player" video-id="video.id" player-vars="{autoplay:1}"></youtube-video>
 </div>
