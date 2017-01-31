@@ -5,13 +5,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/biblia/livro.list.html',
-                controller: function(bibliaService, $scope){                    
-                    $scope.sincronizacao = bibliaService.sincronizacao;
-                    
-                    $scope.$on('$ionicView.enter', function(){
-                        $scope.novoTestamento = bibliaService.buscaLivros('NOVO');
-                        $scope.velhoTestamento = bibliaService.buscaLivros('VELHO');
-                    });
+                controller: function(bibliaService, $scope, sincronizacaoBiblia){
+                    $scope.sincronizacao = sincronizacaoBiblia;
+
+                    var buscaLivros = function(){
+                      $scope.novoTestamento = bibliaService.buscaLivros('NOVO');
+                      $scope.velhoTestamento = bibliaService.buscaLivros('VELHO');
+                    };
+
+                    $scope.$on('$ionicView.enter', buscaLivros);
                 }
             }
         }
@@ -44,6 +46,5 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 }
             }
         }
-    });         
+    });
 }]);
-        
