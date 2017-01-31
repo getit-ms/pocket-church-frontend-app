@@ -6,11 +6,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/boletim/boletim.list.html',
                     controller: function(boletimService, $scope, $state, arquivoService){
-                        
+
                         $scope.searcher = function(page, callback){
                             boletimService.busca({pagina: page, total: 10}, callback);
                         };
-                        
+
                         $scope.thumbnail = function(boletim){
                             if (!boletim.thumbnail.localPath){
                                 boletim.thumbnail.localPath = '#';
@@ -20,7 +20,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                             return boletim.thumbnail.localPath;
                         };
-                        
+
                         $scope.detalhar = function(boletim){
                             $state.go('boletim.view', {id: boletim.id});
                         };
@@ -33,34 +33,39 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config, 
+                    controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config,
                                         $ionicSlideBoxDelegate, $ionicScrollDelegate, $ionicLoading, $filter){
                         $scope.totalPaginas = 0;
-                        
+
                         pdfService.get({
-                            chave:'boletim', 
-                            id:$stateParams.id, 
+                            chave:'boletim',
+                            id:$stateParams.id,
                             errorState:'boletim',
                             callback:function(boletim){
                                 if (!$scope.boletim || !boletim.ultimaAlteracao ||
-                                        boletim.ultimaAlteracao.getTime() != 
+                                        boletim.ultimaAlteracao.getTime() !=
                                         $scope.ultimaAlteracao.getTime()){
                                     $scope.boletim = boletim;
                                     $scope.totalPaginas = boletim.paginas.length;
                                 }
-                            }, 
+                            },
                             supplier:function(id, callback){
                                 boletimService.carrega(id, callback);
                             }
                         });
-                        
+
                         $scope.share = function(){
                             $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
-                            
-                            shareService.share({subject:$scope.boletim.titulo,file:config.server + '/rest/arquivo/download/' + 
-                                        $scope.boletim.boletim.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja});
-                            
-                            $ionicLoading.hide();
+
+                            shareService.share({
+                                subject:$scope.boletim.titulo,
+                                file:config.server + '/rest/arquivo/download/' + $scope.boletim.boletim.id + '?Dispositivo=' +
+                                    config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                                success: $ionicLoading.hide,
+                                error: $ionicLoading.hide
+                            });
+
+
                         };
                         $scope.show = function(pagina, index){
                             var idx = $scope.boletim.paginas.indexOf(pagina);
