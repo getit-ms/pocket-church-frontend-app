@@ -20,14 +20,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         $scope.passados.push(v);
                                     }
                                 });
-                                
+
                                 $scope.$broadcast('scroll.refreshComplete');
                             });
                         };
-                        
+
                         $scope.openModal = function(video) {
                             $scope.video = video;
-                            
+
                             $ionicModal.fromTemplateUrl('js/youtube/youtube.modal.html', {
                                 scope: $scope,
                                 animation: 'slide-in-up'
@@ -42,19 +42,19 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 shareService.share({subject:$scope.video.titulo,link:'https://www.youtube.com/watch?v=' + $scope.video.id});
                             }
                         };
-                        
+
                         $scope.$on('$ionicView.leave', function() {
                             $scope.closeModal();
                         });
 
                         $scope.closeModal = function() {
                             if ($scope.modal){
-                                $scope.modal.hide();
-                                $scope.modal.remove();
+                                $scope.modal.close();
+                                $scope.modal.dismiss();
                             }
                             $scope.video = undefined;
                         };
-                        
+
                         $scope.busca();
                     }
                 }
