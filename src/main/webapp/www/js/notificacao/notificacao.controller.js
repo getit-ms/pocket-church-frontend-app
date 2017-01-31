@@ -66,7 +66,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             $scope.deregisterHardBack = $ionicPlatform.
                                     registerBackButtonAction(function(){
                                 $scope.cancelarExclusao();
-                            });
+                            }, 101);
 
                             $scope.$on('$destroy', function() {
                                 $scope.cancelarExclusao();
