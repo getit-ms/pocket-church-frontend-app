@@ -11,8 +11,8 @@ calvinApp.service('eventoService', ['Restangular', function(Restangular){
             return this.api().get(id).then(callback);
         };
         
-        this.inscricao = function(evento, inscricoes, callback){
-            this.api().one(evento + '/inscricao').customPOST(inscricoes).then(callback);
+        this.inscricao = function(evento, inscricoes, success, error){
+            this.api().one(evento + '/inscricao').customPOST(inscricoes).then(success, error);
         };
         
         this.buscaMinhasInscricoes = function(id, filtro, callback){
