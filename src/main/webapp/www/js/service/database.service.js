@@ -1,16 +1,18 @@
 calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPlatform, $q){
-				
+	var vm = this;
+        
+        
         this.init = function () {
-            this.db = window.sqlitePlugin.openDatabase({name: 'pocket-church.db', location: 'default'});
+            vm.db = window.sqlitePlugin.openDatabase({name: 'pocket-church.db', location: 'default'});
             
-            this.db.transaction(function(tx) {
+            vm.db.transaction(function(tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS livro_biblia(id, nome, ordem, abreviacao, ultima_atualizacao, testamento)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS versiculo_biblia(id, capitulo, versiculo, texto, id_livro)');
             });
         };
         
         this.findUltimaAlteracaoLivroBiblia  = function(callback){
-            this.db.transaction(function(tx) {
+            vm.db.transaction(function(tx) {
                 tx.executeSql('SELECT max(ultima_atualizacao) as ultimaAtualizacao FROM livro_biblia', [], function(tx, rs) {
                     if (rs.rows && rs.rows.length){
                         callback(rs.rows.item(0).ultimaAtualizacao);
@@ -24,7 +26,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
         };
         
         this.mergeLivroBiblia = function(livro){
-            this.db.transaction(function(tx) {
+            vm.db.transaction(function(tx) {
                 tx.executeSql('delete from versiculo_biblia where id_livro = ?', [livro.id]);
                 tx.executeSql('delete from livro_biblia where id = ?', [livro.id]);
                 
@@ -41,7 +43,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
         this.findLivrosBibliaByTestamento = function(testamento){
             var deferred = $q.defer();
             
-            this.db.transaction(function(tx) {
+            vm.db.transaction(function(tx) {
                 tx.executeSql('SELECT * FROM livro_biblia where testamento = ? order by ordem', [testamento], function(tx, rs) {
                     var livros = [];
                     
@@ -65,7 +67,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
         this.findCapitulosLivroBiblia = function(livro){
             var deferred = $q.defer();
             
-            this.db.transaction(function(tx) {
+            vm.db.transaction(function(tx) {
                 tx.executeSql('SELECT capitulo as capitulo FROM versiculo_biblia where id_livro = ? group by capitulo order by capitulo', [livro], function(tx, rs) {
                     var capitulos = [];
                     
@@ -85,7 +87,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
         this.findLivroBiblia = function(livro){
             var deferred = $q.defer();
             
-            this.db.transaction(function(tx) {
+            vm.db.transaction(function(tx) {
                 tx.executeSql('SELECT * FROM livro_biblia where id = ?', [livro], function(tx, rs) {
                     if (rs.rows.length){
                         var item = rs.rows.item(0);
@@ -108,7 +110,7 @@ calvinApp.service('databaseService', ['$ionicPlatform', '$q', function($ionicPla
         this.findVersiculosByLivroCapituloBiblia = function(livro, capitulo){
             var deferred = $q.defer();
             
-            this.db.transaction(function(tx) {
+            vm.db.transaction(function(tx) {
                 tx.executeSql('SELECT * FROM versiculo_biblia where id_livro = ? and capitulo = ? order by versiculo', [livro, capitulo], function(tx, rs) {
                     var versiculos = [];
                     
