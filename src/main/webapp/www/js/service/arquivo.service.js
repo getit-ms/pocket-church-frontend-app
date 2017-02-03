@@ -1,20 +1,20 @@
-calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', '$window', '$cordovaNetwork', 
+calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', '$window', '$cordovaNetwork',
     function($cordovaFileTransfer, $cordovaFile, config, $window, $cordovaNetwork){
         this.timeout = 1000 * 60 * 60 * 24 * 5;
-        
+
         this.init = function(){
             $cordovaFile.checkDir(cordova.file.dataDirectory, "arquivos").then(function(){}, function(){
                 $cordovaFile.createDir(cordova.file.dataDirectory, "arquivos");
             });
-            
+
             $cordovaFile.removeRecursively(cordova.file.cacheDirectory, 'tmp').then(function(){
                 $cordovaFile.createDir(cordova.file.cacheDirectory, "tmp");
             });
         };
-        
+
         this.get = function(id, callback){
             if (!id || !callback) console.error("arquivoService.get: id and callback are required");
-            
+
             var cache = load(id);
             if (cache && cache.uuid == config.headers.Dispositivo){
                 cache.access = new Date().getTime();
@@ -25,7 +25,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 download(id, callback);
             }
         };
-        
+
         this.clean = function(){
             var self = this;
             var count = 0;
@@ -35,8 +35,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                     var cache = $window.localStorage.getItem(key);
 
                     if (cache){
-                        if (!cache.access || cache.uuid != config.headers.Dispositivo
-                                || cache.access + this.timeout < new Date().getTime()){
+                        if (!cache.access || cache.access + this.timeout < new Date().getTime()){
                             if (++count >= 5){
                                 remove(key.substring(key.indexOf('.') + 1), function(){
                                     self.clean();
@@ -50,15 +49,15 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 }
             }
         };
-        
+
         function load(id){
             return angular.fromJson($window.localStorage.getItem('arquivo.'+id));
         }
-        
+
         function save(id, cache){
             $window.localStorage.setItem('arquivo.' + id, angular.toJson(cache));
         }
-        
+
         function remove(id, callback){
             $cordovaFile.removeFile(cordova.file.dataDirectory, 'arquivos/' + id + '.bin').then(function(){
                 $window.localStorage.removeItem('arquivo.' + id);
@@ -67,12 +66,12 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 }
             });
         }
-        
+
         function download(id, callback){
             var path = 'arquivos/' + id + '.bin';
             var temp = 'tmp/' + new Date().getTime() + '.' + id + '.bin';
             var url = config.server + '/rest/arquivo/download/' + id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
-            
+
             try{
                 if ($cordovaNetwork.isOnline()){
                     $cordovaFileTransfer.download(url, cordova.file.cacheDirectory + temp).then(function(success){

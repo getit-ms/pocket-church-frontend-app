@@ -18,7 +18,7 @@ calvinApp.
                 sincronizacaoHino.executando = true;
 
                 api().customGET('', filtro).then(function(hinos){
-                    hinos.resultados.forEach(hinoDAO.mergeLivroBiblia);
+                    hinos.resultados.forEach(hinoDAO.mergeHino);
 
                     sincronizacaoHino.porcentagem = Math.ceil(100 * hinos.pagina / hinos.totalPaginas);
 
