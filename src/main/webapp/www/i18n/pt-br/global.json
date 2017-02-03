@@ -319,7 +319,8 @@
     },
     "hino":{
         "hino":"Hino {numero}",
-        "hinos":"Hinário"
+        "hinos":"Hinário",
+        "sincronizando":"Sincronizando... {porcentagem}%"
     },
     "preferencias":{
         "preferencias":"Preferências",

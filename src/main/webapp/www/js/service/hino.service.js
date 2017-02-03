@@ -11,7 +11,7 @@ calvinApp.
                 var filtro = angular.extend({
                     ultimaAtualizacao:ultimaAtualizacao,
                     pagina:pagina,
-                    total:3
+                    total:10
                 });
 
                 window.localStorage.setItem('filtro_incompleto_hino', angular.toJson(filtro));
@@ -44,13 +44,12 @@ calvinApp.
                 });
             }
         };
-        
+
         this.busca = function(filtro, callback){
             return hinoDAO.findHinosByFiltro(filtro).then(callback);
         };
-        
+
         this.carrega = function(id){
             return hinoDAO.findHino(filtro);
         };
 }]);
-        

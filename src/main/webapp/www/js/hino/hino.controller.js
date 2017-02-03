@@ -14,8 +14,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     };
 
                     $scope.filtra = function(filtro){
-                        if (!filterText){
-                            filterText = '';
+                        if (!filtro){
+                          filtro = '';
                         }
 
                         hinoService.busca(filtro, function(hinos){
