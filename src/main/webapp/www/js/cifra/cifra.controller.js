@@ -64,10 +64,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/cifra/cifra.form.html',
-                    controller: function(cifraService, $scope, cifraService, pdfService, $stateParams, 
+                    controller: function(cifraService, $scope, cifraService, pdfService, $stateParams,
                                          $ionicScrollDelegate, $ionicSlideBoxDelegate, shareService, config, $filter, loadingService){
                         $scope.totalPaginas = 0;
-                        
+
                         pdfService.get({
                             chave:'cifra',
                             id:$stateParams.id,
@@ -80,16 +80,19 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 cifraService.carrega(id, callback);
                             }
                         });
-                        
+
                         $scope.slide = {activeSlide:null};
-                        
+
                         $scope.share = function(){
                             loadingService.show();
-                            
-                            shareService.share({subject:$scope.cifra.titulo,file:config.server + '/rest/arquivo/download/' + 
-                                        $scope.cifra.cifra.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja});
-                            
-                            loadingService.hide();
+
+                            shareService.share({
+                              subject:$scope.cifra.titulo,
+                              file:config.server + '/rest/arquivo/download/' +
+                                        $scope.cifra.cifra.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                              success: loadingService.hide,
+                              error: loadingService.hide
+                            });
                         };
 
                         $scope.updateSlideStatus = function(index) {

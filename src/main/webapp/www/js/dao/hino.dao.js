@@ -17,18 +17,16 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
             database.db.transaction(function(tx) {
                 tx.executeSql('delete from hino where id = ?', [hino.id]);
 
-                tx.executeSql('insert into hino(id, numero, assunto, autor, nome, texto, ultima_atualizacao) values(?,?,?,?,?,?,?)',
+                tx.executeSql('insert into hino(id, numero, assunto, autor, nome, texto, ultima_atualizacao, filtro) values(?,?,?,?,?,?,?)',
                 [hino.id, hino.numero, hino.assunto, hino.autor, hino.nome, hino.texto, hino.ultimaAlteracao.getTime()]);
             });
         };
 
-        this.findHinosByFiltro = function(filtro){
-            filtro = '%' + filtro + '%';
-
+        this.findHinosByFiltro = function(){
             var deferred = $q.defer();
 
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT id, numero, nome FROM hino where assunto like ? or nome like ? or texto like ? or autor like ? order by numero', [filtro, filtro, filtro, filtro], function(tx, rs) {
+                tx.executeSql('SELECT id, numero, nome FROM hino order by numero', [], function(tx, rs) {
                     var hinos = [];
 
                     for (var i=0;i<rs.rows.length;i++){

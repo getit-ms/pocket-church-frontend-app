@@ -13,21 +13,17 @@
 .video-modal iframe {
     max-width: 100%;
     max-height: 100%;
-    
+
     position: absolute;
     left: 50%; top: 50%;
     transform: translate(-50%, -50%);
-}
-
-.tabs-top > .tabs {
-    top:0;
 }
 
 @media (max-width: 679px) {
     .active .modal-backdrop-bg {
         opacity: .9;
     }
-    
+
     .modal-backdrop-bg {
         -webkit-transition: opacity 300ms ease-in-out;
         transition: opacity 300ms ease-in-out;

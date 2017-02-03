@@ -13,28 +13,20 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $state.go('hino.view', {id: hino.id});
                     };
 
-                    $scope.filtra = function(filtro){
-                        if (!filtro){
-                          filtro = '';
-                        }
-
-                        hinoService.busca(filtro, function(hinos){
+                    $scope.filtra = function(){
+                        hinoService.busca(function(hinos){
                             $scope.hinos = hinos;
                         });
                     };
 
                     $scope.showSearch = function(){
                         $ionicFilterBar.show({
-                            items:[{}],
-                            update: function(filter){
-
+                            items: $scope.hinos,
+                            update: function(hinos){
+                                $scope.hinos = hinos;
                             },
-                            expression: function(filterText){
-                                $ionicScrollDelegate.scrollTop();
-                                $scope.filtra(filterText);
-                            },
-                            cancel: function(){
-                                $scope.filtra();
+                            cancel: function(hinos){
+                                $scope.hinos = hinos;
                             },
                             cancelText: $filter('translate')('global.cancelar'),
                             config:{

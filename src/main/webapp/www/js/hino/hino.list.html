@@ -7,14 +7,13 @@
            class="button button-icon icon positive fa fa-search" ></a>
     </ion-nav-buttons>
     <ion-content>
-        <ion-item class="text-center" ng-if="sincronizacao.executando">
-          <p>{{'hino.sincronizando' | translate:{porcentagem:sincronizacao.porcentagem} }}</p>
-        </ion-item>
-
         <ion-item ng-click="detalhar(hino)" ng-repeat="hino in hinos">
             <h2>
                 <b  style="margin-right: 15px;">{{hino.numero}}</b> {{hino.nome}}
             </h2>
         </ion-item>
     </ion-content>
+    <ion-footer-bar ng-show="sincronizacao.executando" class="bar-stable" align-title="center">
+      <h1 class="title">{{'hino.sincronizando' | translate:{porcentagem:sincronizacao.porcentagem} }}</h1>
+    </ion-footer-bar>
 </ion-view>

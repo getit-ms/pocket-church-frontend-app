@@ -1,28 +1,30 @@
 <ion-view>
-    <ion-nav-title>
-        <span>{{'biblia.biblia' | translate:hino }}</span>
-    </ion-nav-title>
-    <ion-content>
-        <ion-item class="text-center" ng-if="sincronizacao.executando">
-            <p>{{'biblia.sincronizando' | translate:{porcentagem:sincronizacao.porcentagem} }}</p>
-        </ion-item>
+  <ion-nav-title>
+    <span>{{'biblia.biblia' | translate:hino }}</span>
+  </ion-nav-title>
+  <ion-tabs class="tabs-stripped tabs-background-positive tabs-color-light" >
+    <ion-tab title="{{'biblia.velho_testamento' | translate}}" >
+      <ion-content>
+        <ion-list>
+          <ion-item ui-sref="biblia.livro({livro:livro.id})" ng-repeat='livro in velhoTestamento'>
+            <h2>{{livro.nome}}</h2>
+          </ion-item>
+        </ion-list>
 
-        <ion-tabs ng-if="velhoTestamento.length || novoTestamento.length">
-            <ion-tab title="{{'biblia.velho_testamento' | translate}}" >
-                <ion-list>
-                    <ion-item ui-sref="biblia.livro({livro:livro.id})" ng-repeat='livro in velhoTestamento'>
-                        <h2>{{livro.nome}}</h2>
-                    </ion-item>
-                </ion-list>
-            </ion-tab>
+      </ion-content>
+    </ion-tab>
 
-            <ion-tab title="{{'biblia.novo_testamento' | translate}}" >
-                <ion-list>
-                    <ion-item ui-sref="biblia.livro({livro:livro.id})" ng-repeat='livro in novoTestamento'>
-                        <h2>{{livro.nome}}</h2>
-                    </ion-item>
-                </ion-list>
-            </ion-tab>
-        </ion-tabs>
-    </ion-content>
+    <ion-tab title="{{'biblia.novo_testamento' | translate}}" >
+      <ion-content>
+        <ion-list>
+          <ion-item ui-sref="biblia.livro({livro:livro.id})" ng-repeat='livro in novoTestamento'>
+            <h2>{{livro.nome}}</h2>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-tab>
+  </ion-tabs>
+  <ion-footer-bar ng-show="sincronizacao.executando" class="bar-stable" align-title="center">
+    <h1 class="title">{{'biblia.sincronizando' | translate:{porcentagem:sincronizacao.porcentagem} }}</h1>
+  </ion-footer-bar>
 </ion-view>
