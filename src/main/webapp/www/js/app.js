@@ -24,19 +24,19 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar',
     'youtube-embed'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, database) {
+arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, database, hinoService) {
     function countNotificacoes(){
         notificacaoService.count(function(dados){
             $rootScope.notifications = dados.count;
             $cordovaBadge.set(dados.count);
         }, function(){});
     }
-                    
+
     $ionicPlatform.on("resume", function(){
         countNotificacoes();
         $cordovaLocalNotification.clearAll();
     });
-    
+
     $ionicPlatform.on("deviceready", function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -53,7 +53,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             version: $_version,
             tipo: ionic.Platform.isAndroid() ? 0 : 1
         });
-        
+
         if (!configService.load().headers.Dispositivo ||
                 configService.load().headers.Dispositivo == 'undefined'){
             configService.save({
@@ -65,18 +65,20 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
                 }
             });
         }
-        
-        PushNotificationsService.register(versaoAtualizada); 
+
+        PushNotificationsService.register(versaoAtualizada);
 
         $rootScope.deviceReady = true;
 
         countNotificacoes();
-        
+
         try{
             database.init();
-        
+
             bibliaService.sincroniza();
-			
+
+            hinoService.sincroniza();
+
             arquivoService.init();
 
             boletimService.cache();
@@ -87,22 +89,21 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         }catch(e){
             console.error(e);
         }
-        
+
         $injector.get('$state').reload();
     });
 
-}).service('loadingService', ['$ionicLoading', function($ionicLoading){
-        this.show = function(){
-            $ionicLoading.show({
-                template:'<ion-spinner icon="dots" class="spinner spinner-spiral"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando'),
-                animation: 'fade-in',
-            });
-        };
-        
-        this.hide = function(){
-            $ionicLoading.hide();
-        };
-        
+}).service('loadingService', ['$ionicLoading', '$filter', function($ionicLoading, $filter){
+      this.show = function(){
+          $ionicLoading.show({
+              template:'<ion-spinner icon="dots" class="spinner spinner-spiral"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando'),
+              animation: 'fade-in',
+          });
+      };
+
+      this.hide = function(){
+          $ionicLoading.hide();
+      };
 }]).value('config', {
     server: $_serverUrl,
     ios: {
@@ -147,7 +148,7 @@ function configureHttpInterceptors($httpProvider) {
                     if (response.headers('Set-Authorization')){
                         configService.save({headers:{Authorization:response.headers('Set-Authorization')}});
                     }
-                    
+
                     return response;
                 },
                 responseError: function (rejection) {
@@ -282,20 +283,20 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
     $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
-          
+
     if (!config.timeout){
         acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
             $rootScope.funcionalidadesPublicas = funcionalidades;
         });
     }
-    
+
     $ionicPlatform.on("resume", function(){
         var time = new Date().getTime();
-        
+
         if (!config.timeout || config.timeout < time) {
             acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
                 $rootScope.funcionalidadesPublicas = funcionalidades;
-                
+
                 if (config.usuario && config.funcionalidades){
                     acessoService.carrega(function (acesso) {
                         $rootScope.usuario = acesso.membro;
@@ -321,7 +322,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
     $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
         $rootScope.offline = false;
     });
-            
+
     $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
         $rootScope.offline = true;
     });
@@ -337,7 +338,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
             $ionicSideMenuDelegate.toggleLeft();
             $state.go('login');
         };
-        
+
         acessoService.logout(cb,function(response){
             if (response.status == 403){
                 cb();
@@ -369,7 +370,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
             });
         }
     };
-    
+
     function pushRegister(novaVersao){
         var push = PushNotification.init({
             android:{
@@ -382,7 +383,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                 alert: true
             }
         });
-        
+
         if (novaVersao){
             push.on('registration', function(data){
                 NodePushServer.storeDeviceToken({

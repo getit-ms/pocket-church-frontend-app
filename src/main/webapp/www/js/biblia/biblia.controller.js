@@ -17,7 +17,18 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             });
                         };
 
-                        $scope.$on('$ionicView.enter', buscaLivros);
+                        $scope.$on('$ionicView.enter', function(){
+                            if ($scope.sincronizacao.executando){
+                                var stop = $scope.$watch('sincronizacao.executando', function(){
+                                    if (!$scope.sincronizacao.executando){
+                                        buscaLivros();
+                                        stop();
+                                    }
+                                })
+                            }
+                        });
+
+                      buscaLivros();
                     }
                 }
             }
@@ -28,15 +39,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/biblia/capitulo.list.html',
                     controller: function(bibliaService, $scope, $stateParams){
-                        $scope.$on('$ionicView.enter', function(){
-                            bibliaService.buscaLivro($stateParams.livro).then(function(livros){
-                                $scope.livro = livros;
-                            });
-                        
-                            bibliaService.buscaCapitulos($stateParams.livro).then(function(capitulos){
-                                $scope.capitulos = capitulos;
-                            });
-                        });
+                      bibliaService.buscaLivro($stateParams.livro).then(function(livros){
+                        $scope.livro = livros;
+                      });
+
+                      bibliaService.buscaCapitulos($stateParams.livro).then(function(capitulos){
+                        $scope.capitulos = capitulos;
+                      });
                     }
                 }
             }
@@ -47,28 +56,26 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/biblia/versiculo.list.html',
                     controller: function(bibliaService, $scope, $stateParams, shareService){
-                        $scope.$on('$ionicView.enter', function(){
-                            $scope.capitulo = $stateParams.capitulo;
-                        
-                            bibliaService.buscaLivro($stateParams.livro).then(function(livro){
-                                $scope.livro = livro;
-                            });
-                        
-                            bibliaService.buscaVersiculos($stateParams.livro, $stateParams.capitulo).then(function(versiculos){
-                                $scope.versiculos = versiculos;
-                            });
-                            
-                            $scope.seleciona = function(versiculo){
-                                if ($scope.selecionado == versiculo){
-                                    shareService.share({
-                                        message:versiculo.texto + ' (' + $scope.livro.nome + ' ' + 
-                                                $scope.capitulo + ':' + versiculo.versiculo + ')'
-                                    });
-                                }else{
-                                    $scope.selecionado = versiculo;
-                                }
-                            };
-                        });
+                      $scope.capitulo = $stateParams.capitulo;
+
+                      bibliaService.buscaLivro($stateParams.livro).then(function(livro){
+                        $scope.livro = livro;
+                      });
+
+                      bibliaService.buscaVersiculos($stateParams.livro, $stateParams.capitulo).then(function(versiculos){
+                        $scope.versiculos = versiculos;
+                      });
+
+                      $scope.seleciona = function(versiculo){
+                        if ($scope.selecionado == versiculo){
+                          shareService.share({
+                            message:versiculo.texto + ' (' + $scope.livro.nome + ' ' +
+                            $scope.capitulo + ':' + versiculo.versiculo + ')'
+                          });
+                        }else{
+                          $scope.selecionado = versiculo;
+                        }
+                      };
                     }
                 }
             }

@@ -5,40 +5,35 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/hino/hino.list.html',
-                controller: function(hinoService, $state, $scope, $ionicFilterBar, $filter, 
+                controller: function(hinoService, $state, $scope, $ionicFilterBar, $filter,
                             $ionicScrollDelegate, $ionicFilterBarConfig, $ionicConfig, sincronizacaoHino){
                     $scope.sincronizacao = sincronizacaoHino;
-                                
-                    $scope.searcher = function(page, callback){
-                        hinoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
-                    };
 
                     $scope.detalhar = function(hino){
                         $state.go('hino.view', {id: hino.id});
                     };
-                    
+
                     $scope.filtra = function(filtro){
                         if (!filterText){
                             filterText = '';
                         }
-                        
+
                         hinoService.busca(filtro, function(hinos){
                             $scope.hinos = hinos;
                         });
                     };
-                    
+
                     $scope.showSearch = function(){
                         $ionicFilterBar.show({
                             items:[{}],
                             update: function(filter){
-                                
+
                             },
                             expression: function(filterText){
                                 $ionicScrollDelegate.scrollTop();
                                 $scope.filtra(filterText);
                             },
                             cancel: function(){
-                                $scope.filtro.filtro = '';
                                 $scope.filtra();
                             },
                             cancelText: $filter('translate')('global.cancelar'),
@@ -59,7 +54,18 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                         });
                     };
-                    
+
+                    $scope.$on('$ionicView.enter', function(){
+                        if ($scope.sincronizacao.executando){
+                            var stop = $scope.$watch('sincronizacao.executando', function(){
+                                if (!$scope.sincronizacao.executando){
+                                    $scope.filtra();
+                                    stop();
+                                }
+                            })
+                        }
+                    });
+
                     $scope.filtra();
                 }
             }
@@ -74,10 +80,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     hinoService.carrega($stateParams.id).then(function(hino){
                         $scope.hino = hino;
                     });
-                    
+
                     $scope.share = function(){
                         loadingService.show();
-                        
+
                         shareService.share({
                             subject:$scope.hino.nome,
                             file:config.server + '/rest/hino/' + $scope.hino.id + '/pdf?Dispositivo=' +
@@ -89,6 +95,5 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 }
             }
         }
-    });         
+    });
 }]);
-        
