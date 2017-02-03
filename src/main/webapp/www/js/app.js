@@ -97,7 +97,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
       this.show = function(){
           $ionicLoading.show({
               template:'<ion-spinner icon="dots" class="spinner spinner-spiral"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando'),
-              animation: 'fade-in',
+              animation: 'fade-in'
           });
       };
 
