@@ -17,16 +17,27 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             });
                         };
 
+                        $scope.sincronizar = function(){
+                            if (!$scope.sincronizacao.executando){
+                                bibliaService.sincroniza();
+                                registraWatcher();
+                            }
+                        };
+
                         $scope.$on('$ionicView.enter', function(){
                             if ($scope.sincronizacao.executando){
-                                var stop = $scope.$watch('sincronizacao.executando', function(){
-                                    if (!$scope.sincronizacao.executando){
-                                        buscaLivros();
-                                        stop();
-                                    }
-                                })
+                                registraWatcher();
                             }
                         });
+
+                        function registraWatcher(){
+                            var stop = $scope.$watch('sincronizacao.porcentagem', function(){
+                                $scope.filtra();
+                                if (!$scope.sincronizacao.executando){
+                                    stop();
+                                }
+                            });
+                        }
 
                       buscaLivros();
                     }

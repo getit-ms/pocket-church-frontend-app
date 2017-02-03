@@ -26,7 +26,7 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
             var deferred = $q.defer();
 
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT id, numero, nome FROM hino order by numero', [], function(tx, rs) {
+                tx.executeSql('SELECT id, numero, nome FROM hino order by numero, nome', [], function(tx, rs) {
                     var hinos = [];
 
                     for (var i=0;i<rs.rows.length;i++){

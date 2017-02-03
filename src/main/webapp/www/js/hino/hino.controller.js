@@ -5,16 +5,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/hino/hino.list.html',
-                controller: function(hinoService, $state, $scope, $ionicFilterBar, $filter,
-                            $ionicScrollDelegate, $ionicFilterBarConfig, $ionicConfig, sincronizacaoHino){
+                controller: function(hinoService, $scope, $ionicFilterBar, $filter,
+                            $ionicFilterBarConfig, $ionicConfig, sincronizacaoHino){
                     $scope.sincronizacao = sincronizacaoHino;
 
-                    $scope.detalhar = function(hino){
-                        $state.go('hino.view', {id: hino.id});
-                    };
-
                     $scope.filtra = function(){
-                        hinoService.busca(function(hinos){
+                        hinoService.busca().then(function(hinos){
                             $scope.hinos = hinos;
                         });
                     };
@@ -46,17 +42,28 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                         });
                     };
+                    
+                    $scope.sincronizar = function(){
+                        if (!$scope.sincronizacao.executando){
+                            hinoService.sincroniza();
+                            registraWatcher();
+                        }
+                    };
 
                     $scope.$on('$ionicView.enter', function(){
                         if ($scope.sincronizacao.executando){
-                            var stop = $scope.$watch('sincronizacao.executando', function(){
-                                if (!$scope.sincronizacao.executando){
-                                    $scope.filtra();
-                                    stop();
-                                }
-                            })
+                            registraWatcher();
                         }
                     });
+                    
+                    function registraWatcher(){
+                        var stop = $scope.$watch('sincronizacao.porcentagem', function(){
+                            $scope.filtra();
+                            if (!$scope.sincronizacao.executando){
+                                stop();
+                            }
+                        });
+                    }
 
                     $scope.filtra();
                 }

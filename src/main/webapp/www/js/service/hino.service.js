@@ -45,8 +45,8 @@ calvinApp.
             }
         };
 
-        this.busca = function(callback){
-            return hinoDAO.findHinosByFiltro().then(callback);
+        this.busca = function(){
+            return hinoDAO.findHinosByFiltro();
         };
 
         this.carrega = function(id){
