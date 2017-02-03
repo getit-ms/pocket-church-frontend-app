@@ -8,7 +8,7 @@
         </ion-item>
 
         <ion-tabs ng-if="velhoTestamento.length || novoTestamento.length">
-            <ion-tab title="{{'biblia.velho_testamento' | translate}}" ng-if="velhoTestamento.length" >
+            <ion-tab title="{{'biblia.velho_testamento' | translate}}" >
                 <ion-list>
                     <ion-item ui-sref="biblia.livro({livro:livro.id})" ng-repeat='livro in velhoTestamento'>
                         <h2>{{livro.nome}}</h2>
@@ -16,7 +16,7 @@
                 </ion-list>
             </ion-tab>
 
-            <ion-tab title="{{'biblia.novo_testamento' | translate}}" ng-if="novoTestamento.length" >
+            <ion-tab title="{{'biblia.novo_testamento' | translate}}" >
                 <ion-list>
                     <ion-item ui-sref="biblia.livro({livro:livro.id})" ng-repeat='livro in novoTestamento'>
                         <h2>{{livro.nome}}</h2>
