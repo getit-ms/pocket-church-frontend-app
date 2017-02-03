@@ -6,7 +6,7 @@
         <a data-tap-disabled="true" ng-click="showSearch()" href=""
            class="button button-icon icon positive fa fa-search" ></a>
     </ion-nav-buttons>
-    <calvin-pagination searcher="searcher" ng-model="hinos" cache="hinos">
+    <ion-content>
         <ion-item ng-click="detalhar(hino)" ng-repeat="hino in hinos">
             <h2>
                 <b  style="margin-right: 15px;">{{hino.numero}}</b> {{hino.nome}} 
@@ -16,5 +16,5 @@
             </h2>
             <p>{{hino.autor}}</p>
         </ion-item>
-    </calvin-pagination>
+    </ion-content>
 </ion-view>

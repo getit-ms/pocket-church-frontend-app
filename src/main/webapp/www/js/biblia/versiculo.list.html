@@ -1,17 +1,23 @@
 <ion-view>
     <ion-nav-title>
-        <span>{{livro.aberviacao}} - {{capitulo}}</span>
+        <span>{{livro.nome}} {{capitulo}}</span>
     </ion-nav-title>
     <ion-content>
         <ion-list>
-            <ion-item class="item-text-wrap" ng-repeat="versiculo in versiculos">
+            <ion-item class="item-text-wrap" 
+                      ng-class="{'item-icon-right':selecionado == versiculo}" 
+                      ng-click="seleciona(versiculo)"
+                      ng-repeat="versiculo in versiculos">
+                <span class="item-note pull-left" ng-if="selecionado != versiculo">
+                    {{versiculo.versiculo}}
+                </span>
                 <p>{{versiculo.texto}}</p>
-                <p>
-                  <a href="" class="subdued">
-                      {{versiculo.livro.nome}} 
-                      {{versiculo.capitulo}}:{{versiculo.versiculo}}
-                  </a>
+                <p ng-if="selecionado == versiculo">
+                    <a href="" class="subdued text-right">
+                        {{livro.nome}} {{capitulo}}:{{versiculo.versiculo}}
+                    </a>
                 </p>
+                <i class="icon ion-android-share-alt" ng-if="selecionado == versiculo"></i>
             </ion-item>
         </ion-list>
     </ion-content>

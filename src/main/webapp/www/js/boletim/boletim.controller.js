@@ -64,9 +64,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 success: loadingService.hide,
                                 error: loadingService.hide
                             });
-
-
                         };
+                        
                         $scope.show = function(pagina, index){
                             var idx = $scope.boletim.paginas.indexOf(pagina);
                             return Math.abs(idx - index) <= 1;

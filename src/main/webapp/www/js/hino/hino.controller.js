@@ -5,15 +5,26 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/hino/hino.list.html',
-                controller: function(hinoService, $state, $scope, $ionicFilterBar, $filter, $ionicScrollDelegate, $ionicFilterBarConfig, $ionicConfig){
-                    $scope.filtro = {total:50};
-                    
+                controller: function(hinoService, $state, $scope, $ionicFilterBar, $filter, 
+                            $ionicScrollDelegate, $ionicFilterBarConfig, $ionicConfig, sincronizacaoHino){
+                    $scope.sincronizacao = sincronizacaoHino;
+                                
                     $scope.searcher = function(page, callback){
                         hinoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
                     };
 
                     $scope.detalhar = function(hino){
                         $state.go('hino.view', {id: hino.id});
+                    };
+                    
+                    $scope.filtra = function(filtro){
+                        if (!filterText){
+                            filterText = '';
+                        }
+                        
+                        hinoService.busca(filtro, function(hinos){
+                            $scope.hinos = hinos;
+                        });
                     };
                     
                     $scope.showSearch = function(){
@@ -23,11 +34,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 
                             },
                             expression: function(filterText){
-                                if (filterText != $scope.filtro.filtro){
-                                    $ionicScrollDelegate.scrollTop();
-                                    $scope.filtro.filtro = filterText;
-                                    $scope.filtra();
-                                }
+                                $ionicScrollDelegate.scrollTop();
+                                $scope.filtra(filterText);
                             },
                             cancel: function(){
                                 $scope.filtro.filtro = '';
@@ -52,9 +60,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         });
                     };
                     
-                    $scope.filtra = function(){
-                        $scope.$broadcast('pagination.search');
-                    };
+                    $scope.filtra();
                 }
             }
         }
@@ -64,8 +70,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/hino/hino.form.html',
-                controller: function($scope, hino, shareService, loadingService, config){
-                    $scope.hino = hino;
+                controller: function($scope, hinoService, $stateParams, shareService, loadingService, config){
+                    hinoService.carrega($stateParams.id).then(function(hino){
+                        $scope.hino = hino;
+                    });
                     
                     $scope.share = function(){
                         loadingService.show();
@@ -78,11 +86,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             error: loadingService.hide
                         });
                     };
-                },
-                resolve: {
-                    hino: ['hinoService', '$stateParams', function(hinoService, $stateParams){
-                        return hinoService.carrega($stateParams.id);
-                    }]
                 }
             }
         }

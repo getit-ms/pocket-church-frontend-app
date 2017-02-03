@@ -1,6 +1,6 @@
 calvinApp.
   value('sincronizacaoBiblia', {porcentagem:0,executando:false}).
-  service('bibliaService', ['Restangular', 'databaseService', 'sincronizacaoBiblia', function(Restangular, databaseService, sincronizacaoBiblia){
+  service('bibliaService', ['Restangular', 'bibliaDAO', 'sincronizacaoBiblia', function(Restangular, bibliaDAO, sincronizacaoBiblia){
         this.api = function(){
             return Restangular.all('biblia');
         };
@@ -18,9 +18,9 @@ calvinApp.
                 sincronizacaoBiblia.executando = true;
 
                 api().customGET('', filtro).then(function(livros){
-                    livros.resultados.forEach(databaseService.mergeLivroBiblia);
+                    livros.resultados.forEach(bibliaDAO.mergeHino);
 
-                    sincronizacaoBiblia.porcentagem = 100 * livros.pagina / livros.totalPaginas;
+                    sincronizacaoBiblia.porcentagem = Math.ceil(100 * livros.pagina / livros.totalPaginas);
 
                     if (livros.hasProxima){
                         busca(pagina + 1, ultimaAtualizacao);
@@ -39,25 +39,25 @@ calvinApp.
                 var ofiltro = angular.fromJson(filtro);
                 busca(ofiltro.pagina, ofiltro.ultimaAtualizacao);
             }else{
-                databaseService.findUltimaAlteracaoLivroBiblia(function(ultimaAtualizacao){
+                bibliaDAO.findUltimaAlteracaoLivroBiblia(function(ultimaAtualizacao){
                     busca(1, formatDate(ultimaAtualizacao));
                 });
             }
         };
 
         this.buscaLivros = function(testamento){
-            return databaseService.findLivrosBibliaByTestamento(testamento);
+            return bibliaDAO.findLivrosBibliaByTestamento(testamento);
         };
 
         this.buscaLivro = function(livro){
-            return databaseService.findLivroBiblia(livro);
+            return bibliaDAO.findLivroBiblia(livro);
         };
 
         this.buscaCapitulos = function(livro){
-            return databaseService.findCapitulosLivroBiblia(livro);
+            return bibliaDAO.findCapitulosLivroBiblia(livro);
         };
 
         this.buscaVersiculos = function(livro, capitulo){
-            return databaseService.findVersiculosByLivroCapituloBiblia(livro, capitulo);
+            return bibliaDAO.findVersiculosByLivroCapituloBiblia(livro, capitulo);
         };
 }]);

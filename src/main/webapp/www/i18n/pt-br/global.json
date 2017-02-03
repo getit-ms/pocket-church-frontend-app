@@ -360,7 +360,8 @@
         "biblia":"Bíblia",
         "velho_testamento":"Velho Testamento",
         "novo_testamento":"Novo Testamento",
-        "sincronizando":"Sincronizando... {porcentagem}%"
+        "sincronizando":"Sincronizando... {porcentagem}%",
+        "capitulo":"Capítulo {numero}"
     }
 }
 
