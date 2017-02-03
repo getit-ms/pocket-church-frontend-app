@@ -17,12 +17,12 @@ calvinApp.
                 window.localStorage.setItem('filtro_incompleto_hino', angular.toJson(filtro));
                 sincronizacaoHino.executando = true;
 
-                api().customGET('', filtro).then(function(livros){
-                    livros.resultados.forEach(hinoDAO.mergeLivroBiblia);
+                api().customGET('', filtro).then(function(hinos){
+                    hinos.resultados.forEach(hinoDAO.mergeLivroBiblia);
 
-                    sincronizacaoHino.porcentagem = Math.ceil(100 * livros.pagina / livros.totalPaginas);
+                    sincronizacaoHino.porcentagem = Math.ceil(100 * hinos.pagina / hinos.totalPaginas);
 
-                    if (livros.hasProxima){
+                    if (hinos.hasProxima){
                         busca(pagina + 1, ultimaAtualizacao);
                     }else{
                         sincronizacaoHino.executando = false;
