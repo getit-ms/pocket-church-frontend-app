@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/chamado/chamado.list.html',
-                    controller: function(chamadoService, $filter, $scope, message, $ionicLoading){
+                    controller: function(chamadoService, $filter, $scope, message, loadingService){
                         $scope.searcher = function(page, callback){
                             chamadoService.busca({pagina:page,total:10}, callback);
                         };
@@ -28,14 +28,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 return;
                             }
 
-                            $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
+                            loadingService.show();
                             
                             chamadoService.cadastra($scope.chamado, function(){
                                 $scope.clear();
-                                $ionicLoading.hide();
+                                loadingService.hide();
                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
                             }, function(){
-                                $ionicLoading.hide();
+                                loadingService.hide();
                             });
                         };
 

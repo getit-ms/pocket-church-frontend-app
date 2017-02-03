@@ -24,13 +24,18 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/estudo/estudo.form.html',
-                controller: function(estudo, $scope, shareService){
+                controller: function(estudo, $scope, shareService, loadingService, config){
                     $scope.estudo = estudo;
                     
                     $scope.share = function(){
+                        loadingService.show();
+                        
                         shareService.share({
                             subject:$scope.estudo.titulo,
-                            message:$scope.estudo.texto
+                            file:config.server + '/rest/estudo' + $scope.estudo.id + '/pdf?Dispositivo=' +
+                                config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                            success: loadingService.hide,
+                            error: loadingService.hide
                         });
                     };
                 },

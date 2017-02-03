@@ -66,7 +66,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/agenda/agenda.form.html',
-                    controller: function(agendaService, $scope, message, $ionicHistory, $filter, $state, $ionicLoading){
+                    controller: function(agendaService, $scope, message, $ionicHistory, $filter, $state, loadingService){
                         $scope.$on('$ionicView.enter', function(){
                             $scope.clear();
                         });
@@ -141,7 +141,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $scope.horariosDia = [];
                                 $scope.agendamento.data = undefined;
                                 
-                                $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
+                                loadingService.show();
                                 
                                 $scope.datepicker.highlights = [];
                                 agendaService.buscaAgenda(calendario.id,  {
@@ -162,9 +162,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     
                                     atualizaHorarios($scope.datepicker.date);
                                     
-                                    $ionicLoading.hide();
+                                    loadingService.hide();
                                 }, function(){
-                                    $ionicLoading.hide();
+                                    loadingService.hide();
                                 });
                             }
                         };

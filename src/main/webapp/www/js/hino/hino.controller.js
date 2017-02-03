@@ -64,13 +64,18 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/hino/hino.form.html',
-                controller: function($scope, hino, shareService){
+                controller: function($scope, hino, shareService, loadingService, config){
                     $scope.hino = hino;
                     
                     $scope.share = function(){
+                        loadingService.show();
+                        
                         shareService.share({
                             subject:$scope.hino.nome,
-                            message:$scope.hino.texto.replace(/<br.?>/, '\n').replace(/<.+>/, '')
+                            file:config.server + '/rest/hino/' + $scope.hino.id + '/pdf?Dispositivo=' +
+                                config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                            success: loadingService.hide,
+                            error: loadingService.hide
                         });
                     };
                 },

@@ -34,7 +34,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
                     controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config,
-                                        $ionicSlideBoxDelegate, $ionicScrollDelegate, $ionicLoading, $filter){
+                                        $ionicSlideBoxDelegate, $ionicScrollDelegate, loadingService, $filter){
                         $scope.totalPaginas = 0;
 
                         pdfService.get({
@@ -55,14 +55,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         });
 
                         $scope.share = function(){
-                            $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
+                            loadingService.show();
 
                             shareService.share({
                                 subject:$scope.boletim.titulo,
                                 file:config.server + '/rest/arquivo/download/' + $scope.boletim.boletim.id + '?Dispositivo=' +
                                     config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
-                                success: $ionicLoading.hide,
-                                error: $ionicLoading.hide
+                                success: loadingService.hide,
+                                error: loadingService.hide
                             });
 
 

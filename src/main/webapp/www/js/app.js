@@ -91,7 +91,19 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         $injector.get('$state').reload();
     });
 
-}).value('config', {
+}).service('loadingService', ['$ionicLoading', function($ionicLoading){
+        this.show = function(){
+            $ionicLoading.show({
+                template:'<ion-spinner icon="dots" class="spinner spinner-spiral"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando'),
+                animation: 'fade-in',
+            });
+        };
+        
+        this.hide = function(){
+            $ionicLoading.hide();
+        };
+        
+}]).value('config', {
     server: $_serverUrl,
     ios: {
         name: $_serverCode

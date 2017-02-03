@@ -51,7 +51,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             'content@':{
                 templateUrl: 'js/evento/inscricao.form.html',
                 controller: function(eventoService, $scope, evento, $state, $filter,
-                                message, $window, $ionicHistory, $ionicLoading){
+                                message, $window, $ionicHistory, loadingService){
                     $scope.evento = evento;
                     
                     $scope.$on('$ionicView.enter', function(){
@@ -85,10 +85,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     
                     $scope.conclui = function(){
                         if ($scope.inscricoes.length){
-                            $ionicLoading.show({template:'<ion-spinner icon="spiral" class="spinner spinner-spiral"></ion-spinner> ' + $filter('translate')('global.carregando')});
+                            loadingService.show();
                                 
                             eventoService.inscricao($scope.evento.id, $scope.inscricoes, function(resposta){
-                                $ionicLoading.hide();
+                                loadingService.hide();
                                 
                                 if (resposta.devePagar && resposta.checkoutPagSeguro){
                                     message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
@@ -100,7 +100,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     $ionicHistory.goBack();
                                 }
                             }, function(){
-                                $ionicLoading.hide();
+                                loadingService.hide();
                             });
                         }
                     };
