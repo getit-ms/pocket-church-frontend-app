@@ -18,7 +18,9 @@ calvinApp.
                 sincronizacaoBiblia.executando = true;
 
                 api().customGET('', filtro).then(function(livros){
-                    livros.resultados.forEach(bibliaDAO.mergeLivroBiblia);
+                    if (livros.resultados){
+                        livros.resultados.forEach(bibliaDAO.mergeLivroBiblia);
+                    }
 
                     sincronizacaoBiblia.porcentagem = Math.ceil(100 * livros.pagina / livros.totalPaginas);
 

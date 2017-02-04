@@ -32,14 +32,15 @@ calvinApp.service('bibliaDAO', ['database', '$q', function(database, $q){
             var deferred = $q.defer();
             
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT * FROM livro_biblia where testamento = ? order by ordem', [testamento], function(tx, rs) {
+                tx.executeSql('SELECT id, nome, abreviacao FROM livro_biblia where testamento = ? order by ordem', [testamento], function(tx, rs) {
                     var livros = [];
                     
                     for (var i=0;i<rs.rows.length;i++){
                         var item = rs.rows.item(i);
                         livros.push({
                             id:item.id,
-                            nome:item.nome
+                            nome:item.nome,
+                            abreviacao:item.abreviacao
                         });
                     }
                     
@@ -76,7 +77,7 @@ calvinApp.service('bibliaDAO', ['database', '$q', function(database, $q){
             var deferred = $q.defer();
             
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT * FROM livro_biblia where id = ?', [Number(livro)], function(tx, rs) {
+                tx.executeSql('SELECT id, nome, abreviacao FROM livro_biblia where id = ?', [Number(livro)], function(tx, rs) {
                     if (rs.rows.length){
                         var item = rs.rows.item(0);
                         deferred.resolve({

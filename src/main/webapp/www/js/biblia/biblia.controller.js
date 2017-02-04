@@ -8,12 +8,32 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     controller: function(bibliaService, $scope, sincronizacaoBiblia){
                         $scope.sincronizacao = sincronizacaoBiblia;
 
+                        var verificaMarcacao = function(){
+                            if ($scope.marcacao){
+                                if ($scope.novoTestamento){
+                                    $scope.novoTestamento.forEach(function(livro){
+                                        livro.marcado = $scope.marcacao.livro == livro.abreviacao;
+                                    });
+                                }
+                                    
+                                if ($scope.velhoTestamento){
+                                    $scope.velhoTestamento.forEach(function(livro){
+                                        livro.marcado = $scope.marcacao.livro == livro.abreviacao;
+                                    });
+                                }
+                            }
+                        };
+                        
                         var buscaLivros = function(){
                             bibliaService.buscaLivros('NOVO').then(function(novoTestamento){
                                 $scope.novoTestamento = novoTestamento;
+                                
+                                verificaMarcacao();
                             });
                             bibliaService.buscaLivros('VELHO').then(function(velhoTestamento){
                                 $scope.velhoTestamento = velhoTestamento;
+                                
+                                verificaMarcacao();
                             });
                         };
 
@@ -28,18 +48,26 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             if ($scope.sincronizacao.executando){
                                 registraWatcher();
                             }
+                            
+                            var smarcacao = window.localStorage.getItem('marcacao_biblia');
+                            if (smarcacao){
+                                $scope.marcacao = angular.fromJson(smarcacao);
+                                
+                                verificaMarcacao();
+                            }
                         });
 
                         function registraWatcher(){
                             var stop = $scope.$watch('sincronizacao.porcentagem', function(){
-                                $scope.filtra();
+                                buscaLivros();
                                 if (!$scope.sincronizacao.executando){
+                                    $scope.$broadcast('scroll.refreshComplete');
                                     stop();
                                 }
                             });
                         }
 
-                      buscaLivros();
+                        buscaLivros();
                     }
                 }
             }
@@ -50,13 +78,21 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/biblia/capitulo.list.html',
                     controller: function(bibliaService, $scope, $stateParams){
-                      bibliaService.buscaLivro($stateParams.livro).then(function(livros){
-                        $scope.livro = livros;
-                      });
+                        $scope.$on('$ionicView.enter', function(){
+                            var smarcacao = window.localStorage.getItem('marcacao_biblia');
+                            if (smarcacao){
+                                $scope.marcacao = angular.fromJson(smarcacao);
+                            }
+                        });
+                        
+                        bibliaService.buscaLivro($stateParams.livro).then(function(livro){
+                            $scope.livro = livro;
+                        });
 
-                      bibliaService.buscaCapitulos($stateParams.livro).then(function(capitulos){
-                        $scope.capitulos = capitulos;
-                      });
+                        bibliaService.buscaCapitulos($stateParams.livro).then(function(capitulos){
+                            $scope.capitulos = capitulos;
+                        });
+
                     }
                 }
             }
@@ -66,27 +102,71 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/biblia/versiculo.list.html',
-                    controller: function(bibliaService, $scope, $stateParams, shareService){
-                      $scope.capitulo = $stateParams.capitulo;
+                    controller: function(bibliaService, $scope, $stateParams, shareService, $ionicListDelegate){
+                        $scope.capitulo = $stateParams.capitulo;
+                      
+                        $scope.$on('$ionicView.enter', function(){
+                            var smarcacao = window.localStorage.getItem('marcacao_biblia');
+                            if (smarcacao){
+                                $scope.marcacao = angular.fromJson(smarcacao);
 
-                      bibliaService.buscaLivro($stateParams.livro).then(function(livro){
-                        $scope.livro = livro;
-                      });
+                                verificaMarcacao();
+                            }
+                        });
+                        
+                        var verificaMarcacao = function(){
+                            if ($scope.marcacao && $scope.versiculos && $scope.livro &&
+                                    $scope.marcacao.livro == $scope.livro.abreviacao &&
+                                    $scope.marcacao.capitulo == $scope.capitulo){
+                                $scope.versiculos.forEach(function(versiculo){
+                                    versiculo.marcado = versiculo.versiculo == $scope.marcacao.versiculo;
+                                    if (versiculo.marcado){
+                                        if ($scope.marcado){
+                                            $scope.marcado.marcado = false;
+                                        }
+                                        
+                                        $scope.marcado = versiculo;
+                                    }
+                                });
+                            }
+                        };
 
-                      bibliaService.buscaVersiculos($stateParams.livro, $stateParams.capitulo).then(function(versiculos){
-                        $scope.versiculos = versiculos;
-                      });
+                        bibliaService.buscaLivro($stateParams.livro).then(function(livro){
+                            $scope.livro = livro;
 
-                      $scope.seleciona = function(versiculo){
-                        if ($scope.selecionado == versiculo){
-                          shareService.share({
-                            message:versiculo.texto + ' (' + $scope.livro.nome + ' ' +
-                            $scope.capitulo + ':' + versiculo.versiculo + ')'
-                          });
-                        }else{
-                          $scope.selecionado = versiculo;
-                        }
-                      };
+                            bibliaService.buscaVersiculos($stateParams.livro, $stateParams.capitulo).then(function(versiculos){
+                                $scope.versiculos = versiculos;
+
+                                verificaMarcacao();
+                            });
+                        });
+                      
+                        $scope.compartilhar = function(versiculo){
+                            shareService.share({
+                                message:versiculo.texto + ' (' + $scope.livro.abreviacao + ' ' +
+                                        $scope.capitulo + ':' + versiculo.versiculo + ')'
+                            });
+                            
+                            $ionicListDelegate.closeOptionButtons();
+                        };
+                      
+                        $scope.marcar = function(versiculo){
+                            $scope.marcacao = {
+                                versiculo: versiculo.versiculo,
+                                capitulo: $scope.capitulo,
+                                livro: $scope.livro.abreviacao
+                            };
+                                
+                            window.localStorage.setItem('marcacao_biblia', angular.toJson($scope.marcacao));
+                            
+                            if ($scope.marcado){
+                                $scope.marcado.marcado = false;
+                            }
+                            $scope.marcado = versiculo;
+                            versiculo.marcado = true;
+                            
+                            $ionicListDelegate.closeOptionButtons();
+                        };
                     }
                 }
             }

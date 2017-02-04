@@ -4,8 +4,11 @@
     </ion-nav-title>
     <ion-content>
         <ion-list>
-            <ion-item ui-sref="biblia.capitulo({livro:livro.id,capitulo:cap})" ng-repeat="cap in capitulos">
+            <ion-item ui-sref="biblia.capitulo({livro:livro.id,capitulo:cap})" 
+                      ng-class="{'item-icon-right':marcacao.livro == livro.abreviacao && marcacao.capitulo == cap}"
+                      ng-repeat="cap in capitulos">
                 <h2>{{'biblia.capitulo' | translate:{numero:cap} }}</h2>
+                <i class="icon ion-bookmark" ng-if="marcacao.livro == livro.abreviacao && marcacao.capitulo == cap"></i>
             </ion-item>
         </ion-list>
     </ion-content>

@@ -60,6 +60,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         var stop = $scope.$watch('sincronizacao.porcentagem', function(){
                             $scope.filtra();
                             if (!$scope.sincronizacao.executando){
+                                $scope.$broadcast('scroll.refreshComplete');
                                 stop();
                             }
                         });

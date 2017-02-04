@@ -5,10 +5,10 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
                     if (rs.rows && rs.rows.length){
                         callback(new Date(rs.rows.item(0).ultimaAtualizacao));
                     }else{
-                        callback(undefined);
+                        callback();
                     }
                 }, function(tx, error) {
-                    callback(undefined);
+                    callback();
                 });
             });
         };
@@ -17,7 +17,7 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
             database.db.transaction(function(tx) {
                 tx.executeSql('delete from hino where id = ?', [hino.id]);
 
-                tx.executeSql('insert into hino(id, numero, assunto, autor, nome, texto, ultima_atualizacao, filtro) values(?,?,?,?,?,?,?)',
+                tx.executeSql('insert into hino(id, numero, assunto, autor, nome, texto, ultima_atualizacao) values(?,?,?,?,?,?,?)',
                 [hino.id, hino.numero, hino.assunto, hino.autor, hino.nome, hino.texto, hino.ultimaAlteracao.getTime()]);
             });
         };
@@ -52,11 +52,10 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
 
             database.db.transaction(function(tx) {
                 tx.executeSql('SELECT id, numero, nome, assunto, texto, autor FROM hino where id = ?', [Number(hino)], function(tx, rs) {
-                    var hinos = [];
-
-                    for (var i=0;i<rs.rows.length;i++){
-                        var item = rs.rows.item(i);
-                        hinos.push({
+                    if (rs.rows && rs.rows.length){
+                        var item = rs.rows.item(0);
+                        
+                        deferred.resolve({
                           id:item.id,
                           numero:item.numero,
                           nome:item.nome,
@@ -64,9 +63,9 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
                           texto:item.texto,
                           autor:item.autor
                         });
+                    }else{
+                        deferred.resolve(null);
                     }
-
-                    deferred.resolve(hinos);
                 }, function(tx, error) {
                     deferred.reject(error);
                 });

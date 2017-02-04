@@ -5,19 +5,21 @@
     <ion-content>
         <ion-list>
             <ion-item class="item-text-wrap" 
-                      ng-class="{'item-icon-right':selecionado == versiculo}" 
-                      ng-click="seleciona(versiculo)"
+                      ng-class="{'item-icon-right':versiculo.marcado}"
                       ng-repeat="versiculo in versiculos">
-                <span class="item-note pull-left" ng-if="selecionado != versiculo">
-                    {{versiculo.versiculo}}
-                </span>
-                <p>{{versiculo.texto}}</p>
-                <p ng-if="selecionado == versiculo">
-                    <a href="" class="subdued text-right">
-                        {{livro.nome}} {{capitulo}}:{{versiculo.versiculo}}
-                    </a>
-                </p>
-                <i class="icon ion-android-share-alt" ng-if="selecionado == versiculo"></i>
+                <p><b style="margin-right: 15px;">{{versiculo.versiculo}}</b> {{versiculo.texto}}</p>
+                <i class="icon ion-bookmark" ng-if="versiculo.marcado"></i>
+                    
+                <ion-option-button class="icon-left ion-android-share-alt"
+                                   ng-click='compartilhar(versiculo)'>
+                    {{'global.compartilhar' | translate}}
+                </ion-option-button>
+                <ion-option-button class="icon-left ion-bookmark"
+                                   ng-click="marcar(versiculo)"
+                                   ng-if="!versiculo.marcado"
+                                   title="{{'biblia.adicionar_marcador' | translate}}">
+                    {{'biblia.marcar' | translate}}
+                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>
