@@ -8,11 +8,11 @@ calvinApp.
         this.sincroniza = function(){
             var api = this.api;
             var busca = function(pagina, ultimaAtualizacao){
-                var filtro = angular.extend({
-                    ultimaAtualizacao:ultimaAtualizacao,
+                var filtro = {
+                    ultimaAtualizacao: ultimaAtualizacao,
                     pagina:pagina,
                     total:10
-                });
+                };
 
                 window.localStorage.setItem('filtro_incompleto_hino', angular.toJson(filtro));
                 sincronizacaoHino.executando = true;

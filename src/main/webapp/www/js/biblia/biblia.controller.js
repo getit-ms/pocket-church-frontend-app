@@ -143,7 +143,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       
                         $scope.compartilhar = function(versiculo){
                             shareService.share({
-                                message:versiculo.texto + ' (' + $scope.livro.abreviacao + ' ' +
+                                message:versiculo.texto + ' (' + $scope.livro.nome + ' ' +
                                         $scope.capitulo + ':' + versiculo.versiculo + ')'
                             });
                             

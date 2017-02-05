@@ -22,11 +22,14 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
             });
         };
 
-        this.findHinosByFiltro = function(){
+        this.findHinosByFiltro = function(filtro){
             var deferred = $q.defer();
+            
+            filtro = angular.extend({filtro:'',pagina:1,total:50}, filtro);
 
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT id, numero, nome FROM hino order by numero, nome', [], function(tx, rs) {
+                tx.executeSql('SELECT id, numero, nome FROM hino where (numero || assunto || nome || autor || texto) like ? order by numero, nome limit ? offset ?', 
+                            ['%' + filtro.filtro + '%', filtro.pagina, filtro.total], function(tx, rs) {
                     var hinos = [];
 
                     for (var i=0;i<rs.rows.length;i++){

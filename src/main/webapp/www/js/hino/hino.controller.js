@@ -5,24 +5,32 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/hino/hino.list.html',
-                controller: function(hinoService, $scope, $ionicFilterBar, $filter,
+                controller: function(hinoService, $scope, $ionicFilterBar, $filter, $ionicScrollDelegate,
                             $ionicFilterBarConfig, $ionicConfig, sincronizacaoHino){
                     $scope.sincronizacao = sincronizacaoHino;
-
-                    $scope.filtra = function(){
-                        hinoService.busca().then(function(hinos){
-                            $scope.hinos = hinos;
-                        });
+                    
+                    $scope.filtro = {total:50};
+                    
+                    $scope.searcher = function(page, callback){
+                        hinoService.busca(angular.extend({pagina:page}, $scope.filtro)).then(callback);
                     };
 
                     $scope.showSearch = function(){
                         $ionicFilterBar.show({
-                            items: $scope.hinos,
-                            update: function(hinos){
-                                $scope.hinos = hinos;
+                            items:[{}],
+                            update: function(filter){
+                                
                             },
-                            cancel: function(hinos){
-                                $scope.hinos = hinos;
+                            expression: function(filterText){
+                                if (filterText !== $scope.filtro.filtro){
+                                    $ionicScrollDelegate.scrollTop();
+                                    $scope.filtro.filtro = filterText;
+                                    $scope.filtra();
+                                }
+                            },
+                            cancel: function(){
+                                $scope.filtro.filtro = '';
+                                $scope.filtra();
                             },
                             cancelText: $filter('translate')('global.cancelar'),
                             config:{
@@ -42,6 +50,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                         });
                     };
+
+                    $scope.filtra = function(){
+                        $scope.$broadcast('pagination.search');
+                    };
                     
                     $scope.sincronizar = function(){
                         if (!$scope.sincronizacao.executando){
@@ -58,9 +70,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     
                     function registraWatcher(){
                         var stop = $scope.$watch('sincronizacao.porcentagem', function(){
-                            $scope.filtra();
                             if (!$scope.sincronizacao.executando){
                                 $scope.$broadcast('scroll.refreshComplete');
+                                $scope.filtra();
                                 stop();
                             }
                         });

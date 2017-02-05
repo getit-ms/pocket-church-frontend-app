@@ -107,12 +107,20 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                 $scope.$broadcast('pagination.search');
                                             });
                                         }else{
-                                            $scope.excluir.selecionados.forEach(function(e){
-                                                notificacaoService.remove(e.id);
-                                            });
+                                            var i=0;
+                                            
+                                            var excluir = function(e){
+                                                notificacaoService.remove(e.id, function(){
+                                                    if (++i < $scope.excluir.selecionados.length){
+                                                        excluir($scope.excluir.selecionados[i]);
+                                                    }else{
+                                                        message({title:'global.title.200',template:'mensagens.MSG-001'});
+                                                        $scope.$broadcast('pagination.search');
+                                                    }
+                                                });
+                                            };
 
-                                            message({title:'global.title.200',template:'mensagens.MSG-001'});
-                                            $scope.$broadcast('pagination.search');
+                                            excluir($scope.excluir.selecionados[0]);
                                         }
                                         $scope.cancelarExclusao();
                                     }

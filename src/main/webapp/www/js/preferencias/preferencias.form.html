@@ -11,6 +11,10 @@
             <ion-toggle ng-model="preferencias.desejaReceberVersiculosDiarios" >
                 {{'preferencias.deseja_receber_versiculos' | translate}}
             </ion-toggle>
+            <ion-toggle ng-model="preferencias.desejaReceberNotificacoesVideos" 
+                        ng-if="funcionalidadesPublicas.indexOf('YOUTUBE') >= 0">
+                {{'preferencias.deseja_receber_notificacoes_video' | translate}}
+            </ion-toggle>
             <div ng-if='preferencias.desejaReceberVersiculosDiarios' class='item item-divider'>{{'preferencias.hora_versiculo' | translate}}</div>
             <ion-radio ng-if='preferencias.desejaReceberVersiculosDiarios' ng-repeat="hora in horasVersiculoDiario" 
                        ng-model="preferencias.horaVersiculoDiario" ng-value="hora">{{'preferencias.hora.' + hora | translate}}</ion-radio>

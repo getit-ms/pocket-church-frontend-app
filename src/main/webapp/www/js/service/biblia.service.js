@@ -8,11 +8,11 @@ calvinApp.
         this.sincroniza = function(){
             var api = this.api;
             var busca = function(pagina, ultimaAtualizacao){
-                var filtro = angular.extend({
+                var filtro = {
                     ultimaAtualizacao:ultimaAtualizacao,
                     pagina:pagina,
                     total:3
-                });
+                };
 
                 window.localStorage.setItem('filtro_incompleto_biblia', angular.toJson(filtro));
                 sincronizacaoBiblia.executando = true;

@@ -17,16 +17,16 @@
                     <span ng-if='agendamento.concluido' class='item-note'>{{'agenda.status.CONCLUIDO' | translate}}</span>
                 </p>
 
-                <div class="buttons">
-                    <a ng-if="!agendamento.concluido" ng-click='cancela(agendamento)'
-                       title="{{'agenda.cancelar_agendamento' | translate}}"
-                       class='button icon fa fa-trash'>
-                    </a>
-                    <a ng-if="usuario.pastor &&   !agendamento.confirmado" ng-click='confirma(agendamento)'
-                       title="{{'agenda.confirmar_agendamento' | translate}}"
-                       class='button icon fa fa-check'>
-                    </a>
-                </div>
+                <ion-option-button ng-if="!agendamento.concluido" 
+                                   ng-click='cancela(agendamento)'
+                                   title="{{'agenda.cancelar_agendamento' | translate}}"
+                                   class='icon-left ion-trash-a'>
+                </ion-option-button>
+                <ion-option-button ng-if="usuario.pastor && !agendamento.confirmado" 
+                                   ng-click='confirma(agendamento)'
+                                   title="{{'agenda.confirmar_agendamento' | translate}}"
+                                   class='icon-left ion-checkmark'>
+                </ion-option-button>
             </div>
         </div>
         <div class='item' ng-if='!usuario.pastor'>

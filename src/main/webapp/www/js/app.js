@@ -96,7 +96,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
 }).service('loadingService', ['$ionicLoading', '$filter', function($ionicLoading, $filter){
       this.show = function(){
           $ionicLoading.show({
-              template:'<ion-spinner icon="dots" class="spinner spinner-spiral"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando'),
+              template:'<ion-spinner class="spinner-light"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando'),
               animation: 'fade-in'
           });
       };

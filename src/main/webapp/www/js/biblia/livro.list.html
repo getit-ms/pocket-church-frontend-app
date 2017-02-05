@@ -4,7 +4,7 @@
   </ion-nav-title>
   <ion-tabs class="tabs-stripped" >
     <ion-tab title="{{'biblia.velho_testamento' | translate}}" >
-      <ion-content class="has-header has-footer">
+      <ion-content class="has-header" ng-class="{'has-footer':sincronizacao.executando}">
         <ion-refresher ng-if="!sincronizacao.executando"
             pulling-text="{{'global.puxe_para_atualizar' | translate}}"
             on-refresh='sincronizar()'></ion-refresher>
@@ -21,7 +21,7 @@
     </ion-tab>
 
     <ion-tab title="{{'biblia.novo_testamento' | translate}}" >
-      <ion-content class="has-header has-footer">
+      <ion-content class="has-header" ng-class="{'has-footer':sincronizacao.executando}">
         <ion-refresher ng-if="!sincronizacao.executando"
             pulling-text="{{'global.puxe_para_atualizar' | translate}}"
             on-refresh='sincronizar()'></ion-refresher>
