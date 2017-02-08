@@ -22,7 +22,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         };
 
                         $scope.detalhar = function(boletim){
-                            $ionicModal.fromTemplateUrl('js/youtube/youtube.modal.html', {
+                            $ionicModal.fromTemplateUrl('js/boletim/boletim.form.html', {
                                 scope: $scope,
                                 animation: 'slide-in-up'
                             }).then(function(modal) {

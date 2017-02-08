@@ -37,17 +37,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             });
                         };
 
-                        $scope.sincronizar = function(){
+                        $scope.$on('$ionicView.enter', function(){
                             if (!$scope.sincronizacao.executando){
                                 bibliaService.sincroniza();
-                                registraWatcher();
                             }
-                        };
-
-                        $scope.$on('$ionicView.enter', function(){
-                            if ($scope.sincronizacao.executando){
-                                registraWatcher();
-                            }
+                            registraWatcher();
                             
                             var smarcacao = window.localStorage.getItem('marcacao_biblia');
                             if (smarcacao){

@@ -4,7 +4,7 @@
     </ion-nav-title>
     <calvin-pagination searcher="searcher" ng-model="agendamentos" cache="agendamentos" not-found-message="usuario.pastor" >
         <div ng-repeat="agendamento in agendamentos" ng-click='$parent.aselecionado = agendamento.id'>
-            <div class="item item-body" ng-class="{'item-button-right':!agendamento.concluido}">
+            <ion-item class="item-text-wrap" ng-class="{'item-button-right':!agendamento.concluido}">
                 <h2>
                     {{agendamento.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}}
                     - {{agendamento.dataHoraFim | date:'HH:mm'}}
@@ -27,7 +27,7 @@
                                    title="{{'agenda.confirmar_agendamento' | translate}}"
                                    class='icon-left ion-checkmark'>
                 </ion-option-button>
-            </div>
+            </ion-item>
         </div>
         <div class='item' ng-if='!usuario.pastor'>
             <button class='button button-block' ui-sref='agenda.novo'>

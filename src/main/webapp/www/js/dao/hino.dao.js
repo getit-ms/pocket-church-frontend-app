@@ -28,13 +28,13 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
             filtro = angular.extend({filtro:'',pagina:1,total:50}, filtro);
 
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT id, numero, nome FROM hino where (numero || assunto || nome || autor || texto) like ? order by numero, nome limit ? offset ?', 
-                            ['%' + filtro.filtro + '%', filtro.pagina, filtro.total], function(tx, rs) {
-                    var hinos = [];
+                tx.executeSql('SELECT id, numero, nome FROM hino where (numero || nome || autor || texto) like ? order by numero, nome limit ?, ?', 
+                            ['%' + filtro.filtro + '%', (filtro.pagina - 1) * filtro.total, filtro.total + 1], function(tx, rs) {
+                    var hinos = {resultados:[],hasProxima:rs.rows.length > filtro.total};
 
-                    for (var i=0;i<rs.rows.length;i++){
+                    for (var i=0;i<rs.rows.length && i<filtro.total;i++){
                         var item = rs.rows.item(i);
-                        hinos.push({
+                        hinos.resultados.push({
                             id:item.id,
                             numero:item.numero,
                             nome:item.nome

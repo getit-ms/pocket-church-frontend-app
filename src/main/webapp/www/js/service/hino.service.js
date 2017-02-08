@@ -20,9 +20,8 @@ calvinApp.
                 api().customGET('', filtro).then(function(hinos){
                     if (hinos.resultados){
                         hinos.resultados.forEach(hinoDAO.mergeHino);
+                        sincronizacaoHino.porcentagem = Math.ceil(100 * hinos.pagina / hinos.totalPaginas);
                     }
-
-                    sincronizacaoHino.porcentagem = Math.ceil(100 * hinos.pagina / hinos.totalPaginas);
 
                     if (hinos.hasProxima){
                         busca(pagina + 1, ultimaAtualizacao);
@@ -47,8 +46,8 @@ calvinApp.
             }
         };
 
-        this.busca = function(){
-            return hinoDAO.findHinosByFiltro();
+        this.busca = function(filtro){
+            return hinoDAO.findHinosByFiltro(filtro);
         };
 
         this.carrega = function(id){

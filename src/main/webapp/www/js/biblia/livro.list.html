@@ -5,9 +5,6 @@
   <ion-tabs class="tabs-stripped" >
     <ion-tab title="{{'biblia.velho_testamento' | translate}}" >
       <ion-content class="has-header" ng-class="{'has-footer':sincronizacao.executando}">
-        <ion-refresher ng-if="!sincronizacao.executando"
-            pulling-text="{{'global.puxe_para_atualizar' | translate}}"
-            on-refresh='sincronizar()'></ion-refresher>
         <ion-list>
           <ion-item ui-sref="biblia.livro({livro:livro.id})" 
                     ng-class="{'item-icon-right':livro.marcado}"
@@ -22,9 +19,6 @@
 
     <ion-tab title="{{'biblia.novo_testamento' | translate}}" >
       <ion-content class="has-header" ng-class="{'has-footer':sincronizacao.executando}">
-        <ion-refresher ng-if="!sincronizacao.executando"
-            pulling-text="{{'global.puxe_para_atualizar' | translate}}"
-            on-refresh='sincronizar()'></ion-refresher>
         <ion-list>
           <ion-item ui-sref="biblia.livro({livro:livro.id})" 
                     ng-class="{'item-icon-right':livro.marcado}"

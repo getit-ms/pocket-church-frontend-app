@@ -54,18 +54,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.filtra = function(){
                         $scope.$broadcast('pagination.search');
                     };
-                    
-                    $scope.sincronizar = function(){
-                        if (!$scope.sincronizacao.executando){
-                            hinoService.sincroniza();
-                            registraWatcher();
-                        }
-                    };
 
                     $scope.$on('$ionicView.enter', function(){
-                        if ($scope.sincronizacao.executando){
-                            registraWatcher();
+                        if (!$scope.sincronizacao.executando){
+                            hinoService.sincroniza();
                         }
+                        registraWatcher();
                     });
                     
                     function registraWatcher(){
