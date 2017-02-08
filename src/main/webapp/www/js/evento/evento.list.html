@@ -3,7 +3,7 @@
         <span translate>evento.eventos</span>
     </ion-nav-title>
     <calvin-pagination searcher='searcher' ng-model="eventos" cache='eventos'>
-        <ion-item class="item-button-right"
+        <ion-item class="item-text-wrap"
                   ng-repeat="evento in eventos"
                   ng-click="detalhar(evento)">
             <h2>{{evento.nome}}</h2>

@@ -408,7 +408,9 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
     }
 });
 
-var regexDate = /^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}.+$/;
+var regexDateTime = /^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}.+$/;
+var regexDate = /^\d{4}\-\d{2}\-\d{2}$/;
+var regexTime = /^\d{2}:\d{2}:\d{2}\.\d{3}/;
 
 function convertDateStringsToDates(input) {
     // Ignore things that aren't objects.
@@ -422,8 +424,12 @@ function convertDateStringsToDates(input) {
         var value = input[key];
         var match;
         // Check for string properties which look like dates.
-        if (typeof value === "string" && (match = value.match(regexDate))) {
+        if (typeof value === "string" && (match = value.match(regexDateTime))) {
             input[key] = moment(match[0]).toDate('YYYY-MM-DDTHH:mm:ss.SSSZZ');
+        }else if (typeof value === "string" && (match = value.match(regexDate))) {
+            input[key] = moment(match[0]).toDate('YYYY-MM-DD');
+        }else if (typeof value === "string" && (match = value.match(regexTime))) {
+            input[key] = moment(match[0]).toDate('HH:mm:ss.SSS');
         } else if (typeof value === "object") {
             // Recurse into object
             convertDateStringsToDates(value);
