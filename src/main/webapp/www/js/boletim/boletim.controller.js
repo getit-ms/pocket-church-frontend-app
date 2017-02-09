@@ -27,18 +27,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 animation: 'slide-in-up'
                             }).then(function(modal) {
                                 $scope.modal = modal;
-
-                                $scope.share = function(){
-                                    loadingService.show();
-
-                                    shareService.share({
-                                        subject:boletim.titulo,
-                                        file:config.server + '/rest/arquivo/download/' + $scope.boletim.boletim.id + '?Dispositivo=' +
-                                            config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
-                                        success: loadingService.hide,
-                                        error: loadingService.hide
-                                    });
-                                };
                                 
                                 pdfService.get({
                                     chave:'boletim',
@@ -47,9 +35,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     callback:function(boletim){
                                         if (!$scope.boletim || !boletim.ultimaAlteracao ||
                                                 boletim.ultimaAlteracao.getTime() !=
-                                                $scope.ultimaAlteracao.getTime()){
+                                                $scope.boletim.ultimaAlteracao.getTime()){
                                             $scope.boletim = boletim;
-                                            $scope.totalPaginas = boletim.paginas.length;
+                                            $scope.modal.show();
                                         }
                                     },
                                     supplier:function(id, callback){
@@ -57,7 +45,20 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     }
                                 });
 
-                                $scope.modal.show();
+                            });
+                        };
+
+                        $scope.share = function(){
+                            if (!$scope.boletim) return;
+
+                            loadingService.show();
+
+                            shareService.share({
+                                subject:$scope.boletim.titulo,
+                                file:config.server + '/rest/arquivo/download/' + $scope.boletim.boletim.id + '?Dispositivo=' +
+                                    config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                                success: loadingService.hide,
+                                error: loadingService.hide
                             });
                         };
                         
@@ -71,7 +72,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $scope.modal.remove();
                             }
 
-                            $scope.video = undefined;
+                            $scope.boletim = undefined;
                         };
                         
                     }
