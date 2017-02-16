@@ -45,6 +45,10 @@ calvinApp.
                 });
             }
         };
+        
+        this.incompleto = function(){
+            return window.localStorage.getItem('filtro_incompleto_hino');
+        };
 
         this.busca = function(filtro){
             return hinoDAO.findHinosByFiltro(filtro);

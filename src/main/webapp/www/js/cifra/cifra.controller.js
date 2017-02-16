@@ -88,8 +88,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                             shareService.share({
                               subject:$scope.cifra.titulo,
-                              file:config.server + '/rest/arquivo/download/' +
-                                        $scope.cifra.cifra.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                              file:config.server + '/rest/arquivo/download/' + 
+                                        $scope.cifra.cifra.id + '/' + 
+                                        $scope.cifra.cifra.filename + '?Dispositivo=' + 
+                                        config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                               success: loadingService.hide,
                               error: loadingService.hide
                             });

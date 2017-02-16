@@ -10,7 +10,7 @@ calvinApp.service('database', [function(){
         vm.db.transaction(function(tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS livro_biblia(id, nome, ordem, abreviacao, ultima_atualizacao, testamento)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS versiculo_biblia(id, capitulo, versiculo, texto, id_livro)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS hino(id, nome, assunto, autor, texto, numero, ultima_atualizacao)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS hino(id, nome, assunto, autor, texto, numero, filename, ultima_atualizacao)');
         });
     };
 

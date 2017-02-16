@@ -7,8 +7,8 @@ calvinApp.service('oracaoService', ['Restangular', function(Restangular){
             return this.api().all('meus').get('', filtro).then(callback);
         };
         
-        this.submete = function(oracao, callback){
-            this.api().customPOST(oracao).then(callback);
+        this.submete = function(oracao, sucess, error){
+            this.api().customPOST(oracao).then(sucess, error);
         };
         
 }]);

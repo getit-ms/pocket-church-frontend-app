@@ -31,6 +31,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                 case 'BOLETIM':
                                                     n.state = 'boletim';
                                                     break;
+                                                case 'ESTUDO':
+                                                    n.state = 'estudo';
+                                                    break;
                                                 case 'EVENTO':
                                                     n.state = 'evento';
                                                     break;

@@ -297,6 +297,11 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
             acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
                 $rootScope.funcionalidadesPublicas = funcionalidades;
 
+                configService.save({
+                    funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
+                    timeout: time + 3600000
+                });
+                
                 if (config.usuario && config.funcionalidades){
                     acessoService.carrega(function (acesso) {
                         $rootScope.usuario = acesso.membro;
@@ -305,14 +310,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                         configService.save({
                             usuario: $rootScope.usuario,
                             funcionalidades: $rootScope.funcionalidades,
-                            funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
                             timeout: time + 3600000
                         });
-                    });
-                }else{
-                    configService.save({
-                        funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
-                        timeout: time + 3600000
                     });
                 }
             });

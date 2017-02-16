@@ -5,7 +5,6 @@
     <calvin-pagination searcher="searcher" ng-model="agendamentos" cache="agendamentos" not-found-message="usuario.pastor" >
         <ion-list>
             <ion-item class="item-text-wrap" 
-                      ng-class="{'item-button-right':!agendamento.concluido}"
                       ng-repeat="agendamento in agendamentos">
                 <h2>
                     {{agendamento.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}}
@@ -21,20 +20,20 @@
 
                 <ion-option-button ng-if="!agendamento.concluido" 
                                    ng-click='cancela(agendamento)'
-                                   title="{{'agenda.cancelar_agendamento' | translate}}"
                                    class='icon-left ion-trash-a'>
+                    {{'agenda.cancelar_agendamento' | translate}}
                 </ion-option-button>
                 <ion-option-button ng-if="usuario.pastor && !agendamento.confirmado" 
                                    ng-click='confirma(agendamento)'
-                                   title="{{'agenda.confirmar_agendamento' | translate}}"
                                    class='icon-left ion-checkmark'>
+                    {{'agenda.confirmar_agendamento' | translate}}
                 </ion-option-button>
             </ion-item>
+            <ion-item ng-if='!usuario.pastor'>
+                <button class='button button-block' ui-sref='agenda.novo'>
+                    {{'agenda.novo_agendamento' | translate}}
+                </button>
+            </ion-item>
         </ion-list>
-        <div class='item' ng-if='!usuario.pastor'>
-            <button class='button button-block' ui-sref='agenda.novo'>
-                {{'agenda.novo_agendamento' | translate}}
-            </button>
-        </div>
     </calvin-pagination>
 </ion-view>

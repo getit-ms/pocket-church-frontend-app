@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/oracao/oracao.form.html',
-                controller: function(oracaoService, $scope){
+                controller: function(oracaoService, $scope, loadingService){
                     $scope.searcher = function(page, callback){
                         oracaoService.busca({pagina:page,total:10}, callback);
                     };
@@ -18,10 +18,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     };
 
                     $scope.submeter = function(){
+                        loadingService.show();
+
                         oracaoService.submete($scope.pedido, function(pedido){
                             $scope.clear();
+                            loadingService.hide();
                             $scope.$broadcast('pagination.refresh');
-                        })
+                        }, function(){
+                            loadingService.hide();
+                        });
                     };
 
                     $scope.clear();

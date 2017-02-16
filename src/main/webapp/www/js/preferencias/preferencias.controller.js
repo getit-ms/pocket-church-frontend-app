@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/preferencias/preferencias.form.html',
-                    controller: function($scope, message, acessoService, $rootScope, $state, $ionicViewService){
+                    controller: function($scope, message, acessoService, $rootScope, $state, $ionicViewService, loadingService){
                         $scope.$on('$ionicView.enter', function(){
                             acessoService.buscaPreferencias(function(preferencias){
                                 $scope.preferencias = preferencias;
@@ -57,6 +57,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 return;
                             }
                             
+                            loadingService.show();
+                            
                             $scope.preferencias.ministeriosInteresse = [];
                             for (var i=0;i<$scope.ministerios.length;i++){
                                 var min = $scope.ministerios[i];
@@ -66,11 +68,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                             
                             acessoService.salvaPreferencias($scope.preferencias, function(){
+                                loadingService.hide();
                                 message({title: 'global.title.200',template: 'mensagens.MSG-001'});
+                            }, function(){
+                                loadingService.hide();
                             });
                         };
                         
                         $scope.logout = function(){
+                            loadingService.show();
+                            
                             acessoService.logout(function(){
                                 $rootScope.usuario = null;
                                 $rootScope.funcionalidades = null;
@@ -78,7 +85,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     historyRoot: true,
                                     disableBack: true
                                 });
+                                loadingService.hide();
                                 $state.go('site');
+                            }, function(){
+                                loadingService.hide();
                             });
                         };
                     }

@@ -17,8 +17,8 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
             database.db.transaction(function(tx) {
                 tx.executeSql('delete from hino where id = ?', [hino.id]);
 
-                tx.executeSql('insert into hino(id, numero, assunto, autor, nome, texto, ultima_atualizacao) values(?,?,?,?,?,?,?)',
-                [hino.id, hino.numero, hino.assunto, hino.autor, hino.nome, hino.texto, hino.ultimaAlteracao.getTime()]);
+                tx.executeSql('insert into hino(id, numero, assunto, autor, nome, texto, filename, ultima_atualizacao) values(?,?,?,?,?,?,?,?)',
+                [hino.id, hino.numero, hino.assunto, hino.autor, hino.nome, hino.texto, hino.filename, hino.ultimaAlteracao.getTime()]);
             });
         };
 
@@ -28,7 +28,7 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
             filtro = angular.extend({filtro:'',pagina:1,total:50}, filtro);
 
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT id, numero, nome FROM hino where (numero || nome || autor || texto) like ? order by numero, nome limit ?, ?', 
+                tx.executeSql('SELECT id, numero, nome FROM hino where (numero || nome || texto) like ? order by numero, nome limit ?, ?', 
                             ['%' + filtro.filtro + '%', (filtro.pagina - 1) * filtro.total, filtro.total + 1], function(tx, rs) {
                     var hinos = {resultados:[],hasProxima:rs.rows.length > filtro.total};
 
@@ -54,7 +54,7 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
             var deferred = $q.defer();
 
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT id, numero, nome, assunto, texto, autor FROM hino where id = ?', [Number(hino)], function(tx, rs) {
+                tx.executeSql('SELECT id, numero, nome, assunto, texto, autor, filename FROM hino where id = ?', [Number(hino)], function(tx, rs) {
                     if (rs.rows && rs.rows.length){
                         var item = rs.rows.item(0);
                         
@@ -64,7 +64,8 @@ calvinApp.service('hinoDAO', ['database', '$q', function(database, $q){
                           nome:item.nome,
                           assunto:item.assunto,
                           texto:item.texto,
-                          autor:item.autor
+                          autor:item.autor,
+                          filename:item.filename
                         });
                     }else{
                         deferred.resolve(null);

@@ -56,10 +56,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     };
 
                     $scope.$on('$ionicView.enter', function(){
-                        if (!$scope.sincronizacao.executando){
+                        if ($scope.sincronizacao.executando){
+                            registraWatcher();
+                        }else if (hinoService.incompleto()){
                             hinoService.sincroniza();
+                            registraWatcher();
                         }
-                        registraWatcher();
                     });
                     
                     function registraWatcher(){
@@ -92,7 +94,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                         shareService.share({
                             subject:$scope.hino.nome,
-                            file:config.server + '/rest/hino/' + $scope.hino.id + '/pdf?Dispositivo=' +
+                            file:config.server + '/rest/hino/' + $scope.hino.id + '/' + $scope.hino.filename + '.pdf?Dispositivo=' +
                                 config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                             success: loadingService.hide,
                             error: loadingService.hide

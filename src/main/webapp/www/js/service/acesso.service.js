@@ -7,11 +7,11 @@ calvinApp.service('acessoService', ['Restangular', 'config', function(Restangula
             this.api().get('').then(callback);
         };
         
-        this.login = function(login, callback){
+        this.login = function(login, success, error){
             this.api().one('login').customPUT(angular.extend({
                 version:config.version, 
                 tipoDispositivo:config.tipo
-            }, login)).then(callback);
+            }, login)).then(success, error);
         };
         
         this.logout = function(callback, errorCallback){

@@ -32,7 +32,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                         shareService.share({
                             subject:$scope.estudo.titulo,
-                            file: config.server + '/rest/estudo/' + $scope.estudo.id + '/pdf?Dispositivo=' +
+                            file: config.server + '/rest/estudo/' + $scope.estudo.id + '/' + $scope.estudo.filename + '.pdf?Dispositivo=' +
                                 config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                             success: loadingService.hide,
                             error: loadingService.hide

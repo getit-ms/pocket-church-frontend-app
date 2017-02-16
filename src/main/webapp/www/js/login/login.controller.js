@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/login/login.form.html',
-                controller: function($scope, $rootScope, $state, message, acessoService, configService, $ionicViewService){
+                controller: function($scope, $rootScope, $state, message, acessoService, configService, $ionicViewService, loadingService){
                     $scope.auth = {username:'',password:''};
                     $scope.efetuarLogin = function(form){
                         if (form.$invalid){
@@ -13,18 +13,27 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             return;
                         }
                         
+                        loadingService.show();
+                        
                         acessoService.login($scope.auth, function(acesso){
                             $rootScope.usuario = acesso.membro;
                             $rootScope.funcionalidades = acesso.funcionalidades;
+                            
                             configService.save({
                                 usuario:$rootScope.usuario,
                                 funcionalidades:acesso.funcionalidades
                             });
+                            
                             $ionicViewService.nextViewOptions({
                                 historyRoot: true,
                                 disableBack: true
                             });
+                            
+                            loadingService.hide();
+                            
                             $state.go('home');
+                        }, function(){
+                            loadingService.hide();
                         });
                     };
                 }

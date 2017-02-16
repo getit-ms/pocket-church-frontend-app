@@ -45,6 +45,10 @@ calvinApp.
                 });
             }
         };
+        
+        this.incompleto = function(){
+            return window.localStorage.getItem('filtro_incompleto_biblia');
+        };
 
         this.buscaLivros = function(testamento){
             return bibliaDAO.findLivrosBibliaByTestamento(testamento);

@@ -38,10 +38,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         };
 
                         $scope.$on('$ionicView.enter', function(){
-                            if (!$scope.sincronizacao.executando){
+                            if ($scope.sincronizacao.executando){
+                                registraWatcher();
+                            }else if (bibliaService.incompleto()){
                                 bibliaService.sincroniza();
+                                registraWatcher();
                             }
-                            registraWatcher();
                             
                             var smarcacao = window.localStorage.getItem('marcacao_biblia');
                             if (smarcacao){
@@ -137,7 +139,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       
                         $scope.compartilhar = function(versiculo){
                             shareService.share({
-                                message:versiculo.texto + ' (' + $scope.livro.nome + ' ' +
+                                message: '"' + versiculo.texto + '" (' + $scope.livro.nome + ' ' +
                                         $scope.capitulo + ':' + versiculo.versiculo + ')'
                             });
                             
