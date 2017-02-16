@@ -124,12 +124,13 @@
     },
     "home":{
         "inicio":"Início",
-        "facebook":"Acessar página do Facebook da igreja",
-        "twitter":"Acessar página do Twitter da igreja",
-        "youtube":"Acessar página do YouTube da igreja",
-        "pinterest":"Acessar página do Pinterest da igreja",
-        "google_plus":"Acessar página do Google Plus da igreja",
-        "instagram":"Acessar página do Instagram da igreja"
+        "website":"Clique para acessar a página web da igreja",
+        "facebook":"Clique para acessar página do Facebook da igreja",
+        "twitter":"Clique para acessar página do Twitter da igreja",
+        "youtube":"Clique para acessar página do YouTube da igreja",
+        "pinterest":"Clique para acessar página do Pinterest da igreja",
+        "google_plus":"Clique para acessar página do Google Plus da igreja",
+        "instagram":"Clique para acessar página do Instagram da igreja"
     },
     "login":{
         "password":"Senha",

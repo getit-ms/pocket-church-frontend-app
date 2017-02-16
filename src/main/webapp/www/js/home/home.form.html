@@ -9,6 +9,10 @@
                     <img src='img/logo.png' alt="${nome.igreja}" />
                 </div>
                 <div class="social">
+                    <a class='fa fa-globe' href='#' 
+                       title="{{'home.website' | translate}}"
+                       ng-click='site(institucional.site)'
+                       ng-if="institucional.site"></a>
                     <a class='fa fa-facebook' href='#' 
                        title="{{'home.facebook' | translate}}"
                        ng-click='site(institucional.redesSociais.facebook)'

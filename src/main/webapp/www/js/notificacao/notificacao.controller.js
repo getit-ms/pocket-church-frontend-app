@@ -118,6 +118,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                         excluir($scope.excluir.selecionados[i]);
                                                     }else{
                                                         message({title:'global.title.200',template:'mensagens.MSG-001'});
+                                                        $scope.cancelarExclusao();
                                                         $scope.$broadcast('pagination.search');
                                                     }
                                                 });
@@ -125,7 +126,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                                             excluir($scope.excluir.selecionados[0]);
                                         }
-                                        $scope.cancelarExclusao();
                                     }
                                 });
                             }

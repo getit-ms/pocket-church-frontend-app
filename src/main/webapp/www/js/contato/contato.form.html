@@ -12,7 +12,7 @@
                 {{contato.visitante ? ('contato.visitante' | translate) : ''}}
             </p>
         </ion-item>
-        <ion-item class="item-icon-left" ng-click="mailto(contato.email)">
+        <ion-item ng-if="contato.email" class="item-icon-left" ng-click="mailto(contato.email)">
             <i class="icon fa fa-envelope-square"></i>
             {{contato.email}}
         </ion-item>
