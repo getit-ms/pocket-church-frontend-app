@@ -34,7 +34,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
                     controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config,
-                                        $ionicSlideBoxDelegate, $ionicScrollDelegate, loadingService, $filter){
+                                        $ionicSlideBoxDelegate, $ionicScrollDelegate, loadingService){
                         $scope.totalPaginas = 0;
 
                         pdfService.get({

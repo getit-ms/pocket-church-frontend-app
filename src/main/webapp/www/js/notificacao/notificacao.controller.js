@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
-                    controller: function(notificacaoService, $scope, $rootScope, $cordovaBadge,
+                    controller: function(notificacaoService, $scope, $rootScope, loadingService,
                         $ionicPopup, $filter, message, $state, shareService, $ionicPlatform){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
@@ -104,10 +104,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     cancelText:$filter('translate')('global.nao')
                                 }).then(function(resp){
                                     if (resp){
+                                        loadingService.show();
+                                        
                                         if ($scope.excluir.todos){
                                             notificacaoService.clear(function(){
                                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
                                                 $scope.$broadcast('pagination.search');
+                                                loadingService.hide();
+                                            }, function(){
+                                                loadingService.hide();
                                             });
                                         }else{
                                             var i=0;
@@ -120,7 +125,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                         message({title:'global.title.200',template:'mensagens.MSG-001'});
                                                         $scope.cancelarExclusao();
                                                         $scope.$broadcast('pagination.search');
+                                                        loadingService.hide();
                                                     }
+                                                }, function(){
+                                                    $scope.cancelarExclusao();
+                                                    loadingService.hide();
                                                 });
                                             };
 
