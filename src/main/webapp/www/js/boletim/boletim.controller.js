@@ -42,8 +42,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             id:$stateParams.id,
                             errorState:'boletim',
                             callback:function(boletim){
-                                $scope.boletim = boletim;
-                                $scope.totalPaginas = boletim.paginas.length;
+                                if (!$scope.boletim){
+                                    $scope.boletim = boletim;
+                                    $scope.totalPaginas = boletim.paginas.length;
+                                }
                             },
                             supplier:function(id, callback){
                                 boletimService.carrega(id, callback);
