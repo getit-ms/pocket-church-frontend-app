@@ -368,6 +368,9 @@
         "capitulo":"Capítulo {numero}",
         "marcar":"Marcar",
         "adicionar_marcador":"Marcar"
+    },
+    "leitura":{
+        "leitura_biblica":"Leitura Bíblica"
     }
 }
 

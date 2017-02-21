@@ -82,6 +82,7 @@
         <script src="js/ebd/ebd.controller.js"></script>
         <script src="js/youtube/youtube.controller.js"></script>
         <script src="js/biblia/biblia.controller.js"></script>
+        <script src="js/leitura/leitura.controller.js"></script>
         
         <script src="js/service/link.service.js"></script>
         <script src="js/service/boletim.service.js"></script>
@@ -103,10 +104,12 @@
         <script src="js/service/share.service.js"></script>
         <script src="js/service/youtube.service.js"></script>
         <script src="js/service/biblia.service.js"></script>
+        <script src="js/service/leitura.service.js"></script>
         
         <script src="js/dao/database.js"></script>
         <script src="js/dao/biblia.dao.js"></script>
         <script src="js/dao/hino.dao.js"></script>
+        <script src="js/dao/leitura.dao.js"></script>
     </head>
     <body ng-app="calvinApp" class="calvin" ng-init>
         
@@ -198,6 +201,12 @@
                         <h2 class="menu-text">{{'youtube.videos' | translate}}</h2>
                     </ion-item>
                     
+                    <ion-item nav-clear menu-close class="item item-icon-left" 
+                              ui-sref="contato" title="{{'leitura.leitura_biblica' | translate}}"
+                              ng-if="funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0">
+                        <span class='icon fa fa-calendar-check-o'></span>
+                        <h2 class="menu-text">{{'leitura.leitura_biblica' | translate}}</h2>
+                    </ion-item>
                     <ion-item nav-clear menu-close class="item item-icon-left" 
                               ui-sref="contato" title="{{'contato.contatos' | translate}}"
                               ng-if="funcionalidades.indexOf('CONSULTAR_CONTATOS_IGREJA') >= 0">

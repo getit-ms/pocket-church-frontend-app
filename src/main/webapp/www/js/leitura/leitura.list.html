@@ -1,0 +1,16 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>leitura.leitura_biblica</span>
+    </ion-nav-title>
+    <ion-content>
+        <unlimited-slide supplier="recuperaByIndex" 
+                         first="{{first}}" last="{{last}}" ng-if="range">
+            <div class="card">
+                <h1 class="text-center">{{slide.data | date:'dd'}}</h1>
+                <h4 class="text-center">{{slide.data | date:'MMMM'}}</h4>
+                <div class="item-divider"></div>
+                {{slide.descricao}}
+            </div>
+        </unlimited-slide>
+    </ion-content>
+</ion-view>
