@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/login/login.form.html',
-                controller: function($scope, $rootScope, $state, message, acessoService, configService, $ionicViewService, loadingService){
+                controller: function($scope, $rootScope, $state, message, acessoService, configService, $ionicViewService, loadingService, leituraService){
                     $scope.auth = {username:'',password:''};
                     $scope.efetuarLogin = function(form){
                         if (form.$invalid){
@@ -28,6 +28,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 historyRoot: true,
                                 disableBack: true
                             });
+                            
+                            leituraService.sincroniza();
                             
                             loadingService.hide();
                             

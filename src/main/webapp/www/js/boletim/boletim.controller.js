@@ -34,8 +34,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
                     controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config,
-                                        $ionicSlideBoxDelegate, $ionicScrollDelegate, loadingService){
-                        $scope.totalPaginas = 0;
+                    $ionicSlideBoxDelegate, $ionicScrollDelegate, loadingService){
+                        $scope.slide = {totalPaginas:0};
 
                         pdfService.get({
                             chave:'boletim',
@@ -44,14 +44,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             callback:function(boletim){
                                 if (!$scope.boletim){
                                     $scope.boletim = boletim;
-                                    $scope.totalPaginas = boletim.paginas.length;
+                                    $scope.slide.totalPaginas = boletim.paginas.length;
                                 }
                             },
                             supplier:function(id, callback){
                                 boletimService.carrega(id, callback);
                             }
                         });
-
+                        
                         $scope.share = function(){
                             loadingService.show();
 
@@ -60,7 +60,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 file:config.server + '/rest/arquivo/download/' + 
                                         $scope.boletim.boletim.id + '/' +
                                         $scope.boletim.boletim.filename + '?Dispositivo=' +
-                                    config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                                        config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                                 success: loadingService.hide,
                                 error: loadingService.hide
                             });

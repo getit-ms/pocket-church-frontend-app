@@ -31,7 +31,7 @@ calvinApp.
                     }else{
                         leituraDAO.findNaoSincronizados().then(function(leituras){
                             leituras.forEach(function(leitura){
-                                atualizaLeitura(leitura.id, leitura.lido);
+                                atualizaLeitura(leitura.dia.id, leitura.lido);
                             });
                             
                             sincronizacaoLeitura.executando = false;
@@ -59,8 +59,8 @@ calvinApp.
             return window.localStorage.getItem('filtro_incompleto_leitura');
         };
         
-        this.selecionaPlano = function(plano, callback){
-            this.api().one('leitura/' + plano).then(callback);
+        this.selecionaPlano = function(plano, success, error){
+            this.api().one('leitura/' + plano).put().then(success, error);
         };
 
         this.findRangeDatas = function(){
@@ -74,7 +74,7 @@ calvinApp.
         this.atualizaLeitura = function(id, lido){
             var api = this.api;
             
-            leituraDAO.atualizaLeitura(id, lido ? true : false).then(function(){
+            leituraDAO.atualizaLeitura(id, lido ? true : false, function(){
                 if (lido){
                     api().one('leitura/dia/' + id).put().then(function(){
                         leituraDAO.atualizaSincronizacao(id, true);
@@ -89,5 +89,17 @@ calvinApp.
                     });
                 }
             });
+        };
+        
+        this.findPorcentagem = function(callback){
+            leituraDAO.findPorcentagem().then(callback);
+        };
+        
+        this.buscaDatasLidas = function(callback){
+            leituraDAO.findDatasLidas().then(callback);
+        };
+        
+        this.findPlanosDisponiveis = function(filtro, callback){
+            this.api().customGET('', filtro).then(callback);
         };
     }]);

@@ -18,14 +18,14 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                 tx.executeSql('delete from leitura_biblica where id_plano <> ?', [leitura.plano]);
                 
                 var atualiza = function(){
-                    tx.executeSql('delete from leitura_biblica where id = ?', [leitura.id]);
+                    tx.executeSql('delete from leitura_biblica where id = ?', [leitura.dia.id]);
 
                     tx.executeSql('insert into leitura_biblica(id, descricao, data, ultima_atualizacao, lido, sincronizado, id_plano, remoto) values(?,?,?,?,?,?,?,?)',
                     [leitura.dia.id, leitura.dia.descricao, leitura.dia.data.getTime(), leitura.ultimaAlteracao.getTime(), leitura.lido, true, leitura.plano, true]);
                 };
                 
                 tx.executeSql('SELECT ultima_atualizacao as ultimaAtualizacao FROM leitura_biblica where id = ?', [leitura.id], function(tx, rs) {
-                    if (rs.rows && rs.rows.length && 
+                    if (!rs.rows || !rs.rows.length || 
                             leitura.ultimaAlteracao.getTime() < rs.rows.item(0).ultimaAtualizacao){
                         atualiza();
                     }
@@ -45,8 +45,10 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                     for (var i=0;i<rs.rows.length;i++){
                         var item = rs.rows.item(i);
                         leituras.push({
-                            id:item.id,
-                            lido:item.lido
+                            dia: {
+                                id:item.id
+                            },
+                            lido:item.lido === 'true'
                         });
                     }
 
@@ -91,13 +93,12 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                         var item = rs.rows.item(0);
                         
                         deferred.resolve({
-                          id:item.id,
-                          numero:item.numero,
-                          nome:item.nome,
-                          assunto:item.assunto,
-                          texto:item.texto,
-                          autor:item.autor,
-                          filename:item.filename
+                            dia:{
+                                id:item.id,
+                                descricao:item.descricao,
+                                data:new Date(item.data)
+                            },
+                            lido:item.lido === 'true'
                         });
                     }else{
                         deferred.resolve(null);
@@ -110,9 +111,74 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
             return deferred.promise;
         };
         
-        this.atualizaLeitura = function(id, lido){
+        this.findDatasLidas = function(){
+            var deferred = $q.defer();
+
             database.db.transaction(function(tx) {
-                tx.executeSql('update leitura_biblica set lido = ?, remoto = ? where id = ?', [lido, false, id]);
+                tx.executeSql('SELECT data FROM leitura_biblica where lido = ? order by data', [true], function(tx, rs) {
+                    var datas = [];
+                    
+                    if (rs.rows && rs.rows.length){
+                        for (var i=0;i<rs.rows.length;i++){
+                            datas.push(new Date(rs.rows.item(i).data));
+                        }
+                    }
+                    
+                    deferred.resolve(datas);
+                }, function(tx, error) {
+                    deferred.reject(error);
+                });
+            });
+
+            return deferred.promise;
+        };
+        
+        this.findPorcentagem = function(){
+            var deferred = $q.defer();
+
+            database.db.transaction(function(tx) {
+                var progresso = {};
+                
+                tx.executeSql('SELECT count(*) as count FROM leitura_biblica where descricao is not null', [], function(tx, rs) {
+                    if (rs.rows && rs.rows.length){
+                        var totalGeral = rs.rows.item(0).count;
+                        tx.executeSql('SELECT count(*) as count FROM leitura_biblica where lido = ? and descricao is not null', [true], function(tx, rs) {
+                            if (rs.rows && rs.rows.length){
+                                progresso.porcentagem = Math.ceil((rs.rows.item(0).count / totalGeral) * 100);
+                                progresso.concluido = progresso.porcentagem === 100;
+                                
+                                tx.executeSql('SELECT count(*) as count FROM leitura_biblica where data < ? and descricao is not null', [new Date().getTime()], function(tx, rs) {
+                                    if (rs.rows && rs.rows.length){
+                                        var totalAtual = rs.rows.item(0).count;
+                                        tx.executeSql('SELECT count(*) as count FROM leitura_biblica where lido = ? and data < ? and descricao is not null', [true, new Date().getTime()], function(tx, rs) {
+                                            if (rs.rows && rs.rows.length){
+                                                progresso.emDia = totalAtual - rs.rows.item(0).count <= 1;
+                                                deferred.resolve(progresso);
+                                            }
+                                        }, function(tx, error) {
+                                            deferred.reject(error);
+                                        });
+                                    }
+                                }, function(tx, error) {
+                                    deferred.reject(error);
+                                });
+                            }
+                        }, function(tx, error) {
+                            deferred.reject(error);
+                        });
+                    }
+                }, function(tx, error) {
+                    deferred.reject(error);
+                });
+                
+            });
+
+            return deferred.promise;
+        };
+        
+        this.atualizaLeitura = function(id, lido, callback){
+            database.db.transaction(function(tx) {
+                tx.executeSql('update leitura_biblica set lido = ?, remoto = ? where id = ?', [lido, false, id], callback);
             });
         };
         

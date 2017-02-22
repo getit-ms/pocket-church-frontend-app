@@ -30,6 +30,10 @@ calvinApp.service('acessoService', ['Restangular', 'config', function(Restangula
             return this.api().one('horariosVersiculoDiario').getList().$object;
         };
         
+        this.buscaHorasLembretesLeitura = function(){
+            return this.api().one('horariosLembretesLeitura').getList().$object;
+        };
+        
         this.buscaFuncionalidadesPublicas = function(callback){
             return this.api().all('funcionalidades/publicas').getList().then(callback);
         };

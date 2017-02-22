@@ -3,15 +3,19 @@
         <span translate>leitura.configuracao</span>
     </ion-nav-title>
     <ion-content>
-        <form id="preferencias_form" name="preferencias_form" ng-submit="salvar(this.preferencias_form)" novalidate>
+        <form id="leitura_form" name="leitura_form" ng-submit="salva(this.leitura_form)" novalidate>
             <ion-toggle ng-model="configuracao.desejaReceberLembreteLeitura" >
-                {{'configuracao.deseja_receber_lembrete_leitura' | translate}}
+                {{'leitura.deseja_receber_lembrete_leitura' | translate}}
             </ion-toggle>
             <div ng-if='configuracao.desejaReceberLembreteLeitura' class='item item-divider'>{{'leitura.hora_lembrete' | translate}}</div>
-            <ion-radio ng-if='configuracao.desejaReceberLembreteLeitura' ng-repeat="hora in horasVersiculoDiario" 
+            <ion-radio ng-if='configuracao.desejaReceberLembreteLeitura' ng-repeat="hora in horasLembrete" 
                        ng-model="configuracao.horaLembreteLeitura" ng-value="hora">{{'leitura.hora.' + hora | translate}}</ion-radio>
             <ion-item>
                 <input type="submit" class='button button-block button-positive' value="{{'global.salvar' | translate}}" />
+            </ion-item>
+            <ion-item>
+                <a class='button button-block button-positive' ui-sref='leitura.escolha' 
+                   >{{'global.trocar_plano_leitura' | translate}}</a>
             </ion-item>
         </form>
     </ion-content>

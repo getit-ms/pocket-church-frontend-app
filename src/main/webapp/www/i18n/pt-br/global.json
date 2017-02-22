@@ -370,7 +370,17 @@
         "adicionar_marcador":"Marcar"
     },
     "leitura":{
-        "leitura_biblica":"Leitura Bíblica"
+        "leitura_biblica":"Leitura Bíblica",
+        "planos_leitura":"Planos de Leitura",
+        "deseja_receber_lembrete_leitura":"Deseja receber lembrete de leitura",
+        "hora_lembrete":"Hora do Lembrete",
+        "configuracao":"Configuração",
+        "sincronizando":"Sincronizando... {porcentagem}%",
+        "em_dia":"Leitura em dia",
+        "atrasada":"Leitura atrasada",
+        "progresso":"Progresso",
+        "concluida":"Concluída",
+        "trocar_plano_leitura":"Trocar Plano de Leitura"
     }
 }
 
