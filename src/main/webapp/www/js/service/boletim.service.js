@@ -3,8 +3,8 @@ calvinApp.service('boletimService', ['Restangular', 'pdfService', '$q', function
             return Restangular.one('boletim');
         };
 
-        this.busca = function(filtro, callback){
-            return this.api().all('publicados').get('', filtro).then(callback);
+        this.busca = function(filtro, success, error){
+            return this.api().all('publicados').get('', filtro).then(success, error);
         };
 
         this.carrega = function(id, callback){
@@ -18,7 +18,7 @@ calvinApp.service('boletimService', ['Restangular', 'pdfService', '$q', function
                 this.busca({pagina:1,total:5}, function(boletins){
                     pdfService.load('boletim', boletins.resultados);
                     deferred.resolve();
-                });
+                }, deferred.reject);
             }catch(e){
                 console.log(e);
                 deferred.reject();

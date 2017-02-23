@@ -79,39 +79,12 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             function(){ return arquivoService.clean(); }
         ];
         
-        if ($rootScope.funcionalidadesPublicas){
-            if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
-                execucoes.push(function(){ return bibliaService.sincroniza(); });
-            }
-
-            if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
-                execucoes.push(function(){ return hinoService.sincroniza(); });
-            }
-
-            if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
-                execucoes.push(function(){ return boletimService.cache(); });
-            }
-        }
-        
-        if ($rootScope.funcionalidades && 
-                $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
-            execucoes.push(function(){ return leituraService.sincroniza(); });
-        }
-        
         execucoes.push(function(){
             $injector.get('$state').reload();
+            return {then:function(){}};
         });
 
-        var idx = -1;
-
-        function exec(){
-            idx++;
-            if (execucoes.length > idx){
-                execucoes[idx]().then(exec, exec);
-            }
-        }
-
-        exec();
+        executePilha(execucoes);
 
     });
 
@@ -300,7 +273,8 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicPlatform, $ionicSideMenuDelegate) {
+.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, 
+                $ionicPlatform, $ionicSideMenuDelegate, bibliaService, hinoService, boletimService) {
     var config = configService.load();
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
@@ -318,22 +292,47 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         if (!config.timeout || config.timeout < time) {
             acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
                 $rootScope.funcionalidadesPublicas = funcionalidades;
+                
+                var execucoes = [];
+        
+                if ($rootScope.funcionalidadesPublicas){
+                    if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
+                        execucoes.push(function(){ return bibliaService.sincroniza(); });
+                    }
+
+                    if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
+                        execucoes.push(function(){ return hinoService.sincroniza(); });
+                    }
+
+                    if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
+                        execucoes.push(function(){ return boletimService.cache(); });
+                    }
+                }
 
                 configService.save({
                     funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
                     timeout: time + 3600000
                 });
                 
+                executePilha(execucoes);
+                
                 if (config.usuario && config.funcionalidades){
                     acessoService.carrega(function (acesso) {
                         $rootScope.usuario = acesso.membro;
                         $rootScope.funcionalidades = acesso.funcionalidades;
+                        
+                        if ($rootScope.funcionalidades && 
+                                $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
+                            execucoes.push(function(){ return leituraService.sincroniza(); });
+                        }
 
                         configService.save({
                             usuario: $rootScope.usuario,
                             funcionalidades: $rootScope.funcionalidades,
                             timeout: time + 3600000
                         });
+                        
+                        executePilha(execucoes);
                     });
                 }
             });
@@ -482,6 +481,19 @@ function formatDate(date) {
     if (!date)
         return null;
     return moment(date).format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
+}
+
+function executePilha(execucoes){
+    var idx = -1;
+
+    function exec(){
+        idx++;
+        if (execucoes.length > idx){
+            execucoes[idx]().then(exec, exec);
+        }
+    }
+
+    exec();
 }
 
 
