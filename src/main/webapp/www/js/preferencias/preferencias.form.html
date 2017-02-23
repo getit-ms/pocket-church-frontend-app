@@ -12,13 +12,15 @@
                         ng-if="funcionalidadesPublicas.indexOf('YOUTUBE') >= 0">
                 {{'preferencias.deseja_receber_notificacoes_video' | translate}}
             </ion-toggle>
+            <div class='item'><h1>{{'preferencias.versiculo_diario' | translate}}</h1></div>
             <ion-toggle ng-model="preferencias.desejaReceberVersiculosDiarios" >
                 {{'preferencias.deseja_receber_versiculos' | translate}}
             </ion-toggle>
             <div ng-if='preferencias.desejaReceberVersiculosDiarios' class='item item-divider'>{{'preferencias.hora_versiculo' | translate}}</div>
             <ion-radio ng-if='preferencias.desejaReceberVersiculosDiarios' ng-repeat="hora in horasVersiculoDiario" 
                        ng-model="preferencias.horaVersiculoDiario" ng-value="hora">{{'preferencias.hora.' + hora | translate}}</ion-radio>
-            <div ng-if="showusuario && funcionalidades && && funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0 && showLeitura">
+            <div ng-if="usuario && funcionalidades && funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0 && showLeitura">
+                <div class='item'><h1>{{'preferencias.leitura_biblica' | translate}}</h1></div>
                 <ion-toggle ng-model="preferencias.desejaReceberLembreteLeitura" >
                     {{'preferencias.deseja_receber_lembrete_leitura' | translate}}
                 </ion-toggle>
@@ -26,7 +28,7 @@
                 <ion-radio ng-if='preferencias.desejaReceberLembreteLeitura' ng-repeat="hora in horasLembreteLeitura" 
                            ng-model="preferencias.horaLembreteLeitura" ng-value="hora">{{'leitura.hora.' + hora | translate}}</ion-radio>
             </div>
-            <div ng-if='ministerios.length' class="item item-divider">{{'preferencias.ministerios_interesse' | translate}}</div>
+            <div class='item'><h1>{{'preferencias.ministerios_interesse' | translate}}</h1></div>
             <ion-toggle ng-if='ministerios.length' ng-checked="todosMinisterios" ng-click="toggleTodosMinisterios()" >
                 {{'preferencias.todos_ministerios' | translate}}
             </ion-toggle>

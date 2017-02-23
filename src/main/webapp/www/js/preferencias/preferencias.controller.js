@@ -11,7 +11,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $scope.preferencias = preferencias;
                                 
                                 leituraService.findPlano().then(function(plano){
-                                    $scope.showLeitura = plano ? true : false
+                                    $scope.showLeitura = plano ? true : false;
                                 });
                                 
                                 $scope.ministeriosSelecionados = [];

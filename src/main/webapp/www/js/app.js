@@ -73,29 +73,29 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         countNotificacoes();
 
         var execucoes = [
-            database.init,
-            arquivoService.init,
-            cacheService.clean,
-            arquivoService.clean
+            function(){ return database.init(); },
+            function(){ return arquivoService.init(); },
+            function(){ return cacheService.clean(); },
+            function(){ return arquivoService.clean(); }
         ];
         
         if ($rootScope.funcionalidadesPublicas){
             if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
-                execucoes.push(bibliaService.sincroniza);
+                execucoes.push(function(){ return bibliaService.sincroniza(); });
             }
 
             if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
-                execucoes.push(hinoService.sincroniza);
+                execucoes.push(function(){ return hinoService.sincroniza(); });
             }
 
             if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
-                execucoes.push(boletimService.cache);
+                execucoes.push(function(){ return boletimService.cache(); });
             }
         }
         
         if ($rootScope.funcionalidades && 
                 $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
-            execucoes.push(leituraService.sincroniza);
+            execucoes.push(function(){ return leituraService.sincroniza(); });
         }
         
         execucoes.push(function(){

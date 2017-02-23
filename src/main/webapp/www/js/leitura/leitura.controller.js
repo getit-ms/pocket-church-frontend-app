@@ -76,7 +76,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         };
 
                                         $scope.datepicker.callback(new Date($scope.datepicker.date.getFullYear(), 
-                                                $scope.datepicker.date.getMonth(), $scope.datepicker.getDate()));
+                                        $scope.datepicker.date.getMonth(), $scope.datepicker.getDate()));
                                         
                                         leituraService.buscaDatasLidas(function(datas){
                                             datas.forEach(function(dt){
@@ -86,18 +86,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                 });
                                             });
                                         });
-                                        
-                                    }else{
-                                        $ionicViewService.nextViewOptions({
-                                            disableBack: true
-                                        });
-                                        $state.go('leitura.escolha');
                                     }
-                                }else if (!sincronizacaoLeitura.executando){
-                                    $ionicViewService.nextViewOptions({
-                                        disableBack: true
-                                    });
-                                    $state.go('leitura.escolha');
                                 }
                             });
                         };

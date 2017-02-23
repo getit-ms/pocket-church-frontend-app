@@ -65,15 +65,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 error: loadingService.hide
                             });
                         };
-                        
-                        $scope.updateSlideStatus = function(index) {
-                            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
-                            if (zoomFactor == 1) {
-                                $ionicSlideBoxDelegate.enableSlide(true);
-                            } else {
-                                $ionicSlideBoxDelegate.enableSlide(false);
-                            }
-                        };
                     }
                 }
             }

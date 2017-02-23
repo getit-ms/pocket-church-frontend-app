@@ -326,6 +326,8 @@
     },
     "preferencias":{
         "preferencias":"Preferências",
+        "versiculo_diario":"Versículo Diário",
+        "leitura_biblica":"Leitura Bíblica",
         "todos_ministerios":"Todos os Ministérios",
         "deseja_disponibilizar_dados":"Permitir que outros membros vejam meus dados",
         "deseja_receber_versiculos":"Receber versículos diários",

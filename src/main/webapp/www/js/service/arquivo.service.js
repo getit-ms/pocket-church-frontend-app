@@ -58,7 +58,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                                     self.clean(i).then(deferred.resolve, deferred.reject);
                                 });
 
-                                return;
+                                return deferred.promise;
                             }
                         }
 
