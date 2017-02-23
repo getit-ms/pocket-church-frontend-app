@@ -26,7 +26,7 @@
                 </ion-toggle>
                 <div ng-if='preferencias.desejaReceberLembreteLeitura' class='item item-divider' >{{'preferencias.hora_lembrete_leitura' | translate}}</div>
                 <ion-radio ng-if='preferencias.desejaReceberLembreteLeitura' ng-repeat="hora in horasLembreteLeitura" 
-                           ng-model="preferencias.horaLembreteLeitura" ng-value="hora">{{'leitura.hora.' + hora | translate}}</ion-radio>
+                           ng-model="preferencias.horaLembreteLeitura" ng-value="hora">{{'preferencias.hora.' + hora | translate}}</ion-radio>
             </div>
             <div class='item'><h1>{{'preferencias.ministerios_interesse' | translate}}</h1></div>
             <ion-toggle ng-if='ministerios.length' ng-checked="todosMinisterios" ng-click="toggleTodosMinisterios()" >

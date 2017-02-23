@@ -29,7 +29,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 disableBack: true
                             });
                             
-                            leituraService.sincroniza();
+                            if ($rootScope.funcionalidades &&
+                                    $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
+                                leituraService.sincroniza();
+                            }
                             
                             loadingService.hide();
                             

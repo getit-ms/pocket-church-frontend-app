@@ -75,8 +75,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                             }
                                         };
 
-                                        $scope.datepicker.callback(new Date($scope.datepicker.date.getFullYear(), 
-                                        $scope.datepicker.date.getMonth(), $scope.datepicker.getDate()));
+                                        $scope.datepicker.callback(new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()));
                                         
                                         leituraService.buscaDatasLidas(function(datas){
                                             datas.forEach(function(dt){
