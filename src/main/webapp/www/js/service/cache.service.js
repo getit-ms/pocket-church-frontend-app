@@ -1,5 +1,5 @@
-calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$state', '$ionicViewService', '$rootScope',
-    function($window, $cordovaNetwork, message, $state, $ionicViewService, $rootScope){
+calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$state', '$ionicViewService', '$rootScope', '$q',
+    function($window, $cordovaNetwork, message, $state, $ionicViewService, $rootScope, $q){
         this.timeout = 1000 * 60 * 60 * 24 * 5;
         
         this.get = function(req){
@@ -75,19 +75,29 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
         };
         
         this.clean = function(){
-            var now = new Date().getTime();
-            for (i=0;i<$window.localStorage.length;i++){
-                var key = $window.localStorage.key(i);
-                if (key.startsWith('cache.')){
-                    var cache = $window.localStorage.getItem(key);
+            var deferred = $q.defer();
+            
+            try{
+                var now = new Date().getTime();
+                for (i=0;i<$window.localStorage.length;i++){
+                    var key = $window.localStorage.key(i);
+                    if (key.startsWith('cache.')){
+                        var cache = $window.localStorage.getItem(key);
 
-                    if (cache){
-                        if (cache.access + this.timeout < now){
-                            $window.localStorage.removeItem(key);
+                        if (cache){
+                            if (cache.access + this.timeout < now){
+                                $window.localStorage.removeItem(key);
+                            }
                         }
                     }
                 }
+                deferred.resolve();
+            }catch(e){
+                console.log(e);
+                deferred.reject();
             }
+            
+            return deferred.promise;
         };
         
         function load(chave, id){

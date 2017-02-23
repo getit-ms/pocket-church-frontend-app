@@ -1,11 +1,13 @@
 calvinApp.
-  value('sincronizacaoBiblia', {porcentagem:0,executando:false}).
-  service('bibliaService', ['Restangular', 'bibliaDAO', 'sincronizacaoBiblia', function(Restangular, bibliaDAO, sincronizacaoBiblia){
-        this.api = function(){
-            return Restangular.all('biblia');
+        value('sincronizacaoBiblia', {porcentagem:0,executando:false}).
+        service('bibliaService', ['Restangular', 'bibliaDAO', 'sincronizacaoBiblia', '$q', function(Restangular, bibliaDAO, sincronizacaoBiblia, $q){
+                this.api = function(){
+                    return Restangular.all('biblia');
         };
 
         this.sincroniza = function(){
+            var deferred = $q.defer();
+            
             var api = this.api;
             var busca = function(pagina, ultimaAtualizacao){
                 var filtro = {
@@ -28,22 +30,33 @@ calvinApp.
                     }else{
                         sincronizacaoBiblia.executando = false;
                         window.localStorage.removeItem('filtro_incompleto_biblia');
+                        deferred.resolve();
                     }
                 }, function(){
                     sincronizacaoBiblia.executando = false;
+                    deferred.reject();
+                    
                 });
             };
 
             var filtro = window.localStorage.getItem('filtro_incompleto_biblia');
 
-            if (filtro){
-                var ofiltro = angular.fromJson(filtro);
-                busca(ofiltro.pagina, ofiltro.ultimaAtualizacao);
-            }else{
-                bibliaDAO.findUltimaAlteracaoLivroBiblia(function(ultimaAtualizacao){
-                    busca(1, formatDate(ultimaAtualizacao));
-                });
+            try{
+    
+                if (filtro){
+                    var ofiltro = angular.fromJson(filtro);
+                    busca(ofiltro.pagina, ofiltro.ultimaAtualizacao);
+                }else{
+                    bibliaDAO.findUltimaAlteracaoLivroBiblia(function(ultimaAtualizacao){
+                        busca(1, formatDate(ultimaAtualizacao));
+                    });
+                }
+            }catch(e){
+                console.log(e);
+                deferred.reject();
             }
+            
+            return deferred.promise;
         };
         
         this.incompleto = function(){
@@ -65,4 +78,4 @@ calvinApp.
         this.buscaVersiculos = function(livro, capitulo){
             return bibliaDAO.findVersiculosByLivroCapituloBiblia(livro, capitulo);
         };
-}]);
+    }]);

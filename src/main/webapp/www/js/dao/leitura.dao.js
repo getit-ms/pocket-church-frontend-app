@@ -12,15 +12,33 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                 });
             });
         };
+        
+        this.mergePlano = function(plano){
+            var deferred = $q.defer();
+            
+            this.findPlano().then(function(salvo){
+                database.db.transaction(function(tx) {
+                    if (salvo && salvo.id === plano.id){
+                        tx.executeSql('update plano_leitura set descricao = ?', [plano.descricao]);
+                    }else{
+                        tx.executeSql('delete from plano_leitura', []);
+                        tx.executeSql('delete from leitura_biblica', []);
 
-        this.merge = function(leitura){
+                        tx.executeSql('insert into plano_leitura(id, descricao) values(?,?)', [plano.id, plano.descricao]);
+                    }
+                    deferred.resolve();
+                });
+            }, deferred.reject);
+            
+            return deferred.promise;
+        };
+
+        this.mergeLeitura = function(leitura){
             database.db.transaction(function(tx) {
-                tx.executeSql('delete from leitura_biblica where id_plano <> ?', [leitura.plano]);
-                
                 var atualiza = function(){
                     tx.executeSql('delete from leitura_biblica where id = ?', [leitura.dia.id]);
 
-                    tx.executeSql('insert into leitura_biblica(id, descricao, data, ultima_atualizacao, lido, sincronizado, id_plano, remoto) values(?,?,?,?,?,?,?,?)',
+                    tx.executeSql('insert into leitura_biblica(id, descricao, data, ultima_atualizacao, lido, sincronizado, remoto) values(?,?,?,?,?,?,?)',
                     [leitura.dia.id, leitura.dia.descricao, leitura.dia.data.getTime(), leitura.ultimaAlteracao.getTime(), leitura.lido, true, leitura.plano, true]);
                 };
                 
@@ -33,6 +51,28 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                     atualiza();
                 });
             });
+        };
+        
+        this.findPlano = function(){
+            var deferred = $q.defer();
+            
+            database.db.transaction(function(tx) {
+                tx.executeSql('SELECT id, descricao FROM plano_leitura', [], function(tx, rs) {
+                    if (rs.rows.length){
+                        var item = rs.rows.item(0);
+                        deferred.resolve({
+                            id: item.id,
+                            descricao: item.descricao
+                        });
+                    }else{
+                        deferred.resolve(null);
+                    }
+                }, function(tx, error) {
+                    deferred.reject(error);
+                });
+            });
+
+            return deferred.promise;
         };
 
         this.findNaoSincronizados = function(){

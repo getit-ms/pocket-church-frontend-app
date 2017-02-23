@@ -24,7 +24,7 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar',
     'youtube-embed'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, database, hinoService) {
+arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, database, hinoService, leituraService) {
     function countNotificacoes(){
         notificacaoService.count(function(dados){
             $rootScope.notifications = dados.count;
@@ -72,25 +72,47 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
 
         countNotificacoes();
 
-        try{
-            database.init();
+        var execucoes = [
+            database.init,
+            arquivoService.init,
+            cacheService.clean,
+            arquivoService.clean
+        ];
+        
+        if ($rootScope.funcionalidadesPublicas){
+            if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
+                execucoes.push(bibliaService.sincroniza);
+            }
 
-            bibliaService.sincroniza();
+            if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
+                execucoes.push(hinoService.sincroniza);
+            }
 
-            hinoService.sincroniza();
+            if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
+                execucoes.push(boletimService.cache);
+            }
+        }
+        
+        if ($rootScope.funcionalidades && 
+                $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
+            execucoes.push(leituraService.sincroniza);
+        }
+        
+        execucoes.push(function(){
+            $injector.get('$state').reload();
+        });
 
-            arquivoService.init();
+        var idx = -1;
 
-            boletimService.cache();
-
-            cacheService.clean();
-
-            arquivoService.clean();
-        }catch(e){
-            console.error(e);
+        function exec(){
+            idx++;
+            if (execucoes.length > idx){
+                execucoes[idx]().then(exec, exec);
+            }
         }
 
-        $injector.get('$state').reload();
+        exec();
+
     });
 
 }).service('loadingService', ['$ionicLoading', '$filter', function($ionicLoading, $filter){
@@ -278,7 +300,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicPlatform, $ionicSideMenuDelegate, leituraService) {
+.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicPlatform, $ionicSideMenuDelegate) {
     var config = configService.load();
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
@@ -290,12 +312,6 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         });
     }
 
-    $ionicPlatform.on("deviceready", function(){
-        if ($rootScope.usuario){
-            leituraService.sincroniza();
-        }
-    });
-    
     $ionicPlatform.on("resume", function(){
         var time = new Date().getTime();
 

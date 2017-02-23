@@ -40,6 +40,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                 case 'PEDIDO_ORACAO':
                                                     n.state = 'oracao';
                                                     break;
+                                                case 'PLANO_LEITURA':
+                                                    n.state = 'leitura';
+                                                    break;
                                             }
                                         }
                                     });

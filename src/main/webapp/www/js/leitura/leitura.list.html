@@ -1,50 +1,11 @@
 <ion-view>
     <ion-nav-title>
-        <span translate>leitura.leitura_biblica</span>
+        <span translate>leitura.planos_leitura</span>
     </ion-nav-title>
-    <ion-nav-buttons side="right" >
-        <a data-tap-disabled="true" ui-sref="leitura.configuracao"
-           class="button button-icon icon positive fa fa-cog" ></a>
-    </ion-nav-buttons>
-    <ion-content>
-        <div class="list">
-            <div class="item item-divider">
-                {{'leitura.progresso' | translate}}
-            </div>
-            <div class="item item-icon-left">
-                <i class='icon ion-happy positive' ng-if='progresso.emDia && !progresso.concluido'></i>
-                <i class='icon ion-sad assertive' ng-if='!progresso.emDia && !progresso.concluido'></i>
-                <i class='icon ion-thumbsup positive' ng-if='progresso.concluido'></i>
-                <progress max="100" value="{{progresso.porcentagem}}" title="{{progresso.porcentagem}}%"></progress>
-                <p ng-if='progresso.emDia && !progresso.concluido'>
-                    {{'leitura.em_dia' | translate}}
-                </p>
-                <p ng-if='!progresso.emDia && !progresso.concluido'>
-                    {{'leitura.atrasada' | translate}}
-                </p>
-                <p ng-if='progresso.concluido'>
-                    {{'leitura.concluida' | translate}}
-                </p>
-            </div>
-            <div class="item item-divider">
-                {{'leitura.leitura_biblica' | translate}}
-            </div>
-            <div class="item padding" ng-if='datepicker'>
-                <onezone-datepicker datepicker-object="datepicker" ></onezone-datepicker>
-            </div>
-            <ion-item class='item-divider'
-                      ng-if="leitura.dia.descricao">
-                <span>{{leitura.dia.data | date:'d MMMM'}}</span>
-            </ion-item>
-            <ion-toggle class="item-text-wrap" 
-                        ng-model="leitura.lido" 
-                        ng-change="toggleLido()" 
-                        ng-if="leitura.dia.descricao" >
-                {{leitura.dia.descricao}}
-            </ion-toggle>
-        </div>
-    </ion-content>
-    <ion-footer-bar ng-show="sincronizacao.executando" class="bar-stable" align-title="center">
-        <h1 class="title">{{'leitura.sincronizando' | translate:{porcentagem:sincronizacao.porcentagem} }}</h1>
-    </ion-footer-bar>
+    <calvin-pagination searcher="searcher" ng-model="planos" cache="planos">
+        <ion-item ng-click="escolhe(plano)" ng-repeat="plano in planos">
+            <h2>{{plano.descricao}}</h2>
+            <p>{{plano.dataInicio | date:'dd/MM/yyyy'}} - {{plano.dataTermino | date:'dd/MM/yyyy'}}</p>
+        </ion-item>
+    </calvin-pagination>
 </ion-view>

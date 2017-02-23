@@ -1,11 +1,13 @@
 calvinApp.
         value('sincronizacaoLeitura', {porcentagem:0,executando:false}).
-        service('leituraService', ['Restangular', 'sincronizacaoLeitura', 'leituraDAO', function(Restangular, sincronizacaoLeitura, leituraDAO){
-        this.api = function(){
-            return Restangular.all('planoLeitura');
+        service('leituraService', ['Restangular', 'sincronizacaoLeitura', 'leituraDAO', '$q', function(Restangular, sincronizacaoLeitura, leituraDAO, $q){
+                this.api = function(){
+                    return Restangular.all('planoLeitura');
         };
 
         this.sincroniza = function(){
+            var deferred = $q.defer();
+            
             var api = this.api;
             
             var atualizaLeitura = this.atualizaLeitura;
@@ -22,7 +24,7 @@ calvinApp.
 
                 api().one('leitura').customGET('', filtro).then(function(leituras){
                     if (leituras.resultados){
-                        leituras.resultados.forEach(leituraDAO.merge);
+                        leituras.resultados.forEach(leituraDAO.mergeLeitura);
                         sincronizacaoLeitura.porcentagem = Math.ceil(100 * leituras.pagina / leituras.totalPaginas);
                     }
 
@@ -36,23 +38,36 @@ calvinApp.
                             
                             sincronizacaoLeitura.executando = false;
                             window.localStorage.removeItem('filtro_incompleto_leitura');
+                            deferred.resolve();
                         });
                     }
                 }, function(){
                     sincronizacaoLeitura.executando = false;
+                    deferred.reject();
                 });
             };
 
-            var filtro = window.localStorage.getItem('filtro_incompleto_leitura');
+            try{
+                api().one('leitura/plano').get().then(function(plano){
+                    leituraDAO.mergePlano(plano).then(function(){
+                        var filtro = window.localStorage.getItem('filtro_incompleto_leitura');
 
-            if (filtro){
-                var ofiltro = angular.fromJson(filtro);
-                busca(ofiltro.pagina, ofiltro.ultimaAtualizacao);
-            }else{
-                leituraDAO.findUltimaAlteracao(function(ultimaAtualizacao){
-                    busca(1, formatDate(ultimaAtualizacao));
+                        if (filtro){
+                            var ofiltro = angular.fromJson(filtro);
+                            busca(ofiltro.pagina, ofiltro.ultimaAtualizacao);
+                        }else{
+                            leituraDAO.findUltimaAlteracao(function(ultimaAtualizacao){
+                                busca(1, formatDate(ultimaAtualizacao));
+                            });
+                        }
+                    });
                 });
+            }catch(e){
+                console.log(e);
+                deferred.reject();
             }
+            
+            return deferred.promise;
         };
         
         this.incompleto = function(){
@@ -65,6 +80,10 @@ calvinApp.
 
         this.findRangeDatas = function(){
             return leituraDAO.findRangeDatas();
+        };
+
+        this.findPlano = function(){
+            return leituraDAO.findPlano();
         };
 
         this.findByData = function(data){

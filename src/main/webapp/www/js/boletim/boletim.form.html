@@ -7,17 +7,14 @@
            class="button button-icon icon positive ion-android-share-alt"
            title="{{'global.compartilhar' | translate}}"></a>
     </ion-nav-buttons>
-    <ion-content class='has-header' scroll='false'>
-        <ion-slides options="{paginationType:'fraction'}" style="background-color:black">
-            <ion-slide-page ng-repeat="pagina in boletim.paginas">
-                <ion-scroll scroll='false' zooming="true" direction="xy" scrollable-x="false"
-                            scrollable-y="false" min-zoom="1" style="width:100%;height:100%"
-                            delegate-handle="scrollHandle{{$index}}" on-scroll="updateSlideStatus($index)" 
-                            on-release="updateSlideStatus($index)" overflow-scroll="false"
-                            ng-if="show(pagina, $index)">
-                    <div class="image" style="background-image: url( {{pagina.localPath}} )"></div>
-                </ion-scroll>
-            </ion-slide-page>
-        </ion-slides>
+    <ion-content class='has-header' >
+        <ion-scroll ng-collection="pagina in boletim.paginas"
+                    scroll='false' zooming="true" direction="xy" scrollable-x="false"
+                    scrollable-y="false" min-zoom="1" style="width:100%;height:100%"
+                    delegate-handle="scrollHandle{{$index}}" on-scroll="updateSlideStatus($index)" 
+                    on-release="updateSlideStatus($index)" overflow-scroll="false"
+                    ng-if="show(pagina, $index)">
+            <div class="image" style="background-image: url( {{pagina.localPath}} )"></div>
+        </ion-scroll>
     </ion-content>
 </ion-view>

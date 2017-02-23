@@ -1,11 +1,13 @@
 calvinApp.
-  value('sincronizacaoHino', {porcentagem:0,executando:false}).
-  service('hinoService', ['Restangular', 'sincronizacaoHino', 'hinoDAO', function(Restangular, sincronizacaoHino, hinoDAO){
-        this.api = function(){
-            return Restangular.all('hino');
+        value('sincronizacaoHino', {porcentagem:0,executando:false}).
+        service('hinoService', ['Restangular', 'sincronizacaoHino', 'hinoDAO', '$q', function(Restangular, sincronizacaoHino, hinoDAO, $q){
+                this.api = function(){
+                    return Restangular.all('hino');
         };
 
         this.sincroniza = function(){
+            var deferred = $q.defer();
+            
             var api = this.api;
             var busca = function(pagina, ultimaAtualizacao){
                 var filtro = {
@@ -28,22 +30,31 @@ calvinApp.
                     }else{
                         sincronizacaoHino.executando = false;
                         window.localStorage.removeItem('filtro_incompleto_hino');
+                        deferred.resolve();
                     }
                 }, function(){
                     sincronizacaoHino.executando = false;
+                    deferred.reject();
                 });
             };
 
             var filtro = window.localStorage.getItem('filtro_incompleto_hino');
 
-            if (filtro){
-                var ofiltro = angular.fromJson(filtro);
-                busca(ofiltro.pagina, ofiltro.ultimaAtualizacao);
-            }else{
-                hinoDAO.findUltimaAlteracaoHinos(function(ultimaAtualizacao){
-                    busca(1, formatDate(ultimaAtualizacao));
-                });
+            try{
+                if (filtro){
+                    var ofiltro = angular.fromJson(filtro);
+                    busca(ofiltro.pagina, ofiltro.ultimaAtualizacao);
+                }else{
+                    hinoDAO.findUltimaAlteracaoHinos(function(ultimaAtualizacao){
+                        busca(1, formatDate(ultimaAtualizacao));
+                    });
+                }
+            }catch(e){
+                console.log(e);
+                deferred.reject();
             }
+            
+            return deferred.promise;
         };
         
         this.incompleto = function(){
@@ -57,4 +68,4 @@ calvinApp.
         this.carrega = function(id){
             return hinoDAO.findHino(id);
         };
-}]);
+    }]);

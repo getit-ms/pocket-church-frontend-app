@@ -18,6 +18,14 @@
             <div ng-if='preferencias.desejaReceberVersiculosDiarios' class='item item-divider'>{{'preferencias.hora_versiculo' | translate}}</div>
             <ion-radio ng-if='preferencias.desejaReceberVersiculosDiarios' ng-repeat="hora in horasVersiculoDiario" 
                        ng-model="preferencias.horaVersiculoDiario" ng-value="hora">{{'preferencias.hora.' + hora | translate}}</ion-radio>
+            <div ng-if="showusuario && funcionalidades && && funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0 && showLeitura">
+                <ion-toggle ng-model="preferencias.desejaReceberLembreteLeitura" >
+                    {{'preferencias.deseja_receber_lembrete_leitura' | translate}}
+                </ion-toggle>
+                <div ng-if='preferencias.desejaReceberLembreteLeitura' class='item item-divider' >{{'preferencias.hora_lembrete_leitura' | translate}}</div>
+                <ion-radio ng-if='preferencias.desejaReceberLembreteLeitura' ng-repeat="hora in horasLembreteLeitura" 
+                           ng-model="preferencias.horaLembreteLeitura" ng-value="hora">{{'leitura.hora.' + hora | translate}}</ion-radio>
+            </div>
             <div ng-if='ministerios.length' class="item item-divider">{{'preferencias.ministerios_interesse' | translate}}</div>
             <ion-toggle ng-if='ministerios.length' ng-checked="todosMinisterios" ng-click="toggleTodosMinisterios()" >
                 {{'preferencias.todos_ministerios' | translate}}

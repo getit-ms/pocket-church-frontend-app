@@ -4,11 +4,21 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             url: '/leitura',
             views:{
                 'content@':{
-                    templateUrl: 'js/leitura/leitura.list.html',
+                    templateUrl: 'js/leitura/leitura.form.html',
                     controller: function(leituraService, $scope, sincronizacaoLeitura, $state, 
                     $ionicViewService, $filter){
                         $scope.$on('$ionicView.enter', function(){
-                            recuperaRange();
+                            leituraService.findPlano().then(function(plano){
+                                if (plano){
+                                    $scope.plano = plano;
+                                    recuperaRange();
+                                }else{
+                                    $ionicViewService.nextViewOptions({
+                                        disableBack: true
+                                    });
+                                    $state.go('leitura.escolha');
+                                }
+                            });
                             
                             if (sincronizacaoLeitura.executando){
                                 aguardaTerminoSincronizacao();
@@ -64,6 +74,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                 });
                                             }
                                         };
+
+                                        $scope.datepicker.callback(new Date($scope.datepicker.date.getFullYear(), 
+                                                $scope.datepicker.date.getMonth(), $scope.datepicker.getDate()));
                                         
                                         leituraService.buscaDatasLidas(function(datas){
                                             datas.forEach(function(dt){
@@ -130,7 +143,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             url: '/escolha',
             views:{
                 'content@':{
-                    templateUrl: 'js/leitura/leitura.form.html',
+                    templateUrl: 'js/leitura/leitura.list.html',
                     controller: function(leituraService, $scope, $state, loadingService, $ionicViewService){
                         $scope.searcher = function(page, callback){
                             leituraService.findPlanosDisponiveis({pagina:page}, callback);
@@ -156,44 +169,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         };
                         
                         $scope.filtra();
-                    }
-                }
-            }
-        }).state('leitura.configuracao', {
-            parent: 'leitura',
-            url: '/config',
-            views:{
-                'content@':{
-                    templateUrl: 'js/leitura/leitura.conf.html',
-                    controller: function($scope, acessoService, loadingService){
-                        $scope.$on('$ionicView.enter', function(){
-                            acessoService.buscaPreferencias(function(preferencias){
-                                $scope.preferencias = preferencias;
-                            });
-                        });
-                        
-                        $scope.configuracao = {
-                            desejaReceberNotificacoes: true,
-                            horarioNotificacoes: '_14_00'
-                        };
-                        
-                        $scope.horasLembrete = acessoService.buscaHorasLembretesLeitura();
-                        
-                        $scope.salva = function(form){
-                            if (form.$invalid){
-                                message({title:'global.title.400',template:'mensagens.MSG-002'})
-                                return;
-                            }
-                            
-                            loadingService.show();
-                            
-                            acessoService.salvaPreferencias($scope.preferencias, function(){
-                                loadingService.hide();
-                                message({title: 'global.title.200',template: 'mensagens.MSG-001'});
-                            }, function(){
-                                loadingService.hide();
-                            });
-                        };
                     }
                 }
             }

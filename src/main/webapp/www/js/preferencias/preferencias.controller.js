@@ -5,10 +5,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/preferencias/preferencias.form.html',
-                    controller: function($scope, message, acessoService, $rootScope, $state, $ionicViewService, loadingService){
+                    controller: function($scope, message, acessoService, $rootScope, $state, $ionicViewService, loadingService, leituraService){
                         $scope.$on('$ionicView.enter', function(){
                             acessoService.buscaPreferencias(function(preferencias){
                                 $scope.preferencias = preferencias;
+                                
+                                leituraService.findPlano().then(function(plano){
+                                    $scope.showLeitura = plano ? true : false
+                                });
                                 
                                 $scope.ministeriosSelecionados = [];
                                 if ($scope.preferencias.ministeriosInteresse){
@@ -50,10 +54,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         
                         $scope.ministerios = acessoService.buscaMinisterios();
                         $scope.horasVersiculoDiario = acessoService.buscaHorasVersiculoDiario();
+                        $scope.horasLembreteLeitura = acessoService.buscaHorasLembretesLeitura();
                         
                         $scope.salvar = function(form){
                             if (form.$invalid){
-                                message({title:'global.title.400',template:'mensagens.MSG-002'})
+                                message({title:'global.title.400',template:'mensagens.MSG-002'});
                                 return;
                             }
                             
