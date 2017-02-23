@@ -39,7 +39,7 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                     tx.executeSql('delete from leitura_biblica where id = ?', [leitura.dia.id]);
 
                     tx.executeSql('insert into leitura_biblica(id, descricao, data, ultima_atualizacao, lido, sincronizado, remoto) values(?,?,?,?,?,?,?)',
-                    [leitura.dia.id, leitura.dia.descricao, leitura.dia.data.getTime(), leitura.ultimaAlteracao.getTime(), leitura.lido, true, leitura.plano, true]);
+                    [leitura.dia.id, leitura.dia.descricao, leitura.dia.data.getTime(), leitura.ultimaAlteracao.getTime(), leitura.lido, true, true]);
                 };
                 
                 tx.executeSql('SELECT ultima_atualizacao as ultimaAtualizacao FROM leitura_biblica where id = ?', [leitura.id], function(tx, rs) {

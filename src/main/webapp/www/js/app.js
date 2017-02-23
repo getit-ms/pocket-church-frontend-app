@@ -47,7 +47,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             StatusBar.styleDefault();
         }
 
-        var versaoAtualizada = $_version != configService.load().version;
+        var versaoAtualizada = $_version !== configService.load().version;
 
         configService.save({
             version: $_version,
@@ -55,7 +55,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         });
 
         if (!configService.load().headers.Dispositivo ||
-                configService.load().headers.Dispositivo == 'undefined'){
+                configService.load().headers.Dispositivo === 'undefined'){
             configService.save({
                 headers:{
                     Dispositivo: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
