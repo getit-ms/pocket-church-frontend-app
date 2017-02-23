@@ -79,6 +79,25 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             function(){ return arquivoService.clean(); }
         ];
         
+        if ($rootScope.funcionalidadesPublicas){
+            if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
+                execucoes.push(function(){ return bibliaService.sincroniza(); });
+            }
+
+            if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
+                execucoes.push(function(){ return hinoService.sincroniza(); });
+            }
+
+            if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
+                execucoes.push(function(){ return boletimService.cache(); });
+            }
+        }
+                        
+        if ($rootScope.funcionalidades && 
+                $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
+            execucoes.push(function(){ return leituraService.sincroniza(); });
+        }
+        
         execucoes.push(function(){
             $injector.get('$state').reload();
             return {then:function(){}};
@@ -273,7 +292,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, 
+.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, leituraService,
                 $ionicPlatform, $ionicSideMenuDelegate, bibliaService, hinoService, boletimService) {
     var config = configService.load();
     $rootScope.usuario = config.usuario;
