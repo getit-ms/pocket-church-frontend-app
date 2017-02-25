@@ -248,7 +248,11 @@ function configureHttpInterceptors($httpProvider) {
     });
 }
 
-calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularProvider', '$translateProvider', '$ionicConfigProvider',
+calvinApp.
+run(['$translatePartialLoader', function($translatePartialLoader){
+    $translatePartialLoader.addPart('global');
+}]).
+config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularProvider', '$translateProvider', '$ionicConfigProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider, $translateProvider, $ionicConfigProvider) {
         // Configurando interceptor de autenticação
         configureHttpInterceptors($httpProvider);
@@ -260,9 +264,6 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         $stateProvider.state('site', {
             abstract: true,
             resolve: {
-                translatePartialLoader: ['$translatePartialLoader', function ($translatePartialLoader) {
-                        $translatePartialLoader.addPart('global');
-                    }],
                 mainTranslatePartialLoader: ['$translate', function ($translate) {
                         return $translate.refresh();
                     }]
