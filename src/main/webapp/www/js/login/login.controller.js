@@ -84,8 +84,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/login/redefine.form.html',
-                controller:['$scope', 'acessoService', 'message', '$state', '$ionicViewService',
-                            function($scope, acessoService, message, $state, $ionicViewService){
+                controller:['$scope', 'acessoService', 'message', '$state', '$ionicViewService', 'loadingService',
+                            function($scope, acessoService, message, $state, $ionicViewService, loadingService){
                     $scope.dados = {};
                                 
                     $scope.redefinirSenha = function(){
@@ -94,14 +94,17 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             return;
                         }
 
+                        loadingService.show();
+                        
                         acessoService.solicitarRedefinicaoSenha($scope.dados.email, function(dados){
+                            loadingService.hide();
                             message({title:'global.title.200',template:'mensagens.MSG-038'});
                             $ionicViewService.nextViewOptions({
                                 historyRoot: true,
                                 disableBack: true
                             });
                             $state.go('login');
-                        });
+                        }, loadingService.hide);
                     };
                 }]
             }
