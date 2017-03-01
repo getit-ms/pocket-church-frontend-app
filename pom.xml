@@ -4,7 +4,7 @@
     
     <groupId>br.gafs.getit.calvinista</groupId>
     <artifactId>calvinista-web-app</artifactId>
-    <version>3.0.6-SNAPSHOT</version>
+    <version>3.0.9-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>calvinista-frontend-app</name>
@@ -148,7 +148,7 @@
             </activation>
             <properties>
                 <chave.igreja>tst</chave.igreja>
-                <nome.igreja>CALVIN - Igreja Teste</nome.igreja>
+                <nome.igreja>Pocket Church</nome.igreja>
             </properties>
         </profile>
         <profile>

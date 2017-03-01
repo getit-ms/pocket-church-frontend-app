@@ -22,8 +22,8 @@ calvinApp.service('acessoService', ['Restangular', 'config', function(Restangula
             this.api().one('senha/altera').customPUT(dados).then(callback);
         };
 
-        this.solicitarRedefinicaoSenha = function(email, callback){
-            this.api().one('senha/redefinir/' + email).put().then(callback);
+        this.solicitarRedefinicaoSenha = function(email, success, error){
+            this.api().one('senha/redefinir/' + email).put().then(success, error);
         };
 
         this.buscaHorasVersiculoDiario = function(){
