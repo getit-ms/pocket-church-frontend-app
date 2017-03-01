@@ -47,10 +47,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             StatusBar.styleDefault();
         }
 
-        var versaoAtualizada = $_version !== configService.load().version;
-
         configService.save({
-            version: $_version,
             tipo: ionic.Platform.isAndroid() ? 0 : 1
         });
 
@@ -66,7 +63,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             });
         }
 
-        PushNotificationsService.register(versaoAtualizada);
+        PushNotificationsService.register();
 
         $rootScope.deviceReady = true;
 
@@ -78,7 +75,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             function(){ return cacheService.clean(); },
             function(){ return arquivoService.clean(); }
         ];
-        
+
         if ($rootScope.funcionalidadesPublicas){
             if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
                 execucoes.push(function(){ return bibliaService.sincroniza(); });
@@ -92,12 +89,12 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
                 execucoes.push(function(){ return boletimService.cache(); });
             }
         }
-                        
-        if ($rootScope.funcionalidades && 
+
+        if ($rootScope.funcionalidades &&
                 $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
             execucoes.push(function(){ return leituraService.sincroniza(); });
         }
-        
+
         execucoes.push(function(){
             $injector.get('$state').reload();
             return {then:function(){}};
@@ -120,6 +117,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
       };
 }]).value('config', {
     server: $_serverUrl,
+    version: '0.0.0',
     ios: {
         name: $_serverCode
     },
@@ -311,9 +309,9 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
         if (!config.timeout || config.timeout < time) {
             acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
                 $rootScope.funcionalidadesPublicas = funcionalidades;
-                
+
                 var execucoes = [];
-        
+
                 if ($rootScope.funcionalidadesPublicas){
                     if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
                         execucoes.push(function(){ return bibliaService.sincroniza(); });
@@ -332,15 +330,15 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                     funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
                     timeout: time + 3600000
                 });
-                
+
                 executePilha(execucoes);
-                
+
                 if (config.usuario && config.funcionalidades){
                     acessoService.carrega(function (acesso) {
                         $rootScope.usuario = acesso.membro;
                         $rootScope.funcionalidades = acesso.funcionalidades;
-                        
-                        if ($rootScope.funcionalidades && 
+
+                        if ($rootScope.funcionalidades &&
                                 $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
                             execucoes.push(function(){ return leituraService.sincroniza(); });
                         }
@@ -350,7 +348,7 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
                             funcionalidades: $rootScope.funcionalidades,
                             timeout: time + 3600000
                         });
-                        
+
                         executePilha(execucoes);
                     });
                 }
@@ -388,17 +386,14 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
 
 .factory('NodePushServer', function (acessoService) {
     return {
-        storeDeviceToken: function (regId) {
-            acessoService.registerPushToken(regId);
-        },
-        removeDeviceToken: function (regId) {
-            acessoService.unregisterPushToken(regId);
+        storeDeviceToken: function (regId, callback) {
+            acessoService.registerPushToken(regId, callback);
         }
     };
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService) {
+.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService, configService) {
     this.register = function (novaVersao) {
         if ($cordovaNetwork.isOnline()){
             pushRegister(novaVersao);
@@ -423,12 +418,16 @@ calvinApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'Rest
             }
         });
 
-        if (novaVersao){
+        if ($_version !== configService.load().version){
             push.on('registration', function(data){
                 NodePushServer.storeDeviceToken({
                     token: data.registrationId,
                     version: config.version,
                     tipoDispositivo: config.tipo
+                }, function(){
+                    configService.save({
+                        version: $_version
+                    });
                 });
             });
         }
