@@ -2,7 +2,8 @@
   <ion-nav-title>
     <span>{{'biblia.biblia' | translate:hino }}</span>
   </ion-nav-title>
-  <ion-tabs class="tabs-stripped" >
+    
+  <ion-tabs class="tabs-stripped" ng-class="{'has-footer':offline}" >
     <ion-tab title="{{'biblia.velho_testamento' | translate}}" >
       <ion-content class="has-header" ng-class="{'has-footer':sincronizacao.executando}">
         <ion-list>
@@ -30,6 +31,7 @@
       </ion-content>
     </ion-tab>
   </ion-tabs>
+    
   <ion-footer-bar ng-show="sincronizacao.executando" class="bar-stable" align-title="center">
     <h1 class="title">{{'biblia.sincronizando' | translate:{porcentagem:sincronizacao.porcentagem} }}</h1>
   </ion-footer-bar>
