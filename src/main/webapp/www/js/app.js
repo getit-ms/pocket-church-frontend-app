@@ -47,10 +47,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             StatusBar.styleDefault();
         }
 
-        var versaoAtualizada = $_version !== configService.load().version;
-
         configService.save({
-            version: $_version,
             tipo: ionic.Platform.isAndroid() ? 0 : 1
         });
 
@@ -66,7 +63,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             });
         }
 
-        PushNotificationsService.register(versaoAtualizada);
+        PushNotificationsService.register();
 
         $rootScope.deviceReady = true;
 
@@ -78,7 +75,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
             function(){ return cacheService.clean(); },
             function(){ return arquivoService.clean(); }
         ];
-        
+
         if ($rootScope.funcionalidadesPublicas){
             if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
                 execucoes.push(function(){ return bibliaService.sincroniza(); });
@@ -92,12 +89,12 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
                 execucoes.push(function(){ return boletimService.cache(); });
             }
         }
-                        
-        if ($rootScope.funcionalidades && 
+
+        if ($rootScope.funcionalidades &&
                 $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
             execucoes.push(function(){ return leituraService.sincroniza(); });
         }
-        
+
         execucoes.push(function(){
             $injector.get('$state').reload();
             return {then:function(){}};
@@ -120,6 +117,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
       };
 }]).value('config', {
     server: $_serverUrl,
+    version: '0.0.0',
     ios: {
         name: $_serverCode
     },
@@ -312,9 +310,9 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
         if (!config.timeout || config.timeout < time) {
             acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
                 $rootScope.funcionalidadesPublicas = funcionalidades;
-                
+
                 var execucoes = [];
-        
+
                 if ($rootScope.funcionalidadesPublicas){
                     if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
                         execucoes.push(function(){ return bibliaService.sincroniza(); });
@@ -333,15 +331,15 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                     funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
                     timeout: time + 3600000
                 });
-                
+
                 executePilha(execucoes);
-                
+
                 if (config.usuario && config.funcionalidades){
                     acessoService.carrega(function (acesso) {
                         $rootScope.usuario = acesso.membro;
                         $rootScope.funcionalidades = acesso.funcionalidades;
-                        
-                        if ($rootScope.funcionalidades && 
+
+                        if ($rootScope.funcionalidades &&
                                 $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
                             execucoes.push(function(){ return leituraService.sincroniza(); });
                         }
@@ -351,7 +349,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                             funcionalidades: $rootScope.funcionalidades,
                             timeout: time + 3600000
                         });
-                        
+
                         executePilha(execucoes);
                     });
                 }
@@ -389,17 +387,14 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
 
 .factory('NodePushServer', function (acessoService) {
     return {
-        storeDeviceToken: function (regId) {
-            acessoService.registerPushToken(regId);
-        },
-        removeDeviceToken: function (regId) {
-            acessoService.unregisterPushToken(regId);
+        storeDeviceToken: function (regId, callback) {
+            acessoService.registerPushToken(regId, callback);
         }
     };
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService) {
+.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService, configService) {
     this.register = function (novaVersao) {
         if ($cordovaNetwork.isOnline()){
             pushRegister(novaVersao);
@@ -424,12 +419,16 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
             }
         });
 
-        if (novaVersao){
+        if ($_version !== configService.load().version){
             push.on('registration', function(data){
                 NodePushServer.storeDeviceToken({
                     token: data.registrationId,
                     version: config.version,
                     tipoDispositivo: config.tipo
+                }, function(){
+                    configService.save({
+                        version: $_version
+                    });
                 });
             });
         }
