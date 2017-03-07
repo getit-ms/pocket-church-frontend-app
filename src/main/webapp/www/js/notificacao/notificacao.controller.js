@@ -43,6 +43,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                 case 'PLANO_LEITURA':
                                                     n.state = 'leitura';
                                                     break;
+                                                case 'YOUTUBE':
+                                                    n.state = 'youtube';
+                                                    break;
                                             }
                                         }
                                     });
