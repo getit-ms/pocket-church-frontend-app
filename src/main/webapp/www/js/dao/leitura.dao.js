@@ -173,6 +173,8 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
             return deferred.promise;
         };
         
+        var MILLIS_DAY = 1000 * 60 * 60 * 24; 
+        
         this.findPorcentagem = function(){
             var deferred = $q.defer();
 
@@ -187,10 +189,10 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                                 progresso.porcentagem = Math.ceil((rs.rows.item(0).count / totalGeral) * 100);
                                 progresso.concluido = progresso.porcentagem === 100;
                                 
-                                tx.executeSql('SELECT count(*) as count FROM leitura_biblica where data < ? and descricao is not null', [new Date().getTime()], function(tx, rs) {
+                                tx.executeSql('SELECT count(*) as count FROM leitura_biblica where data < ? and descricao is not null', [new Date().getTime() - MILLIS_DAY], function(tx, rs) {
                                     if (rs.rows && rs.rows.length){
                                         var totalAtual = rs.rows.item(0).count;
-                                        tx.executeSql('SELECT count(*) as count FROM leitura_biblica where lido = ? and data < ? and descricao is not null', [true, new Date().getTime()], function(tx, rs) {
+                                        tx.executeSql('SELECT count(*) as count FROM leitura_biblica where lido = ? and data < ? and descricao is not null', [true, new Date().getTime() - 2 * MILLIS_DAY], function(tx, rs) {
                                             if (rs.rows && rs.rows.length){
                                                 progresso.emDia = totalAtual - rs.rows.item(0).count <= 1;
                                                 deferred.resolve(progresso);
