@@ -301,6 +301,24 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
     if (!config.timeout){
         acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
             $rootScope.funcionalidadesPublicas = funcionalidades;
+            
+            var execucoes = [];
+                
+            if ($rootScope.funcionalidadesPublicas){
+                if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
+                    execucoes.push(function(){ return bibliaService.sincroniza(); });
+                }
+
+                if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
+                    execucoes.push(function(){ return hinoService.sincroniza(); });
+                }
+
+                if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
+                    execucoes.push(function(){ return boletimService.cache(); });
+                }
+                
+                executePilha(execucoes);
+            }
         });
     }
 
@@ -332,8 +350,6 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                     timeout: time + 3600000
                 });
 
-                executePilha(execucoes);
-
                 if (config.usuario && config.funcionalidades){
                     acessoService.carrega(function (acesso) {
                         $rootScope.usuario = acesso.membro;
@@ -352,6 +368,8 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
 
                         executePilha(execucoes);
                     });
+                }else{
+                    executePilha(execucoes);
                 }
             });
         }
