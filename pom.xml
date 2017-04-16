@@ -4,7 +4,7 @@
     
     <groupId>br.gafs.getit.calvinista</groupId>
     <artifactId>calvinista-web-app</artifactId>
-    <version>3.1.1</version>
+    <version>3.2.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>calvinista-frontend-app</name>
@@ -133,7 +133,7 @@
                 <configuration>
                     <arguments>-Dmaven.deploy.skip=true</arguments>
                     <username>gafsel</username>
-                    <password>discador01</password>
+                    <password>cubomagico04</password>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
