@@ -6,15 +6,18 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             var deferred = $q.defer();
             
             try{
-                $cordovaFile.checkDir(cordova.file.dataDirectory, "arquivos").then(function(){}, function(){
+                $cordovaFile.checkDir(cordova.file.dataDirectory, "arquivos").then(function(){
+                    
+                }, function(){
                     $cordovaFile.createDir(cordova.file.dataDirectory, "arquivos");
                 });
 
                 $cordovaFile.removeRecursively(cordova.file.cacheDirectory, 'tmp').then(function(){
                     $cordovaFile.createDir(cordova.file.cacheDirectory, "tmp");
+                    deferred.resolve();
+                }, function(){
+                    deferred.resolve();
                 });
-                
-                deferred.resolve();
             }catch(e){
                 console.log(e);
                 deferred.reject();

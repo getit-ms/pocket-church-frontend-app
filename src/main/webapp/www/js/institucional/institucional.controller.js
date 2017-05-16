@@ -8,26 +8,28 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     controller: function(institucionalService, linkService, $scope, cacheService){
                         angular.extend($scope, linkService);
                         
-                        cacheService.get({
-                            chave:'institucional',
-                            callback:function(institucional){
-                                $scope.institucional = institucional;
-                                
-                                if (!$scope.institucional.enderecos){
-                                    $scope.institucional.enderecos = [];
-                                    
-                                    if ($scope.institucional.endereco){
-                                        $scope.institucional.enderecos.push($scope.institucional.endereco);
+                        $scope.$on('$ionicView.enter', function(){
+                            cacheService.get({
+                                chave:'institucional',
+                                callback:function(institucional){
+                                    $scope.institucional = institucional;
+
+                                    if (!$scope.institucional.enderecos){
+                                        $scope.institucional.enderecos = [];
+
+                                        if ($scope.institucional.endereco){
+                                            $scope.institucional.enderecos.push($scope.institucional.endereco);
+                                        }
                                     }
+
+                                    $scope.institucional.endereco = undefined;
+                                }, 
+                                supplier:function(callback){
+                                    institucionalService.carrega(function(institucional){
+                                        callback(institucional);
+                                    });
                                 }
-                                
-                                $scope.institucional.endereco = undefined;
-                            }, 
-                            supplier:function(callback){
-                                institucionalService.carrega(function(institucional){
-                                    callback(institucional);
-                                });
-                            }
+                            });
                         });
                     }
                 }

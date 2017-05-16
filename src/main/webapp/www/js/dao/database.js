@@ -26,9 +26,10 @@ calvinApp.service('database', ['$q', function($q){
                 tx.executeSql('CREATE TABLE IF NOT EXISTS leitura_biblica(id, descricao, data, lido, sincronizado, ultima_atualizacao, id_plano, remoto)');
                 tx.executeSql('CREATE INDEX IF NOT EXISTS idx_id_leitura_biblia ON leitura_biblica(id)');
                 tx.executeSql('CREATE INDEX IF NOT EXISTS idx_data_leitura_biblia ON leitura_biblica(data)');
+                
+                deferred.resolve();
             });
             
-            deferred.resolve();
         }catch(e){
             console.log(e);
             deferred.reject();

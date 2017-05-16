@@ -15,7 +15,7 @@ calvinApp.service('boletimService', ['Restangular', 'pdfService', '$q', function
             var deferred = $q.defer();
             
             try{
-                this.busca({pagina:1,total:5}, function(boletins){
+                this.busca({pagina:1,total:1}, function(boletins){
                     pdfService.load('boletim', boletins.resultados);
                     deferred.resolve();
                 }, deferred.reject);

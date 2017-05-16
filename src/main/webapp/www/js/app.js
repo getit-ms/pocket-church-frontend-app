@@ -24,12 +24,17 @@ var calvinApp = angular.module('calvinApp', [
     'jett.ionic.filter.bar',
     'youtube-embed'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, database, hinoService, leituraService) {
+arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, database, hinoService, leituraService, $q) {
     function countNotificacoes(){
+        var deferred = $q.defer();
         notificacaoService.count(function(dados){
             $rootScope.notifications = dados.count;
             $cordovaBadge.set(dados.count);
-        }, function(){});
+            deferred.resolve();
+        }, function(){
+            deferred.reject();
+        });
+        return deferred.promise();
     }
 
     $ionicPlatform.on("resume", function(){
@@ -67,9 +72,8 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
 
         $rootScope.deviceReady = true;
 
-        countNotificacoes();
-
         var execucoes = [
+            function(){ return countNotificacoes(); },
             function(){ return database.init(); },
             function(){ return arquivoService.init(); },
             function(){ return cacheService.clean(); },
@@ -129,15 +133,16 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         this.load = function () {
             var cfg = $window.localStorage.getItem('config');
             if (!cfg) {
-                this.save({});
-                cfg = $window.localStorage.getItem('config');
+                return this.save(config);
             }
 
-            return angular.merge(config, angular.fromJson(cfg));
+            return angular.fromJson(cfg);
         };
 
         this.save = function (cfg) {
-            $window.localStorage.setItem('config', angular.toJson(angular.merge(config, cfg)));
+            var json = angular.toJson(angular.merge(this.load(), cfg));
+            $window.localStorage.setItem('config', json);
+            return json;
         };
     }]);
 
@@ -298,52 +303,12 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
     $rootScope.funcionalidades = config.funcionalidades;
     $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
 
-    if (!config.timeout){
-        acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
-            $rootScope.funcionalidadesPublicas = funcionalidades;
-            
-            var execucoes = [];
-                
-            if ($rootScope.funcionalidadesPublicas){
-                if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
-                    execucoes.push(function(){ return bibliaService.sincroniza(); });
-                }
-
-                if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
-                    execucoes.push(function(){ return hinoService.sincroniza(); });
-                }
-
-                if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
-                    execucoes.push(function(){ return boletimService.cache(); });
-                }
-                
-                executePilha(execucoes);
-            }
-        });
-    }
-
     $ionicPlatform.on("resume", function(){
         var time = new Date().getTime();
 
         if (!config.timeout || config.timeout < time) {
             acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
                 $rootScope.funcionalidadesPublicas = funcionalidades;
-
-                var execucoes = [];
-
-                if ($rootScope.funcionalidadesPublicas){
-                    if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
-                        execucoes.push(function(){ return bibliaService.sincroniza(); });
-                    }
-
-                    if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
-                        execucoes.push(function(){ return hinoService.sincroniza(); });
-                    }
-
-                    if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
-                        execucoes.push(function(){ return boletimService.cache(); });
-                    }
-                }
 
                 configService.save({
                     funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
@@ -355,21 +320,12 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                         $rootScope.usuario = acesso.membro;
                         $rootScope.funcionalidades = acesso.funcionalidades;
 
-                        if ($rootScope.funcionalidades &&
-                                $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
-                            execucoes.push(function(){ return leituraService.sincroniza(); });
-                        }
-
                         configService.save({
                             usuario: $rootScope.usuario,
                             funcionalidades: $rootScope.funcionalidades,
                             timeout: time + 3600000
                         });
-
-                        executePilha(execucoes);
                     });
-                }else{
-                    executePilha(execucoes);
                 }
             });
         }
@@ -413,18 +369,18 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
 
 // PUSH NOTIFICATIONS
 .service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService, configService) {
-    this.register = function (novaVersao) {
+    this.register = function () {
         if ($cordovaNetwork.isOnline()){
-            pushRegister(novaVersao);
+            pushRegister();
         }else{
             var stop = $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
-                pushRegister(novaVersao);
+                pushRegister();
                 stop();
             });
         }
     };
 
-    function pushRegister(novaVersao){
+    function pushRegister(){
         var push = PushNotification.init({
             android:{
                 senderID: $_gcmSenderId,
@@ -441,7 +397,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
             push.on('registration', function(data){
                 NodePushServer.storeDeviceToken({
                     token: data.registrationId,
-                    version: config.version,
+                    version: $_version,
                     tipoDispositivo: config.tipo
                 }, function(){
                     configService.save({
@@ -467,7 +423,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
 
 var regexDateTime = /^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}.+$/;
 var regexDate = /^\d{4}\-\d{2}\-\d{2}$/;
-var regexTime = /^\d{2}:\d{2}:\d{2}\.\d{3}/;
+var regexTime = /^\d{2}:\d{2}:\d{2}\.\d{3}.+$/;
 
 function convertDateStringsToDates(input) {
     // Ignore things that aren't objects.
@@ -486,7 +442,7 @@ function convertDateStringsToDates(input) {
         }else if (typeof value === "string" && (match = value.match(regexDate))) {
             input[key] = moment(match[0]).toDate('YYYY-MM-DD');
         }else if (typeof value === "string" && (match = value.match(regexTime))) {
-            input[key] = moment(match[0]).toDate('HH:mm:ss.SSS');
+            input[key] = moment(match[0]).toDate('HH:mm:ss.SSSZZ');
         } else if (typeof value === "object") {
             // Recurse into object
             convertDateStringsToDates(value);

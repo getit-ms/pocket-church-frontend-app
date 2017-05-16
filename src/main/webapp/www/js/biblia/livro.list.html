@@ -1,9 +1,9 @@
 <ion-view>
   <ion-nav-title>
-    <span>{{'biblia.biblia' | translate:hino }}</span>
+    <span>{{'biblia.biblia' | translate }}</span>
   </ion-nav-title>
     
-  <ion-tabs class="tabs-stripped" ng-class="{'has-footer':offline}" >
+  <ion-tabs class="tabs-stripped" ng-class="{'tabs-top':offline}" >
     <ion-tab title="{{'biblia.velho_testamento' | translate}}" >
       <ion-content class="has-header" ng-class="{'has-footer':sincronizacao.executando || offline}">
         <ion-list>
