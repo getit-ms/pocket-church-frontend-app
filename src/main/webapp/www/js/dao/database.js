@@ -28,6 +28,8 @@ calvinApp.service('database', ['$q', function($q){
                 tx.executeSql('CREATE INDEX IF NOT EXISTS idx_data_leitura_biblia ON leitura_biblica(data)');
                 
                 deferred.resolve();
+            }, function(){
+                deferred.reject();
             });
             
         }catch(e){

@@ -34,7 +34,7 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         }, function(){
             deferred.reject();
         });
-        return deferred.promise();
+        return deferred.promise;
     }
 
     $ionicPlatform.on("resume", function(){
@@ -98,11 +98,6 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
                 $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
             execucoes.push(function(){ return leituraService.sincroniza(); });
         }
-
-        execucoes.push(function(){
-            $injector.get('$state').reload();
-            return {then:function(){}};
-        });
 
         executePilha(execucoes);
 
