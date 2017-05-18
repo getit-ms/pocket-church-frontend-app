@@ -1,5 +1,5 @@
 calvinApp.service('database', ['$q', function($q){
-	  var vm = this;
+    var vm = this;
 
     this.init = function () {
         var deferred = $q.defer();

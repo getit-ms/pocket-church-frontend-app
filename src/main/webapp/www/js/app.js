@@ -72,10 +72,11 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
 
         $rootScope.deviceReady = true;
 
+        arquivoService.init();
+        database.init();
+
         var execucoes = [
             function(){ return countNotificacoes(); },
-            function(){ return database.init(); },
-            function(){ return arquivoService.init(); },
             function(){ return cacheService.clean(); },
             function(){ return arquivoService.clean(); }
         ];
