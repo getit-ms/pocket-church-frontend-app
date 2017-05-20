@@ -22,7 +22,8 @@ var calvinApp = angular.module('calvinApp', [
     'underscore',
     'ngResource',
     'jett.ionic.filter.bar',
-    'youtube-embed'
+    'youtube-embed',
+    'ion-gallery'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
 arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, database, hinoService, leituraService, $q) {
     function countNotificacoes(){
@@ -129,15 +130,16 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         this.load = function () {
             var cfg = $window.localStorage.getItem('config');
             if (!cfg) {
-                return this.save(config);
+				$window.localStorage.setItem('config', angular.toJson(config));
+				return config;
             }
 
             return angular.fromJson(cfg);
         };
 
         this.save = function (cfg) {
-            var json = angular.toJson(angular.merge(this.load(), cfg));
-            $window.localStorage.setItem('config', json);
+            var json = angular.merge(this.load(), cfg);
+            $window.localStorage.setItem('config', angular.toJson(json));
             return json;
         };
     }]);
@@ -364,7 +366,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, config, $rootScope, $cordovaNetwork, $state, $ionicViewService, configService) {
+.service('PushNotificationsService', function (message, NodePushServer, $rootScope, $cordovaNetwork, $state, $ionicViewService, configService) {
     this.register = function () {
         if ($cordovaNetwork.isOnline()){
             pushRegister();
@@ -394,7 +396,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                 NodePushServer.storeDeviceToken({
                     token: data.registrationId,
                     version: $_version,
-                    tipoDispositivo: config.tipo
+                    tipoDispositivo: configService.load().tipo
                 }, function(){
                     configService.save({
                         version: $_version
@@ -484,5 +486,3 @@ function executePilha(execucoes){
 
     exec();
 }
-
-

@@ -12,7 +12,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
         
         function trata(pagina){
             arquivoService.get(pagina.id, function(data){
-                pagina.localPath = data.file;
+                pagina.src = data.file;
             });
         }
         

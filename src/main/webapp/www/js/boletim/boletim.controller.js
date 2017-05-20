@@ -44,7 +44,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             callback:function(boletim){
                                 if (!$scope.boletim){
                                     $scope.boletim = boletim;
-                                    $scope.slide.totalPaginas = boletim.paginas.length;
+                                    $scope.itens = [];
+                                    for (var i=0;i<boletim.paginas.length;i++){
+                                        $scope.itens.push({src:boletim.paginas[i].localPath});
+                                    }
                                 }
                             },
                             supplier:function(id, callback){

@@ -7,11 +7,7 @@
            class="button button-icon icon positive ion-android-share-alt"
            title="{{'global.compartilhar' | translate}}"></a>
     </ion-nav-buttons>
-    <ion-scroll class='has-header' 
-                scroll='false' zooming="true" direction="xy" scrollable-x="false"
-                scrollable-y="false" min-zoom="1" style="width:100%;height:100%;background: black"
-                overflow-scroll="false">
-        <div ng-repeat="pagina in boletim.paginas"
-             class="image" style="background-image: url( {{pagina.localPath}} )"></div>
-    </ion-scroll>
+    <ion-content>
+        <ion-gallery ion-gallery-items="boletim.paginas"></ion-gallery>
+    </ion-content>
 </ion-view>
