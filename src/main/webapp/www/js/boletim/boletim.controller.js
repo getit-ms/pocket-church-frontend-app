@@ -16,6 +16,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 boletim.thumbnail.localPath = '#';
                                 arquivoService.get(boletim.thumbnail.id, function(file){
                                     boletim.thumbnail.localPath = file.file;
+                                }, function(file){
+                                    boletim.thumbnail.localPath = file.file;
+                                }, function(file){
+                                    boletim.thumbnail.localPath = file.file;
                                 });
                             }
                             return boletim.thumbnail.localPath;
@@ -33,24 +37,20 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/boletim/boletim.form.html',
-                    controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config,
-                    $ionicSlideBoxDelegate, $ionicScrollDelegate, loadingService){
+                    controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config, loadingService, $state){
                         $scope.slide = {totalPaginas:0};
-
+                        
                         pdfService.get({
                             chave:'boletim',
                             id:$stateParams.id,
                             errorState:'boletim',
                             callback:function(boletim){
-                                if (!$scope.boletim){
-                                    $scope.boletim = boletim;
-                                    $scope.itens = [];
-                                    for (var i=0;i<boletim.paginas.length;i++){
-                                        $scope.itens.push({src:boletim.paginas[i].localPath});
-                                    }
-                                }
+                                $scope.boletim = boletim;
+                                loadingService.hide();
+                                $state.reload();
                             },
                             supplier:function(id, callback){
+                                loadingService.show();
                                 boletimService.carrega(id, callback);
                             }
                         });

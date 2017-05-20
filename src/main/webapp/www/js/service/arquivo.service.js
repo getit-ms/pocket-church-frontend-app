@@ -24,7 +24,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             return deferred.promise;
         };
 
-        this.get = function(id, callback){
+        this.get = function(id, callback, tempCallback, errorCallback){
             if (!id || !callback) console.error("arquivoService.get: id and callback are required");
 
             var cache = load(id);
@@ -33,8 +33,10 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                 save(id, cache);
                 callback({success:true, file:cordova.file.dataDirectory + cache.file});
             }else{
-                callback({loading:true, file:'img/loading.gif'});
-                download(id, callback);
+                if (tempCallback) {
+                    tempCallback({loading:true, file:'img/loading.gif'});
+                }
+                download(id, callback, tempCallback, errorCallback);
             }
         };
 
@@ -92,7 +94,7 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             });
         }
 
-        function download(id, callback){
+        function download(id, callback, tempCallback, errorCallback){
             var path = 'arquivos/' + id + '.bin';
             var temp = 'tmp/' + new Date().getTime() + '.' + id + '.bin';
             var url = config.server + '/rest/arquivo/download/' + id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
@@ -104,20 +106,20 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
                             save(id, {file:path,access:new Date().getTime(),uuid:config.headers.Dispositivo});
                             callback({success:true, file:cordova.file.dataDirectory + path});
                         }, function(error){
-                            callback({error:true, file:'img/fail.png'});
+                            errorCallback({error:true, file:'img/fail.png'});
                             console.error(error);
                         });
                     }, function(error){
-                        callback({error:true, file:'img/fail.png'});
+                        errorCallback({error:true, file:'img/fail.png'});
                         remove(id);
                         console.error(error);
                     });
                 }else{
-                    callback({error:true, file:'img/fail.png'});
+                    errorCallback({error:true, file:'img/fail.png'});
                     remove(id);
                 }
             }catch(e){
-                callback({error:true, file:'img/fail.png'});
+                errorCallback({error:true, file:'img/fail.png'});
                 remove(id);
                 console.error(e);
             }

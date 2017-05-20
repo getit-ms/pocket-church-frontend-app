@@ -17,6 +17,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     if ($scope.institucional.divulgacao){
                                         arquivoService.get($scope.institucional.divulgacao.id, function(arquivo){
                                             $scope.institucional.divulgacao.localPath = arquivo.file;
+                                        }, function(arquivo){
+                                            $scope.institucional.divulgacao.localPath = arquivo.file;
+                                        }, function(arquivo){
+                                            $scope.institucional.divulgacao.localPath = arquivo.file;
                                         });
                                     }
                                 }, 

@@ -8,6 +8,6 @@
            title="{{'global.compartilhar' | translate}}"></a>
     </ion-nav-buttons>
     <ion-content>
-        <ion-gallery ion-gallery-items="boletim.paginas"></ion-gallery>
+        <ion-gallery ng-if="boletim" ion-gallery-row="2" ion-gallery-items="boletim.paginas"></ion-gallery>
     </ion-content>
 </ion-view>

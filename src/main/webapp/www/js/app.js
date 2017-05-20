@@ -25,7 +25,7 @@ var calvinApp = angular.module('calvinApp', [
     'youtube-embed',
     'ion-gallery'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaService, database, hinoService, leituraService, $q) {
+arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibliaService, database, hinoService, leituraService, $q) {
     function countNotificacoes(){
         var deferred = $q.defer();
         notificacaoService.count(function(dados){
@@ -37,10 +37,55 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         });
         return deferred.promise;
     }
+    
+    function carregaFuncionalidades(){
+        var deferred = $q.defer();
+            
+        var config = configService.load();
+	
+        countNotificacoes();
+        
+        $cordovaLocalNotification.clearAll();
+        
+        var time = new Date().getTime();
+
+        if (!config.timeout || config.timeout < time) {
+            acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
+                $rootScope.funcionalidadesPublicas = funcionalidades;
+
+                configService.save({
+                    funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
+                    timeout: time + 3600000
+                });
+
+                if (config.usuario && config.funcionalidades){
+                    acessoService.carrega(function (acesso) {
+                        $rootScope.usuario = acesso.membro;
+                        $rootScope.funcionalidades = acesso.funcionalidades;
+                        deferred.resolve();
+
+                        configService.save({
+                            usuario: $rootScope.usuario,
+                            funcionalidades: $rootScope.funcionalidades,
+                            timeout: time + 3600000
+                        });
+                    });
+                }else{
+                    deferred.reject();
+                }
+            });
+        }
+        
+        return deferred.promise;
+    }
+    
+    var config = configService.load();
+    $rootScope.usuario = config.usuario;
+    $rootScope.funcionalidades = config.funcionalidades;
+    $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
 
     $ionicPlatform.on("resume", function(){
-        countNotificacoes();
-        $cordovaLocalNotification.clearAll();
+        carregaFuncionalidades();
     });
 
     $ionicPlatform.on("deviceready", function () {
@@ -76,30 +121,45 @@ arquivoService, cacheService, $injector, boletimService, $cordovaBadge, bibliaSe
         arquivoService.init();
         database.init();
 
+        var next = { then: function(callback){ callback(); };
+
         var execucoes = [
-            function(){ return countNotificacoes(); },
+            function(){ return carregaFuncionalidades(); },
             function(){ return cacheService.clean(); },
-            function(){ return arquivoService.clean(); }
-        ];
-
-        if ($rootScope.funcionalidadesPublicas){
-            if ($rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
-                execucoes.push(function(){ return bibliaService.sincroniza(); });
-            }
-
-            if ($rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
-                execucoes.push(function(){ return hinoService.sincroniza(); });
-            }
-
-            if ($rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
-                execucoes.push(function(){ return boletimService.cache(); });
-            }
-        }
-
-        if ($rootScope.funcionalidades &&
+            function(){ return arquivoService.clean(); },
+            function(){ 
+                if ($rootScope.funcionalidadesPublicas &&
+                        $rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
+                    return bibliaService.sincroniza(); 
+                }
+                
+                return next;
+            },
+            function(){ 
+                if ($rootScope.funcionalidadesPublicas &&
+                        $rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
+                    return hinoService.sincroniza(); 
+                }
+                
+                return next;
+            },
+            function(){ 
+                if ($rootScope.funcionalidadesPublicas &&
+                        $rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
+                    return boletimService.cache(); 
+                }
+                
+                return next;
+            },
+            function(){ 
+                if ($rootScope.funcionalidades &&
                 $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
-            execucoes.push(function(){ return leituraService.sincroniza(); });
-        }
+                    return leituraService.sincroniza(); 
+                }
+                
+                return next;
+            }
+        ];
 
         executePilha(execucoes);
 
@@ -294,41 +354,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, leituraService,
-                $ionicPlatform, $ionicSideMenuDelegate, bibliaService, hinoService, boletimService) {
-    var config = configService.load();
-    $rootScope.usuario = config.usuario;
-    $rootScope.funcionalidades = config.funcionalidades;
-    $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
-
-    $ionicPlatform.on("resume", function(){
-        var time = new Date().getTime();
-
-        if (!config.timeout || config.timeout < time) {
-            acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
-                $rootScope.funcionalidadesPublicas = funcionalidades;
-
-                configService.save({
-                    funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
-                    timeout: time + 3600000
-                });
-
-                if (config.usuario && config.funcionalidades){
-                    acessoService.carrega(function (acesso) {
-                        $rootScope.usuario = acesso.membro;
-                        $rootScope.funcionalidades = acesso.funcionalidades;
-
-                        configService.save({
-                            usuario: $rootScope.usuario,
-                            funcionalidades: $rootScope.funcionalidades,
-                            timeout: time + 3600000
-                        });
-                    });
-                }
-            });
-        }
-    });
-
+.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicSideMenuDelegate) {
     $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
         $rootScope.offline = false;
     });
