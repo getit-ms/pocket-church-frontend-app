@@ -121,7 +121,7 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
         arquivoService.init();
         database.init();
 
-        var next = { then: function(callback){ callback(); };
+        var next = { then: function(callback){ callback(); } };
 
         var execucoes = [
             function(){ return carregaFuncionalidades(); },
