@@ -40,7 +40,7 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
     
     function carregaFuncionalidades(){
         var deferred = $q.defer();
-            
+        
         var config = configService.load();
 	
         countNotificacoes();
@@ -48,22 +48,22 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
         $cordovaLocalNotification.clearAll();
         
         var time = new Date().getTime();
-
+        
         if (!config.timeout || config.timeout < time) {
             acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
                 $rootScope.funcionalidadesPublicas = funcionalidades;
-
+                
                 configService.save({
                     funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
                     timeout: time + 3600000
                 });
-
+                
                 if (config.usuario && config.funcionalidades){
                     acessoService.carrega(function (acesso) {
                         $rootScope.usuario = acesso.membro;
                         $rootScope.funcionalidades = acesso.funcionalidades;
                         deferred.resolve();
-
+                        
                         configService.save({
                             usuario: $rootScope.usuario,
                             funcionalidades: $rootScope.funcionalidades,
@@ -83,11 +83,11 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
     $rootScope.usuario = config.usuario;
     $rootScope.funcionalidades = config.funcionalidades;
     $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
-
+    
     $ionicPlatform.on("resume", function(){
         carregaFuncionalidades();
     });
-
+    
     $ionicPlatform.on("deviceready", function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -97,11 +97,11 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
-
+        
         configService.save({
             tipo: ionic.Platform.isAndroid() ? 0 : 1
         });
-
+        
         if (!configService.load().headers.Dispositivo ||
                 configService.load().headers.Dispositivo === 'undefined'){
             configService.save({
@@ -113,16 +113,16 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
                 }
             });
         }
-
+        
         PushNotificationsService.register();
-
+        
         $rootScope.deviceReady = true;
-
+        
         arquivoService.init();
         database.init();
-
+        
         var next = { then: function(callback){ callback(); } };
-
+        
         var execucoes = [
             function(){ return carregaFuncionalidades(); },
             function(){ return cacheService.clean(); },
@@ -153,30 +153,30 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
             },
             function(){ 
                 if ($rootScope.funcionalidades &&
-                $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
+                        $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
                     return leituraService.sincroniza(); 
                 }
                 
                 return next;
             }
         ];
-
+        
         executePilha(execucoes);
-
+        
     });
-
+    
 }).service('loadingService', ['$ionicLoading', '$filter', function($ionicLoading, $filter){
-      this.show = function(){
-          $ionicLoading.show({
-              template:'<ion-spinner class="spinner-light"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando'),
-              animation: 'fade-in'
-          });
-      };
-
-      this.hide = function(){
-          $ionicLoading.hide();
-      };
-}]).value('config', {
+        this.show = function(){
+            $ionicLoading.show({
+                template:'<ion-spinner class="spinner-light"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando'),
+                animation: 'fade-in'
+            });
+        };
+        
+        this.hide = function(){
+            $ionicLoading.hide();
+        };
+    }]).value('config', {
     server: $_serverUrl,
     version: '0.0.0',
     ios: {
@@ -190,13 +190,13 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
         this.load = function () {
             var cfg = $window.localStorage.getItem('config');
             if (!cfg) {
-				$window.localStorage.setItem('config', angular.toJson(config));
-				return config;
+                $window.localStorage.setItem('config', angular.toJson(config));
+                return config;
             }
-
+            
             return angular.fromJson(cfg);
         };
-
+        
         this.save = function (cfg) {
             var json = angular.merge(this.load(), cfg);
             $window.localStorage.setItem('config', angular.toJson(json));
@@ -214,16 +214,16 @@ function configureHttpInterceptors($httpProvider) {
                         request.headers['Content-Type'] = 'application/json;charset=UTF-8';
                         request.data = '';
                     }
-
+                    
                     angular.extend(request.headers, configService.load().headers);
-
+                    
                     return request;
                 },
                 response: function(response){
                     if (response.headers('Set-Authorization')){
                         configService.save({headers:{Authorization:response.headers('Set-Authorization')}});
                     }
-
+                    
                     return response;
                 },
                 responseError: function (rejection) {
@@ -233,7 +233,7 @@ function configureHttpInterceptors($httpProvider) {
                                 title: 'global.title.400',
                                 template: rejection.data.message
                             });
-
+                            
                             if (rejection.data.validations) {
                                 rejection.data.validations.forEach(function (erro) {
                                     backendErrors.set(erro.field, erro.message, erro.args);
@@ -288,21 +288,21 @@ function configureHttpInterceptors($httpProvider) {
                             $rootScope.$broadcast('scroll.infiniteScrollComplete');
                         }
                     };
-
+                    
                     if (responseInterceptors[rejection.status]) {
                         responseInterceptors[rejection.status](rejection);
                     }
-
+                    
                     return $q.reject(rejection);
                 }
             }
         }]);
-
+    
     $httpProvider.defaults.transformResponse.push(function (responseData) {
         convertDateStringsToDates(responseData);
         return responseData;
     });
-
+    
     $httpProvider.defaults.transformRequest.splice(0, 0, function (requestData) {
         convertDateToStrings(requestData);
         return requestData;
@@ -310,16 +310,16 @@ function configureHttpInterceptors($httpProvider) {
 }
 
 calvinApp.
-run(['$translatePartialLoader', function($translatePartialLoader){
-    $translatePartialLoader.addPart('global');
-}]).
-config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularProvider', '$translateProvider', '$ionicConfigProvider',
+        run(['$translatePartialLoader', function($translatePartialLoader){
+                $translatePartialLoader.addPart('global');
+    }]).
+        config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularProvider', '$translateProvider', '$ionicConfigProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider, $translateProvider, $ionicConfigProvider) {
         // Configurando interceptor de autenticação
         configureHttpInterceptors($httpProvider);
-
+        
         $ionicConfigProvider.backButton.text('');
-
+        
         // Configurando UI-ROUTER
         $urlRouterProvider.otherwise('/home');
         $stateProvider.state('site', {
@@ -330,21 +330,21 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                     }]
             }
         });
-
+        
         // Configuranto Restangular
         RestangularProvider.setBaseUrl($_serverUrl + '/rest');
-
-
+        
+        
         // Configurando o angular-translate
         $translateProvider.useLoader('$translatePartialLoader', {
             urlTemplate: 'i18n/{lang}/{part}.json'
         });
-
+        
         $translateProvider.preferredLanguage('pt-br');
         $translateProvider.useMessageFormatInterpolation();
         $translateProvider.useSanitizeValueStrategy('escaped');
         $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
-
+        
         if (!$httpProvider.defaults.headers.get) {
             $httpProvider.defaults.headers.get = {};
         }
@@ -354,15 +354,15 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
         $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
     }])
 
-.run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicSideMenuDelegate) {
-    $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
-        $rootScope.offline = false;
+        .run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicSideMenuDelegate) {
+            $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+                $rootScope.offline = false;
     });
-
+    
     $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
         $rootScope.offline = true;
     });
-
+    
     $rootScope.logout = function () {
         var cb = function(){
             $rootScope.usuario = null;
@@ -374,7 +374,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
             $ionicSideMenuDelegate.toggleLeft();
             $state.go('login');
         };
-
+        
         acessoService.logout(cb,function(response){
             if (response.status == 403){
                 cb();
@@ -383,19 +383,19 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
     };
 })
 
-.factory('NodePushServer', function (acessoService) {
-    return {
-        storeDeviceToken: function (regId, callback) {
-            acessoService.registerPushToken(regId, callback);
+        .factory('NodePushServer', function (acessoService) {
+            return {
+                storeDeviceToken: function (registration, callback) {
+                    acessoService.registerPushToken(registration, callback);
         }
     };
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, $rootScope, $cordovaNetwork, $cordovaBadge, $state, $ionicViewService, configService) {
-    this.register = function () {
-        if ($cordovaNetwork.isOnline()){
-            pushRegister();
+        .service('PushNotificationsService', function (message, NodePushServer, $rootScope, $cordovaNetwork, $cordovaBadge, $state, $ionicViewService, configService) {
+            this.register = function () {
+                if ($cordovaNetwork.isOnline()){
+                    pushRegister();
         }else{
             var stop = $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
                 pushRegister();
@@ -403,7 +403,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
             });
         }
     };
-
+    
     function pushRegister(){
         var push = PushNotification.init({
             android:{
@@ -416,7 +416,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                 alert: true
             }
         });
-
+        
         if ($_version !== configService.load().version){
             push.on('registration', function(data){
                 NodePushServer.storeDeviceToken({
@@ -430,8 +430,8 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                 });
             });
         }
-
-
+        
+        
         push.on('notification', function(data){
             if (data.additionalData.foreground){
                 message({title: data.title,template: data.message});
@@ -456,11 +456,11 @@ function convertDateStringsToDates(input) {
     // Ignore things that aren't objects.
     if (typeof input !== "object")
         return input;
-
+    
     for (var key in input) {
         if (!input.hasOwnProperty(key))
             continue;
-
+        
         var value = input[key];
         var match;
         // Check for string properties which look like dates.
@@ -481,11 +481,11 @@ function convertDateToStrings(input) {
     // Ignore things that aren't objects.
     if (typeof input !== "object")
         return input;
-
+    
     for (var key in input) {
         if (!input.hasOwnProperty(key))
             continue;
-
+        
         var value = input[key];
         // Check for string properties which look like dates.
         if (value instanceof Date) {
@@ -505,13 +505,13 @@ function formatDate(date) {
 
 function executePilha(execucoes){
     var idx = -1;
-
+    
     function exec(){
         idx++;
         if (execucoes.length > idx){
             execucoes[idx]().then(exec, exec);
         }
     }
-
+    
     exec();
 }
