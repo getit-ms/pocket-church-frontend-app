@@ -8,9 +8,9 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
                         trata(pagina, function(){
                             i++;
 							
-							if (i >= pdf.paginas.length){
-								req.callback(pdf);
-							}
+                            if (i >= pdf.paginas.length){
+                                req.callback(pdf);
+                            }
                         });
                     });
                 }

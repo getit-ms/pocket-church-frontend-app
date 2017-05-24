@@ -392,7 +392,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
 })
 
 // PUSH NOTIFICATIONS
-.service('PushNotificationsService', function (message, NodePushServer, $rootScope, $cordovaNetwork, $state, $ionicViewService, configService) {
+.service('PushNotificationsService', function (message, NodePushServer, $rootScope, $cordovaNetwork, $cordovaBadge, $state, $ionicViewService, configService) {
     this.register = function () {
         if ($cordovaNetwork.isOnline()){
             pushRegister();
@@ -440,6 +440,9 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
                     disableBack: true
                 });
                 $state.go('notificacao');
+            }else{
+                $cordovaBadge.set(data.count);
+                $rootScope.notifications = data.count;
             }
         });
     }

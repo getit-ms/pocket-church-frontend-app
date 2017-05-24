@@ -8,7 +8,7 @@ calvinApp.service('agendaService', ['Restangular', '$filter', function(Restangul
         };
     
         this.buscaCalendarios = function(){
-            return this.api().getList().$object;
+            return this.api().getList();
         };
         
         this.buscaAgenda = function(id, filtro, callback){

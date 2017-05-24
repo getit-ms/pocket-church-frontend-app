@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
-                    controller: function(notificacaoService, $scope, $rootScope, loadingService,
+                    controller: function(notificacaoService, $scope, $rootScope, loadingService, $cordovaBadge,
                         $ionicPopup, $filter, message, $state, shareService, $ionicPlatform){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
@@ -50,15 +50,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         }
                                     });
                                 }
-                                //$cordovaBadge.set(0);
                                 $rootScope.notifications = 0;
                                 callback(angular.extend(notificacoes, {resultados:ns}));
+                                $cordovaBadge.set(0);
                             });
                         };
 
                         $scope.showData = function(message, messages){
                             var idx = messages.indexOf(message);
-                            return idx == 0 || diferenca(messages[idx - 1].data, message.data) > 0;
+                            return idx === 0 || diferenca(messages[idx - 1].data, message.data) > 0;
                         };
 
                         function diferenca(d1, d2){

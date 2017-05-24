@@ -68,6 +68,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                          $ionicScrollDelegate, $ionicSlideBoxDelegate, shareService, config, $filter, loadingService){
                         $scope.totalPaginas = 0;
 
+                        loadingService.show();
                         pdfService.get({
                             chave:'cifra',
                             id:$stateParams.id,
@@ -75,6 +76,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             callback:function(cifra){
                                 $scope.cifra = cifra;
                                 $scope.totalPaginas = cifra.paginas.length;
+                                loadingService.hide();
                             },
                             supplier:function(id, callback){
                                 cifraService.carrega(id, callback);

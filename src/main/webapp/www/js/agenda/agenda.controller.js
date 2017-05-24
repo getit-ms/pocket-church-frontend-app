@@ -74,7 +74,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.clear = function(){
                             $scope.agendamento = {};
                             $scope.calendarioSelecionado = null;
-                            $scope.calendarios = agendaService.buscaCalendarios();
+                            
+                            loadingService.show();
+                            agendaService.buscaCalendarios().then(function(calendarios){
+                                $scope.calendarios = calendarios;
+                                loadingService.hide();
+                            }, function(){
+                                loadingService.hide();
+                            });
                         };
                         
                         var currentDate = new Date();
