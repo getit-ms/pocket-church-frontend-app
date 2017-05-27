@@ -439,9 +439,9 @@ calvinApp.
                     disableBack: true
                 });
                 $state.go('notificacao');
-            }else{
-                $cordovaBadge.set(data.count);
-                $rootScope.notifications = data.count;
+            }else if (data.badge) {
+                $cordovaBadge.set(data.badge);
+                $rootScope.notifications = data.badge;
             }
         });
     }
