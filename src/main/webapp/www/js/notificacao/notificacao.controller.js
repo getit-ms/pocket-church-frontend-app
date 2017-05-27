@@ -58,7 +58,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                         $scope.showData = function(message, messages){
                             var idx = messages.indexOf(message);
-                            return idx === 0 || diferenca(messages[idx - 1].data, message.data) > 0;
+                            return idx === 0 || message.data && diferenca(messages[idx - 1].data, message.data) > 0;
                         };
 
                         function diferenca(d1, d2){

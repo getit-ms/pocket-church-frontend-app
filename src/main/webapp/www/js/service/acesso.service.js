@@ -3,8 +3,8 @@ calvinApp.service('acessoService', ['Restangular', 'config', function(Restangula
             return Restangular.all('acesso');
         };
 
-        this.carrega = function(callback){
-            this.api().get('').then(callback);
+        this.carrega = function(success, error){
+            this.api().get('').then(success, error);
         };
 
         this.login = function(login, success, error){
@@ -34,8 +34,8 @@ calvinApp.service('acessoService', ['Restangular', 'config', function(Restangula
             return this.api().one('horariosLembretesLeitura').getList().$object;
         };
 
-        this.buscaFuncionalidadesPublicas = function(callback){
-            return this.api().all('funcionalidades/publicas').getList().then(callback);
+        this.buscaFuncionalidadesPublicas = function(success, error){
+            return this.api().all('funcionalidades/publicas').getList().then(success, error);
         };
 
         this.buscaPreferencias = function(callback){

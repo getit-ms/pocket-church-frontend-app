@@ -7,7 +7,7 @@
            class="button button-icon icon positive ion-android-share-alt"
            title="{{'global.compartilhar' | translate}}"></a>
     </ion-nav-buttons>
-    <ion-content ng-class="{'has-footer': cifra.paginas.length > 1" class='has-header'>
+    <ion-content ng-class="{'has-footer': cifra.paginas.length > 1}" class='has-header'>
         <ion-slide-box show-pager="false" ng-if="cifra.paginas.length" on-slide-changed="slideChanged(index)" active-slide="slide.activeSlide">
             <ion-slide ng-repeat="pagina in cifra.paginas">
                 <ion-scroll scroll='false' zooming="true" direction="xy" scrollable-x="false"

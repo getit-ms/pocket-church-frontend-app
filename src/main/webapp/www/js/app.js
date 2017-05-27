@@ -47,34 +47,33 @@ arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibl
         
         $cordovaLocalNotification.clearAll();
         
-        var time = new Date().getTime();
-        
-        if (!config.timeout || config.timeout < time) {
-            acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
-                $rootScope.funcionalidadesPublicas = funcionalidades;
-                
-                configService.save({
-                    funcionalidadesPublicas: $rootScope.funcionalidadesPublicas,
-                    timeout: time + 3600000
-                });
-                
-                if (config.usuario && config.funcionalidades){
-                    acessoService.carrega(function (acesso) {
-                        $rootScope.usuario = acesso.membro;
-                        $rootScope.funcionalidades = acesso.funcionalidades;
-                        deferred.resolve();
-                        
-                        configService.save({
-                            usuario: $rootScope.usuario,
-                            funcionalidades: $rootScope.funcionalidades,
-                            timeout: time + 3600000
-                        });
-                    });
-                }else{
-                    deferred.reject();
-                }
+        acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
+            $rootScope.funcionalidadesPublicas = funcionalidades;
+
+            configService.save({
+                funcionalidadesPublicas: $rootScope.funcionalidadesPublicas
             });
-        }
+
+            if (config.usuario && config.funcionalidades){
+                acessoService.carrega(function (acesso) {
+                    $rootScope.usuario = acesso.membro;
+                    $rootScope.funcionalidades = acesso.funcionalidades;
+
+                    configService.save({
+                        usuario: $rootScope.usuario,
+                        funcionalidades: $rootScope.funcionalidades
+                    });
+                    
+                    deferred.resolve();
+                }, function(){
+                    deferred.reject();
+                });
+            }else{
+                deferred.reject();
+            }
+        }, function(){
+            deferred.reject();
+        });
         
         return deferred.promise;
     }
