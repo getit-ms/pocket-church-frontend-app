@@ -57,7 +57,7 @@
     "cordova-plugin-file-transfer@1.6.3",
     "cordova-plugin-file@4.3.3",
     {
-      "locator": "https://github.com/katzer/cordova-plugin-badge.git#0.7.4",
+      "locator": "https://github.com/katzer/cordova-plugin-badge.git#0.7.3",
       "id": "cordova-plugin-badge"
     },
     {
