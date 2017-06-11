@@ -404,8 +404,6 @@ calvinApp.
     };
 
     function pushRegister(){
-      if (!PushNotification) return;
-
         var push = PushNotification.init({
             android:{
                 senderID: $_gcmSenderId,
