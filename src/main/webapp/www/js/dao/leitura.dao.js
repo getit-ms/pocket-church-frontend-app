@@ -57,7 +57,7 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
             var deferred = $q.defer();
 
             database.db.transaction(function(tx) {
-                tx.executeSql('SELECT id, descricao FROM plano_leitura2', [], function(tx, rs) {
+                tx.executeSql('SELECT id, descricao FROM plano_leitura', [], function(tx, rs) {
                     if (rs.rows.length){
                         var item = rs.rows.item(0);
                         deferred.resolve({
