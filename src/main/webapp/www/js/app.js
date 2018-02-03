@@ -236,8 +236,8 @@ var calvinApp = angular.module('calvinApp', [
 }]);
 
 function configureHttpInterceptors($httpProvider) {
-  $httpProvider.interceptors.push(['$q', '$rootScope', 'backendErrors', 'configService', '$injector', 'PushNotificationsService', 'database',
-    function ($q, $rootScope, backendErrors, configService, $injector, PushNotificationsService, databse) {
+  $httpProvider.interceptors.push(['$q', '$rootScope', 'backendErrors', 'configService', '$injector', 'database',
+    function ($q, $rootScope, backendErrors, configService, $injector, database) {
       return {
         request: function (request) {
           var deferred = $q.defer();
@@ -262,7 +262,7 @@ function configureHttpInterceptors($httpProvider) {
           }
 
           if (response.headers('Force-Register')){
-            PushNotificationsService.register(true);
+            config.save({registrationId:'redefine'});
           }
 
           if (response.headers('Force-Reset')){
