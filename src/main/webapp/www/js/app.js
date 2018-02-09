@@ -79,6 +79,10 @@ var calvinApp = angular.module('calvinApp', [
     return deferred.promise;
   }
 
+  $rootScope.registerPush = function(force) {
+    PushNotificationsService.register(force);
+  };
+
   $ionicPlatform.on("resume", function(){
     arquivoService.init();
     database.init();
@@ -88,6 +92,8 @@ var calvinApp = angular.module('calvinApp', [
       $rootScope.funcionalidades = config.funcionalidades;
       $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
     });
+
+    $rootScope.registerPush(false);
 
     carregaFuncionalidades();
   });
@@ -104,10 +110,6 @@ var calvinApp = angular.module('calvinApp', [
 
     arquivoService.init();
     database.init();
-
-    configService.save({
-      tipo: ionic.Platform.isAndroid() ? 0 : 1
-    });
 
     var next = { then: function(callback){ callback(); } };
 
@@ -152,6 +154,7 @@ var calvinApp = angular.module('calvinApp', [
     configService.load().then(function(config) {
       if (!config.headers.Dispositivo || config.headers.Dispositivo === 'undefined'){
         configService.save({
+          tipo: ionic.Platform.isAndroid() ? 0 : 1,
           headers:{
             Dispositivo: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
               var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
@@ -161,7 +164,7 @@ var calvinApp = angular.module('calvinApp', [
         });
       }
 
-      PushNotificationsService.register(false);
+      $rootScope.registerPush(false);
 
       $rootScope.deviceReady = true;
 
@@ -263,6 +266,10 @@ function configureHttpInterceptors($httpProvider) {
 
           if (response.headers('Force-Register')){
             config.save({registrationId:'redefine'});
+
+            if ($rootScope.registerPush) {
+              $rootScope.registerPush(true);
+            }
           }
 
           if (response.headers('Force-Reset')){
@@ -458,8 +465,8 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
         }
       });
 
-      configService.load().then(function(config){
-        push.on('registration', function(data){
+      push.on('registration', function(data){
+        configService.load().then(function(config){
           if (force || $_version !== config.version ||
             data.registrationId !== config.registrationId){
 
