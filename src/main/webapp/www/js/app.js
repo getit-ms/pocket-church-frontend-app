@@ -274,6 +274,7 @@ function configureHttpInterceptors($httpProvider) {
 
           if (response.headers('Force-Reset')){
             database.resetAll();
+            localStorage.clear();
           }
 
           return response;
