@@ -91,9 +91,9 @@ var calvinApp = angular.module('calvinApp', [
       $rootScope.usuario = config.usuario;
       $rootScope.funcionalidades = config.funcionalidades;
       $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
-    });
 
-    $rootScope.registerPush(false);
+      $rootScope.registerPush(false);
+    });
 
     carregaFuncionalidades();
   });
@@ -161,12 +161,12 @@ var calvinApp = angular.module('calvinApp', [
               return v.toString(16);
             })
           }
+        }).then(function() {
+          $rootScope.registerPush(false);
+
+          $rootScope.deviceReady = true;
         });
       }
-
-      $rootScope.registerPush(false);
-
-      $rootScope.deviceReady = true;
 
       executePilha(execucoes);
     });
@@ -265,7 +265,7 @@ function configureHttpInterceptors($httpProvider) {
           }
 
           if (response.headers('Force-Register')){
-            config.save({registrationId:'redefine'});
+            configService.save({registrationId:'redefine'});
 
             if ($rootScope.registerPush) {
               $rootScope.registerPush(true);
@@ -467,8 +467,9 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
 
       push.on('registration', function(data){
         configService.load().then(function(config){
-          if (force || $_version !== config.version ||
-            data.registrationId !== config.registrationId){
+          if (config.headers.Dispositivo && (force ||
+            $_version !== config.version ||
+            data.registrationId !== config.registrationId)){
 
             NodePushServer.storeDeviceToken({
               token: data.registrationId,
