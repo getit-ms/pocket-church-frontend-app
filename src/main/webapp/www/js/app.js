@@ -98,7 +98,7 @@ var calvinApp = angular.module('calvinApp', [
     carregaFuncionalidades();
   });
 
-  $ionicPlatform.on("deviceready", function () {
+  $rootScope.initApp = function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -171,6 +171,10 @@ var calvinApp = angular.module('calvinApp', [
       executePilha(execucoes);
     });
 
+  };
+
+  $ionicPlatform.on("deviceready", function() {
+    $rootScope.initApp();
   });
 
 }).service('loadingService', ['$ionicLoading', '$filter', function($ionicLoading, $filter){
@@ -264,17 +268,17 @@ function configureHttpInterceptors($httpProvider) {
             configService.save({headers:{Authorization:response.headers('Set-Authorization')}});
           }
 
-          if (response.headers('Force-Register')){
+          if (response.headers('Force-Reset')){
+            database.resetAll();
+            localStorage.clear();
+            $rootScope.logout();
+            $rootScope.initApp();
+          } else if (response.headers('Force-Register')){
             configService.save({registrationId:'redefine'});
 
             if ($rootScope.registerPush) {
               $rootScope.registerPush(true);
             }
-          }
-
-          if (response.headers('Force-Reset')){
-            database.resetAll();
-            localStorage.clear();
           }
 
           return response;
