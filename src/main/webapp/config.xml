@@ -62,5 +62,4 @@
     <plugin name="cordova-plugin-transport-security" spec="^0.1.1" />
     <plugin name="cordova-plugin-network-information" />
     <plugin name="cordova-sqlite-storage" spec="~2.0.1" />
-    <plugin name="cordova-plugin-badge" spec="https://github.com/katzer/cordova-plugin-badge.git#0.7.3" />
 </widget>
