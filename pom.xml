@@ -110,20 +110,6 @@
                 <version>1.4.0</version>
                 <executions>
                     <execution>
-                        <id>npm-install</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <workingDirectory>src/main/webapp</workingDirectory>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>install</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>bower-install</id>
                         <phase>prepare-package</phase>
                         <goals>
