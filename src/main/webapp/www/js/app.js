@@ -166,6 +166,10 @@ var calvinApp = angular.module('calvinApp', [
 
           $rootScope.deviceReady = true;
         });
+      } else {
+        $rootScope.registerPush(false);
+
+        $rootScope.deviceReady = true;
       }
 
       executePilha(execucoes);

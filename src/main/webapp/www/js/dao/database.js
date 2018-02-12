@@ -53,23 +53,17 @@ calvinApp.service('database', ['$q', function($q){
 
     try{
       vm.db.transaction(function(tx) {
-        tx.executeSql('DROP INDEX IF EXISTS idx_id_livro_biblia');
-        tx.executeSql('DROP INDEX IF EXISTS idx_testamento_livro_biblia');
-        tx.executeSql('DROP TABLE IF EXISTS livro_biblia');
+        tx.executeSql('DELETE FROM livro_biblia');
 
-        tx.executeSql('DROP INDEX IF EXISTS idx_id_livro_versiculo_biblia');
-        tx.executeSql('DROP TABLE IF EXISTS versiculo_biblia');
+        tx.executeSql('DELETE FROM versiculo_biblia');
 
-        tx.executeSql('DROP INDEX IF EXISTS idx_id_hin');
-        tx.executeSql('DROP TABLE IF EXISTS hino');
+        tx.executeSql('DELETE FROM hino');
 
-        tx.executeSql('DROP TABLE IF EXISTS plano_leitura');
+        tx.executeSql('DELETE FROM plano_leitura');
 
-        tx.executeSql('DROP INDEX IF EXISTS idx_id_leitura_biblia2');
-        tx.executeSql('DROP INDEX IF EXISTS idx_data_leitura_biblia2');
-        tx.executeSql('DROP TABLE IF EXISTS leitura_biblica2');
+        tx.executeSql('DELETE FROM leitura_biblica2');
 
-        tx.executeSql('DROP TABLE IF EXISTS config');
+        tx.executeSql('DELETE FROM config');
 
         deferred.resolve();
 
