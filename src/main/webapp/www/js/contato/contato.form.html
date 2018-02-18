@@ -4,7 +4,11 @@
     </ion-nav-title>
     <ion-content>
         <ion-item class="item-icon-left">
-            <span class="icon fa fa-user"></span>
+          <ion-avatar item-start ng-if="contato.foto">
+            <img src="{{foto(contato)}}">
+          </ion-avatar>
+          <span class="icon fa fa-user" ng-if="!contato.foto"></span>
+
             <h2>{{contato.nome}}</h2>
             <p>
                 {{contato.pastor ? ('contato.pastor' | translate) : ''}}

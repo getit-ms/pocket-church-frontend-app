@@ -69,6 +69,7 @@
 
         <script src="js/institucional/institucional.controller.js"></script>
         <script src="js/boletim/boletim.controller.js"></script>
+        <script src="js/publicacao/publicacao.controller.js"></script>
         <script src="js/estudo/estudo.controller.js"></script>
         <script src="js/login/login.controller.js"></script>
         <script src="js/contato/contato.controller.js"></script>
@@ -86,6 +87,7 @@
         <script src="js/youtube/youtube.controller.js"></script>
         <script src="js/biblia/biblia.controller.js"></script>
         <script src="js/leitura/leitura.controller.js"></script>
+        <script src="js/calendario/calendario.controller.js"></script>
 
         <script src="js/service/link.service.js"></script>
         <script src="js/service/boletim.service.js"></script>
@@ -108,6 +110,7 @@
         <script src="js/service/youtube.service.js"></script>
         <script src="js/service/biblia.service.js"></script>
         <script src="js/service/leitura.service.js"></script>
+        <script src="js/service/calendario.service.js"></script>
 
         <script src="js/dao/database.js"></script>
         <script src="js/dao/config.dao.js"></script>
@@ -167,6 +170,18 @@
                               ui-sref="institucional" title="{{'institucional.institucional' | translate}}">
                         <span class='icon fa fa-cube'></span>
                         <h2 class="menu-text">{{'institucional.institucional' | translate}}</h2>
+                    </ion-item>
+                    <ion-item nav-clear menu-close class="item item-icon-left"
+                              ui-sref="calendario" title="{{'calendario.agenda' | translate}}"
+                              ng-if="funcionalidadesPublicas.indexOf('AGENDA') >= 0">
+                      <span class='icon fa fa-calendar-times-o'></span>
+                      <h2 class="menu-text">{{'calendario.agenda' | translate}}</h2>
+                    </ion-item>
+                    <ion-item nav-clear menu-close class="item item-icon-left"
+                              ui-sref="boletim" title="{{'publicacao.publicacoes' | translate}}"
+                              ng-if="funcionalidadesPublicas.indexOf('LISTAR_PUBLICACOES') >= 0">
+                      <span class='icon fa fa-file-text'></span>
+                      <h2 class="menu-text">{{'publicacao.publicacoes' | translate}}</h2>
                     </ion-item>
                     <ion-item nav-clear menu-close class="item item-icon-left"
                               ui-sref="boletim" title="{{'boletim.boletins' | translate}}"

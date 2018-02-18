@@ -1,0 +1,33 @@
+<ion-view>
+    <ion-nav-title >
+        <span translate>calendario.agenda</span>
+    </ion-nav-title>
+  <ion-content class="has-header">
+    <ion-refresher
+      pulling-text="{{'global.puxe_para_atualizar' | translate}}"
+      on-refresh='refresh()'></ion-refresher>
+    <div ng-if="!eventos.eventos.length" class="row row-center">
+      <div class="col col-center text-center">
+        <span translate>global.nenhum_registro_encontrado</span>
+      </div>
+    </div>
+
+    <div class="item item-divider" ng-repeat-start="evento in eventos.eventos" ng-if="primeiroDoMes(eventos.eventos, evento)">
+      {{evento | date:'MMMM de yyyy'}}
+    </div>
+    <ion-item class="item-text-wrap" ng-repeat-end >
+      <h2>{{evento.inicio | date:'dd | HH:mm'}} - {{evento.termino | date:'HH:mm'}}</h2>
+      <p>{{evento.descricao}}</p>
+      <p ng-if="evento.local">
+        {{evento.local}}
+        <i class="icon fa fa-map-marker icon-accessory" ></i>
+      </p>
+    </ion-item>
+
+    <ion-infinite-scroll
+      ng-if="hasMore"
+      on-infinite="more()"
+      distance="5%">
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-view>

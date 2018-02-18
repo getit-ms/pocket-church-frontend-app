@@ -364,6 +364,9 @@
         "proximos_videos_cultos":"Próximos Cultos e Vídeos ",
         "historico_videos_cultos":"Histórico de Cultos e Vídeos"
     },
+    "calendario":{
+      "agenda":"Agenda da Igreja"
+    },
     "biblia":{
         "biblia":"Bíblia",
         "velho_testamento":"Velho Testamento",
