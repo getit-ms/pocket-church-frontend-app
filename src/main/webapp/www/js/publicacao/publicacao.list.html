@@ -6,11 +6,10 @@
       <div class="item item-divider"
            ng-repeat-start="publicacao in publicacoes"
            ng-if="primeiroDaLetra(publicacoes, publicacao)">
-        {{letra(contato)}}
+        {{letra(publicacao)}}
       </div>
       <ion-item ng-click='detalhar(publicacao)' ng-repeat-end >
         <h2>
-          <i class="icon ion-ios-book icon-accessory" ></i>
           {{publicacao.titulo}}
         </h2>
       </ion-item>

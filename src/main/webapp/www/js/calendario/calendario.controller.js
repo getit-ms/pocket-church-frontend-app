@@ -7,7 +7,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     templateUrl: 'js/calendario/calendario.list.html',
                     controller: function(calendarioService, $scope, $ionicModal, shareService){
                       $scope.filtro = {total:50};
-                      $scope.eventos = {};
+                      $scope.eventos = {eventos:[]};
 
                       $scope.refresh = function() {
                         $scope.eventos = {};
@@ -16,8 +16,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                       $scope.more = function() {
                         calendarioService.busca(angular.extend($scope.filtro, {pagina: $scope.eventos.proximaPagina}), function(eventos) {
-                          $scope.eventos = eventos;
+                          if (eventos.eventos) {
+                            eventos.eventos.forEach(function(evento) {
+                              $scope.eventos.eventos.push(evento);
+                            });
+                          }
                           $scope.hasMore = eventos.possuiProximaPagina;
+                          $scope.$broadcast('scroll.infiniteScrollComplete');
+                          $scope.$broadcast('scroll.refreshComplete');
                         });
                       };
 

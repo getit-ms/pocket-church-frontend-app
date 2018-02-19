@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/contato/contato.list.html',
-                controller: function(contatoService, $state, $scope, $ionicScrollDelegate, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig){
+                controller: function(contatoService, $state, $scope, $ionicScrollDelegate, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig, arquivoService){
                     $scope.filtro = {nome:'',total:50};
                     $scope.hasFilters = false;
 
@@ -50,6 +50,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     };
 
                     $scope.foto = function(contato){
+                      if (!contato || !contato.foto) {
+                        return undefined;
+                      }
+
                       if (!contato.foto.localPath){
                         contato.foto.localPath = '#';
                         arquivoService.get(contato.foto.id, function(file){
@@ -90,12 +94,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/contato/contato.form.html',
-                controller: function($scope, contato, linkService){
+                controller: function($scope, contato, linkService, arquivoService){
                     $scope.contato = contato;
 
                     angular.extend($scope, linkService);
 
                     $scope.foto = function(contato){
+                      if (!contato || !contato.foto) {
+                        return undefined;
+                      }
+
                       if (!contato.foto.localPath){
                         contato.foto.localPath = '#';
                         arquivoService.get(contato.foto.id, function(file){

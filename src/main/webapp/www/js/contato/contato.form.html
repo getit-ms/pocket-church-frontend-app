@@ -3,11 +3,9 @@
         <span translate>contato.contato</span>
     </ion-nav-title>
     <ion-content>
-        <ion-item class="item-icon-left">
-          <ion-avatar item-start ng-if="contato.foto">
-            <img src="{{foto(contato)}}">
-          </ion-avatar>
-          <span class="icon fa fa-user" ng-if="!contato.foto"></span>
+        <ion-item class="item-thumbnail-left">
+          <img src="{{foto(contato)}}" ng-if="contato.foto">
+          <img src="img/avatar.png" ng-if="!contato.foto">
 
             <h2>{{contato.nome}}</h2>
             <p>

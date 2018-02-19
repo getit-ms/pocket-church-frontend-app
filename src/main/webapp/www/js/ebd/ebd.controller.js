@@ -22,11 +22,30 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/ebd/ebd.form.html',
-                controller: function($scope, ebd, $state, eventoService){
+                controller: function($scope, ebd, $state, eventoService, arquivoService){
                     $scope.ebd = ebd;
 
                     $scope.searcherInscricoes = function(page, callback){
                         eventoService.buscaMinhasInscricoes(ebd.id, {pagina:page,total:10}, callback);
+                    };
+
+                    $scope.banner = function(ebd){
+                      if (!ebd || !ebd.banner) {
+                        return undefined;
+                      }
+
+                      if (!ebd.banner.localPath){
+                        ebd.banner.localPath = '#';
+                        arquivoService.get(ebd.banner.id, function(file){
+                          ebd.banner.localPath = file.file;
+                        }, function(file){
+                          ebd.banner.localPath = file.file;
+                        }, function(file){
+                          ebd.banner.localPath = file.file;
+                        });
+                      }
+
+                      return ebd.banner.localPath;
                     };
 
                     $scope.$on('$ionicView.enter', function(){
@@ -86,10 +105,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.conclui = function(){
                         if ($scope.inscricoes.length){
                             loadingService.show();
-                            
+
                             eventoService.inscricao($scope.ebd.id, $scope.inscricoes, function(resposta){
                                 loadingService.hide();
-                                
+
                                 if (resposta.devePagar && resposta.checkoutPagSeguro){
                                     message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
                                         $ionicHistory.goBack();

@@ -10,7 +10,10 @@
             </h1>
         </div>
 
-        <div class='item item-text-wrap white-space'>{{ebd.descricao}}</div>
+        <div class='item item-body item-text-wrap white-space'>
+          <img class="full-image" src="{{banner(ebd)}}" ng-if="ebd.banner">
+          {{ebd.descricao}}
+        </div>
         <div class='item item-input'>
             <label class='input-label' translate>ebd.dataHoraInicio</label>
             {{ebd.dataHoraInicio | date:'dd MMMM yyyy HH:mm'}}
