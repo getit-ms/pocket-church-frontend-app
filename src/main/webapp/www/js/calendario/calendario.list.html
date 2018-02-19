@@ -13,7 +13,7 @@
     </div>
 
     <div class="item item-divider" ng-repeat-start="evento in eventos.eventos" ng-if="primeiroDoMes(eventos.eventos, evento)">
-      {{evento | date:'MMMM de yyyy'}}
+      {{evento.inicio | date:'MMMM de yyyy'}}
     </div>
     <ion-item class="item-text-wrap" ng-repeat-end >
       <h2>{{evento.inicio | date:'dd | HH:mm'}} - {{evento.termino | date:'HH:mm'}}</h2>

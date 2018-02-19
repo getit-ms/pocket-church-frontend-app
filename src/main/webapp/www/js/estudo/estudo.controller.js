@@ -4,20 +4,35 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         url: '/estudo',
         views:{
             'content@':{
-                templateUrl: 'js/estudo/estudo.list.html',
+                templateUrl: 'js/estudo/categoria.list.html',
                 controller: function(estudoService, $state, $scope){
-                    $scope.filtro = {total:10};
-
-                    $scope.searcher = function(page, callback){
-                        estudoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
-                    };
-
-                    $scope.detalhar = function(estudo){
-                        $state.go('estudo.view', {id: estudo.id});
-                    };
+                    $scope.$on('$ionicView.enter', function() {
+                      estudoService.buscaCategorias(function(categorias) {
+                        $scope.categorias = categorias;
+                      });
+                    });
                 }
             }
         }
+    }).state('estudo.list', {
+      parent: 'estudo',
+      url: '/categoria/:categoria',
+      views:{
+        'content@':{
+          templateUrl: 'js/estudo/estudo.list.html',
+          controller: function(estudoService, $state, $scope, $stateParams){
+            $scope.filtro = {categoria:$stateParams.categoria, total:10};
+
+            $scope.searcher = function(page, callback){
+              estudoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
+            };
+
+            $scope.detalhar = function(estudo){
+              $state.go('estudo.view', {id: estudo.id});
+            };
+          }
+        }
+      }
     }).state('estudo.view', {
         parent: 'estudo',
         url: '/:id',

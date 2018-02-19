@@ -169,6 +169,11 @@
         "boletim":"Boletim",
         "paginacao":"{atual} de {total}"
     },
+    "publicacao":{
+      "publicacoes":"Publicações",
+      "publicacao":"Publicaçãoa",
+      "paginacao":"{atual} de {total}"
+    },
     "cifra":{
         "cifras":"Cânticos",
         "cifra":"Cântico",

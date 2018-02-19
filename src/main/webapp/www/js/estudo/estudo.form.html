@@ -3,7 +3,7 @@
         <span translate>estudo.estudo</span>
     </ion-nav-title>
     <ion-nav-buttons side="right" >
-        <a data-tap-disabled="true" ng-click="share()" href="" 
+        <a data-tap-disabled="true" ng-click="share()" href=""
            class="button button-icon icon positive ion-android-share-alt"
            title="{{'global.compartilhar' | translate}}"></a>
     </ion-nav-buttons>
@@ -15,7 +15,9 @@
                 <span class='item-note'>{{estudo.dataPublicacao | date:'dd MMMM yyyy HH:mm'}}</span>
             </h2>
         </div>
-        <div class="item item-body ">
+        <ion-gallery ng-if="estudo.tipo == 'PDF'" ion-gallery-row="2"
+                     ion-gallery-items="estudo.paginas"></ion-gallery>
+        <div class="item item-body " ng-if="estudo.tipo == 'TEXTO'">
             <p class="html-div" ng-bind-html='estudo.texto'></p>
         </div>
     </ion-content>
