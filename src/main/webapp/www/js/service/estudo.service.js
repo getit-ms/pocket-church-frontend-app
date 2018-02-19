@@ -11,7 +11,7 @@ calvinApp.service('estudoService', ['Restangular', function(Restangular){
           return this.api().all('categoria').getList().then(callback);
         };
 
-        this.carrega = function(id){
-            return this.api().get(id).$object;
+        this.carrega = function(id, callback){
+            return this.api().get(id).then(callback);
         };
 }]);

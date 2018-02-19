@@ -39,25 +39,51 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/estudo/estudo.form.html',
-                controller: function(estudo, $scope, shareService, loadingService, config){
-                    $scope.estudo = estudo;
+                controller: function($scope, shareService, loadingService, config, pdfService, estudoService, $stateParams){
+                    estudoService.carrega($stateParams.id, function(estudo) {
+
+                      if (estudo.tipo == 'PDF') {
+                        pdfService.get({
+                          chave:'estudo',
+                          id:$stateParams.id,
+                          errorState:'estudo',
+                          callback:function(estudo){
+                            $scope.estudo = estudo;
+                            loadingService.hide();
+                            $state.reload();
+                          },
+                          supplier:function(id, callback){
+                            loadingService.show();
+                            callback(estudo);
+                          }
+                        });
+                      } else {
+                        $scope.estudo = estudo;
+                      }
+                    });
 
                     $scope.share = function(){
                         loadingService.show();
 
-                        shareService.share({
+                        if ($scope.estudo.tipo == 'PDF') {
+                          shareService.share({
                             subject:$scope.estudo.titulo,
-                            file: config.server + '/rest/estudo/' + $scope.estudo.id + '/' + $scope.estudo.filename + '.pdf?Dispositivo=' +
-                                config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                            file:config.server + '/rest/arquivo/download/' +
+                            $scope.estudo.pdf.id + '/' +  $scope.estudo.pdf.filename + '?Dispositivo=' +
+                            config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                             success: loadingService.hide,
                             error: loadingService.hide
-                        });
+                          });
+                        } else {
+                          shareService.share({
+                            subject:$scope.estudo.titulo,
+                            file: config.server + '/rest/estudo/' + $scope.estudo.id + '/' + $scope.estudo.filename + '.pdf?Dispositivo=' +
+                            config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                            success: loadingService.hide,
+                            error: loadingService.hide
+                          });
+                        }
                     };
-                },
-                resolve:{
-                    estudo: ['estudoService', '$stateParams', function(estudoService, $stateParams){
-                        return estudoService.carrega($stateParams.id);
-                    }]
                 }
             }
         }

@@ -21,6 +21,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                               $scope.eventos.eventos.push(evento);
                             });
                           }
+                          $scope.eventos.proximaPagina = eventos.proximaPagina;
                           $scope.hasMore = eventos.possuiProximaPagina;
                           $scope.$broadcast('scroll.infiniteScrollComplete');
                           $scope.$broadcast('scroll.refreshComplete');

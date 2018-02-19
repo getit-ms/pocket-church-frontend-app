@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
-                    controller: function(notificacaoService, $scope, $rootScope, loadingService, $cordovaBadge,
+                    controller: function(notificacaoService, $scope, $rootScope, loadingService, $cordovaBadge, $window,
                         $ionicPopup, $filter, message, $state, shareService, $ionicPlatform, $ionicActionSheet){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
@@ -47,7 +47,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                     n.state = 'youtube';
                                                     break;
                                               default:
-                                                if (!message.customData || !message.customData.compartilhavel) {
+                                                if (!n.customData || !n.customData.compartilhavel) {
                                                   n.links = n.message.match(/https?:(\.?[^\. ])+/g);
                                                 }
                                                 break;
@@ -71,7 +71,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         }
 
                         function day(d){
+                          if (d) {
                             return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate();
+                          }
+
+                          return 0;
                         }
 
                         $scope.clear = function(){
