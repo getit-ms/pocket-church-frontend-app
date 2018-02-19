@@ -6,7 +6,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/notificacao/notificacao.list.html',
                     controller: function(notificacaoService, $scope, $rootScope, loadingService, $cordovaBadge,
-                        $ionicPopup, $filter, message, $state, shareService, $ionicPlatform){
+                        $ionicPopup, $filter, message, $state, shareService, $ionicPlatform, $ionicActionSheet){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
                                 var ns = [];
@@ -46,6 +46,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                 case 'YOUTUBE':
                                                     n.state = 'youtube';
                                                     break;
+                                              default:
+                                                if (!message.customData || !message.customData.compartilhavel) {
+                                                  n.links = n.message.match(/https?:(\.?[^\. ])+/g);
+                                                }
+                                                break;
                                             }
                                         }
                                     });
@@ -89,8 +94,26 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.acessar = function(message){
                             if (message.state){
                                 $state.go(message.state);
-                            }else if (message.customData && message.customData.compartilhavel){
+                            } else if (message.customData && message.customData.compartilhavel){
                                 shareService.share({message:message.message, subject:message.title});
+                            } else if (message.links) {
+                              if (message.links.length === 1) {
+                                $window.open(message.links[0], '_system');
+                              } else if (message.links.length > 1) {
+                                var opcoes = [];
+                                message.links.forEach(function(link) {
+                                  opcoes.push({text:link});
+                                });
+
+                                $ionicActionSheet.show({
+                                  buttons: opcoes,
+                                  cancelText: $filter('translate')('global.cancelar'),
+                                  buttonClicked: function(index) {
+                                    $window.open(message.links[index], '_system');
+                                    return true;
+                                  }
+                                });
+                              }
                             }
                         };
 
@@ -111,7 +134,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }).then(function(resp){
                                     if (resp){
                                         loadingService.show();
-                                        
+
                                         if ($scope.excluir.todos){
                                             notificacaoService.clear(function(){
                                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
@@ -122,7 +145,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                             });
                                         }else{
                                             var i=0;
-                                            
+
                                             var excluir = function(e){
                                                 notificacaoService.remove(e.id, function(){
                                                     if (++i < $scope.excluir.selecionados.length){

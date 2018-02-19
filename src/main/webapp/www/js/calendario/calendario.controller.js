@@ -10,7 +10,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       $scope.eventos = {eventos:[]};
 
                       $scope.refresh = function() {
-                        $scope.eventos = {};
+                        $scope.eventos = {eventos:[]};
                         $scope.more();
                       };
 

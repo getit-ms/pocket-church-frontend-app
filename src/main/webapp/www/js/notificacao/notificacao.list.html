@@ -7,7 +7,7 @@
            class="button button-icon icon positive fa fa-trash"
            title="{{'notificacao.excluir_notificacoes' | translate}}"></a>
     </ion-nav-buttons>
-    <calvin-pagination ng-model="messages" searcher="searcher" cache="messages" 
+    <calvin-pagination ng-model="messages" searcher="searcher" cache="messages"
                        ng-class="{'has-footer': excluir}">
         <ion-checkbox ng-if='excluir' ng-model="excluir.todos">
             <p translate>notificacao.excluir_todos</p>
@@ -15,25 +15,26 @@
         <div class="item item-divider" ng-repeat-start="message in messages" ng-if="showData(message, messages)">
             {{message.dataFormatada}}
         </div>
-        <ion-checkbox class="item-text-wrap" ng-if='excluir' 
-                      ng-checked="excluir.todos || excluir.selecionados.indexOf(message) >= 0" 
+        <ion-checkbox class="item-text-wrap" ng-if='excluir'
+                      ng-checked="excluir.todos || excluir.selecionados.indexOf(message) >= 0"
                       ng-click="toggleExcluir(message)">
             <h2>
                 {{message.title}}
                 <span class="item-note">{{message.data | date:('config.pattern.hour' | translate)}}</span>
             </h2>
-            <p>{{message.message}}</p>
+            <p ng-bind-html="message.message"></p>
         </ion-checkbox>
-        <ion-item class="item-text-wrap" ng-class="{'item-icon-right':message.state || (message.customData && message.customData.compartilhavel)}" 
+        <ion-item class="item-text-wrap" ng-class="{'item-icon-right':message.state || (message.customData && message.customData.compartilhavel) || message.links.length}"
                   ng-repeat-end ng-click="acessar(message)" ng-if="!excluir">
             <h2>
                 {{message.title}}
                 <span class="item-note">{{message.data | date:('config.pattern.hour' | translate)}}</span>
             </h2>
             <p>{{message.message}}</p>
-            <a class="icon ion-android-share-alt" ng-if="message.customData.compartilhavel" 
+            <a class="icon ion-android-share-alt" ng-if="message.customData.compartilhavel"
                title="{{'global.compartilhar' | translate}}"></a>
             <i ng-if="message.state" class="icon ion-chevron-right"></i>
+            <i ng-if="message.links.length" class="icon ion-link"></i>
         </ion-item>
     </calvin-pagination>
     <ion-footer-bar ng-hide="!excluir" class="bar-stable" align-title="center">
