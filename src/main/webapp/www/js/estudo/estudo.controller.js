@@ -24,7 +24,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             $scope.filtro = {categoria:$stateParams.categoria, total:10};
 
             $scope.searcher = function(page, callback){
-              estudoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
+              estudoService.busca(angular.extend({pagina:page}, $scope.filtro), function(estudos) {
+                $scope.categoria = estudos.categoria;
+                callback(estudos);
+              });
             };
 
             $scope.detalhar = function(estudo){
@@ -84,6 +87,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                           });
                         }
                     };
+
+                    $scope.updateSlideStatus = function(index) {
+                      var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+                      if (zoomFactor == 1) {
+                        $ionicSlideBoxDelegate.enableSlide(true);
+                      } else {
+                        $ionicSlideBoxDelegate.enableSlide(false);
+                      }
+                    };
+
                 }
             }
         }

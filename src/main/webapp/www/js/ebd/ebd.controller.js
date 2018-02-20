@@ -29,7 +29,34 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         eventoService.buscaMinhasInscricoes(ebd.id, {pagina:page,total:10}, callback);
                     };
 
-                    $scope.banner = function(ebd){
+
+                  $scope.zoomBaanner = function() {
+                    $ionicModal.fromTemplateUrl('js/ebd/banner.modal.html', {
+                      scope: $scope,
+                      animation: 'slide-in-up'
+                    }).then(function(modal) {
+                      $scope.modal = modal;
+                      $scope.modal.show();
+                    });
+                  };
+
+                  $scope.closeModal = function() {
+                    if ($scope.modal){
+                      $scope.modal.hide();
+                      $scope.modal.remove();
+                    }
+                  };
+
+                  $scope.updateSlideStatus = function(index) {
+                    var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+                    if (zoomFactor == 1) {
+                      $ionicSlideBoxDelegate.enableSlide(true);
+                    } else {
+                      $ionicSlideBoxDelegate.enableSlide(false);
+                    }
+                  };
+
+                  $scope.banner = function(ebd){
                       if (!ebd || !ebd.banner) {
                         return undefined;
                       }

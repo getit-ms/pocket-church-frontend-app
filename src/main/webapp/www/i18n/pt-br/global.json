@@ -182,7 +182,8 @@
     "estudo":{
         "estudo":"Estudo",
         "estudos":"Estudos",
-        "detalhar":"Mais"
+        "detalhar":"Mais",
+        "paginacao":"{atual} de {total}"
     },
     "votacao":{
         "votar":"Votar",

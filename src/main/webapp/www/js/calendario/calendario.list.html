@@ -15,12 +15,12 @@
     <div class="item item-divider" ng-repeat-start="evento in eventos.eventos" ng-if="primeiroDoMes(eventos.eventos, evento)">
       {{evento.inicio | date:'MMMM yyyy'}}
     </div>
-    <ion-item class="item-text-wrap" ng-repeat-end >
-      <h2>{{evento.inicio | date:'dd | HH:mm'}} - {{evento.termino | date:'HH:mm'}}</h2>
-      <p>{{evento.descricao}}</p>
+    <ion-item class="item-text-wrap item-icon-left" ng-repeat-end >
+      <i class="icon">{{evento.inicio | date:'dd'}}</i>
+      <div class="item-note">{{evento.inicio | date:'HH:mm'}} - {{evento.termino | date:'HH:mm'}}</div>
+      <h2>{{evento.descricao}}</h2>
       <p ng-if="evento.local">
         {{evento.local}}
-        <i class="icon fa fa-map-marker icon-accessory" ></i>
       </p>
     </ion-item>
 

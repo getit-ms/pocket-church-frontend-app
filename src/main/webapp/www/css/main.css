@@ -34,3 +34,12 @@
 
 .leitura h1 { font-size: 90px !important; margin: 5px 0 5px }
 .leitura h4 { font-size: 20px !important; }
+
+.action-sheet .button,
+.action-sheet .button:hover {
+  background-color: transparent;
+}
+
+.contato h2 {
+  font-size: 24px;
+}

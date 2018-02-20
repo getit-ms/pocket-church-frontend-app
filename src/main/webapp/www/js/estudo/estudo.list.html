@@ -1,6 +1,6 @@
 <ion-view>
     <ion-nav-title>
-        <span translate>estudo.estudos</span>
+        <span>{{categoria.nome}}</span>
     </ion-nav-title>
     <calvin-pagination searcher="searcher" ng-model="estudos" cache="estudos">
         <ion-item ng-click="detalhar(estudo)" ng-repeat="estudo in estudos">
