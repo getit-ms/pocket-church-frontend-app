@@ -22,7 +22,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/ebd/ebd.form.html',
-                controller: function($scope, ebd, $state, eventoService, arquivoService){
+                controller: function($scope, ebd, $state, eventoService, $ionicModal, arquivoService){
                     $scope.ebd = ebd;
 
                     $scope.searcherInscricoes = function(page, callback){
@@ -44,15 +44,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     if ($scope.modal){
                       $scope.modal.hide();
                       $scope.modal.remove();
-                    }
-                  };
-
-                  $scope.updateSlideStatus = function(index) {
-                    var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
-                    if (zoomFactor == 1) {
-                      $ionicSlideBoxDelegate.enableSlide(true);
-                    } else {
-                      $ionicSlideBoxDelegate.enableSlide(false);
                     }
                   };
 

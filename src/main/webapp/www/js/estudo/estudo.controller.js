@@ -52,6 +52,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                           errorState:'estudo',
                           callback:function(estudo){
                             $scope.estudo = estudo;
+                            $scope.totalPaginas = estudo.paginas.length;
                             loadingService.hide();
                             $state.reload();
                           },

@@ -40,6 +40,6 @@
   background-color: transparent;
 }
 
-.contato h2 {
-  font-size: 24px;
+.item.contato h2 {
+  font-size: 24px !important;
 }
