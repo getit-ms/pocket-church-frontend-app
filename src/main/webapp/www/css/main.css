@@ -19,6 +19,14 @@
     transform: translate(-50%, -50%);
 }
 
+.banner-modal {
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important;
+  text-align:center;
+}
+
 @media (max-width: 679px) {
     .active .modal-backdrop-bg {
         opacity: .9;
@@ -37,7 +45,7 @@
 
 .action-sheet .button,
 .action-sheet .button:hover {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .item.contato h2 {

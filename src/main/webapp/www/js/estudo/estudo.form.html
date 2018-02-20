@@ -30,7 +30,7 @@
             <p class="html-div" ng-bind-html='estudo.texto'></p>
         </div>
     </ion-content>
-    <ion-footer-bar ng-if="estudo.tipo == 'PDF' && slide" class="bar-stable" align-title="center">
+    <ion-footer-bar ng-if="estudo.tipo == 'PDF'" class="bar-stable" align-title="center">
       <h1 class="title">{{'estudo.paginacao' | translate:'{atual:'+(slide.activeSlide+1)+',total:'+ totalPaginas +'}' }}</h1>
     </ion-footer-bar>
 </ion-view>

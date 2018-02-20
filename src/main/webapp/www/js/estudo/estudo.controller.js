@@ -46,6 +46,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     estudoService.carrega($stateParams.id, function(estudo) {
 
                       if (estudo.tipo == 'PDF') {
+                        $scope.slide = {activeSlide:null};
+
                         pdfService.get({
                           chave:'estudo',
                           id:$stateParams.id,
