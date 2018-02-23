@@ -64,3 +64,15 @@
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
+
+.main-menu .item.active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.main-menu .item.active .icon:before {
+  background-color: transparent !important;
+}
+
+.main-menu .item.item-accordion {
+  background-color: rgba(0, 0, 0, 0.15) !important;
+}

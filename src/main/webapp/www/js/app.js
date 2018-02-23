@@ -38,6 +38,18 @@ var calvinApp = angular.module('calvinApp', [
     return deferred.promise;
   }
 
+  $rootScope.selecionaMenu = function(menu) {
+    if ($rootScope._menuSelecionado) {
+      $rootScope._menuSelecionado.selecionado = false;
+    }
+    $rootScope._menuSelecionado = menu;
+    $rootScope._menuSelecionado.selecionado = true;
+  };
+
+  $rootScope.menuSelecionado = function(menu) {
+    return menu.selecionado;
+  };
+
   function carregaFuncionalidades(){
     var deferred = $q.defer();
 
@@ -98,7 +110,7 @@ var calvinApp = angular.module('calvinApp', [
   });
 
   $rootScope.funcionalidadeHabilitada = function(funcionalidade) {
-    if ($rootScope.menu) {
+    if ($rootScope.menu && $rootScope.menu.submenus) {
       for (var i=0;i<$rootScope.menu.submenus.length;i++) {
         var menu = $rootScope.menu.submenus[i];
 
@@ -106,18 +118,20 @@ var calvinApp = angular.module('calvinApp', [
           return true;
         }
 
-        for (var j=0;j<menu.submenus.length;j++) {
-          var submenu = menu.submenus[j];
+        if (menu.submenus) {
+          for (var j=0;j<menu.submenus.length;j++) {
+            var submenu = menu.submenus[j];
 
-          if (submenu.funcionalidade == funcionalidade) {
-            return true;
+            if (submenu.funcionalidade == funcionalidade) {
+              return true;
+            }
           }
         }
       }
     }
 
     return false;
-  }
+  };
 
   $rootScope.initApp = function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

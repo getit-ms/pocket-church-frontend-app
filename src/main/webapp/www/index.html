@@ -161,27 +161,27 @@
                               title="{{'global.menu.logout' | translate}}"></span>
                     </ion-item>
 
-                    <div ng-repeat="mnu in menu.submenus">
-                      <ion-item class="item item-icon-left"
-                                ng-if="mnu.submenus.length"  title="{{mnu.nome}}"
-                                ng-click="menuSelecionado = mnu"
-                                ng-class="{active: menuSelecionado == mnu}">
-                        <span class='icon {{mnu.icone}}'></span>
-                        <h2 class="menu-text">{{mnu.nome}}</h2>
+                      <ion-item class="item" ng-repeat-start="mnu in menu.submenus"
+                                ng-if="mnu.submenus.length" title="{{mnu.nome}}"
+                                ng-class="{active: menuSelecionado(mnu),'item-icon-left':mnu.icone}" >
+                        <a href="javascript:void(0)" class="item-content" ng-click="selecionaMenu(mnu)">
+                          <span class='icon {{mnu.icone}}' ng-if="mnu.icone"></span>
+                          <h2 class="menu-text">{{mnu.nome}}</h2>
+                        </a>
                       </ion-item>
-                      <ion-item nav-clear menu-close class="item item-icon-left"
+                      <ion-item nav-clear menu-close class="item" ng-class="{'item-icon-left':mnu.icone}"
                                 ng-if="!mnu.submenus.length"
                                 ui-sref="{{mnu.link}}" title="{{mnu.nome}}">
-                        <span class='icon {{mnu.icone}}'></span>
+                        <span class='icon {{mnu.icone}}' ng-if="mnu.icone"></span>
                         <h2 class="menu-text">{{mnu.nome}}</h2>
                       </ion-item>
 
-                      <ion-item class="item-accordion item item-icon-left"
-                                ng-repeat="sbm in mnu.submenus" ng-show="menuSelecionado == mnu"
+                      <ion-item class="item-accordion item" ng-class="{'item-icon-left':sbm.icone}" ng-repeat-end
+                                ng-repeat="sbm in mnu.submenus" ng-show="menuSelecionado(mnu)"
                                 nav-clear menu-close ui-sref="{{sbm.link}}" title="{{sbm.nome}}">
+                        <span class='icon {{sbm.icone}}' ng-if="sbm.icone"></span>
                         <h2 class="menu-text">{{sbm.nome}}</h2>
                       </ion-item>
-                    </div>
 
                     <div class='menu-end'></div>
                 </ion-list>
