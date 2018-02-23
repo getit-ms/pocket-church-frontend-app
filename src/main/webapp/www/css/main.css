@@ -52,20 +52,30 @@
   font-size: 24px !important;
 }
 
-.list .item.item-accordion {
+.main-menu .item.item-parent:after {
+  content: '▹';
+  position: absolute;
+  right:5px;
+}
+
+.main-menu .item.item-parent.active:after {
+  content: '▿';
+}
+
+.main-menu .item.item-accordion {
   transition: 0.09s all linear;
 }
 
-.list .item.item-accordion.ng-hide {
+.main-menu .item.item-accordion.ng-hide {
   line-height: 0px;
 }
 
-.list .item.item-accordion.ng-hide-add,
-.list .item.item-accordion.ng-hide-remove {
+.main-menu .item.item-accordion.ng-hide-add,
+.main-menu .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
 
-.main-menu .item.active {
+.main-menu .item.item-parent.active {
   background-color: rgba(255, 255, 255, 0.2) !important;
 }
 

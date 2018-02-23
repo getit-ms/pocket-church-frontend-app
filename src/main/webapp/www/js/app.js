@@ -38,12 +38,16 @@ var calvinApp = angular.module('calvinApp', [
     return deferred.promise;
   }
 
-  $rootScope.selecionaMenu = function(menu) {
+  $rootScope.toggleMenu = function(menu) {
     if ($rootScope._menuSelecionado) {
       $rootScope._menuSelecionado.selecionado = false;
     }
-    $rootScope._menuSelecionado = menu;
-    $rootScope._menuSelecionado.selecionado = true;
+    if ($rootScope._menuSelecionado != menu) {
+      $rootScope._menuSelecionado = menu;
+      $rootScope._menuSelecionado.selecionado = true;
+    } else {
+      $rootScope._menuSelecionado = undefined;
+    }
   };
 
   $rootScope.menuSelecionado = function(menu) {
@@ -456,6 +460,15 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
         $rootScope.usuario = null;
         $rootScope.menu = null;
         configService.save({usuario: '', menu: '', headers: {Authorization: ''}});
+
+        acessoService.buscaMenu(function(menu) {
+          $rootScope.menu = menu;
+
+          configService.save({
+            menu: $rootScope.menu
+          });
+        });
+
         $ionicViewService.nextViewOptions({
           disableBack: true
         });

@@ -161,14 +161,15 @@
                               title="{{'global.menu.logout' | translate}}"></span>
                     </ion-item>
 
-                      <ion-item class="item" ng-repeat-start="mnu in menu.submenus"
-                                ng-if="mnu.submenus.length" title="{{mnu.nome}}"
-                                ng-class="{active: menuSelecionado(mnu),'item-icon-left':mnu.icone}" >
-                        <a href="javascript:void(0)" class="item-content" ng-click="selecionaMenu(mnu)">
+                      <ion-item class="item item-parent" ng-repeat-start="mnu in menu.submenus"
+                                ng-if="mnu.submenus.length" title="{{mnu.nome}}" ng-click="toggleMenu(mnu)"
+                                ng-class="{active: mnu.selecionado,'item-icon-left':mnu.icone}" >
+                        <a href="javascript:void(0)" class="item-content" >
                           <span class='icon {{mnu.icone}}' ng-if="mnu.icone"></span>
                           <h2 class="menu-text">{{mnu.nome}}</h2>
                         </a>
                       </ion-item>
+
                       <ion-item nav-clear menu-close class="item" ng-class="{'item-icon-left':mnu.icone}"
                                 ng-if="!mnu.submenus.length"
                                 ui-sref="{{mnu.link}}" title="{{mnu.nome}}">
@@ -177,7 +178,7 @@
                       </ion-item>
 
                       <ion-item class="item-accordion item" ng-class="{'item-icon-left':sbm.icone}" ng-repeat-end
-                                ng-repeat="sbm in mnu.submenus" ng-show="menuSelecionado(mnu)"
+                                ng-repeat="sbm in mnu.submenus" ng-show="mnu.selecionado"
                                 nav-clear menu-close ui-sref="{{sbm.link}}" title="{{sbm.nome}}">
                         <span class='icon {{sbm.icone}}' ng-if="sbm.icone"></span>
                         <h2 class="menu-text">{{sbm.nome}}</h2>
