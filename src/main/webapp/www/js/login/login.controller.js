@@ -12,30 +12,29 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             message({title:'global.title.200',template:'mensagens.MSG-002'})
                             return;
                         }
-                        
+
                         loadingService.show();
-                        
+
                         acessoService.login($scope.auth, function(acesso){
                             $rootScope.usuario = acesso.membro;
-                            $rootScope.funcionalidades = acesso.funcionalidades;
-                            
+                            $rootScope.menu = acesso.menu;
+
                             configService.save({
                                 usuario:$rootScope.usuario,
-                                funcionalidades:acesso.funcionalidades
+                                menu:acesso.menu
                             });
-                            
+
                             $ionicViewService.nextViewOptions({
                                 historyRoot: true,
                                 disableBack: true
                             });
-                            
-                            if ($rootScope.funcionalidades &&
-                                    $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
+
+                            if ($rootScope.funcionalidadeHabilitada('CONSULTAR_PLANOS_LEITURA_BIBLICA')){
                                 leituraService.sincroniza();
                             }
-                            
+
                             loadingService.hide();
-                            
+
                             $state.go('home');
                         }, function(){
                             loadingService.hide();
@@ -56,16 +55,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                     $scope.alteraSenha = function(){
                         if (!$scope.membro.novaSenha || !$scope.membro.confirmacaoSenha){
-                            message({title:'global.title.400',template:'mensagens.MSG-002'})
+                            message({title:'global.title.400',template:'mensagens.MSG-002'});
                             return;
                         }
 
                         acessoService.alteraSenha($scope.membro, function(dados){
                             $rootScope.usuario = null;
-                            $rootScope.funcionalidades = null;
+                            $rootScope.menu = null;
                             configService.save({
                                 usuario:'',
-                                funcionalidades:''
+                                menu:''
                             });
                             $ionicViewService.nextViewOptions({
                                 historyRoot: true,
@@ -87,7 +86,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 controller:['$scope', 'acessoService', 'message', '$state', '$ionicViewService', 'loadingService',
                             function($scope, acessoService, message, $state, $ionicViewService, loadingService){
                     $scope.dados = {};
-                                
+
                     $scope.redefinirSenha = function(){
                         if (!$scope.dados.email){
                             message({title:'global.title.400',template:'mensagens.MSG-002'})
@@ -95,7 +94,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         }
 
                         loadingService.show();
-                        
+
                         acessoService.solicitarRedefinicaoSenha($scope.dados.email, function(dados){
                             loadingService.hide();
                             message({title:'global.title.200',template:'mensagens.MSG-038'});
@@ -109,6 +108,5 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 }]
             }
         }
-    });         
+    });
 }]);
-        

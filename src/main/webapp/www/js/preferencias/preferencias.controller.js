@@ -9,11 +9,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.$on('$ionicView.enter', function(){
                             acessoService.buscaPreferencias(function(preferencias){
                                 $scope.preferencias = preferencias;
-                                
+
                                 leituraService.findPlano().then(function(plano){
                                     $scope.showLeitura = plano ? true : false;
                                 });
-                                
+
                                 $scope.ministeriosSelecionados = [];
                                 if ($scope.preferencias.ministeriosInteresse){
                                     for (var i=0;i<$scope.preferencias.ministeriosInteresse.length;i++){
@@ -24,7 +24,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $scope.verifyTodosMinisterios();
                             });
                         });
-                        
+
                         $scope.toggleTodosMinisterios = function(){
                             if ($scope.ministerios){
                                 if ($scope.todosMinisterios){
@@ -38,7 +38,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
                             }
                         };
-                        
+
                         $scope.verifyTodosMinisterios = function(){
                             if ($scope.ministerios){
                                 $scope.todosMinisterios = true;
@@ -51,19 +51,19 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 };
                             }
                         };
-                        
+
                         $scope.ministerios = acessoService.buscaMinisterios();
                         $scope.horasVersiculoDiario = acessoService.buscaHorasVersiculoDiario();
                         $scope.horasLembreteLeitura = acessoService.buscaHorasLembretesLeitura();
-                        
+
                         $scope.salvar = function(form){
                             if (form.$invalid){
                                 message({title:'global.title.400',template:'mensagens.MSG-002'});
                                 return;
                             }
-                            
+
                             loadingService.show();
-                            
+
                             $scope.preferencias.ministeriosInteresse = [];
                             for (var i=0;i<$scope.ministerios.length;i++){
                                 var min = $scope.ministerios[i];
@@ -71,7 +71,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     $scope.preferencias.ministeriosInteresse.push(min);
                                 }
                             }
-                            
+
                             acessoService.salvaPreferencias($scope.preferencias, function(){
                                 loadingService.hide();
                                 message({title: 'global.title.200',template: 'mensagens.MSG-001'});
@@ -79,13 +79,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 loadingService.hide();
                             });
                         };
-                        
+
                         $scope.logout = function(){
                             loadingService.show();
-                            
+
                             acessoService.logout(function(){
                                 $rootScope.usuario = null;
-                                $rootScope.funcionalidades = null;
+                                $rootScope.menu = null;
                                 $ionicViewService.nextViewOptions({
                                     historyRoot: true,
                                     disableBack: true
@@ -99,5 +99,5 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     }
                 }
             }
-        });         
+        });
     }]);

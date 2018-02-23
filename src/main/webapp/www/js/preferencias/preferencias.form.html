@@ -4,12 +4,11 @@
     </ion-nav-title>
     <ion-content>
         <form id="preferencias_form" name="preferencias_form" ng-submit="salvar(this.preferencias_form)" novalidate>
-            <ion-toggle class="item-text-wrap" ng-model="preferencias.dadosDisponiveis"
-                        ng-if='usuario && funcionalidades'>
+            <ion-toggle class="item-text-wrap" ng-model="preferencias.dadosDisponiveis" ng-if='usuario'>
                 {{'preferencias.deseja_disponibilizar_dados' | translate}}
             </ion-toggle>
-            <ion-toggle ng-model="preferencias.desejaReceberNotificacoesVideos" 
-                        ng-if="funcionalidadesPublicas.indexOf('YOUTUBE') >= 0">
+            <ion-toggle ng-model="preferencias.desejaReceberNotificacoesVideos"
+                        ng-if="funcionalidadeHabilitada('YOUTUBE')">
                 {{'preferencias.deseja_receber_notificacoes_video' | translate}}
             </ion-toggle>
             <div class='item item-divider'>{{'preferencias.versiculo_diario' | translate}}</div>
@@ -17,15 +16,15 @@
                 {{'preferencias.deseja_receber_versiculos' | translate}}
             </ion-toggle>
             <div ng-if='preferencias.desejaReceberVersiculosDiarios' class='item'><h1>{{'preferencias.hora_versiculo' | translate}}</h1></div>
-            <ion-radio name="horaVersiculoDiario" ng-if='preferencias.desejaReceberVersiculosDiarios' ng-repeat="hora in horasVersiculoDiario" 
+            <ion-radio name="horaVersiculoDiario" ng-if='preferencias.desejaReceberVersiculosDiarios' ng-repeat="hora in horasVersiculoDiario"
                        ng-model="preferencias.horaVersiculoDiario" ng-value="hora">{{'preferencias.hora.' + hora | translate}}</ion-radio>
-            <div ng-if="usuario && funcionalidades && funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0 && showLeitura">
+            <div ng-if="usuario && funcionalidadeHabilitada('CONSULTAR_PLANOS_LEITURA_BIBLICA') && showLeitura">
                 <div class='item item-divider'>{{'preferencias.leitura_biblica' | translate}}</div>
                 <ion-toggle ng-model="preferencias.desejaReceberLembreteLeitura" >
                     {{'preferencias.deseja_receber_lembrete_leitura' | translate}}
                 </ion-toggle>
                 <div ng-if='preferencias.desejaReceberLembreteLeitura' class='item' ><h1>{{'preferencias.hora_lembrete_leitura' | translate}}</h1></div>
-                <ion-radio name="horaLembreteLeitura" ng-if='preferencias.desejaReceberLembreteLeitura' ng-repeat="hora in horasLembreteLeitura" 
+                <ion-radio name="horaLembreteLeitura" ng-if='preferencias.desejaReceberLembreteLeitura' ng-repeat="hora in horasLembreteLeitura"
                            ng-model="preferencias.horaLembreteLeitura" ng-value="hora">{{'preferencias.hora.' + hora | translate}}</ion-radio>
             </div>
             <div class='item item-divider'>{{'preferencias.ministerios_interesse' | translate}}</div>
@@ -38,7 +37,7 @@
             <ion-item>
                 <input type="submit" class='button button-block button-positive' value="{{'global.salvar' | translate}}" />
             </ion-item>
-            <ion-item ng-if='usuario && funcionalidades'>
+            <ion-item ng-if='usuario'>
                 <a ui-sref="alteraSenha" class='button button-block button-positive' >{{'login.alterar_senha' | translate}}</a>
             </ion-item>
         </form>

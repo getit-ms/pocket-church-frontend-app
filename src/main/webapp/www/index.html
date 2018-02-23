@@ -161,123 +161,27 @@
                               title="{{'global.menu.logout' | translate}}"></span>
                     </ion-item>
 
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="home" title="{{'home.inicio' | translate}}">
-                        <span class='icon fa fa-home'></span>
-                        <h2 class="menu-text">{{'home.inicio' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="institucional" title="{{'institucional.institucional' | translate}}">
-                        <span class='icon fa fa-cube'></span>
-                        <h2 class="menu-text">{{'institucional.institucional' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="calendario" title="{{'calendario.agenda' | translate}}"
-                              ng-if="funcionalidadesPublicas.indexOf('AGENDA') >= 0">
-                      <span class='icon fa fa-calendar-o'></span>
-                      <h2 class="menu-text">{{'calendario.agenda' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="publicacao" title="{{'publicacao.publicacoes' | translate}}"
-                              ng-if="funcionalidadesPublicas.indexOf('LISTAR_PUBLICACOES') >= 0">
-                      <span class='icon fa fa-clipboard'></span>
-                      <h2 class="menu-text">{{'publicacao.publicacoes' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="boletim" title="{{'boletim.boletins' | translate}}"
-                              ng-if="funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0">
-                        <span class='icon fa fa-file-text'></span>
-                        <h2 class="menu-text">{{'boletim.boletins' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left" ui-sref="estudo"
-                              title="{{'estudo.estudos' | translate}}"
-                              ng-if="funcionalidadesPublicas.indexOf('LISTAR_ESTUDOS') >= 0">
-                        <span class='icon fa fa-book'></span>
-                        <h2 class="menu-text">{{'estudo.estudos' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="hino" title="{{'hino.hinos' | translate}}"
-                              ng-if="funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0">
-                        <span class='icon fa fa-music'></span>
-                        <h2 class="menu-text">{{'hino.hinos' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="cifra" title="{{'cifra.cifras' | translate}}"
-                              ng-if="funcionalidadesPublicas.indexOf('CONSULTAR_CIFRAS') >= 0">
-                        <span class='icon fa fa-file-audio-o'></span>
-                        <h2 class="menu-text">{{'cifra.cifras' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="biblia" title="{{'biblia.biblia' | translate}}"
-                              ng-if="funcionalidadesPublicas.indexOf('BIBLIA') >= 0">
-                        <span class='icon fa fa-plus-square'></span>
-                        <h2 class="menu-text">{{'biblia.biblia' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="youtube" title="{{'youtube.videos' | translate}}"
-                              ng-if="funcionalidadesPublicas.indexOf('YOUTUBE') >= 0">
-                        <span class='icon fa fa-youtube-play'></span>
-                        <h2 class="menu-text">{{'youtube.videos' | translate}}</h2>
-                    </ion-item>
+                    <div ng-repeat="mnu in menu.submenus">
+                      <ion-item class="item item-icon-left"
+                                ng-if="mnu.submenus.length"  title="{{mnu.nome}}"
+                                ng-click="menuSelecionado = mnu"
+                                ng-class="{active: menuSelecionado == mnu}">
+                        <span class='icon {{mnu.icone}}'></span>
+                        <h2 class="menu-text">{{mnu.nome}}</h2>
+                      </ion-item>
+                      <ion-item nav-clear menu-close class="item item-icon-left"
+                                ng-if="!mnu.submenus.length"
+                                ui-sref="{{mnu.link}}" title="{{mnu.nome}}">
+                        <span class='icon {{mnu.icone}}'></span>
+                        <h2 class="menu-text">{{mnu.nome}}</h2>
+                      </ion-item>
 
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="leitura" title="{{'leitura.leitura_biblica' | translate}}"
-                              ng-if="funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0">
-                        <span class='icon fa fa-calendar-check-o'></span>
-                        <h2 class="menu-text">{{'leitura.leitura_biblica' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="contato" title="{{'contato.contatos' | translate}}"
-                              ng-if="funcionalidades.indexOf('CONSULTAR_CONTATOS_IGREJA') >= 0">
-                        <span class='icon fa fa-users'></span>
-                        <h2 class="menu-text">{{'contato.contatos' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="votacao" title="{{'votacao.votacoes' | translate}}"
-                              ng-if="funcionalidades.indexOf('REALIZAR_VOTACAO') >= 0">
-                        <span class='icon fa fa-check-square'></span>
-                        <h2 class="menu-text">{{'votacao.votacoes' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="oracao" title="{{'oracao.pedidos' | translate}}"
-                              ng-if="funcionalidades.indexOf('PEDIR_ORACAO') >= 0">
-                        <span class='icon fa fa-heart'></span>
-                        <h2 class="menu-text">{{'oracao.pedidos' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="agenda" title="{{'agenda.agendamentos' | translate}}"
-                              ng-if="funcionalidades.indexOf('AGENDAR_ACONSELHAMENTO') >= 0">
-                        <span class='icon fa fa-comments'></span>
-                        <h2 class="menu-text">{{'agenda.agendamentos' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="evento" title="{{'evento.eventos' | translate}}"
-                              ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EVENTO') >= 0">
-                        <span class='icon fa fa-calendar'></span>
-                        <h2 class="menu-text">{{'evento.eventos' | translate}}</h2>
-                    </ion-item>
-                    <ion-item nav-clear menu-close class="item item-icon-left"
-                              ui-sref="ebd" title="{{'ebd.ebd' | translate}}"
-                              ng-if="funcionalidades.indexOf('REALIZAR_INSCRICAO_EBD') >= 0">
-                        <span class='icon fa fa-mortar-board'></span>
-                        <h2 class="menu-text">{{'ebd.ebd' | translate}}</h2>
-                    </ion-item>
-                    <ion-item class="item item-icon-left" nav-clear menu-close
-                              ui-sref="notificacao" title="{{'notificacao.notificacoes' | translate}}">
-                        <span class='icon fa fa-exclamation-circle'></span>
-                        <h2 class="menu-text">{{'notificacao.notificacoes' | translate}}</h2>
-                        <span class="badge badge-stable" ng-show="notifications">{{notifications}}</span>
-                    </ion-item>
-                    <ion-item class="item item-icon-left" nav-clear menu-close
-                              ui-sref="chamado" title="{{'chamado.chamados' | translate}}">
-                        <span class='icon fa fa-comment'></span>
-                        <h2 class="menu-text">{{'chamado.chamados' | translate}}</h2>
-                    </ion-item>
-                    <ion-item class="item item-icon-left" nav-clear menu-close
-                              ui-sref="preferencias" title="{{'preferencias.preferencias' | translate}}">
-                        <span class='icon fa fa-cog'></span>
-                        <h2 class="menu-text">{{'preferencias.preferencias' | translate}}</h2>
-                    </ion-item>
+                      <ion-item class="item-accordion item item-icon-left"
+                                ng-repeat="sbm in mnu.submenus" ng-show="menuSelecionado == mnu"
+                                nav-clear menu-close ui-sref="{{sbm.link}}" title="{{sbm.nome}}">
+                        <h2 class="menu-text">{{sbm.nome}}</h2>
+                      </ion-item>
+                    </div>
 
                     <div class='menu-end'></div>
                 </ion-list>

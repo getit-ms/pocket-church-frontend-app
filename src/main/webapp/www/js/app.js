@@ -45,22 +45,22 @@ var calvinApp = angular.module('calvinApp', [
 
     $cordovaLocalNotification.clearAll();
 
-    acessoService.buscaFuncionalidadesPublicas(function(funcionalidades){
-      $rootScope.funcionalidadesPublicas = funcionalidades;
+    acessoService.buscaMenu(function(menu){
+      $rootScope.menu = menu;
 
       configService.save({
-        funcionalidadesPublicas: $rootScope.funcionalidadesPublicas
+        menu: $rootScope.menu
       });
 
       configService.load().then(function(config) {
-        if (config.usuario && config.funcionalidades){
+        if (config.usuario && config.menu){
           acessoService.carrega(function (acesso) {
             $rootScope.usuario = acesso.membro;
-            $rootScope.funcionalidades = acesso.funcionalidades;
+            $rootScope.menu = acesso.menu;
 
             configService.save({
               usuario: $rootScope.usuario,
-              funcionalidades: $rootScope.funcionalidades
+              menu: $rootScope.menu
             });
 
             deferred.resolve();
@@ -89,14 +89,35 @@ var calvinApp = angular.module('calvinApp', [
 
     configService.load().then(function(config){
       $rootScope.usuario = config.usuario;
-      $rootScope.funcionalidades = config.funcionalidades;
-      $rootScope.funcionalidadesPublicas = config.funcionalidadesPublicas;
+      $rootScope.menu = config.menu;
 
       $rootScope.registerPush(false);
     });
 
     carregaFuncionalidades();
   });
+
+  $rootScope.funcionalidadeHabilitada = function(funcionalidade) {
+    if ($rootScope.menu) {
+      for (var i=0;i<$rootScope.menu.submenus.length;i++) {
+        var menu = $rootScope.menu.submenus[i];
+
+        if (menu.funcionalidade == funcionalidade) {
+          return true;
+        }
+
+        for (var j=0;j<menu.submenus.length;j++) {
+          var submenu = menu.submenus[j];
+
+          if (submenu.funcionalidade == funcionalidade) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
 
   $rootScope.initApp = function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -118,32 +139,28 @@ var calvinApp = angular.module('calvinApp', [
       function(){ return cacheService.clean(); },
       function(){ return arquivoService.clean(); },
       function(){
-        if ($rootScope.funcionalidadesPublicas &&
-          $rootScope.funcionalidadesPublicas.indexOf('BIBLIA') >= 0){
+        if ($rootScope.funcionalidadeHabilitada('BIBLIA')){
           return bibliaService.sincroniza();
         }
 
         return next;
       },
       function(){
-        if ($rootScope.funcionalidadesPublicas &&
-          $rootScope.funcionalidadesPublicas.indexOf('CONSULTAR_HINARIO') >= 0){
+        if ($rootScope.funcionalidadeHabilitada('CONSULTAR_HINARIO')){
           return hinoService.sincroniza();
         }
 
         return next;
       },
       function(){
-        if ($rootScope.funcionalidadesPublicas &&
-          $rootScope.funcionalidadesPublicas.indexOf('LISTAR_BOLETINS') >= 0){
+        if ($rootScope.funcionalidadeHabilitada('LISTAR_BOLETINS')){
           return boletimService.cache();
         }
 
         return next;
       },
       function(){
-        if ($rootScope.funcionalidades &&
-          $rootScope.funcionalidades.indexOf('CONSULTAR_PLANOS_LEITURA_BIBLICA') >= 0){
+        if ($rootScope.funcionalidadeHabilitada('CONSULTAR_PLANOS_LEITURA_BIBLICA')){
           return leituraService.sincroniza();
         }
 
@@ -423,8 +440,8 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
     $rootScope.logout = function () {
       var cb = function(){
         $rootScope.usuario = null;
-        $rootScope.funcionalidades = null;
-        configService.save({usuario: '', funcionalidades: '', headers: {Authorization: ''}});
+        $rootScope.menu = null;
+        configService.save({usuario: '', menu: '', headers: {Authorization: ''}});
         $ionicViewService.nextViewOptions({
           disableBack: true
         });
