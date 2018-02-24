@@ -161,12 +161,14 @@
                               title="{{'global.menu.logout' | translate}}"></span>
                     </ion-item>
 
-                      <ion-item class="item item-parent" ng-repeat-start="mnu in menu.submenus"
+                      <ion-item class="item item-parent item-icon-right" ng-repeat-start="mnu in menu.submenus"
                                 ng-if="mnu.submenus.length" title="{{mnu.nome}}" ng-click="toggleMenu(mnu)"
                                 ng-class="{active: mnu.selecionado,'item-icon-left':mnu.icone}" >
                         <a href="javascript:void(0)" class="item-content" >
                           <span class='icon {{mnu.icone}}' ng-if="mnu.icone"></span>
                           <h2 class="menu-text">{{mnu.nome}}</h2>
+                          <span class='icon fa fa-chevron-right' ng-if="!mnu.selecionado"></span>
+                          <span class='icon fa fa-chevron-down' ng-if="mnu.selecionado"></span>
                         </a>
                       </ion-item>
 
