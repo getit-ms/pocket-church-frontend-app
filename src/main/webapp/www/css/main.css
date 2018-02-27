@@ -75,7 +75,10 @@
   background-color: transparent !important;
 }
 
-.main-menu .item.item-accordion {
-  background-color: rgba(0, 0, 0, 0.15) !important;
+.calvin .main-menu.menu .item.item-accordion * {
   color: #fff !important;
+}
+
+.calvin .main-menu .item.item-accordion {
+  background-color: rgba(0, 0, 0, 0.15) !important;
 }
