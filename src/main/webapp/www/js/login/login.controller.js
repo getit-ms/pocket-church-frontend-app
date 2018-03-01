@@ -17,7 +17,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                         acessoService.login($scope.auth, function(acesso){
                             $rootScope.usuario = acesso.membro;
-                            $rootScope.menu = acesso.menu;
+                            $rootScope.carregaMenu(acesso.menu);
 
                             configService.save({
                                 usuario:$rootScope.usuario,
@@ -60,8 +60,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         }
 
                         acessoService.alteraSenha($scope.membro, function(dados){
-                            $rootScope.usuario = null;
-                            $rootScope.menu = null;
+                            $rootScope.logout();
                             configService.save({
                                 usuario:'',
                                 menu:''

@@ -62,7 +62,7 @@ var calvinApp = angular.module('calvinApp', [
     $cordovaLocalNotification.clearAll();
 
     acessoService.buscaMenu(function(menu){
-      $rootScope.menu = menu;
+      $rootScope.carregaMenu(menu);
 
       configService.save({
         menu: $rootScope.menu
@@ -72,7 +72,7 @@ var calvinApp = angular.module('calvinApp', [
         if (config.usuario && config.menu){
           acessoService.carrega(function (acesso) {
             $rootScope.usuario = acesso.membro;
-            $rootScope.menu = acesso.menu;
+            $rootScope.carregaMenu(acesso.menu);
 
             configService.save({
               usuario: $rootScope.usuario,
@@ -105,7 +105,7 @@ var calvinApp = angular.module('calvinApp', [
 
     configService.load().then(function(config){
       $rootScope.usuario = config.usuario;
-      $rootScope.menu = config.menu;
+      $rootScope.carregaMenu(config.menu);
 
       $rootScope.registerPush(false);
     });
@@ -137,6 +137,27 @@ var calvinApp = angular.module('calvinApp', [
     return false;
   };
 
+  $rootScope.carregaMenu = function(menu) {
+    if ($rootScope.menu && $rootScope.menu.submenus) {
+
+      var selecionado = $rootScope.menu.submenus.find(function(mnu) {
+        return mnu.selecionado;
+      });
+
+      if (selecionado) {
+        var aSelecionar = menu.submenus.find(function(mnu) {
+          return mnu.nome == selecionado.nome;
+        });
+
+        if (aSelecionar) {
+          aSelecionar.selecionado = true;
+        }
+      }
+    }
+
+    $rootScope.menu = menu;
+  };
+
   $rootScope.initApp = function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -152,7 +173,7 @@ var calvinApp = angular.module('calvinApp', [
 
     configService.load().then(function(config){
       $rootScope.usuario = config.usuario;
-      $rootScope.menu = config.menu;
+      $rootScope.carregaMenu(config.menu);
 
       $rootScope.registerPush(false);
     });
@@ -465,11 +486,10 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
     $rootScope.logout = function () {
       var cb = function(){
         $rootScope.usuario = null;
-        $rootScope.menu = null;
         configService.save({usuario: '', menu: '', headers: {Authorization: ''}});
 
         acessoService.buscaMenu(function(menu) {
-          $rootScope.menu = menu;
+          $rootScope.carregaMenu(menu);
 
           configService.save({
             menu: $rootScope.menu

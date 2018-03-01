@@ -78,25 +78,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }, function(){
                                 loadingService.hide();
                             });
-                        };
-
-                        $scope.logout = function(){
-                            loadingService.show();
-
-                            acessoService.logout(function(){
-                                $rootScope.usuario = null;
-                                $rootScope.menu = null;
-                                $ionicViewService.nextViewOptions({
-                                    historyRoot: true,
-                                    disableBack: true
-                                });
-                                loadingService.hide();
-                                $state.go('site');
-                            }, function(){
-                                loadingService.hide();
-                            });
-                        };
-                    }
+                        };                    }
                 }
             }
         });
