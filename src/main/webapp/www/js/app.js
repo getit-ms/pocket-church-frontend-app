@@ -151,7 +151,12 @@ var calvinApp = angular.module('calvinApp', [
 
         if (aSelecionar) {
           aSelecionar.selecionado = true;
+          $rootScope._menuSelecionado = aSelecionar;
+        } else{
+          $rootScope._menuSelecionado = undefined;
         }
+      } else {
+        $rootScope._menuSelecionado = undefined;
       }
     }
 
