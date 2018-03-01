@@ -25,6 +25,18 @@
     background-color: #666;
 }
 
+.contato .item h2 {
+  overflow: inherit;
+  text-overflow: unset;
+  white-space: inherit;
+}
+
+.item.item-thumbnail-left .item-image,
+.item.item-avatar .item-image {
+  background-size: contain;
+  background-position: center center;
+}
+
 .home .social a {
     text-decoration:none;
     font-size: 22px;

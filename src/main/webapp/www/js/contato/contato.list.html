@@ -12,7 +12,7 @@
         </div>
         <ion-item ng-class="{'item-icon-right':contato.pastor || contato.visitante,'item-avatar':true}"
                   ng-click="detalhar(contato)" ng-repeat-end >
-          <img src="{{foto(contato)}}" ng-if="contato.foto">
+          <div class="item-image" style="background-image: url({{foto(contato)}})" ng-if="contato.foto"></div>
           <img src="img/avatar.png" ng-if="!contato.foto">
 
           <h2>

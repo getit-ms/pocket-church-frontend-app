@@ -150,6 +150,13 @@ var calvinApp = angular.module('calvinApp', [
     arquivoService.init();
     database.init();
 
+    configService.load().then(function(config){
+      $rootScope.usuario = config.usuario;
+      $rootScope.menu = config.menu;
+
+      $rootScope.registerPush(false);
+    });
+
     var next = { then: function(callback){ callback(); } };
 
     var execucoes = [
