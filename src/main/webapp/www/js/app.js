@@ -139,7 +139,6 @@ var calvinApp = angular.module('calvinApp', [
 
   $rootScope.carregaMenu = function(menu) {
     if ($rootScope.menu && $rootScope.menu.submenus) {
-
       var selecionado = $rootScope.menu.submenus.find(function(mnu) {
         return mnu.selecionado;
       });
@@ -158,6 +157,14 @@ var calvinApp = angular.module('calvinApp', [
       } else {
         $rootScope._menuSelecionado = undefined;
       }
+    }
+
+    if (menu && menu.submenus) {
+      menu.submenus.forEach(function(mnu) {
+        if (mnu.selecionado) {
+          mnu.selecionado = undefined;
+        }
+      });
     }
 
     $rootScope.menu = menu;

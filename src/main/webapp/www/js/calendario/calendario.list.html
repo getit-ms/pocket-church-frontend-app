@@ -2,27 +2,32 @@
     <ion-nav-title >
         <span translate>calendario.agenda</span>
     </ion-nav-title>
-  <ion-content class="has-header">
+  <ion-content class="has-header calendario">
     <ion-refresher
       pulling-text="{{'global.puxe_para_atualizar' | translate}}"
       on-refresh='refresh()'></ion-refresher>
-    <div ng-if="!eventos.eventos.length" class="row row-center">
+    <div ng-if="!eventos.dias.length" class="row row-center">
       <div class="col col-center text-center">
         <span translate>global.nenhum_registro_encontrado</span>
       </div>
     </div>
 
-    <div class="item item-divider" ng-repeat-start="evento in eventos.eventos" ng-if="primeiroDoMes(eventos.eventos, evento)">
-      {{evento.inicio | date:'MMMM yyyy'}}
+    <div class="item item-divider" ng-repeat-start="dia in eventos.dias" ng-if="primeiroDoMes(eventos.dias, dia)">
+      {{'global.mes.' + dia.mes}} {{dia.ano}}
     </div>
-    <ion-item class="item-text-wrap item-icon-left" ng-repeat-end >
-      <i class="icon">{{evento.inicio | date:'dd'}}</i>
-      <div class="item-note">{{evento.inicio | date:'HH:mm'}} - {{evento.termino | date:'HH:mm'}}</div>
-      <h2>{{evento.descricao}}</h2>
-      <p ng-if="evento.local">
-        {{evento.local}}
-      </p>
-    </ion-item>
+    <ion-list ng-repeat-end>
+      <ion-item ng-class="{'hoje':dia.hoje}">
+        <i class="icon">{{dia.dia | mask:'99'}}</i>
+
+        <ion-item class="item-text-wrap item-icon-left" ng-repeat="evento in dia.eventos" >
+          <div class="item-note">{{evento.inicio | date:'HH:mm'}} - {{evento.termino | date:'HH:mm'}}</div>
+          <h2>{{evento.descricao}}</h2>
+          <p ng-if="evento.local">
+            {{evento.local}}
+          </p>
+        </ion-item>
+      </ion-item>
+    </ion-list>
 
     <ion-infinite-scroll
       ng-if="hasMore"

@@ -25,7 +25,7 @@
     background-color: #666;
 }
 
-.contato .item h2 {
+.item.contato h2 {
   overflow: inherit;
   text-overflow: unset;
   white-space: inherit;
