@@ -4,7 +4,7 @@
     
     <groupId>br.gafs.getit.calvinista</groupId>
     <artifactId>calvinista-web-app</artifactId>
-    <version>4.0.20</version>
+    <version>4.0.21-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>calvinista-frontend-app</name>
@@ -25,7 +25,7 @@
     
     <scm>
         <connection>scm:git:https://bitbucket.org/getit-team/calvinista-frontend-app</connection>
-      <tag>4.0.20</tag>
+      <tag>4.0.6</tag>
   </scm>
     
     <dependencies>
