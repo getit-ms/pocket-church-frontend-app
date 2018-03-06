@@ -85,8 +85,14 @@
   margin: -18px -15px -18px 5px;
 }
 
+
+.calendario .item .list .item {
+  border-left: none;
+  border-color: #d3d3d3;
+}
+
 .calendario .item.hoje {
-  border-left: 10px solid blue;
+  border-left: 10px solid #333;
 }
 
 .calendario .item.hoje .list {
