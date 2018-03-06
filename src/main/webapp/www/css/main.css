@@ -97,8 +97,8 @@
   left: 5px;
 }
 
-.calvin .menu.menu-left .item .icon.fa.fa-chevron-right,
-.calvin .menu.menu-left .item .icon.fa.fa-chevron-down {
+.calvin .main-menu .item .icon.fa.fa-chevron-right:before,
+.calvin .main-menu .item .icon.fa.fa-chevron-down:before {
   font-size: 12px;
 }
 

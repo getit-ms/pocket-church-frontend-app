@@ -34,9 +34,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             }
           };
 
-          function doAdicionarNaAgenda(evento) {
-            window.plugins.calendar.hasWritePermission().then(function(hasWritePermission) {
+          function doAdicionarNaAgenda(evento, tentativa) {
+            tentativa = tentativa || 0;
+
+            window.plugins.calendar.hasWritePermission(function(hasWritePermission) {
               if (hasWritePermission) {
+                loadingService.show();
+
                 window.plugins.calendar.createEvent(
                   evento.descricao,
                   evento.local,
@@ -51,16 +55,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                   loadingService.hide();
                 });
               } else {
-                window.plugins.calendar.requestWritePermission().then(function() {
-                  $scope.adicionarNaAgenda(evento);
-                }, function() {
+                if (tentativa >= 3) {
                   message({title:'global.title.500',template:'mensagens.MSG-049'});
-                  loadingService.hide();
-                })
+                } else {
+                  window.plugins.calendar.requestWritePermission(function() {
+                    $scope.adicionarNaAgenda(evento, tentativa++);
+                  });
+                }
               }
-            }, function() {
-              message({title:'global.title.500',template:'mensagens.MSG-049'});
-              loadingService.hide();
             });
           }
 
@@ -72,8 +74,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
               cancelText:$filter('translate')('global.nao')
             }).then(function(resp) {
               if (resp) {
-                loadingService.show();
-
                 doAdicionarNaAgenda(evento);
               }
             });
