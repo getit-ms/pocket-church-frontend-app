@@ -110,6 +110,8 @@
         "MSG-043":"Deseja realmente excluir todas as notificações?",
         "MSG-046":"Houve um problema ao tentar conectar com o YouTube. Tente novamente e se o problema persistir conecte o administrador do sistema.",
         "MSG-047":"Deseja realmente excluir as {quantidade} notificações selecionadas?",
+        "MSG-048":"Deseja salvar o evento '{evento}' no seu celular?",
+        "MSG-049":"Não foi possível salvar o evento no celular. Tente novamente e se o problema persistir envie-nos uma mensagem explicando o ocorrido através das Sugestões.",
         "MSG-302":"Parece que você está sem acesso à Internet. Verifique sua conexão e tente novamente.",
         "MSG-403":"Você não tem permissão para fazer isso.",
         "MSG-404":"O servidor parece estar fora do ar. Aguarde alguns minutos e tente novamente.",
@@ -371,7 +373,8 @@
         "historico_videos_cultos":"Histórico de Cultos e Vídeos"
     },
     "calendario":{
-      "agenda":"Agenda da Igreja"
+      "agenda":"Agenda da Igreja",
+      "salvar_evento":"Salvar Evento"
     },
     "biblia":{
         "biblia":"Bíblia",

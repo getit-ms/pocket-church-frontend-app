@@ -42,7 +42,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/estudo/estudo.form.html',
-                controller: function($scope, shareService, loadingService, config, pdfService, estudoService, $stateParams){
+                controller: function($scope, shareService, loadingService, config, pdfService, estudoService, $state, $stateParams, $ionicScrollDelegate){
                     estudoService.carrega($stateParams.id, function(estudo) {
 
                       if (estudo.tipo == 'PDF') {

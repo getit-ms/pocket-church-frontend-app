@@ -28,7 +28,7 @@
 .item.contato h2 {
   overflow: inherit;
   text-overflow: unset;
-  white-space: inherit;
+  white-space: pre-line;
 }
 
 .item.item-thumbnail-left .item-image,

@@ -1,7 +1,7 @@
 <ion-view>
-    <ion-nav-title >
-        <span translate>calendario.agenda</span>
-    </ion-nav-title>
+  <ion-nav-title >
+    <span translate>calendario.agenda</span>
+  </ion-nav-title>
   <ion-content class="has-header calendario">
     <ion-refresher
       pulling-text="{{'global.puxe_para_atualizar' | translate}}"
@@ -13,19 +13,21 @@
     </div>
 
     <div class="item item-divider" ng-repeat-start="dia in eventos.dias" ng-if="primeiroDoMes(eventos.dias, dia)">
-      {{'global.mes.' + dia.mes}} {{dia.ano}}
+      {{'global.mes.' + dia.mes | translate}} {{dia.ano}}
     </div>
     <ion-list ng-repeat-end>
-      <ion-item ng-class="{'hoje':dia.hoje}">
-        <i class="icon">{{dia.dia | mask:'99'}}</i>
+      <ion-item class="item-icon-left" ng-class="{'hoje':dia.hoje}">
+        <i class="icon">{{dia.dia | zpad:2}}</i>
 
-        <ion-item class="item-text-wrap item-icon-left" ng-repeat="evento in dia.eventos" >
-          <div class="item-note">{{evento.inicio | date:'HH:mm'}} - {{evento.termino | date:'HH:mm'}}</div>
-          <h2>{{evento.descricao}}</h2>
-          <p ng-if="evento.local">
-            {{evento.local}}
-          </p>
-        </ion-item>
+        <ion-list>
+          <ion-item class="item-text-wrap" ng-repeat="evento in dia.eventos" ng-click="adicionarNaAgenda(evento)" >
+            <div class="item-note">{{evento.inicio | date:'HH:mm'}} - {{evento.termino | date:'HH:mm'}}</div>
+            <h2>{{evento.descricao}}</h2>
+            <p ng-if="evento.local">
+              {{evento.local}}
+            </p>
+          </ion-item>
+        </ion-list>
       </ion-item>
     </ion-list>
 

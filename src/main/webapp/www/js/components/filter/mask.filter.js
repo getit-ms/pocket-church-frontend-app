@@ -1,12 +1,24 @@
 calvinApp
-    .filter('mask', function(){
-        return function(number, format){
-            if (!number) return undefined;
+.filter('mask', function(){
+    return function(number, format){
+        if (!number) return undefined;
 
-            return mask(number, format);
-        }
+        return mask(number, format);
     }
-).filter('telefone', function(){
+})
+.filter('zpad', function(){
+  return function(number, size){
+    if (!number) return undefined;
+
+    var snumber = number + '';
+
+    while (snumber.length < size) {
+      snumber = '0' + snumber;
+    }
+
+    return snumber;
+  }
+}).filter('telefone', function(){
         return function(numero){
             if (!numero) return undefined;
 
