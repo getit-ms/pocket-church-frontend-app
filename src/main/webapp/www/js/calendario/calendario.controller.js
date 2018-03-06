@@ -34,8 +34,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             }
           };
 
-          function doAdicionarNaAgenda(evento, tentativa) {
-            tentativa = tentativa || 0;
+          function doAdicionarNaAgenda(evento) {
 
             window.plugins.calendar.hasWritePermission(function(hasWritePermission) {
               if (hasWritePermission) {
@@ -46,22 +45,17 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                   evento.local,
                   undefined,
                   evento.inicio,
-                  evento.termino
-                ).then(function() {
-                  message({title:'global.title.200',template:'mensagens.MSG-001'});
-                  loadingService.hide();
-                }, function() {
-                  message({title:'global.title.500',template:'mensagens.MSG-049'});
-                  loadingService.hide();
-                });
+                  evento.termino,
+                  function() {
+                    message({title:'global.title.200',template:'mensagens.MSG-001'});
+                    loadingService.hide();
+                  }, function() {
+                    message({title:'global.title.500',template:'mensagens.MSG-049'});
+                    loadingService.hide();
+                  }
+                );
               } else {
-                if (tentativa >= 3) {
-                  message({title:'global.title.500',template:'mensagens.MSG-049'});
-                } else {
-                  window.plugins.calendar.requestWritePermission(function() {
-                    $scope.adicionarNaAgenda(evento, tentativa++);
-                  });
-                }
+                window.plugins.calendar.requestWritePermission();
               }
             });
           }

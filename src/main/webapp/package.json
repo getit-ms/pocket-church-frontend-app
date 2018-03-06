@@ -60,7 +60,13 @@
     "de.appplant.cordova.plugin.local-notification@0.8.4",
     "cordova-plugin-x-socialsharing@5.1.8",
     "cordova-sqlite-storage@2.0.4",
-    "cordova-plugin-calendar@4.6.0"
+    {
+      "variables":{
+        "CALENDAR_USAGE_DESCRIPTION":"Gravar eventos da igreja na agenda do celular."
+      },
+      "locator": "cordova-plugin-calendar@4.6.0",
+      "id": "cordova-plugin-calendar@4.6.0"
+    }
   ],
   "cordovaPlatforms": [
     "android",
