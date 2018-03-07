@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/calendario/calendario.list.html',
-        controller: function(calendarioService, $scope, $filter, $ionicPopup, message, loadingService){
+        controller: function(calendarioService, $scope, $filter, $ionicPopup, message, loadingService, $ionicActionSheet){
           $scope.filtro = {total:50};
           $scope.eventos = {dias:[]};
 
@@ -34,28 +34,81 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             }
           };
 
+          function createEvent(calendar, evento) {
+            window.plugins.calendar.createEventWithOptions(
+              evento.descricao,
+              evento.local,
+              undefined,
+              evento.inicio,
+              evento.termino,
+              {
+                calendarName: calendar.name,
+                calendarId: calendar.id
+              },
+              function() {
+                message({title:'global.title.200',template:'mensagens.MSG-001'});
+                loadingService.hide();
+              }, function() {
+                message({title:'global.title.500',template:'mensagens.MSG-049'});
+                loadingService.hide();
+              }
+            );
+          }
+
           function doAdicionarNaAgenda(evento) {
 
-            window.plugins.calendar.hasWritePermission(function(hasWritePermission) {
-              if (hasWritePermission) {
+            window.plugins.calendar.hasReadWritePermission(function(hasPermissions) {
+              if (hasPermissions) {
                 loadingService.show();
 
-                window.plugins.calendar.createEvent(
-                  evento.descricao,
-                  evento.local,
-                  undefined,
-                  evento.inicio,
-                  evento.termino,
-                  function() {
-                    message({title:'global.title.200',template:'mensagens.MSG-001'});
-                    loadingService.hide();
+                if (!ionic.Platform.isAndroid()) {
+                  createEvent({}, evento);
+                } else {
+                  window.plugins.calendar.listCalendars(function(calendars){
+
+                    if (calendars && calendars.length) {
+
+                      if (calendars.length == 1) {
+                        createEvent(calendars[0], evento);
+                      } else {
+
+                        var opcoes = [];
+                        calendars.forEach(function(cal) {
+                          opcoes.push({text:cal.name});
+                        });
+
+                        loadingService.hide();
+
+                        $ionicActionSheet.show({
+                          buttons: opcoes,
+                          titleText: $filter('translate')('mensagens.MSG-050'),
+                          cancelText: $filter('translate')('global.cancelar'),
+                          buttonClicked: function(index) {
+                            if (index >= 0) {
+                              loadingService.show();
+
+                              createEvent(calendars[index], evento);
+                            }
+                            return true;
+                          }
+                        });
+
+                      }
+
+                    } else {
+                      message({title:'global.title.500',template:'mensagens.MSG-049'});
+                      loadingService.hide();
+                    }
+
                   }, function() {
                     message({title:'global.title.500',template:'mensagens.MSG-049'});
                     loadingService.hide();
-                  }
-                );
+                  });
+
+                }
+
               } else {
-                window.plugins.calendar.requestWritePermission();
+                window.plugins.calendar.requestReadWritePermission();
               }
             });
           }

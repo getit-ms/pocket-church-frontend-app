@@ -49,6 +49,21 @@
   color: #000;
 }
 
+.platform-android .action-sheet .button,
+.platform-android .action-sheet .button:hover {
+  padding: 0 15px;
+  border-top: 1px solid #ddd !important;
+}
+
+.platform-android .action-sheet .action-sheet-title {
+  text-align: center;
+  font-size: 16px;
+  background: #ddd;
+  color: #333;
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #666;
+}
+
 .item.contato h2 {
   font-size: 24px !important;
 }
