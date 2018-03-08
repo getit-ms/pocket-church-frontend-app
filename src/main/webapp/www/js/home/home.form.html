@@ -2,35 +2,35 @@
     <ion-nav-title>
         <span></span>
     </ion-nav-title>
-    <ion-content>
+    <ion-content scrol="false">
         <div class="top-content row">
             <div class="profile-container">
                 <div class="user-image-container">
                     <img src='img/home.png' alt="${nome.igreja}" />
                 </div>
                 <div class="social">
-                    <a class='fa fa-globe' href='#' 
+                    <a class='fa fa-globe' href='#'
                        title="{{'home.website' | translate}}"
                        ng-click='site(institucional.site)'
                        ng-if="institucional.site"></a>
-                    <a class='fa fa-facebook' href='#' 
+                    <a class='fa fa-facebook' href='#'
                        title="{{'home.facebook' | translate}}"
                        ng-click='site(institucional.redesSociais.facebook)'
                        ng-if="institucional.redesSociais.facebook"></a>
-                    <a class='fa fa-twitter' href='#' 
+                    <a class='fa fa-twitter' href='#'
                        title="{{'home.twitter' | translate}}"
                        ng-click='site(institucional.redesSociais.twitter)'
                        ng-if="institucional.redesSociais.twitter"></a>
-                    <a class='fa fa-youtube-play' href='#' 
+                    <a class='fa fa-youtube-play' href='#'
                        title="{{'home.youtube' | translate}}"
                        ng-click='site(institucional.redesSociais.youtube)'
                        ng-if="institucional.redesSociais.youtube"></a>
-                    <a class='fa fa-pinterest' href='#' 
+                    <a class='fa fa-pinterest' href='#'
                        title="{{'home.pinterest' | translate}}"
                        ng-click='site(institucional.redesSociais.pinterest)'
                        ng-if="institucional.redesSociais.pinterest"></a>
                     <a class='fa fa-google-plus' href='#'
-                       title="{{'home.google_plus' | translate}}" 
+                       title="{{'home.google_plus' | translate}}"
                        ng-click="site(institucional.redesSociais['google-plus'])"
                        ng-if="institucional.redesSociais['google-plus']"></a>
                     <a class='fa fa-instagram' href='#'
@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class="center-content" 
+        <div class="center-content"
              title="{{institucional.textoDivulgacao}}"
              style="background-image: url({{institucional.divulgacao.localPath}})">
         </div>

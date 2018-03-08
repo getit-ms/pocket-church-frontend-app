@@ -49,7 +49,7 @@
     margin: 0 5px;
 }
 
-.home .scroll {
+.home .scroll-content {
     width: 100%;
     height: 100%;
     background-image: url(../img/login.jpg);
@@ -70,6 +70,8 @@
     }
 }
 
+
+
 @media all and (orientation:landscape) {
     .home .center-content {
         background-size: 100% auto;
@@ -77,12 +79,16 @@
     }
 }
 
+.home ion-content {
+    overflow: hidden;
+}
+
 .home .center-content {
     border: 0;
     padding: 0;
     width: 100%;
     height:100%;
-    position:fixed;
+    position:absolute;
     background-repeat: no-repeat;
 }
 
