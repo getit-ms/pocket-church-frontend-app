@@ -40,30 +40,6 @@
             "404":"Servidor fora do ar"
         },
         "menu":{
-            "CONSULTAR_CONTATOS_IGREJA":{
-                "state":"contato",
-                "label":"Contatos"
-            },
-            "REALIZAR_VOTACAO":{
-                "state":"votacao",
-                "label":"Votações"
-            },
-            "PEDIR_ORACAO":{
-                "state":"oracao",
-                "label":"Pedidos de Oração"
-            },
-            "AGENDAR_ACONSELHAMENTO":{
-                "state":"aconselhamento",
-                "label":"Aconselhamento"
-            },
-            "REALIZAR_INSCRICAO_EVENTO":{
-                "state":"evento",
-                "label":"Eventos"
-            },
-            "REALIZAR_INSCRICAO_EBD":{
-                "state":"ebd",
-                "label":"EBD"
-            },
             "menu":"Menu do aplicativo",
             "login":"Página de Autenticação",
             "logut":"Realizar logout do aplicativo",
@@ -174,7 +150,7 @@
     },
     "publicacao":{
       "publicacoes":"Publicações",
-      "publicacao":"Publicaçãoa",
+      "publicacao":"Publicação",
       "paginacao":"{atual} de {total}"
     },
     "cifra":{
