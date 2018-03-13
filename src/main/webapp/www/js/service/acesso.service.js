@@ -4,11 +4,7 @@ calvinApp.service('acessoService', ['Restangular', 'configService', function(Res
         };
 
         this.carrega = function(success, error){
-          var api = this.api();
-
-          configService.load().then(function(config){
-            api.get('', {versao:config.version}).then(success, error);
-          });
+          this.api().get('', {versao:$_version}).then(success, error);
         };
 
         this.login = function(login, success, error){
@@ -55,11 +51,7 @@ calvinApp.service('acessoService', ['Restangular', 'configService', function(Res
         };
 
         this.buscaMenu = function(success, error){
-          var menuRest = this.api().one('menu');
-
-          configService.load().then(function(config){
-            menuRest.customGET('', {versao:config.version}).then(success, error);
-          });
+          this.api().one('menu').customGET('', {versao:$_version}).then(success, error);
         };
 
         this.registerPushToken = function(token, callback){
