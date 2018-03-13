@@ -173,6 +173,7 @@
       "noticia":"Notícia",
       "noticias":"Notícias",
       "detalhar":"Mais",
+      "publicado_por":"Publicado por {autor}",
       "paginacao":"{atual} de {total}"
     },
     "votacao":{

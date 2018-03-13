@@ -127,6 +127,7 @@
   top: 80px;
   bottom: 0;
   height: auto;
+  position: absolute;
 }
 
 .modal.imageView {
@@ -140,5 +141,4 @@
 .item.item-image.gallery-slide-view img:first-child,
 .item.item-image.gallery-slide-view .list-img {
   vertical-align: top;
-  margin-top: 140px;
 }

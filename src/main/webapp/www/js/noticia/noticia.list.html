@@ -5,13 +5,10 @@
     <calvin-pagination searcher="searcher" ng-model="noticias" cache="noticias" class="noticias">
       <div class="list card" ng-click="detalhar(noticia)" ng-repeat="noticia in noticias">
 
-        <div class="item item-avatar">
-          <div class="item-image" style="background-image: url({{foto(contato)}})" ng-if="contato.foto"></div>
-          <img src="img/avatar.png" ng-if="!contato.foto">
-
+        <div class="item">
           <h2>{{noticia.titulo}}</h2>
           <span class="item-note">{{noticia.dataPublicacao | date:'dd MMMM yyyy HH:mm'}}</span>
-          <p>{{noticia.autor.nome}}</p>
+          <p>{{'noticia.publicado_por' | translate:{autor: noticia.autor.nome}}</p>
         </div>
 
         <div class="item item-body">
@@ -19,9 +16,6 @@
           <p>
             {{noticia.resumo}}
           </p>
-        </div>
-
-        <div class="item item-avatar">
         </div>
 
       </div>
