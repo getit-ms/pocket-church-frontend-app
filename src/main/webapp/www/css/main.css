@@ -124,5 +124,15 @@
 }
 
 .estudo .slider {
-  height: 80%;
+  top: 80px;
+  bottom: 0;
+  height: auto;
+}
+
+.modal.imageView {
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  width:auto;
 }
