@@ -1,43 +1,24 @@
 <ion-vie cache-view="false">
     <ion-nav-title>
-        <span translate>votacao.votar</span>
+        <span>{{resposta.votacao.nome}}</span>
     </ion-nav-title>
     <ion-content>
         <div class="item">
             <h1>
-                {{resposta.votacao.nome }} - {{questao.questao.questao}}
-                <span class="item-note" ng-if="questao.questao.quantidadeVotos > 1">{{'votacao.questao.votos' | translate:questao.questao }}</span>
+                {{questao.questao.questao}}
             </h1>
         </div>
-        
+
         <div ng-repeat="selection in questao.selections">
             <div class='item item-divider'>
                 <label ng-if='questao.selections.length == 1'>{{'votacao.questao.voto' | translate:{index:questao.selections.indexOf(selection) + 1} }}</label>
                 <label ng-if='questao.selections.length > 1'>{{'votacao.questao.voto_index' | translate:{index:questao.selections.indexOf(selection) + 1} }}</label>
             </div>
-            
-            <ion-radio ng-if="!selection.branco && !selection.nulo" ng-repeat="opcao in questao.questao.opcoes" 
+
+            <ion-radio ng-repeat="opcao in questao.questao.opcoes"
                        ng-model="selection.value" ng-value="opcao" ng-attr-name="opcao{{questao.selections.indexOf(selection)}}">{{opcao.opcao}}</ion-radio>
-            <div class='item item-toggle' ng-if="!selection.branco">
-                {{'votacao.questao.opcao.nulo' | translate}}
-                <label class="toggle">
-                    <input ng-model="selection.nulo" type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </div>
-            <div class='item item-toggle' ng-if="!selection.nulo">
-                {{'votacao.questao.opcao.branco' | translate}}
-                <label class="toggle">
-                    <input ng-model="selection.branco" type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </div>
         </div>
-        
+
         <div class='item'>
             <button class='button button-block button-stable' ng-if='hasAnterior()' ng-click='anterior()'>{{'votacao.anterior' | translate}}</button>
             <button class='button button-block button-stable' ng-if='hasProximo()' ng-click='proximo()'>{{'votacao.proximo' | translate}}</button>

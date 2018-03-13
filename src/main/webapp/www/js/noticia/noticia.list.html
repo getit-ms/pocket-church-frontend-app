@@ -1,0 +1,29 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>noticia.noticias</span>
+    </ion-nav-title>
+    <calvin-pagination searcher="searcher" ng-model="noticias" cache="noticias" class="noticias">
+      <div class="list card" ng-click="detalhar(noticia)" ng-repeat="noticia in noticias">
+
+        <div class="item item-avatar">
+          <h2>{{noticia.titulo}}</h2>
+          <p>{{noticia.dataPublicacao | date:'dd MMMM yyyy HH:mm'}}</p>
+        </div>
+
+        <div class="item item-body">
+          <img class="full-image" ng-if="noticia.ilustracao" src="ilustracao(noticia)">
+          <p>
+            {{noticia.texto}}
+          </p>
+        </div>
+
+        <div class="item item-avatar">
+          <div class="item-image" style="background-image: url({{foto(contato)}})" ng-if="contato.foto"></div>
+          <img src="img/avatar.png" ng-if="!contato.foto">
+
+          <h2>{{noticia.autor.nome}}</h2>
+        </div>
+
+      </div>
+    </calvin-pagination>
+</ion-view>

@@ -158,11 +158,22 @@
         "cifra":"Cântico",
         "paginacao":"{atual} de {total}"
     },
+    "cantico":{
+      "canticos":"Cânticos",
+      "cantico":"Cântico",
+      "paginacao":"{atual} de {total}"
+    },
     "estudo":{
         "estudo":"Estudo",
         "estudos":"Estudos",
         "detalhar":"Mais",
         "paginacao":"{atual} de {total}"
+    },
+    "noticia":{
+      "noticia":"Notícia",
+      "noticias":"Notícias",
+      "detalhar":"Mais",
+      "paginacao":"{atual} de {total}"
     },
     "votacao":{
         "votar":"Votar",

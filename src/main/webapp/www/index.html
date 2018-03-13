@@ -71,6 +71,7 @@
         <script src="js/boletim/boletim.controller.js"></script>
         <script src="js/publicacao/publicacao.controller.js"></script>
         <script src="js/estudo/estudo.controller.js"></script>
+        <script src="js/noticia/noticia.controller.js"></script>
         <script src="js/login/login.controller.js"></script>
         <script src="js/contato/contato.controller.js"></script>
         <script src="js/oracao/oracao.controller.js"></script>
@@ -81,6 +82,7 @@
         <script src="js/evento/evento.controller.js"></script>
         <script src="js/home/home.controller.js"></script>
         <script src="js/cifra/cifra.controller.js"></script>
+        <script src="js/cantico/cantico.controller.js"></script>
         <script src="js/chamado/chamado.controller.js"></script>
         <script src="js/notificacao/notificacao.controller.js"></script>
         <script src="js/ebd/ebd.controller.js"></script>
@@ -93,6 +95,7 @@
         <script src="js/service/boletim.service.js"></script>
         <script src="js/service/institucional.service.js"></script>
         <script src="js/service/estudo.service.js"></script>
+        <script src="js/service/noticia.service.js"></script>
         <script src="js/service/acesso.service.js"></script>
         <script src="js/service/contato.service.js"></script>
         <script src="js/service/oracao.service.js"></script>
@@ -167,6 +170,7 @@
                         <a href="javascript:void(0)" class="item-content" >
                           <span class='icon {{mnu.icone}}' ng-if="mnu.icone"></span>
                           <h2 class="menu-text">{{mnu.nome}}</h2>
+                          <span ng-if="menu.notificacoes" class="badge badge-stable pull-right">{{menu.notificacoes}}</span>
                           <span class='icon fa fa-chevron-right' ng-if="!mnu.selecionado"></span>
                           <span class='icon fa fa-chevron-down' ng-if="mnu.selecionado"></span>
                         </a>
@@ -184,6 +188,7 @@
                                 nav-clear menu-close ui-sref="{{sbm.link}}" title="{{sbm.nome}}">
                         <span class='icon {{sbm.icone}}' ng-if="sbm.icone"></span>
                         <h2 class="menu-text">{{sbm.nome}}</h2>
+                        <span ng-if="sbm.notificacoes" class="badge badge-stable pull-right">{{sbm.notificacoes}}</span>
                       </ion-item>
 
                     <div class='menu-end'></div>

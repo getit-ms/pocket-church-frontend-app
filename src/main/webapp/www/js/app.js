@@ -26,18 +26,6 @@ var calvinApp = angular.module('calvinApp', [
   'ion-gallery'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
                  arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibliaService, database, hinoService, leituraService, $q) {
-  function countNotificacoes(){
-    var deferred = $q.defer();
-    notificacaoService.count(function(dados){
-      $rootScope.notifications = dados.count;
-      $cordovaBadge.set(dados.count);
-      deferred.resolve();
-    }, function(){
-      deferred.reject();
-    });
-    return deferred.promise;
-  }
-
   $rootScope.toggleMenu = function(menu) {
     if ($rootScope._menuSelecionado) {
       $rootScope._menuSelecionado.selecionado = false;
@@ -57,8 +45,6 @@ var calvinApp = angular.module('calvinApp', [
   function carregaFuncionalidades(){
     var deferred = $q.defer();
 
-    countNotificacoes();
-
     $cordovaLocalNotification.clearAll();
 
     acessoService.buscaMenu(function(menu){
@@ -72,7 +58,7 @@ var calvinApp = angular.module('calvinApp', [
         if (config.usuario && config.menu){
           acessoService.carrega(function (acesso) {
             $rootScope.usuario = acesso.membro;
-            $rootScope.carregaMenu(acesso.menu);
+            $rootScope.carregaMenu(acesso.menu, true);
 
             configService.save({
               usuario: $rootScope.usuario,
@@ -105,7 +91,7 @@ var calvinApp = angular.module('calvinApp', [
 
     configService.load().then(function(config){
       $rootScope.usuario = config.usuario;
-      $rootScope.carregaMenu(config.menu);
+      $rootScope.carregaMenu(config.menu, true);
 
       $rootScope.registerPush(false);
     });
@@ -137,7 +123,24 @@ var calvinApp = angular.module('calvinApp', [
     return false;
   };
 
-  $rootScope.carregaMenu = function(menu) {
+  $rootScope.carregaMenu = function(menu, clearNotificacoes) {
+    if (menu && menu.submenus) {
+      menu.submenus.forEach(function(mnu) {
+        if (mnu.selecionado) {
+          mnu.selecionado = undefined;
+        }
+
+        if (clearNotificacoes) {
+          mnu.notificacoes = 0;
+          if (mnu.submenus) {
+            mnu.submenus.forEach(function(sbm) {
+              sbm.notificacoes = 0;
+            });
+          }
+        }
+      });
+    }
+
     if ($rootScope.menu && $rootScope.menu.submenus) {
       var selecionado = $rootScope.menu.submenus.find(function(mnu) {
         return mnu.selecionado;
@@ -159,14 +162,6 @@ var calvinApp = angular.module('calvinApp', [
       }
     }
 
-    if (menu && menu.submenus) {
-      menu.submenus.forEach(function(mnu) {
-        if (mnu.selecionado) {
-          mnu.selecionado = undefined;
-        }
-      });
-    }
-
     $rootScope.menu = menu;
   };
 
@@ -176,7 +171,7 @@ var calvinApp = angular.module('calvinApp', [
 
     configService.load().then(function(config){
       $rootScope.usuario = config.usuario;
-      $rootScope.carregaMenu(config.menu);
+      $rootScope.carregaMenu(config.menu, true);
 
       $rootScope.registerPush(false);
     });

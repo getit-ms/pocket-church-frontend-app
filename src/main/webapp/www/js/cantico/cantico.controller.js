@@ -1,12 +1,12 @@
 calvinApp.config(['$stateProvider', function($stateProvider){
-        $stateProvider.state('cifra', {
+        $stateProvider.state('cantico', {
             parent: 'site',
-            url: '/cifra',
+            url: '/cantico',
             views:{
                 'content@':{
-                    templateUrl: 'js/cifra/cifra.list.html',
+                    templateUrl: 'js/cantico/cantico.list.html',
                     controller: function(cifraService, $scope, $state, $ionicFilterBar, $ionicFilterBarConfig, $ionicScrollDelegate, $filter, $ionicConfig){
-                        $scope.filtro = {tipo:'CIFRA',total: 10};
+                        $scope.filtro = {tipo:'CANTICO',total: 10};
 
                         $scope.searcher = function(page, callback){
                             cifraService.busca(angular.extend({pagina: page}, $scope.filtro), callback);
@@ -52,30 +52,30 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             $scope.$broadcast('pagination.search');
                         };
 
-                        $scope.detalhar = function(cifra){
-                            $state.go('cifra.view', {id: cifra.id});
+                        $scope.detalhar = function(cantico){
+                            $state.go('cantico.view', {id: cantico.id});
                         };
                     }
                 }
             }
-        }).state('cifra.view', {
-            parent: 'cifra',
+        }).state('cantico.view', {
+            parent: 'cantico',
             url: '/:id',
             views:{
                 'content@':{
-                    templateUrl: 'js/cifra/cifra.form.html',
+                    templateUrl: 'js/cantico/cantico.form.html',
                     controller: function(cifraService, $scope, cifraService, pdfService, $stateParams,
                                          $ionicScrollDelegate, $ionicSlideBoxDelegate, shareService, config, $filter, loadingService){
                         $scope.totalPaginas = 0;
 
                         loadingService.show();
                         pdfService.get({
-                            chave:'cifra',
+                            chave:'cantico',
                             id:$stateParams.id,
-                            errorState:'cifra',
-                            callback:function(cifra){
-                                $scope.cifra = cifra;
-                                $scope.totalPaginas = cifra.paginas.length;
+                            errorState:'cantico',
+                            callback:function(cantico){
+                                $scope.cantico = cantico;
+                                $scope.totalPaginas = cantico.paginas.length;
                                 loadingService.hide();
                             },
                             supplier:function(id, callback){
@@ -89,10 +89,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             loadingService.show();
 
                             shareService.share({
-                              subject:$scope.cifra.titulo,
+                              subject:$scope.cantico.titulo,
                               file:config.server + '/rest/arquivo/download/' +
-                                        $scope.cifra.cifra.id + '/' +
-                                        $scope.cifra.cifra.filename + '?Dispositivo=' +
+                                        $scope.cantico.cantico.id + '/' +
+                                        $scope.cantico.cantico.filename + '?Dispositivo=' +
                                         config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                               success: loadingService.hide,
                               error: loadingService.hide

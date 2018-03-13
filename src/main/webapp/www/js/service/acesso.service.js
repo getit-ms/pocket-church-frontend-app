@@ -1,17 +1,25 @@
-calvinApp.service('acessoService', ['Restangular', 'config', function(Restangular, config){
+calvinApp.service('acessoService', ['Restangular', 'config', function(Restangular, configService){
         this.api = function(){
             return Restangular.all('acesso');
         };
 
         this.carrega = function(success, error){
-            this.api().get('').then(success, error);
+          var api = this.api();
+
+          configService.load().then(function(config){
+            api.get('', {versao:config.version}).then(success, error);
+          });
         };
 
         this.login = function(login, success, error){
-            this.api().one('login').customPUT(angular.extend({
-                version:config.version,
-                tipoDispositivo:config.tipo
+          var restLogin = this.api().one('login');
+
+          configService.load().then(function(config){
+            restLogin.customPUT(angular.extend({
+              version:config.version,
+              tipoDispositivo:config.tipo
             }, login)).then(success, error);
+          });
         };
 
         this.logout = function(callback, errorCallback){
@@ -46,8 +54,12 @@ calvinApp.service('acessoService', ['Restangular', 'config', function(Restangula
             return this.api().one('ministerios').getList().$object;
         };
 
-        this.buscaMenu = function(success, error){
-          return this.api().one('menu').get('').then(success, error);
+        this.buscaMenu = function(versao, success, error){
+          var menuRest = this.api().one('menu');
+
+          configService.load().then(function(config){
+            menuRest.get('', {versao:config.version}).then(success, error);
+          });
         };
 
         this.registerPushToken = function(token, callback){

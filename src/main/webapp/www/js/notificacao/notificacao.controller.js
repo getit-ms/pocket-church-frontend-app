@@ -31,8 +31,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                                 case 'BOLETIM':
                                                     n.state = 'boletim';
                                                     break;
+                                                case 'PUBLICACAO':
+                                                    n.state = 'publicacao';
+                                                    break;
                                                 case 'ESTUDO':
                                                     n.state = 'estudo';
+                                                    break;
+                                                case 'NOTICIA':
+                                                    n.state = 'noticia';
                                                     break;
                                                 case 'EVENTO':
                                                     n.state = 'evento';
@@ -55,7 +61,22 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         }
                                     });
                                 }
-                                $rootScope.notifications = 0;
+
+                                if ($rootScope.menu && $rootScope.menu.submenus) {
+                                  $rootScope.menu.submenus.forEach(function(mnu) {
+                                    if (menu.funcionalidade == 'NOTIFICACOES') {
+                                      menu.notificacoes = 0;
+                                    } else if (menu.submenus) {
+                                      menu.submenus.forEach(function(sbm) {
+                                        if (sbm.funcionalidade == 'NOTIFICACOES') {
+                                          menu.notificacoes = Math.max(0, menu.notificacoes - sbm.notificacoes);
+                                          sbm.notificacoes = 0;
+                                        }
+                                      });
+                                    }
+                                  });
+                                }
+
                                 callback(angular.extend(notificacoes, {resultados:ns}));
                                 $cordovaBadge.set(0);
                             });
