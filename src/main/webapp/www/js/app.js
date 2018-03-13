@@ -93,6 +93,10 @@ var calvinApp = angular.module('calvinApp', [
       $rootScope.usuario = config.usuario;
       $rootScope.carregaMenu(config.menu, true);
 
+      configService.save({
+        menu: $rootScope.menu
+      });
+
       $rootScope.registerPush(false);
     });
 

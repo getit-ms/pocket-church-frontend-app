@@ -3,12 +3,13 @@
         <span translate>noticia.noticia</span>
     </ion-nav-title>
     <ion-content class='noticia has-header'>
-        <div class="item">
-            <h1>{{noticia.titulo}}</h1>
-            <h2>
-                {{noticia.autor.nome}}
-                <span class='item-note'>{{noticia.dataPublicacao | date:'dd MMMM yyyy HH:mm'}}</span>
-            </h2>
+        <div class="item item-avatar">
+          <div class="item-image" style="background-image: url({{foto(contato)}})" ng-if="contato.foto"></div>
+          <img src="img/avatar.png" ng-if="!contato.foto">
+
+          <h2>{{noticia.titulo}}</h2>
+          <span class="item-note">{{noticia.dataPublicacao | date:'dd MMMM yyyy HH:mm'}}</span>
+          <p>{{noticia.autor.nome}}</p>
         </div>
         <div class="item item-body " >
           <img class="full-image" ng-click="zoomIlustracao()" src="{{ilustracao(noticia)}}" ng-if="noticia.ilustracao">

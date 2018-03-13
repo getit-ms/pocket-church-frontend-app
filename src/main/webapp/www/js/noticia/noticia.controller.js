@@ -81,7 +81,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         });
                     };
 
-                    $scope.zoomBaanner = function() {
+                    $scope.zoomIlustracao = function() {
                       $ionicModal.fromTemplateUrl('js/noticia/ilustracao.modal.html', {
                         scope: $scope,
                         animation: 'slide-in-up'

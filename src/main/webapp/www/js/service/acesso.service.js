@@ -1,4 +1,4 @@
-calvinApp.service('acessoService', ['Restangular', 'config', function(Restangular, configService){
+calvinApp.service('acessoService', ['Restangular', 'configService', function(Restangular, configService){
         this.api = function(){
             return Restangular.all('acesso');
         };
@@ -58,7 +58,7 @@ calvinApp.service('acessoService', ['Restangular', 'config', function(Restangula
           var menuRest = this.api().one('menu');
 
           configService.load().then(function(config){
-            menuRest.get('', {versao:config.version}).then(success, error);
+            menuRest.customGET('', {versao:config.version}).then(success, error);
           });
         };
 

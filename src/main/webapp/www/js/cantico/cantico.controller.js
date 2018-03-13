@@ -64,7 +64,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/cantico/cantico.form.html',
-                    controller: function(cifraService, $scope, cifraService, pdfService, $stateParams,
+                    controller: function(cifraService, $scope, pdfService, $stateParams,
                                          $ionicScrollDelegate, $ionicSlideBoxDelegate, shareService, config, $filter, loadingService){
                         $scope.totalPaginas = 0;
 
