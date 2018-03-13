@@ -58,7 +58,7 @@ var calvinApp = angular.module('calvinApp', [
         if (config.usuario && config.menu){
           acessoService.carrega(function (acesso) {
             $rootScope.usuario = acesso.membro;
-            $rootScope.carregaMenu(acesso.menu, true);
+            $rootScope.carregaMenu(acesso.menu);
 
             configService.save({
               usuario: $rootScope.usuario,
