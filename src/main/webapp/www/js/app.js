@@ -45,37 +45,34 @@ var calvinApp = angular.module('calvinApp', [
   function carregaFuncionalidades(){
     var deferred = $q.defer();
 
-    $cordovaLocalNotification.clearAll();
+    configService.load().then(function(config) {
+      if (config.usuario){
+        acessoService.carrega(function (acesso) {
+          $rootScope.usuario = acesso.membro;
+          $rootScope.carregaMenu(acesso.menu);
 
-    acessoService.buscaMenu(function(menu){
-      $rootScope.carregaMenu(menu);
-
-      configService.save({
-        menu: $rootScope.menu
-      });
-
-      configService.load().then(function(config) {
-        if (config.usuario && config.menu){
-          acessoService.carrega(function (acesso) {
-            $rootScope.usuario = acesso.membro;
-            $rootScope.carregaMenu(acesso.menu);
-
-            configService.save({
-              usuario: $rootScope.usuario,
-              menu: $rootScope.menu
-            });
-
-            deferred.resolve();
-          }, function(){
-            deferred.reject();
+          configService.save({
+            usuario: $rootScope.usuario,
+            menu: $rootScope.menu
           });
-        }else{
-          deferred.reject();
-        }
-      });
 
-    }, function(){
-      deferred.reject();
+          deferred.resolve();
+        }, function(){
+          deferred.reject();
+        });
+      }else{
+        acessoService.buscaMenu(function(menu){
+          $rootScope.carregaMenu(menu);
+
+          configService.save({
+            menu: $rootScope.menu
+          });
+
+          deferred.resolve();
+        }, function(){
+          deferred.reject();
+        });
+      }
     });
 
     return deferred.promise;
@@ -93,14 +90,11 @@ var calvinApp = angular.module('calvinApp', [
       $rootScope.usuario = config.usuario;
       $rootScope.carregaMenu(config.menu, true);
 
-      configService.save({
-        menu: $rootScope.menu
-      });
-
       $rootScope.registerPush(false);
+
+      carregaFuncionalidades();
     });
 
-    carregaFuncionalidades();
   });
 
   $rootScope.funcionalidadeHabilitada = function(funcionalidade) {
@@ -173,13 +167,6 @@ var calvinApp = angular.module('calvinApp', [
     arquivoService.init();
     database.init();
 
-    configService.load().then(function(config){
-      $rootScope.usuario = config.usuario;
-      $rootScope.carregaMenu(config.menu, true);
-
-      $rootScope.registerPush(false);
-    });
-
     var next = { then: function(callback){ callback(); } };
 
     var execucoes = [
@@ -217,6 +204,11 @@ var calvinApp = angular.module('calvinApp', [
     ];
 
     configService.load().then(function(config) {
+      $rootScope.usuario = config.usuario;
+      $rootScope.carregaMenu(config.menu, true);
+
+      $rootScope.registerPush(false);
+
       if (!config.headers.Dispositivo || config.headers.Dispositivo === 'undefined'){
         configService.save({
           tipo: ionic.Platform.isAndroid() ? 0 : 1,
