@@ -54,7 +54,7 @@ calvinApp.service('acessoService', ['Restangular', 'configService', function(Res
             return this.api().one('ministerios').getList().$object;
         };
 
-        this.buscaMenu = function(versao, success, error){
+        this.buscaMenu = function(success, error){
           var menuRest = this.api().one('menu');
 
           configService.load().then(function(config){

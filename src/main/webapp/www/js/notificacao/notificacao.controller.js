@@ -63,7 +63,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
 
                                 if ($rootScope.menu && $rootScope.menu.submenus) {
-                                  $rootScope.menu.submenus.forEach(function(mnu) {
+                                  $rootScope.menu.submenus.forEach(function(menu) {
                                     if (menu.funcionalidade == 'NOTIFICACOES') {
                                       menu.notificacoes = 0;
                                     } else if (menu.submenus) {
