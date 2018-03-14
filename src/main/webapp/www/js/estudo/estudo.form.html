@@ -15,22 +15,7 @@
                 <span class='item-note'>{{estudo.dataPublicacao | date:'dd MMMM yyyy HH:mm'}}</span>
             </h2>
         </div>
-        <ion-slide-box ng-if="estudo.tipo == 'PDF'" show-pager="false" ng-if="estudo.paginas.length"
-                       on-slide-changed="slideChanged(index)" active-slide="slide.activeSlide">
-          <ion-slide ng-repeat="pagina in estudo.paginas">
-            <ion-scroll scroll='false' zooming="true" direction="xy" scrollable-x="false"
-                        scrollable-y="false" min-zoom="1" style="width:100%;height:100%"
-                        delegate-handle="scrollHandle{{$index}}" on-scroll="updateSlideStatus($index)"
-                        on-release="updateSlideStatus($index)" overflow-scroll="false">
-              <div class="image" style="background-image: url( {{pagina.src}} )"></div>
-            </ion-scroll>
-          </ion-slide>
-        </ion-slide-box>
-        <div class="item item-body " ng-if="estudo.tipo == 'TEXTO'">
-            <p class="html-div" ng-bind-html='estudo.texto'></p>
-        </div>
+        <ion-gallery ng-if="estudo" ion-gallery-row="2" ion-gallery-items="estudo.paginas"></ion-gallery>
     </ion-content>
-    <ion-footer-bar ng-if="estudo.tipo == 'PDF'" class="bar-stable" align-title="center">
-      <h1 class="title">{{'estudo.paginacao' | translate:'{atual:'+(slide.activeSlide+1)+',total:'+ totalPaginas +'}' }}</h1>
     </ion-footer-bar>
 </ion-view>

@@ -39,7 +39,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     templateUrl: 'js/boletim/boletim.form.html',
                     controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config, loadingService, $state){
                         $scope.slide = {totalPaginas:0};
-                        
+
+                        var dados = {porcentagem:0};
+
                         pdfService.get({
                             chave:'boletim',
                             id:$stateParams.id,
@@ -49,18 +51,21 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 loadingService.hide();
                                 $state.reload();
                             },
+                            pagina:function(pag, total) {
+                              dados.porcentagem = (pag/total) * 100;
+                            },
                             supplier:function(id, callback){
-                                loadingService.show();
+                                loadingService.show(dados);
                                 boletimService.carrega(id, callback);
                             }
                         });
-                        
+
                         $scope.share = function(){
                             loadingService.show();
 
                             shareService.share({
                                 subject:$scope.boletim.titulo,
-                                file:config.server + '/rest/arquivo/download/' + 
+                                file:config.server + '/rest/arquivo/download/' +
                                         $scope.boletim.boletim.id + '/' +
                                         $scope.boletim.boletim.filename + '?Dispositivo=' +
                                         config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,

@@ -247,19 +247,20 @@ var calvinApp = angular.module('calvinApp', [
     $rootScope.initApp();
   });
 
-}).service('loadingService', ['$ionicLoading', '$filter', function($ionicLoading, $filter, $scope){
+}).service('loadingService', ['$ionicLoading', '$filter', '$rootScope', function($ionicLoading, $filter, $rootScope){
   this.show = function(dados){
-    $scope.dados = dados;
+    $rootScope.dadosLoading = dados;
 
     $ionicLoading.show({
-      template:'<ion-spinner class="spinner-light"></ion-spinner><br/><span ng-if="dados.porcentagem">{{dados.porcentagem}}%</span><br/>' + $filter('translate')('global.carregando'),
+      template:'<ion-spinner class="spinner-light"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando')
+                + '<div ng-if="dadosLoading.porcentagem">{{dadosLoading.porcentagem | number:2}}%</div>',
       animation: 'fade-in',
-      scope: $scope
+      scope: $rootScope
     });
   };
 
   this.hide = function(){
-    $scope.dados = undefined;
+    $rootScope.dadosLoading = undefined;
     $ionicLoading.hide();
   };
 }]).value('config', {

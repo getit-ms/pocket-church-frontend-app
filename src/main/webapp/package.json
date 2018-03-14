@@ -70,6 +70,6 @@
   ],
   "cordovaPlatforms": [
     "android",
-    "ios"
+    "ios@4.5.4"
   ]
 }
