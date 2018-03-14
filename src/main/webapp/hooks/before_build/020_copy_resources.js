@@ -9,6 +9,10 @@ var resources = [
     {
         from: 'resources/native/android/',
         to: 'platforms/android/res/'
+    },
+    {
+      from: 'resources/splash.png',
+      to: 'resources/ios/splash/Default@2x~universal~anyany.png'
     }
 ];
 
@@ -16,8 +20,8 @@ function copyAndroidResources() {
     resources.forEach(function(resource){
         exec('cp -Rf ' + resource.from + '* ' + resource.to);
     });
-    
-    process.stdout.write('Copied android native resources');
+
+    process.stdout.write('Copied native resources');
 }
 
 if (rootdir) {
