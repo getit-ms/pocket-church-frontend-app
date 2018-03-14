@@ -240,9 +240,6 @@ var calvinApp = angular.module('calvinApp', [
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
-    if (window.StatusBar) {
-      StatusBar.styleDefault();
-    }
 
     $rootScope.initApp();
   });
