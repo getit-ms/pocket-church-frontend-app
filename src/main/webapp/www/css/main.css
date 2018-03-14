@@ -138,7 +138,17 @@
   width:auto;
 }
 
+.modal .scroll {
+  min-height: inherit;
+  height: auto
+}
+
 .item.item-image.gallery-slide-view img:first-child,
 .item.item-image.gallery-slide-view .list-img {
   vertical-align: top;
+}
+
+.platform-ios .title.title-center.header-item {
+  left: 49px!important;
+  right: 49px!important;
 }

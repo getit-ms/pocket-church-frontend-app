@@ -70,8 +70,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             shareService.share({
                                 subject:$scope.publicacao.titulo,
                                 file:config.server + '/rest/arquivo/download/' +
-                                        $scope.publicacao.publicacao.id + '/' +
-                                        $scope.publicacao.publicacao.filename + '?Dispositivo=' +
+                                        $scope.publicacao.boletim.id + '/' +
+                                        $scope.publicacao.boletim.filename + '?Dispositivo=' +
                                         config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                                 success: loadingService.hide,
                                 error: loadingService.hide
