@@ -3,20 +3,32 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
             cacheService.get(angular.extend({}, req, {
                 callback:function(pdf){
                     var i=0;
+                    var iniciado = 0;
 
-                    pdf.paginas.forEach(function(pagina){
+                    function chamada(pagina){
+
+                      if (iniciado - i <= 5) {
+                        iniciado++;
+
                         trata(pagina, function(){
-                            i++;
+                          i++;
 
-                            if (req.pagina) {
-                              req.pagina(i, pdf.paginas.length);
-                            }
+                          if (req.pagina) {
+                            req.pagina(i, pdf.paginas.length);
+                          }
 
-                            if (i >= pdf.paginas.length){
-                                req.callback(pdf);
-                            }
+                          if (i >= pdf.paginas.length){
+                            req.callback(pdf);
+                          }
                         });
-                    });
+                      } else {
+                        setTimeout(function() {
+                          chamada(pagina);
+                        }, 1000);
+                      }
+                    };
+
+                    pdf.paginas.forEach(chamada);
                 }
             }));
         };
