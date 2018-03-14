@@ -7,7 +7,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
 
                     function chamada(pagina){
 
-                      if (iniciado - i <= 5) {
+                      if ((iniciado - i) <= 5) {
                         iniciado++;
 
                         trata(pagina, function(){
@@ -24,7 +24,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
                       } else {
                         setTimeout(function() {
                           chamada(pagina);
-                        }, 1000);
+                        }, 50);
                       }
                     };
 
