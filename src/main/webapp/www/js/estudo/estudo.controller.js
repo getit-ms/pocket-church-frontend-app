@@ -49,6 +49,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       if (estudo.tipo == 'PDF') {
                         $scope.slide = {activeSlide:null};
 
+                        var dados = {porcentagem:0};
+
                         pdfService.get({
                           chave:'estudo',
                           id:$stateParams.id,
@@ -59,8 +61,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             loadingService.hide();
                             $state.reload();
                           },
+                          pagina:function(pag, total) {
+                            dados.porcentagem = (pag/total) * 100;
+                          },
                           supplier:function(id, callback){
-                            loadingService.show();
+                            loadingService.show(dados);
                             callback(estudo);
                           }
                         });

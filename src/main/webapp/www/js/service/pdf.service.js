@@ -7,7 +7,11 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
                     pdf.paginas.forEach(function(pagina){
                         trata(pagina, function(){
                             i++;
-							
+
+                            if (req.pagina) {
+                              req.pagina(i, pdf.paginas.length);
+                            }
+
                             if (i >= pdf.paginas.length){
                                 req.callback(pdf);
                             }
@@ -16,7 +20,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
                 }
             }));
         };
-        
+
         function trata(pagina, callback){
             arquivoService.get(pagina.id, function(data){
                 pagina.src = data.file;
@@ -27,7 +31,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
                 callback();
             });
         }
-        
+
         this.load = function(chave, pdfs){
             try{
                 for (var i=0;i<pdfs.length && i<5;i++){
