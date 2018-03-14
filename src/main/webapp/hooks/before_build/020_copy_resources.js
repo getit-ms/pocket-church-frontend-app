@@ -13,6 +13,10 @@ var resources = [
     {
       from: 'resources/splash.png',
       to: 'resources/ios/splash/Default@2x~universal~anyany.png'
+    },
+    {
+      from: 'resources/icon.png',
+      to: 'resources/ios/icon/icon-1024.png'
     }
 ];
 
