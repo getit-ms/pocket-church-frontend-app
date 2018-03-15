@@ -9,8 +9,30 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.filtro = {nome:'',total:50};
                     $scope.hasFilters = false;
 
+                    const accents =
+                      "ÀÁÂÃÄÅĄàáâãäåąßÒÓÔÕÕÖØÓòóôõöøóÈÉÊËĘèéêëęðÇĆçćÐÌÍÎÏìíîïÙÚÛÜùúûüÑŃñńŠŚšśŸÿýŽŻŹžżź";
+                    const accentsOut =
+                      "AAAAAAAAAAAAAABOOOOOOOOOOOOOOOEEEEEEEEEEECCCCDIIIIIIIIUUUUUUUUNNNNSSSSYYYZZZZZZ";
+
+                    function letra(contato){
+                      var letra = contato.nome.slice(0,1);
+                      if (accents.indexOf(letra) >= 0) {
+                        return accentsOut.charAt(accents.indexOf(letra));
+                      }
+
+                      return letra.toUpperCase();
+                    }
+
                     $scope.searcher = function(page, callback){
-                        contatoService.busca(angular.extend({pagina:page}, $scope.filtro), callback);
+                        contatoService.busca(angular.extend({pagina:page}, $scope.filtro), function(contatos) {
+                          if (contatos.resultados) {
+                            contatos.resultados.forEach(function(contato){
+                              contato.letra = letra(contato);
+                            })
+                          }
+
+                          callback(contatos);
+                        });
                     };
 
                     $scope.showSearch = function(){
@@ -77,11 +99,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                     $scope.primeiroDaLetra = function(contatos, contato){
                         var idx = contatos.indexOf(contato);
-                        return idx == 0 || $scope.letra(contatos[idx - 1]) != $scope.letra(contato);
-                    };
-
-                    $scope.letra = function(contato){
-                        return contato.nome.slice(0,1).toUpperCase();
+                        return idx == 0 || contatos[idx - 1].letra != contato.letra;
                     };
 
                     $scope.filtra();
