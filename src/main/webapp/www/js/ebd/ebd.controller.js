@@ -29,7 +29,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         eventoService.buscaMinhasInscricoes(ebd.id, {pagina:page,total:10}, callback);
                     };
 
-
                   $scope.zoomBaanner = function() {
                     $ionicModal.fromTemplateUrl('js/ebd/banner.modal.html', {
                       scope: $scope,

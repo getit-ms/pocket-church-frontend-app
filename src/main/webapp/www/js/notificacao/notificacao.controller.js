@@ -9,6 +9,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $ionicPopup, $filter, message, $state, shareService, $ionicPlatform, $ionicActionSheet){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
+                                $cordovaBadge.set(0);
+
                                 var ns = [];
                                 if (notificacoes.resultados){
                                     notificacoes.resultados.forEach(function(n){
@@ -78,7 +80,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
 
                                 callback(angular.extend(notificacoes, {resultados:ns}));
-                                $cordovaBadge.set(0);
                             });
                         };
 

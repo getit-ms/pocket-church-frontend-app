@@ -123,6 +123,8 @@ var calvinApp = angular.module('calvinApp', [
 
   $rootScope.carregaMenu = function(menu, clearNotificacoes) {
     if (menu && menu.submenus) {
+      var total = 0;
+
       menu.submenus.forEach(function(mnu) {
         if (mnu.selecionado) {
           mnu.selecionado = undefined;
@@ -136,7 +138,11 @@ var calvinApp = angular.module('calvinApp', [
             });
           }
         }
+
+        total += mnu.notificacoes || 0;
       });
+
+      $cordovaBadge.set(total);
     }
 
     if ($rootScope.menu && $rootScope.menu.submenus) {
@@ -239,6 +245,14 @@ var calvinApp = angular.module('calvinApp', [
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }
+
+    if (window.StatusBar) {
+      if ($_statusBarLight) {
+        StatusBar.styleLightContent();
+      } else {
+        StatusBar.styleDefault();
+      }
     }
 
     $rootScope.initApp();

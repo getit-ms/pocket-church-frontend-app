@@ -9,7 +9,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.searcher = function(page, callback){
                         eventoService.busca({tipo:'EVENTO',pagina:page,total:10}, callback);
                     };
-                    
+
                     $scope.detalhar = function(evento){
                         $state.go('evento.detalhe', {id: evento.id});
                     };
@@ -22,17 +22,53 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/evento/evento.form.html',
-                controller: function($scope, evento, $state, eventoService){
+                controller: function($scope, evento, $state, eventoService, $ionicModal, arquivoService){
                     $scope.evento = evento;
-                    
+
                     $scope.searcherInscricoes = function(page, callback){
                         eventoService.buscaMinhasInscricoes(evento.id, {pagina:page,total:10}, callback);
                     };
-                    
+
+                  $scope.zoomBaanner = function() {
+                    $ionicModal.fromTemplateUrl('js/evento/banner.modal.html', {
+                      scope: $scope,
+                      animation: 'slide-in-up'
+                    }).then(function(modal) {
+                      $scope.modal = modal;
+                      $scope.modal.show();
+                    });
+                  };
+
+                  $scope.closeModal = function() {
+                    if ($scope.modal){
+                      $scope.modal.hide();
+                      $scope.modal.remove();
+                    }
+                  };
+
+                  $scope.banner = function(evento){
+                    if (!evento || !evento.banner) {
+                      return undefined;
+                    }
+
+                    if (!evento.banner.localPath){
+                      evento.banner.localPath = '#';
+                      arquivoService.get(evento.banner.id, function(file){
+                        evento.banner.localPath = file.file;
+                      }, function(file){
+                        evento.banner.localPath = file.file;
+                      }, function(file){
+                        evento.banner.localPath = file.file;
+                      });
+                    }
+
+                    return evento.banner.localPath;
+                  };
+
                     $scope.$on('$ionicView.enter', function(){
                         $scope.$broadcast('pagination.search');
                     });
-                    
+
                     $scope.inscricao = function(){
                         $state.go('evento.inscricao', {id: $scope.evento.id});
                     };
@@ -53,16 +89,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 controller: function(eventoService, $scope, evento, $state, $filter,
                                 message, $window, $ionicHistory, loadingService){
                     $scope.evento = evento;
-                    
+
                     $scope.$on('$ionicView.enter', function(){
                         $scope.clear();
                     });
-                    
+
                     $scope.clear = function(){
                         $scope.inscricoes = [];
                         $scope.addInscricao();
                     };
-                    
+
                     $scope.addInscricao = function(){
                         if ($scope.evento.vagasRestantes > $scope.inscricoes.length){
                             if ($scope.inscricoes.length){
@@ -72,24 +108,24 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     nomeInscrito: $scope.usuario.nome,
                                     emailInscrito: $scope.usuario.email,
                                     telefoneInscrito: $scope.usuario.telefones &&
-                                            $scope.usuario.telefones.length ? 
+                                            $scope.usuario.telefones.length ?
                                     $scope.usuario.telefones[0] : ''
                                 });
                             }
                         }
                     };
-                    
+
                     $scope.removeInscricao = function(inscricao){
                         $scope.inscricoes.splice($scope.inscricoes.indexOf(inscricao), 1);
                     };
-                    
+
                     $scope.conclui = function(){
                         if ($scope.inscricoes.length){
                             loadingService.show();
-                                
+
                             eventoService.inscricao($scope.evento.id, $scope.inscricoes, function(resposta){
                                 loadingService.hide();
-                                
+
                                 if (resposta.devePagar && resposta.checkoutPagSeguro){
                                     message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
                                         $ionicHistory.goBack();
@@ -104,7 +140,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             });
                         }
                     };
-                    
+
                     $scope.clear();
                 },
                 resolve: {
@@ -114,6 +150,5 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 }
             }
         }
-    });         
+    });
 }]);
-        
