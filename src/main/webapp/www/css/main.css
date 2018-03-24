@@ -65,7 +65,8 @@
 }
 
 h2.title {
-  font-size: 18px !important;
+  font-size: 20px !important;
+  font-weight: bold;
 }
 
 .item.contato h2 {
