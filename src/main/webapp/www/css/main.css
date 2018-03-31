@@ -162,3 +162,16 @@ h2.title {
   left: 49px!important;
   right: 49px!important;
 }
+
+.main-menu .item.item-avatar {
+  padding-left: 55px;
+  line-height: 55px;
+  min-height: 55px;
+}
+
+.main-menu .item.item-avatar img:first-child {
+  top: 11px;
+  left: 16px;
+  max-width: 30px;
+  max-height: 30px;
+}

@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/contato/contato.list.html',
-                controller: function(contatoService, $state, $scope, $ionicScrollDelegate, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig, arquivoService){
+                controller: function(contatoService, $state, $scope, $ionicScrollDelegate, $filter, $ionicFilterBar, $ionicFilterBarConfig, $ionicConfig){
                     $scope.filtro = {nome:'',total:50};
                     $scope.hasFilters = false;
 
@@ -71,24 +71,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         });
                     };
 
-                    $scope.foto = function(contato){
-                      if (!contato || !contato.foto) {
-                        return undefined;
-                      }
-
-                      if (!contato.foto.localPath){
-                        contato.foto.localPath = '#';
-                        arquivoService.get(contato.foto.id, function(file){
-                          contato.foto.localPath = file.file;
-                        }, function(file){
-                          contato.foto.localPath = file.file;
-                        }, function(file){
-                          contato.foto.localPath = file.file;
-                        });
-                      }
-                      return contato.foto.localPath;
-                    };
-
                     $scope.detalhar = function(contato){
                         $state.go('contato.view', {id: contato.id});
                     };
@@ -112,28 +94,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/contato/contato.form.html',
-                controller: function($scope, contato, linkService, arquivoService){
+                controller: function($scope, contato, linkService){
                     $scope.contato = contato;
 
                     angular.extend($scope, linkService);
-
-                    $scope.foto = function(contato){
-                      if (!contato || !contato.foto) {
-                        return undefined;
-                      }
-
-                      if (!contato.foto.localPath){
-                        contato.foto.localPath = '#';
-                        arquivoService.get(contato.foto.id, function(file){
-                          contato.foto.localPath = file.file;
-                        }, function(file){
-                          contato.foto.localPath = file.file;
-                        }, function(file){
-                          contato.foto.localPath = file.file;
-                        });
-                      }
-                      return contato.foto.localPath;
-                    };
                 },
                 resolve: {
                     contato: ['contatoService', '$stateParams', function(contatoService, $stateParams){

@@ -9,6 +9,7 @@
 
         <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
         <link href="js/components/pace/pace.css" rel="stylesheet">
+        <link href="js/components/autocomplete/auto-complete.css" rel="stylesheet">
         <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="lib/angular-loading-bar/build/loading-bar.min.css" rel="stylesheet">
         <link href="lib/ionic-filter-bar/dist/ionic.filter.bar.min.css" rel="stylesheet">
@@ -66,6 +67,8 @@
         <script src="js/components/template/template.js"></script>
         <script src="js/components/filter/mask.filter.js"></script>
         <script src="js/components/unlimited-slide/unlimited-slide.directive.js"></script>
+        <script src="js/components/autocomplete/auto-complete.min.js"></script>
+        <script src="js/components/autocomplete/autocomplete.directive.js"></script>
 
         <script src="js/institucional/institucional.controller.js"></script>
         <script src="js/boletim/boletim.controller.js"></script>
@@ -156,10 +159,14 @@
                         <img class="igreja-image" alt='${nome.igreja}' ng-src="img/logo.png">
                     </ion-item>
 
-                    <ion-item ng-if="usuario" class="item item-icon-left item-icon-right user" >
-                        <span nav-clear menu-close ui-sref="alteraSenha" class='icon ion-person'></span>
+                    <ion-item ng-if="usuario" class="item item-icon-left item-avatar item-icon-right user" >
+                        <span nav-clear menu-close ui-sref="alteraFoto" class='icon ion-person' ng-if="!usuario.foto"></span>
+                        <img nav-clear menu-close ui-sref="alteraFoto" class="item-image"
+                             style="background-image: url({{localPath(usuario.foto)}})" ng-if="usuario.foto" />
+
                         <h2 nav-clear menu-close ui-sref="alteraSenha" class='menu-text'
                             title="{{'global.menu.alterar_senha' | translate}}">{{usuario.nome}}</h2>
+
                         <span ng-click='logout()' class='icon icon-right fa fa-power-off'
                               title="{{'global.menu.logout' | translate}}"></span>
                     </ion-item>

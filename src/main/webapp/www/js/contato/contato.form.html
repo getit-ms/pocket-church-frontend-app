@@ -4,7 +4,7 @@
     </ion-nav-title>
     <ion-content>
         <ion-item class="contato item-thumbnail-left">
-          <div class="item-image" style="background-image: url({{foto(contato)}})" ng-if="contato.foto"></div>
+          <div class="item-image" style="background-image: url({{localPath(contato.foto)}})" ng-if="contato.foto"></div>
           <img src="img/avatar.png" ng-if="!contato.foto">
 
             <h2>{{contato.nome}}</h2>

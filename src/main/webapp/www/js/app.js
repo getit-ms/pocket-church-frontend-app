@@ -38,6 +38,25 @@ var calvinApp = angular.module('calvinApp', [
     }
   };
 
+  $rootScope.localPath = function(arquivo){
+    if (!arquivo) {
+      return undefined;
+    }
+
+    if (!arquivo.localPath){
+      arquivo.localPath = '#';
+      arquivoService.get(arquivo.id, function(file){
+        arquivo.localPath = file.file;
+      }, function(file){
+        arquivo.localPath = file.file;
+      }, function(file){
+        arquivo.localPath = file.file;
+      });
+    }
+
+    return arquivo.localPath;
+  };
+
   $rootScope.menuSelecionado = function(menu) {
     return menu.selecionado;
   };
@@ -142,7 +161,11 @@ var calvinApp = angular.module('calvinApp', [
         total += mnu.notificacoes || 0;
       });
 
-      $cordovaBadge.set(total);
+      try {
+        $cordovaBadge.set(total);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     if ($rootScope.menu && $rootScope.menu.submenus) {

@@ -90,12 +90,16 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
         }
 
         function remove(id, callback){
+          try{
             $cordovaFile.removeFile(cordova.file.dataDirectory, 'arquivos/' + id + '.bin').then(function(){
-                $window.localStorage.removeItem('arquivo.' + id);
-                if (callback){
-                    callback();
-                }
+              $window.localStorage.removeItem('arquivo.' + id);
+              if (callback){
+                callback();
+              }
             });
+          }catch(e){
+            console.error(e);
+          }
         }
 
         function download(id, callback, tempCallback, errorCallback){
