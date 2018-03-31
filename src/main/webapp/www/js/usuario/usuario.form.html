@@ -1,0 +1,42 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>login.dados_usuario</span>
+    </ion-nav-title>
+    <ion-content>
+        <div class="card">
+          <div class="item item-body">
+            <img class="full-image" src="{{localPath(contato.foto)}}" ng-if="usuario.foto" />
+            <img class="full-image" src="img/avatar.png" ng-if="!usuario.foto" />
+            <a class="item-note">
+              <i class="fa fa-camera"></i>
+              {{'global.editar' | translate}}
+            </a>
+          </div>
+          <div class="item text-center">
+            <h2>{{usuario.nome}}</h2>
+          </div>
+        </div>
+
+        <ion-item ng-if="usuario.email" class="item-icon-left" ng-click="mailto(usuario.email)">
+            <i class="icon fa fa-envelope-square"></i>
+            {{usuario.email}}
+        </ion-item>
+        <ion-item class="item-icon-left" ng-repeat='tele in usuario.telefones' ng-click="tel(tele)">
+            <i class="icon fa fa-phone-square"></i>
+            {{tele | telefone}}
+        </ion-item>
+        <ion-item ng-if="usuario.endereco.descricao" class="item-icon-left item-text-wrap" ng-click="geo(usuario.endereco)">
+            <i class="icon fa fa-map-marker"></i>
+            {{usuario.endereco.descricao}} - {{usuario.endereco.cidade}} - {{usuario.endereco.estado}}
+        </ion-item>
+        <ion-item>
+          <a ui-sref="alteraSenha" class='button button-block button-positive' >{{'login.alterar_senha' | translate}}</a>
+        </ion-item>
+        <ion-item>
+          <a ui-sref="preferencias" class='button button-block button-positive' >{{'preferencias.preferencias' | translate}}</a>
+        </ion-item>
+        <ion-item>
+          <a click="logout()" class='button button-block button-positive' >{{'preferencias.logout' | translate}}</a>
+        </ion-item>
+    </ion-content>
+</ion-view>

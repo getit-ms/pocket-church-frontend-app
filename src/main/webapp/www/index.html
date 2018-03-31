@@ -93,6 +93,7 @@
         <script src="js/biblia/biblia.controller.js"></script>
         <script src="js/leitura/leitura.controller.js"></script>
         <script src="js/calendario/calendario.controller.js"></script>
+        <script src="js/usuario/usuario.controller.js"></script>
 
         <script src="js/service/link.service.js"></script>
         <script src="js/service/boletim.service.js"></script>
@@ -159,16 +160,13 @@
                         <img class="igreja-image" alt='${nome.igreja}' ng-src="img/logo.png">
                     </ion-item>
 
-                    <ion-item ng-if="usuario" class="item item-icon-left item-avatar item-icon-right user" >
-                        <span nav-clear menu-close ui-sref="alteraFoto" class='icon ion-person' ng-if="!usuario.foto"></span>
-                        <img nav-clear menu-close ui-sref="alteraFoto" class="item-image"
-                             style="background-image: url({{localPath(usuario.foto)}})" ng-if="usuario.foto" />
+                    <ion-item nav-clear menu-close ui-sref="usuario"
+                              ng-if="usuario" class="item item-avatar user" >
+                        <span class='item-image icon ion-person' ng-if="!usuario.foto"></span>
+                        <span class="item-image" style="background-image: url({{localPath(usuario.foto)}})" ng-if="usuario.foto" ></span>
 
-                        <h2 nav-clear menu-close ui-sref="alteraSenha" class='menu-text'
+                        <h2 class='menu-text'
                             title="{{'global.menu.alterar_senha' | translate}}">{{usuario.nome}}</h2>
-
-                        <span ng-click='logout()' class='icon icon-right fa fa-power-off'
-                              title="{{'global.menu.logout' | translate}}"></span>
                     </ion-item>
 
                       <ion-item class="item item-parent" ng-repeat-start="mnu in menu.submenus"

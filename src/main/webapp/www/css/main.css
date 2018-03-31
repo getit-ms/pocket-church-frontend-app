@@ -1,22 +1,22 @@
 .transparent {
-    background: rgba(0,0,0,0.9) !important;
+  background: rgba(0,0,0,0.9) !important;
 }
 
 .video-modal {
-    width: 100% !important;
-    height: 100%;
-    top: 0 !important;
-    left: 0 !important;
-    text-align:center;
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important;
+  text-align:center;
 }
 
 .video-modal iframe {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 
-    position: absolute;
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .banner-modal {
@@ -28,16 +28,16 @@
 }
 
 @media (max-width: 679px) {
-    .active .modal-backdrop-bg {
-        opacity: .9;
-    }
+  .active .modal-backdrop-bg {
+    opacity: .9;
+  }
 
-    .modal-backdrop-bg {
-        -webkit-transition: opacity 300ms ease-in-out;
-        transition: opacity 300ms ease-in-out;
-        background-color: rgba(0,0,0,0.9);
-        opacity: 0;
-    }
+  .modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: rgba(0,0,0,0.9);
+    opacity: 0;
+  }
 }
 
 .leitura h1 { font-size: 90px !important; margin: 5px 0 5px }
@@ -165,13 +165,33 @@ h2.title {
 
 .main-menu .item.item-avatar {
   padding-left: 55px;
-  line-height: 55px;
+  line-height: 50px;
   min-height: 55px;
+  max-height: 55px;
 }
 
-.main-menu .item.item-avatar img:first-child {
+.main-menu .item.item-avatar .item-content {
+  min-height: 20px;
+  max-height: 20px;
+  padding: 1px;
+}
+
+.main-menu .item.item-avatar .item-image {
   top: 11px;
   left: 16px;
   max-width: 30px;
   max-height: 30px;
+  line-height:  30px;
+}
+
+.usuario .item-note {
+  background-color: rgba(200, 200, 200, 0.3);
+  padding: 5px 10px;
+  position:absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.usuario .item-note .icon {
+  margin-right: 5px;
 }
