@@ -102,6 +102,8 @@ var calvinApp = angular.module('calvinApp', [
   };
 
   $ionicPlatform.on("resume", function(){
+    $rootScope.offline = !$cordovaNetwork.isOnline();
+
     arquivoService.init();
     database.init();
 
@@ -193,6 +195,8 @@ var calvinApp = angular.module('calvinApp', [
   };
 
   $rootScope.initApp = function () {
+    $rootScope.offline = !$cordovaNetwork.isOnline();
+
     arquivoService.init();
     database.init();
 

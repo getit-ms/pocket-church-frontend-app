@@ -160,14 +160,14 @@
                         <img class="igreja-image" alt='${nome.igreja}' ng-src="img/logo.png">
                     </ion-item>
 
-                    <ion-item nav-clear menu-close ui-sref="usuario"
+                    <div nav-clear menu-close ui-sref="usuario"
                               ng-if="usuario" class="item item-avatar user" >
                         <span class='item-image icon ion-person' ng-if="!usuario.foto"></span>
                         <span class="item-image" style="background-image: url({{localPath(usuario.foto)}})" ng-if="usuario.foto" ></span>
 
                         <h2 class='menu-text'
                             title="{{'global.menu.alterar_senha' | translate}}">{{usuario.nome}}</h2>
-                    </ion-item>
+                    </div>
 
                       <ion-item class="item item-parent" ng-repeat-start="mnu in menu.submenus"
                                 ng-if="mnu.submenus.length" title="{{mnu.nome}}" ng-click="toggleMenu(mnu)"

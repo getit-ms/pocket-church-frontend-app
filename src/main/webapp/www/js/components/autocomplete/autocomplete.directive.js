@@ -6,7 +6,7 @@ calvinApp.directive('autocomplete', function(){
     restrict: "A",
     link: function(scope, element, attrs, ctrl, transclude) {
 
-      new autoComplete(angular.extend(
+      scope.ac = new autoComplete(angular.extend(
         {},
         scope.autocomplete || {},
         {
@@ -17,7 +17,9 @@ calvinApp.directive('autocomplete', function(){
     },
     controller: ['$scope', '$compile', function($scope, $compile) {
 
-
+      $scope.$on('$destroy', function() {
+        $scope.ac.destroy();
+      })
 
     }]
   };

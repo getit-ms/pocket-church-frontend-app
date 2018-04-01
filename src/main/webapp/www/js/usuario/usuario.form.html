@@ -2,9 +2,9 @@
     <ion-nav-title>
         <span translate>login.dados_usuario</span>
     </ion-nav-title>
-    <ion-content>
-        <div class="card">
-          <div class="item item-body">
+    <ion-content class="usuario">
+        <div class="card" (click)="trocarFoto()">
+          <div class="item">
             <img class="full-image" src="{{localPath(contato.foto)}}" ng-if="usuario.foto" />
             <img class="full-image" src="img/avatar.png" ng-if="!usuario.foto" />
             <a class="item-note">

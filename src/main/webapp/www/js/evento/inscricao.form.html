@@ -12,18 +12,18 @@
             <label class='input-label'>{{'evento.vagas_restantes' | translate}}</label>
             {{evento.vagasRestantes - inscricoes.length}}
         </div>
-        
+
         <div ng-repeat="inscricao in inscricoes">
             <div class='item item-divider item-icon-right'>
                 {{'evento.inscrito' | translate:{index:inscricoes.indexOf(inscricao) + 1} }}
                 <a class="icon" ng-if='inscricoes.length > 1' ng-click='removeInscricao(inscricao)'>
-                    <i class='fa fa-trash'></i>  
+                    <i class='fa fa-trash'></i>
                 </a>
             </div>
-            
+
             <div class='item item-input' >
                 <label class='input-label' >{{'evento.nome' | translate }}</label>
-                <input type='text' ng-model='inscricao.nomeInscrito' />
+                <input type='text' ng-model='inscricao.nomeInscrito' autocomplete="datasets[inscricao]" />
             </div>
             <div class='item item-input' >
                 <label class='input-label' >{{'evento.email' | translate }}</label>
@@ -31,18 +31,18 @@
             </div>
             <div class='item item-input' >
                 <label class='input-label' >{{'evento.telefone' | translate }}</label>
-                <input type='tel' autocomplete="off" autocorrect="off" autocapitalize="off" 
+                <input type='tel' autocomplete="off" autocorrect="off" autocapitalize="off"
                        spellcheck="false" telefone ng-model='inscricao.telefoneInscrito' />
             </div>
         </div>
-        
+
         <div class='item' >
-            <button class='button button-block button-positive icon ion-plus-circled' 
+            <button class='button button-block button-positive icon ion-plus-circled'
                     ng-if='inscricoes.length < evento.vagasRestantes' ng-click='addInscricao()'>
                 {{'evento.adicionar_inscrito' | translate}}
             </button>
         </div>
-        
+
         <div class='item item-divider' >
             {{'evento.concluir_inscricao' | translate}}
         </div>

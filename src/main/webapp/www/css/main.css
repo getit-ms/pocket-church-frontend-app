@@ -185,13 +185,16 @@ h2.title {
 }
 
 .usuario .item-note {
-  background-color: rgba(200, 200, 200, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   padding: 5px 10px;
-  position:absolute;
-  bottom: 5px;
-  right: 5px;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  color: #fff;
 }
 
 .usuario .item-note .icon {
   margin-right: 5px;
+  color: #fff;
 }
+
