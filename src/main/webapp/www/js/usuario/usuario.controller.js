@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/usuario/usuario.form.html',
-        controller: function($scope, linkService, loadingService, $filter, $ionicActionSheet, acessoService, arquivoService){
+        controller: function($scope, linkService, loadingService, $filter, $ionicActionSheet, acessoService, arquivoService, message){
           angular.extend($scope, linkService);
 
           $scope.trocarFoto = function() {
@@ -14,8 +14,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
             $ionicActionSheet.show({
               buttons: [
-                'Tirar Foto',
-                'Escolher da Galeria'
+                {text:'Tirar Foto'},
+                {text:'Escolher da Galeria'}
               ],
               cancelText: $filter('translate')('global.cancelar'),
               buttonClicked: function(index) {
@@ -29,7 +29,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                   var options = {
                     // Some common settings are 20, 50, and 100
                     quality: 50,
-                    destinationType: Camera.DestinationType.FILE_URI,
+                    destinationType: Camera.DestinationType.DATA_URL,
                     // In this app, dynamically set the picture source, Camera or photo gallery
                     sourceType: type,
                     encodingType: Camera.EncodingType.JPEG,
@@ -47,16 +47,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       $scope.usuario.foto = arquivo;
                       loadingService.hide();
                     }, function(error) {
+                      message({title:'global.title.500',template:'mensagens.MSG-052'});
                       console.error(error);
                       loadingService.hide();
                     });
 
                   }, function cameraError(error) {
-
+                    message({title:'global.title.500',template:'mensagens.MSG-051'});
                     console.error(error);
-
                     loadingService.hide();
-
                   }, options);
                 }
                 return true;

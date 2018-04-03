@@ -1,6 +1,10 @@
-calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'config', '$window', '$cordovaNetwork', '$q',
-    function($cordovaFileTransfer, $cordovaFile, config, $window, $cordovaNetwork, $q){
+calvinApp.service('arquivoService', ['Restangular', '$cordovaFileTransfer', '$cordovaFile', 'config', '$window', '$cordovaNetwork', '$q',
+    function(Restangular, $cordovaFileTransfer, $cordovaFile, config, $window, $cordovaNetwork, $q){
         this.timeout = 1000 * 60 * 60 * 24 * 5;
+
+        this.api = function(){
+          return Restangular.all('arquivo');
+        };
 
         this.init = function(){
             var deferred = $q.defer();
