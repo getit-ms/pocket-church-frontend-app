@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/usuario/usuario.form.html',
-        controller: function($scope, linkService, loadingService, $ionicActionSheet){
+        controller: function($scope, linkService, loadingService, $filter, $ionicActionSheet, acessoService, arquivoService){
           angular.extend($scope, linkService);
 
           $scope.trocarFoto = function() {
@@ -40,9 +40,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                   navigator.camera.getPicture(function cameraSuccess(imageUri) {
 
-                    $scope.usuario.foto = {localPath: 'data:image/jpeg;base64,' + imageUri};
-
-                    loadingService.hide();
+                    arquivoService.upload({
+                      fileName: $scope.usuario.nome + '.jpg',
+                      data: imageUri
+                    }, function(arquivo) {
+                      $scope.usuario.foto = arquivo;
+                      loadingService.hide();
+                    }, function(error) {
+                      console.error(error);
+                      loadingService.hide();
+                    });
 
                   }, function cameraError(error) {
 

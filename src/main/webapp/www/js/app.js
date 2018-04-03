@@ -25,7 +25,8 @@ var calvinApp = angular.module('calvinApp', [
   'youtube-embed',
   'ion-gallery'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-                 arquivoService, cacheService, acessoService, boletimService, $cordovaBadge, bibliaService, database, hinoService, leituraService, $q) {
+                 arquivoService, cacheService, $cordovaNetwork, acessoService, boletimService, $cordovaBadge, bibliaService,
+                 database, hinoService, leituraService, $q) {
   $rootScope.toggleMenu = function(menu) {
     if ($rootScope._menuSelecionado) {
       $rootScope._menuSelecionado.selecionado = false;

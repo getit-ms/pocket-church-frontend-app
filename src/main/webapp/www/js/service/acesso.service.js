@@ -18,6 +18,10 @@ calvinApp.service('acessoService', ['Restangular', 'configService', function(Res
           });
         };
 
+        this.atualizaFoto = function(arquivo, callback) {
+          this.api().one('foto').customPUT(arquivo).then(callback);
+        };
+
         this.logout = function(callback, errorCallback){
             this.api().one('logout').put().then(callback, errorCallback);
         };

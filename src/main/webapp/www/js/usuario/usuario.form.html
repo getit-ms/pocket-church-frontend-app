@@ -3,7 +3,7 @@
         <span translate>login.dados_usuario</span>
     </ion-nav-title>
     <ion-content class="usuario">
-        <div class="card" (click)="trocarFoto()">
+        <div class="card" ng-click="trocarFoto()">
           <div class="item">
             <img class="full-image" src="{{localPath(contato.foto)}}" ng-if="usuario.foto" />
             <img class="full-image" src="img/avatar.png" ng-if="!usuario.foto" />
@@ -30,13 +30,13 @@
             {{usuario.endereco.descricao}} - {{usuario.endereco.cidade}} - {{usuario.endereco.estado}}
         </ion-item>
         <ion-item>
-          <a ui-sref="alteraSenha" class='button button-block button-positive' >{{'login.alterar_senha' | translate}}</a>
+          <button type="button" ui-sref="alteraSenha" class='button button-block button-positive' >{{'login.alterar_senha' | translate}}</button>
         </ion-item>
         <ion-item>
-          <a ui-sref="preferencias" class='button button-block button-positive' >{{'preferencias.preferencias' | translate}}</a>
+          <button type="button" ui-sref="preferencias" class='button button-block button-positive' >{{'preferencias.preferencias' | translate}}</button>
         </ion-item>
         <ion-item>
-          <a click="logout()" class='button button-block button-positive' >{{'preferencias.logout' | translate}}</a>
+          <button type="button" click="logout()" class='button button-block button-positive' >{{'preferencias.logout' | translate}}</button>
         </ion-item>
     </ion-content>
 </ion-view>

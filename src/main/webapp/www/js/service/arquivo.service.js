@@ -24,6 +24,10 @@ calvinApp.service('arquivoService', ['$cordovaFileTransfer', '$cordovaFile', 'co
             return deferred.promise;
         };
 
+        this.upload = function(arquivo, success, error) {
+          this.api().one('upload/base64').customPOST(arquivo).then(success, error);
+        };
+
         this.get = function(id, callback, tempCallback, errorCallback){
             if (!id || !callback) console.error("arquivoService.get: id and callback are required");
 
