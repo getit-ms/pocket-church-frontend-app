@@ -11,7 +11,6 @@ angular.module('underscore', [])
 var calvinApp = angular.module('calvinApp', [
   'ionic',
   'ionic.service.core',
-  'ionic.service.push',
   'pascalprecht.translate',
   'ngCordova',
   'angularUtils.directives.uiBreadcrumbs',
