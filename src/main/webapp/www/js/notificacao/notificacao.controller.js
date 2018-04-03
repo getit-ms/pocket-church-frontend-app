@@ -164,9 +164,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         if ($scope.excluir.todos){
                                             notificacaoService.clear(function(){
                                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
+                                                $scope.cancelarExclusao();
                                                 $scope.$broadcast('pagination.search');
                                                 loadingService.hide();
                                             }, function(){
+                                                $scope.cancelarExclusao();
                                                 loadingService.hide();
                                             });
                                         }else{

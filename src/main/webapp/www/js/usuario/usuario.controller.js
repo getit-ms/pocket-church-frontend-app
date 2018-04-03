@@ -10,8 +10,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
           $scope.trocarFoto = function() {
 
-            loadingService.hide();
-
             $ionicActionSheet.show({
               buttons: [
                 {text:'Tirar Foto'},
@@ -20,6 +18,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
               cancelText: $filter('translate')('global.cancelar'),
               buttonClicked: function(index) {
                 if (index >= 0) {
+
+                  loadingService.show();
 
                   var type = [
                     Camera.PictureSourceType.CAMERA,
@@ -44,20 +44,32 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       fileName: $scope.usuario.nome + '.jpg',
                       data: imageUri
                     }, function(arquivo) {
-                      $scope.usuario.foto = arquivo;
-                      loadingService.hide();
+
+                      acessoService.atualizaFoto(arquivo, function() {
+
+                        $scope.usuario.foto = arquivo;
+                        loadingService.hide();
+                        message({title:'global.title.200',template:'mensagens.MSG-001'});
+
+                      }, function(error) {
+                        console.error(error);
+                        message({title:'global.title.500',template:'mensagens.MSG-052'});
+                        loadingService.hide();
+                      });
+
                     }, function(error) {
-                      message({title:'global.title.500',template:'mensagens.MSG-052'});
                       console.error(error);
+                      message({title:'global.title.500',template:'mensagens.MSG-052'});
                       loadingService.hide();
                     });
 
                   }, function cameraError(error) {
-                    message({title:'global.title.500',template:'mensagens.MSG-051'});
                     console.error(error);
+                    message({title:'global.title.500',template:'mensagens.MSG-051'});
                     loadingService.hide();
                   }, options);
                 }
+
                 return true;
               }
             });
