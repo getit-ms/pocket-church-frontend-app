@@ -72,8 +72,8 @@
        "NSPhotoLibraryUsageDescription": "Acessa a galeria para alterar foto do membro logado",
        "NSPhotoLibraryAddUsageDescription": "Acessa a galeria para alterar foto do membro logado"
      },
-    "locator": "cordova-plugin-camera@4.0.2",
-    "id": "cordova-plugin-camera@4.0.2"
+    "locator": "cordova-plugin-camera@2.4.1",
+    "id": "cordova-plugin-camera@2.4.1"
     }
   ],
   "cordovaPlatforms": [
