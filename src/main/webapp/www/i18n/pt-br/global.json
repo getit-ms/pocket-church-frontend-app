@@ -367,6 +367,7 @@
     },
     "calendario":{
       "agenda":"Agenda da Igreja",
+      "dia":"Dia {dia}",
       "salvar_evento":"Salvar Evento"
     },
     "biblia":{

@@ -23,7 +23,7 @@
 
       <div class='item item-input' >
         <label class='input-label' >{{'ebd.nome' | translate }}</label>
-        <input type='text' ng-model='inscricao.nomeInscrito' autocomplete="datasets[inscricao]" />
+        <input type='text' ng-model='inscricao.nomeInscrito' autocomplete="datasets[inscricoes.indexOf(inscricao)]" />
       </div>
       <div class='item item-input' >
         <label class='input-label' >{{'ebd.email' | translate }}</label>

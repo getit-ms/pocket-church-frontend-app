@@ -116,7 +116,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 };
               }
 
-              $scope.datasets[inscricao] = {
+              $scope.datasets[$scope.inscricoes.length] = {
                 minChars: 3,
                 inscricao: inscricao,
                 onSelect: function(contato)	{

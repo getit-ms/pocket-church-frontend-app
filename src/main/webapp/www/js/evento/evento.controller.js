@@ -114,12 +114,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 };
               }
 
-              $scope.datasets[inscricao] = {
+              $scope.datasets[$scope.inscricoes.length] = {
                 minChars: 3,
                 inscricao: inscricao,
-                onSelect: function(event, term, item)	{
-                  var contato = angular.fromJson(item.getAttribute('data-obj'));
-
+                onSelect: function(contato)	{
                   var inscricao = this.inscricao;
 
                   inscricao.nomeInscrito = contato.nome;
@@ -132,7 +130,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                   });
                 },
                 renderItem: function(item, search) {
-                  return '<div class="autocomplete-suggestion item" data-obj=\'' + angular.toJson(item) + '\' data-val=\'' + item.nome + '\'><h2> ' + item.nome + '</h2><p>' + item.email + '</p></div>'
+                  return '<div class="item"><h2> ' + item.nome + '</h2><p>' + item.email + '</p></div>'
                 },
                 source: function(term, suggest){
                   contatoService.busca({nome:term}, function(contatos) {

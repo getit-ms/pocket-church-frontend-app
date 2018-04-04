@@ -36,7 +36,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     targetHeight: 300,
                     encodingType: Camera.EncodingType.JPEG,
                     mediaType: Camera.MediaType.PICTURE,
-                    allowEdit: true,
+                    allowEdit: false,
                     correctOrientation: true  //Corrects Android orientation quirks
                   };
 
@@ -65,9 +65,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       loadingService.hide();
                     });
 
-                  }, function cameraError(error) {
+                  }, function (error) {
                     console.error(error);
-                    message({title:'global.title.500',template:'mensagens.MSG-051'});
                     loadingService.hide();
                   }, options);
                 }

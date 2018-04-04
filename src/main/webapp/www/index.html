@@ -127,8 +127,7 @@
     <ion-side-menus>
         <ion-side-menu-content class="post-size-14px">
             <ion-nav-bar class="bar app-top-bar">
-                <ion-nav-back-button>
-                </ion-nav-back-button>
+                <ion-nav-back-button title="{{'global.voltar' | translate}}"></ion-nav-back-button>
                 <ion-nav-buttons side="left">
                     <button class="button button-icon button-clear ion-navicon" menu-toggle="left"
                             title="{{'global.menu.menu' | translate}}">
@@ -153,25 +152,26 @@
         <ion-side-menu side="left" class="main-menu" expose-aside-when="large">
             <ion-content>
                 <ion-list>
-                    <ion-item href='' class='menu-header'>
+                    <ion-item href='' class='menu-header' role="presentation">
                         <img class="igreja-image" alt='${nome.igreja}' ng-src="img/logo.png">
                     </ion-item>
 
                     <div nav-clear menu-close ui-sref="usuario"
+                         aria-labelledby="dados_usuario" role="group"
                               ng-if="usuario" class="item item-avatar user" >
-                        <span class='item-image icon ion-person' ng-if="!usuario.foto"></span>
-                        <span class="item-image" style="background-image: url({{localPath(usuario.foto)}})" ng-if="usuario.foto" ></span>
+                        <span class='item-image icon ion-person' role="presentation" ng-if="!usuario.foto"></span>
+                        <span class="item-image" style="background-image: url({{localPath(usuario.foto)}})" role="presentation" ng-if="usuario.foto" ></span>
 
-                        <h2 class='menu-text'
-                            title="{{'global.menu.alterar_senha' | translate}}">{{usuario.nome}}</h2>
+                        <h2 class='menu-text' id="dados_usuario">{{usuario.nome}}</h2>
                     </div>
 
                       <ion-item class="item item-parent" ng-repeat-start="mnu in menu.submenus"
+                                aria-labelledby="menu_{{menu.submenus.indexOf(menu)}}" role="group"
                                 ng-if="mnu.submenus.length" title="{{mnu.nome}}" ng-click="toggleMenu(mnu)"
                                 ng-class="{active: mnu.selecionado,'item-icon-left':mnu.icone,'item-icon-right':!mnu.notificacoes}" >
-                        <a href="javascript:void(0)" class="item-content" >
-                          <span class='icon {{mnu.icone}}' ng-if="mnu.icone"></span>
-                          <h2 class="menu-text">{{mnu.nome}}</h2>
+                        <a href="javascript:void(0)" class="item-content" title="{{mnu.nome}}">
+                          <span class='icon {{mnu.icone}}' role="presentation" ng-if="mnu.icone"></span>
+                          <h2 class="menu-text" id="menu_{{menu.submenus.indexOf(menu)}}" >{{mnu.nome}}</h2>
                           <span ng-if="mnu.notificacoes" class="badge badge-stable pull-right">
                             {{mnu.notificacoes}}
                           </span>
@@ -182,17 +182,18 @@
                       </ion-item>
 
                       <ion-item nav-clear menu-close class="item" ng-class="{'item-icon-left':mnu.icone}"
-                                ng-if="!mnu.submenus.length"
-                                ui-sref="{{mnu.link}}" title="{{mnu.nome}}">
-                        <span class='icon {{mnu.icone}}' ng-if="mnu.icone"></span>
-                        <h2 class="menu-text">{{mnu.nome}}</h2>
+                                aria-labelledby="menu_{{menu.submenus.indexOf(menu)}}" role="group"
+                                ng-if="!mnu.submenus.length" ui-sref="{{mnu.link}}" title="{{mnu.nome}}">
+                        <span class='icon {{mnu.icone}}' role="presentation" ng-if="mnu.icone"></span>
+                        <h2 class="menu-text" id="menu_{{menu.submenus.indexOf(menu)}}" >{{mnu.nome}}</h2>
                       </ion-item>
 
                       <ion-item class="item-accordion item" ng-class="{'item-icon-left':sbm.icone}" ng-repeat-end
+                                aria-labelledby="submenu_{{menu.submenus.indexOf(menu)}}_{{mnu.submenus.indexOf(sbm)}}" role="group"
                                 ng-repeat="sbm in mnu.submenus" ng-show="mnu.selecionado"
                                 nav-clear menu-close ui-sref="{{sbm.link}}" title="{{sbm.nome}}">
-                        <span class='icon {{sbm.icone}}' ng-if="sbm.icone"></span>
-                        <h2 class="menu-text">{{sbm.nome}}</h2>
+                        <span class='icon {{sbm.icone}}' role="presentation" ng-if="sbm.icone"></span>
+                        <h2 class="menu-text" id="submenu_{{menu.submenus.indexOf(menu)}}_{{mnu.submenus.indexOf(sbm)}}">{{sbm.nome}}</h2>
                         <span ng-if="sbm.notificacoes" class="badge badge-stable pull-right">{{sbm.notificacoes}}</span>
                       </ion-item>
 
