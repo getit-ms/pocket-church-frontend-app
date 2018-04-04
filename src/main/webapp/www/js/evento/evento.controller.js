@@ -87,7 +87,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
       'content@':{
         templateUrl: 'js/evento/inscricao.form.html',
         controller: function(eventoService, $scope, evento, $state, $filter,
-                             message, $window, $ionicHistory, loadingService){
+                             message, $window, $ionicHistory, loadingService, contatoService){
           $scope.evento = evento;
 
           $scope.$on('$ionicView.enter', function(){
@@ -95,6 +95,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
           });
 
           $scope.clear = function(){
+            $scope.datasets = {};
             $scope.inscricoes = [];
             $scope.addInscricao();
           };

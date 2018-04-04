@@ -95,11 +95,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
           });
 
           $scope.clear = function(){
+            $scope.datasets = {};
             $scope.inscricoes = [];
             $scope.addInscricao();
           };
-
-          $scope.datasets = {};
 
           $scope.addInscricao = function(){
             if ($scope.ebd.vagasRestantes > $scope.inscricoes.length){

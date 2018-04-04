@@ -66,15 +66,7 @@
       "locator": "cordova-plugin-calendar@4.6.0",
       "id": "cordova-plugin-calendar@4.6.0"
     },
-    {
-     "variable": {
-       "NSCameraUsageDescription": "Acesso a camera para alterar foto do membro logado",
-       "NSPhotoLibraryUsageDescription": "Acessa a galeria para alterar foto do membro logado",
-       "NSPhotoLibraryAddUsageDescription": "Acessa a galeria para alterar foto do membro logado"
-     },
-    "locator": "cordova-plugin-camera@2.4.1",
-    "id": "cordova-plugin-camera@2.4.1"
-    }
+    "cordova-plugin-camera@2.4.1"
   ],
   "cordovaPlatforms": [
     "android",

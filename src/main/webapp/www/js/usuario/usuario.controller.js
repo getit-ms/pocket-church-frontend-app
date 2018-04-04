@@ -32,8 +32,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     destinationType: Camera.DestinationType.DATA_URL,
                     // In this app, dynamically set the picture source, Camera or photo gallery
                     sourceType: type,
-                    targetWidth: 300,
-                    targetHeight: 300,
+                    targetWidth: 500,
+                    targetHeight: 500,
                     encodingType: Camera.EncodingType.JPEG,
                     mediaType: Camera.MediaType.PICTURE,
                     allowEdit: false,
