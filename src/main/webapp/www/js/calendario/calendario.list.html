@@ -17,7 +17,7 @@
     </div>
     <ion-list ng-repeat-end>
       <ion-item class="item-icon-left" ng-class="{'hoje':dia.hoje}">
-        <i class="icon" title="{{'calendario.dia' | translate:{dia: dia.dia}}}">{{dia.dia | zpad:2}}</i>
+        <i class="icon" title="{{'calendario.dia' | translate:{dia: dia.dia} }}">{{dia.dia | zpad:2}}</i>
 
         <ion-list>
           <ion-item class="item-text-wrap" ng-repeat="evento in dia.eventos" ng-click="adicionarNaAgenda(evento)" >
