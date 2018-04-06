@@ -95,7 +95,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
           });
 
           $scope.clear = function(){
-            $scope.datasets = {};
+            $scope.datasets = [];
             $scope.inscricoes = [];
             $scope.addInscricao();
           };
