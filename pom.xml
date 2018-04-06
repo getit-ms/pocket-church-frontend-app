@@ -72,7 +72,7 @@
                                 <exclude>**/*.html</exclude>
                                 <exclude>**/*.js</exclude>
                                 <exclude>**/*.xml</exclude>
-                                <exclude>**/*.json</exclude>
+                                <exclude>**/fastlane/**</exclude>
                             </excludes>
                         </resource>
                     </webResources>    
