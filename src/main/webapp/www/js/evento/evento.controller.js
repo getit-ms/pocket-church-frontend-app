@@ -149,7 +149,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
           };
 
           $scope.removeInscricao = function(inscricao){
-            $scope.inscricoes.splice($scope.inscricoes.indexOf(inscricao), 1);
+            var index = $scope.inscricoes.indexOf(inscricao);
+            $scope.inscricoes.splice(index, 1);
+            $scope.datasets.splice(index, 1);
           };
 
           $scope.conclui = function(){
