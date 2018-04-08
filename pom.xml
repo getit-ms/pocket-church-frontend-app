@@ -62,6 +62,7 @@
                                 <include>**/*.js</include>
                                 <include>**/*.xml</include>
                                 <include>**/*.json</include>
+                                <include>**/fastlane/**</include>
                             </includes>
                         </resource>
                         <resource>

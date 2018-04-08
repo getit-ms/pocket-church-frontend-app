@@ -38,6 +38,16 @@ var calvinApp = angular.module('calvinApp', [
     }
   };
 
+  $rootScope.$on( "$stateChangeSuccess", function( event, toState, toParams, fromState, fromParams ) {
+    var body = angular.element(window.document.body);
+
+    if (fromState && fromState.name) {
+      body.removeClass( 'route-' + fromState.name.replace( /\./g, '-' ) );
+    }
+
+    body.addClass( 'route-' + toState.name.replace( /\./g, '-' ) );
+  });
+
   $rootScope.localPath = function(arquivo){
     if (!arquivo) {
       return undefined;
