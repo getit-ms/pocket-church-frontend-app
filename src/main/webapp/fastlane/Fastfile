@@ -19,7 +19,7 @@ platform :ios do
     # This will retrofit any existing schemes in fastlane/ionic/config/ios/ui-tests/
     #
     require("./configure_entitlements.rb")
-    sh("cp ../../../pocket-church.entitlements ../${nomeAplicativo.igreja}/Entitlements-Release.plist")
+    sh("cp -f ../../../Entitlements-*.plist ../${nomeAplicativo.igreja}/")
   end
 
   lane :build_ios do
