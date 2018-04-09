@@ -18,7 +18,7 @@ platform :ios do
     #
     # This will retrofit any existing schemes in fastlane/ionic/config/ios/ui-tests/
     #
-    sh("cp ../../../pocket-church.entitlements ./${nomeAplicativo.igreja}")
+    sh("cp ../../../pocket-church.entitlements ../${nomeAplicativo.igreja}")
     require("./configure_entitlements.rb")
   end
 
@@ -31,6 +31,6 @@ platform :ios do
     enable_automatic_code_signing(path: "${nomeAplicativo.igreja}.xcodeproj")
     gym(xcargs: "-allowProvisioningUpdates", export_method: "app-store")
 
-    upload_to_testflight
+    upload_to_testflight(skip_waiting_for_build_processing)
   end
 end
