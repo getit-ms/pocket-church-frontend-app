@@ -1,12 +1,12 @@
 {
     "ios": {
         "debug": {
-            "codeSignIdentity": "iPhone Development",
+            "codeSignIdentity": "Development",
             "developmentTeam": "${apple.team.id}",
             "packageType": "development"
         },
         "release": {
-            "codeSignIdentity": "iPhone Distribution",
+            "codeSignIdentity": "Apple Store",
             "developmentTeam": "${apple.team.id}",
             "packageType": "app-store"
         }

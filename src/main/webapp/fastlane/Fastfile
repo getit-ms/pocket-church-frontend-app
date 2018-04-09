@@ -18,23 +18,19 @@ platform :ios do
     #
     # This will retrofit any existing schemes in fastlane/ionic/config/ios/ui-tests/
     #
-    sh("cp ./pocket-church.entitlements/* ./platforms/ios")
-    configure_entitlements
-
-    ionic_ios_snapshot(
-    	team_id: "${apple.team.id}"
-    	bundle_id: "${pacote.app}"
-    )
+    sh("cp ../../pocket-church.entitlements ./${nomeAplicativo.igreja}")
+    require("/.configure_entitlements.rb")
   end
 
-  lane :custom_lane do
+  lane :build_ios do
     # add actions here: https://docs.fastlane.tools/actions
 
-    snapshot(
-          output_simulator_logs: true,
-          reinstall_app: false,
-          erase_simulator: true,
-          scheme: "Screenshots" # The name of a scheme to use, one that you generated with ionic_ios_config_snapshot
-        )
+    get_certificates
+    get_provisioning_profile
+
+    enable_automatic_code_signing(path: "${nomeAplicativo.igreja}.xcodeproj")
+    gym(scheme: "${nomeAplicativo.igreja}", xcargs: "-allowProvisioningUpdates", export_method: "app-store")
+
+    upload_to_testflight
   end
 end
