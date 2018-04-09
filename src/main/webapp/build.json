@@ -1,7 +1,7 @@
 {
     "ios": {
         "debug": {
-            "codeSignIdentity": "Development",
+            "codeSignIdentity": "iPhone Developer",
             "developmentTeam": "${apple.team.id}",
             "packageType": "development"
         },
