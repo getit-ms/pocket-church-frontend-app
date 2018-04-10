@@ -33,4 +33,10 @@ platform :ios do
 
     upload_to_testflight(skip_waiting_for_build_processing: true)
   end
+
+  lane :build_android do
+    # add actions here: https://docs.fastlane.tools/actions
+
+    upload_to_play_store(track: 'beta', apk: 'build/outputs/apk/android-release-final.apk')
+  end
 end
