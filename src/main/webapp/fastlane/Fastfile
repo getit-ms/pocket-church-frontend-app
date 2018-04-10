@@ -14,16 +14,10 @@ default_platform(:ios)
 platform :ios do
   desc "Trata iOS"
 
-  before_all do
-    #
-    # This will retrofit any existing schemes in fastlane/ionic/config/ios/ui-tests/
-    #
-    require("./configure_entitlements.rb")
-    sh("cp -f ../../../Entitlements-*.plist ../${nomeAplicativo.igreja}/")
-  end
-
   lane :build_ios do
     # add actions here: https://docs.fastlane.tools/actions
+    require("./configure_entitlements.rb")
+    sh("cp -f ../../../Entitlements-*.plist ../${nomeAplicativo.igreja}/")
 
     get_certificates
     get_provisioning_profile
