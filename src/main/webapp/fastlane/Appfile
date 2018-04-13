@@ -4,5 +4,5 @@ apple_id("${apple.id}") # Your Apple email address
 itc_team_id("${apple.itc.id}")
 team_id("${apple.team.id}")
 
-json_key_file "../fastlane/acesso-android.json"
+json_key_file "./fastlane/acesso-android.json"
 package_name "${pacote.app}"
