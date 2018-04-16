@@ -559,7 +559,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
         $ionicViewService.nextViewOptions({
           disableBack: true
         });
-        $ionicSideMenuDelegate.toggleLeft();
+
         $state.go('login');
       };
 

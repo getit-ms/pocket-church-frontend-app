@@ -87,16 +87,17 @@ h2.title {
   display: block !important;
 }
 
-.main-menu .item.item-parent.active {
-  box-shadow: 0 3px 5px;
-}
 
 .main-menu .item.active .icon:before {
   background-color: transparent !important;
 }
 
+.calvin .main-menu .item.active {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
 .calvin .main-menu .item.item-accordion {
-  background-color: rgba(0, 0, 0, 0.15) !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 
