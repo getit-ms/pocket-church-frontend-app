@@ -1,63 +1,65 @@
 <ion-view>
-    <ion-nav-title>
-        <span translate>evento.inscricao</span>
-    </ion-nav-title>
-    <ion-content>
-        <div class="item">
-            <h2>
-                {{evento.nome }}
-            </h2>
+  <ion-nav-title>
+    <span translate>evento.inscricao</span>
+  </ion-nav-title>
+  <ion-content>
+    <div class="item">
+      <h2>
+        {{evento.nome }}
+      </h2>
+    </div>
+    <div class='item item-input' >
+      <label class='input-label'>{{'evento.vagas_restantes' | translate}}</label>
+      {{evento.vagasRestantes - inscricoes.length}}
+    </div>
+
+    <form id="inscricoes_form" name="inscricoes_form" ng-submit="conclui(this.inscricoes_form)">
+      <div ng-repeat="inscricao in inscricoes">
+        <div class='item item-divider item-icon-right'>
+          {{'evento.inscrito' | translate:{index:inscricoes.indexOf(inscricao) + 1} }}
+          <a class="icon" ng-if='inscricoes.length > 1' ng-click='removeInscricao(inscricao)'>
+            <i class='fa fa-trash'></i>
+          </a>
+        </div>
+
+        <div class='item item-input' >
+          <label class='input-label' >{{'evento.nome' | translate }}</label>
+          <input type='text' required ng-model='inscricao.nomeInscrito' autocomplete="datasets[inscricoes.indexOf(inscricao)]" />
         </div>
         <div class='item item-input' >
-            <label class='input-label'>{{'evento.vagas_restantes' | translate}}</label>
-            {{evento.vagasRestantes - inscricoes.length}}
-        </div>
-
-        <div ng-repeat="inscricao in inscricoes">
-            <div class='item item-divider item-icon-right'>
-                {{'evento.inscrito' | translate:{index:inscricoes.indexOf(inscricao) + 1} }}
-                <a class="icon" ng-if='inscricoes.length > 1' ng-click='removeInscricao(inscricao)'>
-                    <i class='fa fa-trash'></i>
-                </a>
-            </div>
-
-            <div class='item item-input' >
-                <label class='input-label' >{{'evento.nome' | translate }}</label>
-                <input type='text' ng-model='inscricao.nomeInscrito' autocomplete="datasets[inscricoes.indexOf(inscricao)]" />
-            </div>
-            <div class='item item-input' >
-                <label class='input-label' >{{'evento.email' | translate }}</label>
-                <input type='email' ng-model='inscricao.emailInscrito' />
-            </div>
-            <div class='item item-input' >
-                <label class='input-label' >{{'evento.telefone' | translate }}</label>
-                <input type='tel' autocomplete="off" autocorrect="off" autocapitalize="off"
-                       spellcheck="false" telefone ng-model='inscricao.telefoneInscrito' />
-            </div>
-        </div>
-
-        <div class='item' >
-            <button class='button button-block button-positive icon ion-plus-circled'
-                    ng-if='inscricoes.length < evento.vagasRestantes' ng-click='addInscricao()'>
-                {{'evento.adicionar_inscrito' | translate}}
-            </button>
-        </div>
-
-        <div class='item item-divider' >
-            {{'evento.concluir_inscricao' | translate}}
+          <label class='input-label' >{{'evento.email' | translate }}</label>
+          <input type='email' required ng-model='inscricao.emailInscrito' />
         </div>
         <div class='item item-input' >
-            <label class='input-label'>{{'evento.total_inscricoes' | translate}}</label>
-            {{inscricoes.length}}
+          <label class='input-label' >{{'evento.telefone' | translate }}</label>
+          <input type='tel' required autocomplete="off" autocorrect="off" autocapitalize="off"
+                 spellcheck="false" telefone ng-model='inscricao.telefoneInscrito' />
         </div>
-        <div class='item item-input' ng-if='evento.exigePagamento'>
-            <label class='input-label'>{{'evento.valor_total' | translate}}</label>
-            {{evento.valor * inscricoes.length | currency:'R$ '}}
-        </div>
-        <div class='item'>
-            <button class='button button-block button-positive' ng-click='conclui()'>
-                {{'evento.concluir_inscricao' | translate}}
-            </button>
-        </div>
-    </ion-content>
+      </div>
+
+      <div class='item' >
+        <button class='button button-block button-positive icon ion-plus-circled'
+                ng-if='inscricoes.length < evento.vagasRestantes' ng-click='addInscricao()'>
+          {{'evento.adicionar_inscrito' | translate}}
+        </button>
+      </div>
+
+      <div class='item item-divider' >
+        {{'evento.concluir_inscricao' | translate}}
+      </div>
+      <div class='item item-input' >
+        <label class='input-label'>{{'evento.total_inscricoes' | translate}}</label>
+        {{inscricoes.length}}
+      </div>
+      <div class='item item-input' ng-if='evento.exigePagamento'>
+        <label class='input-label'>{{'evento.valor_total' | translate}}</label>
+        {{evento.valor * inscricoes.length | currency:'R$ '}}
+      </div>
+      <div class='item'>
+        <button type="submit" class='button button-block button-positive' >
+          {{'evento.concluir_inscricao' | translate}}
+        </button>
+      </div>
+    </form>
+  </ion-content>
 </ion-view>

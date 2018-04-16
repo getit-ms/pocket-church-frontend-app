@@ -154,26 +154,29 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             $scope.datasets.splice(index, 1);
           };
 
-          $scope.conclui = function(){
-            if ($scope.inscricoes.length){
-              loadingService.show();
-
-              eventoService.inscricao($scope.ebd.id, $scope.inscricoes, function(resposta){
-                loadingService.hide();
-
-                if (resposta.devePagar && resposta.checkoutPagSeguro){
-                  message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
-                    $ionicHistory.goBack();
-                    $window.open('https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + resposta.checkoutPagSeguro, '_system');
-                  });
-                }else{
-                  message({title: 'global.title.200',template: 'mensagens.MSG-001'});
-                  $ionicHistory.goBack();
-                }
-              }, function(){
-                loadingService.hide();
-              });
+          $scope.conclui = function(form){
+            if (!$scope.inscricoes.length || form.$invalid){
+              message({title:'global.title.400',template:'mensagens.MSG-002'})
+              return;
             }
+
+            loadingService.show();
+
+            eventoService.inscricao($scope.ebd.id, $scope.inscricoes, function(resposta){
+              loadingService.hide();
+
+              if (resposta.devePagar && resposta.checkoutPagSeguro){
+                message({title: 'global.title.200',template: 'mensagens.MSG-042'}, function(){
+                  $ionicHistory.goBack();
+                  $window.open('https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + resposta.checkoutPagSeguro, '_system');
+                });
+              }else{
+                message({title: 'global.title.200',template: 'mensagens.MSG-001'});
+                $ionicHistory.goBack();
+              }
+            }, function(){
+              loadingService.hide();
+            });
           };
 
           $scope.clear();
