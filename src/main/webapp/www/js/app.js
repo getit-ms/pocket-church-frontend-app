@@ -174,7 +174,11 @@ var calvinApp = angular.module('calvinApp', [
       });
 
       try {
-        $cordovaBadge.set(total);
+        if (total) {
+          $cordovaBadge.set(total);
+        } else {
+          $cordovaBadge.clear();
+        }
       } catch (e) {
         console.error(e);
       }
@@ -629,9 +633,10 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
             disableBack: true
           });
           $state.go('notificacao');
-        }else if (data.badge) {
+        } else if (data.badge) {
           $cordovaBadge.set(data.badge);
-          $rootScope.notifications = data.badge;
+        } else {
+          $cordovaBadge.clear();
         }
       });
     }

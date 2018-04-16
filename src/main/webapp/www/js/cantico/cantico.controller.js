@@ -91,8 +91,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             shareService.share({
                               subject:$scope.cantico.titulo,
                               file:config.server + '/rest/arquivo/download/' +
-                                        $scope.cantico.cantico.id + '/' +
-                                        $scope.cantico.cantico.filename + '?Dispositivo=' +
+                                        $scope.cantico.cifra.id + '/' +
+                                        $scope.cantico.cifra.filename + '?Dispositivo=' +
                                         config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                               success: loadingService.hide,
                               error: loadingService.hide

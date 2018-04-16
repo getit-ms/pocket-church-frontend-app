@@ -1,4 +1,12 @@
 calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
+  function toPersitedDate(data) {
+    return data.getFullYear()*10000 + data.getMonth()*100 + data.getDate();
+  }
+
+  function fromPersistedDate(data) {
+    return new Date(Math.floor(data/10000), Math.floor((data%10000)/100), Math.floor(data%100));
+  }
+
         this.findUltimaAlteracao  = function(callback){
           try {
             database.db.transaction(function (tx) {
@@ -54,7 +62,7 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                 tx.executeSql('DELETE FROM leitura_biblica2 WHERE id = ?', [leitura.dia.id]);
 
                 tx.executeSql('INSERT INTO leitura_biblica2(id, descricao, data, ultima_atualizacao, lido, sincronizado, remoto) VALUES(?,?,?,?,?,?,?)',
-                  [leitura.dia.id, leitura.dia.descricao, leitura.dia.data.getFullYear() * 10000 + leitura.dia.data.getMonth() * 100 + leitura.dia.data.getDate(), leitura.ultimaAlteracao.getTime(), leitura.lido, true, true]);
+                  [leitura.dia.id, leitura.dia.descricao, toPersitedDate(leitura.dia.data), leitura.ultimaAlteracao.getTime(), leitura.lido, true, true]);
               };
 
               tx.executeSql('SELECT ultima_atualizacao AS ultimaAtualizacao FROM leitura_biblica2 WHERE id = ?', [leitura.id], function (tx, rs) {
@@ -142,8 +150,8 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                     var item = rs.rows.item(0);
 
                     deferred.resolve({
-                      dataInicio:new Date(Math.floor(item.dataInicio/10000), Math.floor((item.dataInicio%10000)/100), Math.floor(item.dataInicio%100)),
-                      dataTermino:new Date(Math.floor(item.dataTermino/10000), Math.floor((item.dataTermino%10000)/100), Math.floor(item.dataTermino%100))
+                      dataInicio:fromPersistedDate(item.dataInicio),
+                      dataTermino:fromPersistedDate(item.dataTermino)
                     });
                   }else{
                     deferred.resolve(null);
@@ -166,7 +174,7 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
 
             try {
               database.db.transaction(function(tx) {
-                tx.executeSql('SELECT id, descricao, lido, data FROM leitura_biblica2 where data = ?', [data.getFullYear()*10000 + data.getMonth()*100 + data.getDate()], function(tx, rs) {
+                tx.executeSql('SELECT id, descricao, lido, data FROM leitura_biblica2 where data = ?', [toPersitedDate(data)], function(tx, rs) {
                   if (rs.rows && rs.rows.length){
                     var item = rs.rows.item(0);
 
@@ -174,7 +182,7 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                       dia:{
                         id:item.id,
                         descricao:item.descricao,
-                        data:new Date(Math.floor(item.data/10000), Math.floor((item.data%10000)/100), Math.floor(item.data%100))
+                        data:fromPersistedDate(item.data)
                       },
                       lido:item.lido === 'true'
                     });
@@ -205,7 +213,7 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                   if (rs.rows && rs.rows.length){
                     for (var i=0;i<rs.rows.length;i++){
                       datas.push(
-                        new Date(Math.floor(rs.rows.item(i).data/10000), Math.floor((rs.rows.item(i).data%10000)/100), Math.floor(rs.rows.item(i).data%100))
+                        fromPersistedDate(rs.rows.item(i).data)
                       );
                     }
                   }
@@ -241,12 +249,12 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                         progresso.porcentagem = Math.ceil((rs.rows.item(0).count / totalGeral) * 100);
                         progresso.concluido = progresso.porcentagem === 100;
 
-                        tx.executeSql('SELECT count(*) as count FROM leitura_biblica2 where data < ? and descricao is not null', [new Date().getTime() - MILLIS_DAY], function(tx, rs) {
+                        tx.executeSql('SELECT count(*) as count FROM leitura_biblica2 where data < ? and descricao is not null', [toPersitedDate(new Date(new Date().getTime() - MILLIS_DAY))], function(tx, rs) {
                           if (rs.rows && rs.rows.length){
                             var totalAtual = rs.rows.item(0).count;
-                            tx.executeSql('SELECT count(*) as count FROM leitura_biblica2 where lido = ? and data < ? and descricao is not null', [true, new Date().getTime() - 2 * MILLIS_DAY], function(tx, rs) {
+                            tx.executeSql('SELECT count(*) as count FROM leitura_biblica2 where lido = ? and data < ? and descricao is not null', [true, toPersitedDate(new Date(new Date().getTime() - 2 * MILLIS_DAY))], function(tx, rs) {
                               if (rs.rows && rs.rows.length){
-                                progresso.emDia = totalAtual - rs.rows.item(0).count <= 1;
+                                progresso.emDia = (totalAtual - rs.rows.item(0).count) <= 1;
                                 deferred.resolve(progresso);
                               }
                             }, function(tx, error) {
@@ -288,7 +296,7 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
         this.atualizaSincronizacao = function(id, sincronizado){
           try {
             database.db.transaction(function(tx) {
-              tx.executeSql('update leitura_biblica2 set sincronizado = ?, ultima_atualizacao = ? where id = ?', [sincronizado, new Date().getTime(), id]);
+              tx.executeSql('update leitura_biblica2 set sincronizado = ?, ultima_atualizacao = ? where id = ?', [sincronizado, toPersitedDate(new Date()), id]);
             });
           } catch (e) {
             console.log(e);
