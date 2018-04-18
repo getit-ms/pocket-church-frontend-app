@@ -6667,51 +6667,6 @@ button.item.item-button-right {
   .badge:empty {
     display: none; }
 
-.tabs .tab-item .badge.badge-light,
-.badge.badge-light {
-  background-color: #fff;
-  color: #444; }
-
-.tabs .tab-item .badge.badge-stable,
-.badge.badge-stable {
-  background-color: #f8f8f8;
-  color: #444; }
-
-.tabs .tab-item .badge.badge-positive,
-.badge.badge-positive {
-  background-color: #33AC6B;
-  color: #fff; }
-
-.tabs .tab-item .badge.badge-calm,
-.badge.badge-calm {
-  background-color: #11c1f3;
-  color: #fff; }
-
-.tabs .tab-item .badge.badge-assertive,
-.badge.badge-assertive {
-  background-color: #33779B;
-  color: #fff; }
-
-.tabs .tab-item .badge.badge-balanced,
-.badge.badge-balanced {
-  background-color: #33cd5f;
-  color: #fff; }
-
-.tabs .tab-item .badge.badge-energized,
-.badge.badge-energized {
-  background-color: #ffc900;
-  color: #fff; }
-
-.tabs .tab-item .badge.badge-royal,
-.badge.badge-royal {
-  background-color: #886aea;
-  color: #fff; }
-
-.tabs .tab-item .badge.badge-dark,
-.badge.badge-dark {
-  background-color: #444;
-  color: #fff; }
-
 .button .badge {
   position: relative;
   top: -1px; }
