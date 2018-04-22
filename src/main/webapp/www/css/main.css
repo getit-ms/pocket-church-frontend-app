@@ -289,3 +289,12 @@ h2.title {
   text-transform: uppercase;
   font-size: 16px;
 }
+
+.calvin .card.login-container .item .ion-eye:before {
+  margin-right: 10px;
+}
+
+.card .item:last-child,
+.list-inset .item:last-child {
+  border: 0;
+}
