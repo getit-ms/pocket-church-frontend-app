@@ -73,6 +73,41 @@ h2.title {
   font-size: 24px !important;
 }
 
+.calvin .main-menu.menu .item.user h2 {
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.main-menu .item.item-avatar {
+  padding-left: 52px;
+  line-height: 50px;
+  min-height: 53px;
+}
+
+.main-menu .item.item-avatar .item-content {
+  min-height: 20px;
+  max-height: 20px;
+  padding: 1px;
+}
+
+.main-menu .item.item-avatar .item-image:before {
+  font-size: 30px;
+}
+
+.calvin .main-menu.menu .item.menu-header a {
+  padding: 0px;
+}
+
+.main-menu .item.item-avatar .item-image {
+  top: 11px;
+  left: 16px;
+  max-width: 30px;
+  max-height: 30px;
+  line-height:  30px;
+  padding: 0;
+  margin: 0;
+}
+
 .main-menu .item.item-accordion {
   height: 47px;
   transition: 90ms all linear;
@@ -87,17 +122,64 @@ h2.title {
   display: block !important;
 }
 
-
-.main-menu .item.active .icon:before {
-  background-color: transparent !important;
+.calvin .main-menu.menu .item {
+  border-color: #cdcdcd;
 }
 
-.calvin .main-menu .item.active {
-  background-color: rgba(255, 255, 255, 0.05) !important;
+.calvin .main-menu.menu .scroll-content {
+  background-color: #fff;
 }
 
-.calvin .main-menu .item.item-accordion {
-  background-color: rgba(0, 0, 0, 0.05) !important;
+.calvin .main-menu.menu .item,
+.calvin .main-menu.menu .item a,
+.calvin .menu.menu-left .item .icon:before {
+  background: transparent;
+}
+
+.calvin .menu.menu-left .item .icon:before {
+  color: #999;
+}
+
+.calvin .menu.menu-left .item.item-parent.active {
+  background-color: #eee !important;
+}
+
+.calvin .main-menu.menu.menu-left .item.item-accordion {
+  background-color: #e4e4e4 !important;
+  border-color: #cdcdcd;
+}
+
+.calvin .menu.menu-left .item.item-parent .icon.fa.fa-chevron-down:before,
+.calvin .menu.menu-left .item.item-parent .icon.fa.fa-chevron-right:before {
+  color: #bdbdbd;
+  font-size: 12px;
+}
+
+.calvin .menu.menu-left .item.item-parent.active .icon:before {
+  color: #000;
+}
+
+.calvin .menu.menu-left .item.user {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.calvin .menu.menu-left .item.user h2 {
+  color: #fff !important;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.calvin .main-menu.menu .item h2 {
+  color: #000 !important;
+  font-weight: bold;
+}
+
+.calvin.menu.menu-left .item .badge {
+  background-color: #000;
+  color: #fff;
 }
 
 .calvin .view-container .badge {
@@ -127,11 +209,6 @@ h2.title {
 
 .calendario .item.hoje .icon {
   left: 5px;
-}
-
-.calvin .main-menu .item .icon.fa.fa-chevron-right:before,
-.calvin .main-menu .item .icon.fa.fa-chevron-down:before {
-  font-size: 12px;
 }
 
 .estudo .slider {
@@ -167,34 +244,6 @@ h2.title {
 .platform-ios .title.title-center.header-item {
   left: 49px!important;
   right: 49px!important;
-}
-
-.main-menu .item.item-avatar {
-  padding-left: 52px;
-  line-height: 50px;
-  min-height: 53px;
-  /* max-height: 55px; */
-}
-
-.main-menu .item.item-avatar .item-content {
-  min-height: 20px;
-  max-height: 20px;
-  padding: 1px;
-}
-
-
-.main-menu .item.item-avatar .item-image:before {
-  font-size: 30px;
-}
-
-.main-menu .item.item-avatar .item-image {
-  top: 11px;
-  left: 16px;
-  max-width: 30px;
-  max-height: 30px;
-  line-height:  30px;
-  padding: 0;
-  margin: 0;
 }
 
 .usuario .item-note {
@@ -285,16 +334,64 @@ h2.title {
   font-size: 20px;
 }
 
-.calvin .main-menu.menu .item.user h2 {
-  text-transform: uppercase;
-  font-size: 16px;
+.onezone-datepicker-button:after {
+  border-bottom: 6px solid #000 !important;
 }
 
-.calvin .card.login-container .item .ion-eye:before {
-  margin-right: 10px;
+.onezone-datepicker-button {
+  border-bottom: 1px solid #000 !important;
+}
+
+.onezone-datepicker-navigation-arrow {
+  color: #000 !important;
+}
+
+.onezone-datepicker-modal-item.onezone-datepicker-modal-item-active {
+  background-color: #BBBBBB !important;
+}
+
+.onezone-datepicker-day {
+  background: #b3b3b3 !important;
+  color: #fff !important;
+  border-color: #b3b3b3 !important;
+}
+
+.onezone-datepicker-day.onezone-datepicker-disable-day {
+  background: #fff !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+}
+
+.onezone-datepicker-day.onezone-datepicker-different-month {
+  background: #fff !important;
+  color: #b3b3b3 !important;
+  border: 1px solid #b3b3b3 !important;
+}
+
+.onezone-datepicker.onezone-datepicker-show {
+  background: none !important;
+  border-bottom: none !important;
+}
+
+.onezone-datepicker-week {
+  color: #b3b3b3;
+}
+
+.onezone-datepicker-day.onezone-datepicker-active-day {
+  border-color: #000 !important;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.onezone-datepicker-day.onezone-datepicker-current-day {
+  border-color: #000 !important;
 }
 
 .card .item:last-child,
 .list-inset .item:last-child {
   border: 0;
+}
+
+.calvin .card.login-container .item .ion-eye:before {
+  margin-right: 10px;
 }
