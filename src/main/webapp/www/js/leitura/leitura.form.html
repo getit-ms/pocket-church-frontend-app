@@ -30,16 +30,16 @@
             </div>
             <ion-item class='item-divider'
                       ng-if="leitura.dia.descricao">
-                <span>{{leitura.dia.data | date:'d MMMM'}}</span>
+              {{leitura.dia.data | date:'d MMMM'}}
             </ion-item>
-            <ion-toggle class="item-text-wrap" 
-                        ng-model="leitura.lido" 
-                        ng-change="toggleLido()" 
+            <ion-toggle class="item-text-wrap"
+                        ng-model="leitura.lido"
+                        ng-change="toggleLido()"
                         ng-if="leitura.dia.descricao" >
                 {{leitura.dia.descricao}}
             </ion-toggle>
             <ion-item>
-                <a class='button button-block button-positive' ui-sref='leitura.escolha' 
+                <a class='button button-block button-positive' ui-sref='leitura.escolha'
                    >{{'leitura.trocar_plano_leitura' | translate}}</a>
             </ion-item>
         </div>

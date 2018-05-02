@@ -17,6 +17,7 @@
       <div ng-repeat="inscricao in inscricoes">
         <div class='item item-divider item-icon-right'>
           {{'ebd.inscrito' | translate:{index:inscricoes.indexOf(inscricao) + 1} }}
+
           <a class="icon" ng-if='inscricoes.length > 1' ng-click='removeInscricao(inscricao)'>
             <i class='fa fa-trash'></i>
           </a>
