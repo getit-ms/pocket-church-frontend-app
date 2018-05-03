@@ -43,6 +43,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                         };
 
+                        $scope.$on('modal.hidden', function() {
+                          $scope.closeModal();
+                        });
+
                         $scope.$on('$ionicView.leave', function() {
                             $scope.closeModal();
                         });
@@ -50,11 +54,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.closeModal = function() {
                             if ($scope.player){
                                 $scope.player.stopVideo();
+                              $scope.player = undefined;
                             }
 
                             if ($scope.modal){
-                                $scope.modal.hide();
-                                $scope.modal.remove();
+                                var modal = $scope.modal;
+
+                                $scope.modal = undefined;
+
+                                modal.hide();
+                                modal.remove();
                             }
 
                             $scope.video = undefined;

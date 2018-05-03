@@ -15,7 +15,7 @@ var resources = [
       to: 'resources/ios/splash/Default@2x~universal~anyany.png'
     },
     {
-      from: 'resources/icon.png',
+      from: 'resources/native/ios/icon.png',
       to: 'resources/ios/icon/icon-1024.png'
     }
 ];
