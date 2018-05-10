@@ -31,10 +31,8 @@ platform :ios do
   lane :release do
     deliver(
       skip_app_version_update: false, # Create the new version
-      # Skip
       force: true,
       skip_screenshots: true,
-      skip_metadata: true,
       skip_binary_upload: true
     )
   end
