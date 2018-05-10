@@ -19,6 +19,8 @@ platform :ios do
     require("./configure_entitlements.rb")
     sh("cp -f ../../../Entitlements-*.plist ../${nomeAplicativo.igreja}/")
 
+    set_info_plist_value(path: "./${nomeAplicativo.igreja}/${nomeAplicativo.igreja}-Info.plist", key:"ITSAppUsesNonExemptEncryption", value:false)
+
     get_certificates
     get_provisioning_profile
 
