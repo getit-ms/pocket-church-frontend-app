@@ -25,7 +25,18 @@ platform :ios do
     enable_automatic_code_signing(path: "${nomeAplicativo.igreja}.xcodeproj")
     gym(xcargs: "-allowProvisioningUpdates", export_method: "app-store")
 
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_to_testflight
+  end
+
+  lane :release do
+    deliver(
+      skip_app_version_update: false, # Create the new version
+      # Skip
+      force: true,
+      skip_screenshots: true,
+      skip_metadata: true,
+      skip_binary_upload: true
+    )
   end
 end
 
@@ -34,5 +45,12 @@ platform :android do
     # add actions here: https://docs.fastlane.tools/actions
 
     upload_to_play_store(track: 'beta', apk: 'build/outputs/apk/android-release-final.apk')
+  end
+
+  lane :release do
+    upload_to_play_store(
+      track: 'rollout',
+      rollout: '${project.version}'
+    )
   end
 end

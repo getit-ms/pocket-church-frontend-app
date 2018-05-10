@@ -1,0 +1,7 @@
+submit_for_review(false)
+
+submission_information({
+  add_id_info_serves_ads: false,
+  add_id_info_uses_idfa: false,
+  export_compliance_uses_encryption: false
+})
