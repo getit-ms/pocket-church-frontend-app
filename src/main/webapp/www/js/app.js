@@ -534,7 +534,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
   }])
 
-  .run(function ($rootScope, $state, acessoService, configService, $ionicViewService, $ionicSideMenuDelegate) {
+  .run(function ($rootScope, $state, acessoService, configService, $ionicHistory, $ionicSideMenuDelegate) {
     $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
       $rootScope.offline = false;
     });
@@ -556,7 +556,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
           });
         });
 
-        $ionicViewService.nextViewOptions({
+        $ionicHistory.nextViewOptions({
           disableBack: true
         });
 
@@ -580,7 +580,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
   })
 
   // PUSH NOTIFICATIONS
-  .service('PushNotificationsService', function (message, NodePushServer, $rootScope, $cordovaNetwork, $cordovaBadge, $state, $ionicViewService, configService) {
+  .service('PushNotificationsService', function (message, NodePushServer, $rootScope, $cordovaNetwork, $cordovaBadge, $state, $ionicHistory, configService) {
     this.register = function (force) {
       if ($cordovaNetwork.isOnline()){
         pushRegister(force);
@@ -629,7 +629,7 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
         if (data.additionalData.foreground){
           message({title: data.title,template: data.message});
         }else if (data.additionalData.coldstart){
-          $ionicViewService.nextViewOptions({
+          $ionicHistory.nextViewOptions({
             disableBack: true
           });
           $state.go('notificacao');

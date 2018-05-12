@@ -5,41 +5,41 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/leitura/leitura.form.html',
-                    controller: function(leituraService, $scope, sincronizacaoLeitura, $state, 
-                    $ionicViewService, $filter){
+                    controller: function(leituraService, $scope, sincronizacaoLeitura, $state,
+                    $ionicHistory, $filter){
                         $scope.$on('$ionicView.enter', function(){
                             leituraService.findPlano().then(function(plano){
                                 if (plano){
                                     $scope.plano = plano;
                                     recuperaRange();
                                 }else{
-                                    $ionicViewService.nextViewOptions({
+                                  $ionicHistory.nextViewOptions({
                                         disableBack: true
                                     });
                                     $state.go('leitura.escolha');
                                 }
                             });
-                            
+
                             if (sincronizacaoLeitura.executando){
                                 aguardaTerminoSincronizacao();
                             }
                         });
-                        
+
                         function updateProgresso(){
                             leituraService.findPorcentagem(function(progresso){
                                 $scope.progresso = progresso;
                             });
                         }
-                        
+
                         var recuperaRange = function(){
                             leituraService.findRangeDatas().then(function(range){
                                 if (range){
                                     updateProgresso();
-                                    
+
                                     var hoje = new Date();
                                     if (hoje.getTime() <= range.dataTermino.getTime()){
                                         $scope.datepicker = {
-                                            date: hoje, 
+                                            date: hoje,
                                             months: [
                                                 $filter('translate')('global.mes.1'),
                                                 $filter('translate')('global.mes.2'),
@@ -76,7 +76,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         };
 
                                         $scope.datepicker.callback(new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()));
-                                        
+
                                         leituraService.buscaDatasLidas(function(datas){
                                             datas.forEach(function(dt){
                                                 $scope.datepicker.highlights.push({
@@ -89,29 +89,29 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
                             });
                         };
-                        
+
                         var aguardaTerminoSincronizacao = function(){
                             $scope.sincronizacao = sincronizacaoLeitura;
-                            
+
                             var stop = $scope.$watch('sincronizacao.executando', function(){
                                 if (!$scope.sincronizacao.executando){
                                     stop();
-                                    
+
                                     recuperaRange();
                                 }
                             });
                         };
-                        
+
                         $scope.toggleLido = function(){
                             leituraService.atualizaLeitura($scope.leitura.dia.id, $scope.leitura.lido);
                             var idx = -1;
-                            
+
                             $scope.datepicker.highlights.forEach(function(h, i){
                                 if (h.date.getTime() === $scope.leitura.dia.data.getTime()){
                                     idx = i;
                                 }
                             });
-                            
+
                             if ($scope.leitura.lido && idx < 0){
                                 $scope.datepicker.highlights.push({
                                     date:$scope.leitura.dia.data,
@@ -120,7 +120,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }else if (!$scope.leitura.lido && idx >= 0){
                                 $scope.datepicker.highlights.splice(idx, 1);
                             }
-                            
+
                             updateProgresso();
                         };
                     }
@@ -132,22 +132,22 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/leitura/leitura.list.html',
-                    controller: function(leituraService, $scope, $state, loadingService, $ionicViewService){
+                    controller: function(leituraService, $scope, $state, loadingService, $ionicHistory){
                         $scope.searcher = function(page, callback){
                             leituraService.findPlanosDisponiveis({pagina:page}, callback);
                         };
-                        
+
                         $scope.filtra = function(){
                             $scope.$broadcast('pagination.search');
                         };
-                        
+
                         $scope.escolhe = function(plano){
                             loadingService.show();
-                            
+
                             leituraService.selecionaPlano(plano.id, function(){
                                 loadingService.hide();
                                 leituraService.sincroniza();
-                                $ionicViewService.nextViewOptions({
+                                $ionicHistory.nextViewOptions({
                                     disableBack: true
                                 });
                                 $state.go('leitura');
@@ -155,10 +155,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 loadingService.hide();
                             });
                         };
-                        
+
                         $scope.filtra();
                     }
                 }
             }
-        });         
+        });
     }]);

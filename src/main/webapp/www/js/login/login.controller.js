@@ -5,39 +5,43 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/login/login.form.html',
-                controller: function($scope, $rootScope, $state, message, acessoService, configService, $ionicViewService, loadingService, leituraService){
+                controller: function($scope, $rootScope, $state, message, acessoService, configService, $ionicHistory, loadingService, leituraService){
                     $scope.auth = {username:'',password:''};
                     $scope.efetuarLogin = function(form){
                         if (form.$invalid){
-                            message({title:'global.title.200',template:'mensagens.MSG-002'})
+                            message({title:'global.title.200',template:'mensagens.MSG-002'});
                             return;
                         }
 
                         loadingService.show();
 
                         acessoService.login($scope.auth, function(acesso){
-                            $rootScope.usuario = acesso.membro;
-                            $rootScope.carregaMenu(acesso.menu);
+                          $rootScope.usuario = acesso.membro;
+                          $rootScope.carregaMenu(acesso.menu);
 
+                          try {
                             configService.save({
-                                usuario:$rootScope.usuario,
-                                menu:acesso.menu
-                            });
-
-                            $ionicViewService.nextViewOptions({
-                                historyRoot: true,
-                                disableBack: true
+                              usuario:$rootScope.usuario,
+                              menu:acesso.menu
                             });
 
                             if ($rootScope.funcionalidadeHabilitada('CONSULTAR_PLANOS_LEITURA_BIBLICA')){
-                                leituraService.sincroniza();
+                              leituraService.sincroniza();
                             }
+                          } catch (ex) {
+                            console.log(ex);
+                          }
 
-                            loadingService.hide();
+                          loadingService.hide();
 
-                            $state.go('home');
+                          $ionicHistory.nextViewOptions({
+                            historyRoot: true,
+                            disableBack: true
+                          });
+
+                          $state.go('home');
                         }, function(){
-                            loadingService.hide();
+                          loadingService.hide();
                         });
                     };
                 }
@@ -49,8 +53,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/login/alteraSenha.form.html',
-                controller:['$scope', 'acessoService', 'message', '$rootScope', 'configService', '$state', '$ionicViewService',
-                            function($scope, acessoService, message, $rootScope, configService, $state, $ionicViewService){
+                controller:['$scope', 'acessoService', 'message', '$rootScope', 'configService', '$state', '$ionicHistory',
+                            function($scope, acessoService, message, $rootScope, configService, $state, $ionicHistory){
                     $scope.membro = {};
 
                     $scope.alteraSenha = function(){
@@ -65,7 +69,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 usuario:'',
                                 menu:''
                             });
-                            $ionicViewService.nextViewOptions({
+                            $ionicHistory.nextViewOptions({
                                 historyRoot: true,
                                 disableBack: true
                             });
@@ -82,8 +86,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/login/redefine.form.html',
-                controller:['$scope', 'acessoService', 'message', '$state', '$ionicViewService', 'loadingService',
-                            function($scope, acessoService, message, $state, $ionicViewService, loadingService){
+                controller:['$scope', 'acessoService', 'message', '$state', '$ionicHistory', 'loadingService',
+                            function($scope, acessoService, message, $state, $ionicHistory, loadingService){
                     $scope.dados = {};
 
                     $scope.redefinirSenha = function(){
@@ -97,7 +101,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         acessoService.solicitarRedefinicaoSenha($scope.dados.email, function(dados){
                             loadingService.hide();
                             message({title:'global.title.200',template:'mensagens.MSG-038'});
-                            $ionicViewService.nextViewOptions({
+                            $ionicHistory.nextViewOptions({
                                 historyRoot: true,
                                 disableBack: true
                             });

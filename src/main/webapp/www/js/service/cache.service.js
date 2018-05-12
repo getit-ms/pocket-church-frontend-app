@@ -1,10 +1,10 @@
-calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$state', '$ionicViewService', '$rootScope', '$q',
-    function($window, $cordovaNetwork, message, $state, $ionicViewService, $rootScope, $q){
+calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$state', '$ionicHistory', '$rootScope', '$q',
+    function($window, $cordovaNetwork, message, $state, $ionicHistory, $rootScope, $q){
         this.timeout = 1000 * 60 * 60 * 24 * 5;
-        
+
         this.get = function(req){
             if (!req.chave || !req.callback || !req.supplier) console.error("cacheService.single: req.chave, req.callback and req.supplier are required");
-            
+
             if (!$rootScope.deviceReady){
                 if (req.id){
                     req.supplier(req.id, req.callback);
@@ -13,9 +13,9 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                 }
                 return;
             }
-            
+
             var cache = null;
-            
+
             try{
                 cache = load(req.chave, req.id);
                 if (cache){
@@ -27,7 +27,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
             }catch(e){
                 console.error(e);
             }
-            
+
             try{
                 if ($cordovaNetwork.isOnline()){
                     if (req.id) {
@@ -49,7 +49,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                         template: 'mensagens.MSG-404'
                     });
                     if (req.errorState){
-                        $ionicViewService.nextViewOptions({
+                        $ionicHistory.nextViewOptions({
                             historyRoot: true,
                             disableBack: true
                         });
@@ -63,7 +63,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                         template: 'mensagens.MSG-404'
                     });
                     if (req.errorState){
-                        $ionicViewService.nextViewOptions({
+                        $ionicHistory.nextViewOptions({
                             historyRoot: true,
                             disableBack: true
                         });
@@ -73,10 +73,10 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                 console.error(e);
             }
         };
-        
+
         this.clean = function(){
             var deferred = $q.defer();
-            
+
             try{
                 var now = new Date().getTime();
                 for (i=0;i<$window.localStorage.length;i++){
@@ -96,18 +96,18 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                 console.log(e);
                 deferred.reject();
             }
-            
+
             return deferred.promise;
         };
-        
+
         function load(chave, id){
             if (id){
                 return angular.fromJson($window.localStorage.getItem('cache.' + chave + '.' + id));
             }
-            
+
             return angular.fromJson($window.localStorage.getItem('cache.' + chave));
         }
-        
+
         function save(chave, id, cache){
             if (id){
                 $window.localStorage.setItem('cache.' + chave + '.' + id, angular.toJson(cache));
@@ -115,7 +115,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                 $window.localStorage.setItem('cache.' + chave, angular.toJson(cache));
             }
         }
-        
+
         function remove(chave, id){
             if (id){
                 $window.localStorage.removeItem('cache.' + chave + '.' + id);

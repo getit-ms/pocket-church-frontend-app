@@ -11,10 +11,12 @@ calvinApp.service('acessoService', ['Restangular', 'configService', function(Res
           var restLogin = this.api().one('login');
 
           configService.load().then(function(config){
-            restLogin.customPUT(angular.extend({
-              version:config.version,
-              tipoDispositivo:config.tipo
-            }, login)).then(success, error);
+            restLogin.customPUT({
+              username: login.username,
+              password: login.password,
+              version: config.version,
+              tipoDispositivo: config.tipo
+            }).then(success, error);
           });
         };
 

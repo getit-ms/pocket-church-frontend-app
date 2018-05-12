@@ -5,44 +5,44 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/agenda/agenda.list.html',
-                    controller: function(agendaService, $scope, message, $ionicPopup, $filter, $ionicViewService, $state){
+                    controller: function(agendaService, $scope, message, $ionicPopup, $filter, $ionicHistory, $state){
                         $scope.searcher = function(page, callback){
                             agendaService.busca({pagina:page,total:10}, function(agendamentos){
                                 if ($scope.usuario.pastor || agendamentos.totalResultados){
                                     callback(agendamentos);
                                 }else{
-                                    $ionicViewService.nextViewOptions({
+                                    $ionicHistory.nextViewOptions({
                                         disableBack: true
                                     });
                                     $state.go('agenda.novo');
                                 }
                             });
-                        }; 
-                        
+                        };
+
                         $scope.$on('$ionicView.enter', function(){
                             $scope.$broadcast('pagination.search');
                         });
-						
+
                         $scope.carrega = function(){
                             $scope.$broadcast('pagination.refresh');
                         };
-						
+
                         $scope.confirma = function(agendamento){
                             agendaService.confirma(agendamento.calendario.id, agendamento.id, function(dados){
                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
                                 $scope.carrega();
                             });
                         };
-                        
+
                         $scope.cancela = function(agendamento){
                             $ionicPopup.confirm({
                                 title:$filter('translate')('agenda.confirmacao_cancelamento'),
                                 template:$filter('translate')('mensagens.MSG-035', {
-                                    data:$filter('date')(agendamento.dataHoraInicio, 
+                                    data:$filter('date')(agendamento.dataHoraInicio,
                                     $filter('translate')('config.pattern.date')),
-                                    horaInicio:$filter('date')(agendamento.dataHoraInicio, 
+                                    horaInicio:$filter('date')(agendamento.dataHoraInicio,
                                     $filter('translate')('config.pattern.hour')),
-                                    horaFim:$filter('date')(agendamento.dataHoraFim, 
+                                    horaFim:$filter('date')(agendamento.dataHoraFim,
                                     $filter('translate')('config.pattern.hour'))
                                 }),
                                 okText:$filter('translate')('global.sim'),
@@ -56,7 +56,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
                             });
                         };
-                        
+
                     }
                 }
             }
@@ -70,11 +70,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.$on('$ionicView.enter', function(){
                             $scope.clear();
                         });
-						
+
                         $scope.clear = function(){
                             $scope.agendamento = {};
                             $scope.calendarioSelecionado = null;
-                            
+
                             loadingService.show();
                             agendaService.buscaCalendarios().then(function(calendarios){
                                 $scope.calendarios = calendarios;
@@ -83,11 +83,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 loadingService.hide();
                             });
                         };
-                        
+
                         var currentDate = new Date();
-                        
+
                         $scope.datepicker = {
-                            date: currentDate, 
+                            date: currentDate,
                             months: [
                                 $filter('translate')('global.mes.1'),
                                 $filter('translate')('global.mes.2'),
@@ -123,7 +123,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
                             }
                         };
-                        
+
                         function atualizaHorarios(value){
                             $scope.horariosDia = [];
                             $scope.horarios.forEach(function(horario){
@@ -140,25 +140,25 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $scope.agendamento.data = null;
                             }
                         }
-                        
+
                         $scope.calendarioModificado = function(calendario){
                             if (calendario){
                                 $scope.horarios = [];
                                 $scope.datepicker.highlights = [];
                                 $scope.horariosDia = [];
                                 $scope.agendamento.data = undefined;
-                                
+
                                 loadingService.show();
-                                
+
                                 $scope.datepicker.highlights = [];
                                 agendaService.buscaAgenda(calendario.id,  {
-                                    di:$scope.datepicker.startDate, 
+                                    di:$scope.datepicker.startDate,
                                     df:$scope.datepicker.endDate
                                 }, function(horarios){
                                     if (!horarios.length){
                                         message({title:'agenda.sem_horarios_disponiveis',template:'mensagens.MSG-033'});
                                     }
-                                    
+
                                     $scope.horarios = horarios;
                                     $scope.horarios.forEach(function(horario){
                                         $scope.datepicker.highlights.push({
@@ -166,16 +166,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                             color:'#bbb'
                                         });
                                     });
-                                    
+
                                     atualizaHorarios($scope.datepicker.date);
-                                    
+
                                     loadingService.hide();
                                 }, function(){
                                     loadingService.hide();
                                 });
                             }
                         };
-                        
+
                         $scope.solicitar = function(calendario){
                             agendaService.agenda(calendario.id, $scope.agendamento, function(){
                                 message({title:'global.title.200',template:'mensagens.MSG-029'});
@@ -185,11 +185,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $state.go('agenda');
                             });
                         };
-                        
+
                         $scope.clear();
-                        
+
                     }
                 }
             }
-        });;         
+        });;
     }]);

@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/preferencias/preferencias.form.html',
-                    controller: function($scope, message, acessoService, $rootScope, $state, $ionicViewService, loadingService, leituraService){
+                    controller: function($scope, message, acessoService, $rootScope, $state, $ionicHistory, loadingService, leituraService){
                         $scope.$on('$ionicView.enter', function(){
                             acessoService.buscaPreferencias(function(preferencias){
                                 $scope.preferencias = preferencias;
