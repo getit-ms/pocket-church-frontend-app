@@ -27,7 +27,7 @@ platform :ios do
     enable_automatic_code_signing(path: "${nomeAplicativo.igreja}.xcodeproj")
     gym(xcargs: "-allowProvisioningUpdates", export_method: "app-store")
 
-    upload_to_testflight
+    upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 
   lane :release do
@@ -49,8 +49,9 @@ platform :android do
 
   lane :release do
     upload_to_play_store(
-      track: 'rollout',
-      rollout: '${project.version}'
+      track: 'production',
+      skip_upload_apk: fasle,
+      track_promote_to: 'beta'
     )
   end
 end

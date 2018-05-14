@@ -92,6 +92,8 @@
         "MSG-050":"Selecione um Calendário",
         "MSG-051":"Houve um erro ao recuperar a foto. Verifique se o celular possui uma camera. Se o probema persistir contate o suporte através do canal e Sugestões.",
         "MSG-052":"Não foi possível salvar a foto. Tente novamente e se o problema persistir envie-nos uma mensagem explicando o ocorrido através das Sugestões.",
+        "MSG-053":"Os resultados estarão disponíveis após a enquete estar encerrada.",
+        "MSG-054":"Você já respondeu essa enquete. Aguarde o término do período para visualizar o resultado.",
         "MSG-302":"Parece que você está sem acesso à Internet. Verifique sua conexão e tente novamente.",
         "MSG-403":"Você não tem permissão para fazer isso.",
         "MSG-404":"O servidor parece estar fora do ar. Aguarde alguns minutos e tente novamente.",
@@ -187,6 +189,8 @@
         "proximo":"Próximo",
         "anterior":"Anterior",
         "concluir":"Concluir",
+        "encerrada":"Encerrada",
+        "respondida":"Respondida",
         "questao":{
             "voto":"Voto",
             "voto_index":"Voto {index}",

@@ -13,25 +13,27 @@ calvinApp.directive('calvinPagination', function(){
                 if ($scope.notFoundMessage === undefined){
                     $scope.notFoundMessage = true;
                 }
-                
+
                 $scope.refresh = function(){
                     $scope.page = 0;
                     $scope.ngModel = [];
                     $scope.hasMore = false;
-                    
+
                     $scope.more();
                 };
-                
+
                 $scope.more = function(){
                     $scope.page++;
                     $scope.search($scope.page, function(data){
-                        data.resultados.forEach(function(d){
-                            $scope.ngModel.push(d);    
-                        });
+                        if (data.resultados) {
+                          data.resultados.forEach(function(d){
+                              $scope.ngModel.push(d);
+                          });
+                        }
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     });
                 };
-                
+
                 $scope.search = function(page, callback){
                     $scope.page = page;
                     $scope.searcher(page, function(data){
@@ -42,7 +44,7 @@ calvinApp.directive('calvinPagination', function(){
                         $scope.$broadcast('scroll.refreshComplete');
                     });
                 };
-                
+
                 $scope.init = function(){
                     if ($scope.cache){
                         cacheService.get({
@@ -66,15 +68,15 @@ calvinApp.directive('calvinPagination', function(){
                 $scope.$on('pagination.search', function() {
                     $scope.init();
                 });
-                
+
                 $scope.$on('pagination.refresh', function() {
                     $scope.refresh();
                 });
-                
+
                 $scope.$on('pagination.more', function() {
                     $scope.more();
                 });
-                
+
                 $scope.init();
             }]
     };

@@ -1,11 +1,14 @@
 <ion-view>
-    <ion-nav-title>
-        <span translate>votacao.votacoes</span>
-    </ion-nav-title>
-    <calvin-pagination searcher='searcher' ng-model="votacoes" cache='votacoes'>
-        <ion-item class="item-button-right" ng-repeat="votacao in votacoes" ng-click="votar(votacao)">
-            <h2>{{votacao.nome}}</h1>
-            <p>{{votacao.descricao}}</p>
-        </ion-item>
-    </calvin-pagination>
+  <ion-nav-title>
+    <span translate>votacao.votacoes</span>
+  </ion-nav-title>
+  <calvin-pagination searcher='searcher' ng-model="votacoes" cache='votacoes'>
+    <ion-item class="item-button-right" ng-repeat="votacao in votacoes" ng-click="votar(votacao)">
+      <span class="badge badge-energized" ng-if="votacao.encerrado" translate>votacao.encerrada</span>
+      <span class="badge badge-balanced" ng-if="!votacao.encerrado && votacao.respondido" translate>votacao.respondida</span>
+
+      <h2>{{votacao.nome}}</h1>
+        <p>{{votacao.descricao}}</p>
+    </ion-item>
+  </calvin-pagination>
 </ion-view>

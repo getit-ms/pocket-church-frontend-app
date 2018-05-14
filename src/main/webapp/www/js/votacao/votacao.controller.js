@@ -11,7 +11,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     };
 
                     $scope.votar = function(votacao){
+                      if (votacao.respondida) {
+                        message({title: 'global.title.403',template: 'mensagens.MSG-054'});
+                      } else if (votacao.encerrada) {
+                        $state.go('votacao.resultado', {id: votacao.id});
+                      } else {
                         $state.go('votacao.votar', {id: votacao.id});
+                      }
                     };
 
                     $scope.$on('$ionicView.enter', function(){
