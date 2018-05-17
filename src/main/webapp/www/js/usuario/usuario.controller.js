@@ -46,9 +46,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     }
 
                     plugins.crop(function (newUri) {
+                      message({title:'global.title.200',template:newUri});
+
                       if (ionic.Platform.isAndroid() && newUri.indexOf('://') < 0) {
                         newUri = 'file://' + newUri;
                       }
+
+                      message({title:'global.title.200',template:newUri});
 
                       $cordovaFile
                         .readAsDataURL(
