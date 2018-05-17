@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/usuario/usuario.form.html',
-        controller: function($scope, linkService, loadingService, $filter, $ionicActionSheet, acessoService, arquivoService, message){
+        controller: function($scope, linkService, loadingService, $filter, $ionicActionSheet, $cordovaFile, acessoService, arquivoService, message){
           angular.extend($scope, linkService);
 
           $scope.trocarFoto = function() {
@@ -28,7 +28,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                   var options = {
                     // Some common settings are 20, 50, and 100
-                    destinationType: Camera.DestinationType.DATA_URL,
+                    destinationType: Camera.DestinationType.FILE_URI,
                     // In this app, dynamically set the picture source, Camera or photo gallery
                     sourceType: type,
                     encodingType: Camera.EncodingType.JPEG,
@@ -43,32 +43,43 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                     if (ionic.Platform.isAndroid()) {
                       uri = 'file://' + imageUri;
+                    } else {
+                      uri = imageUri;
                     }
 
-                    window.plugins.crop(function (newUri) {
-                      arquivoService.upload({
-                        fileName: $scope.usuario.nome + '.jpg',
-                        data: newUri.replace('file://', '')
-                      }, function(arquivo) {
+                    plugins.crop(function (newUri) {
+                      $cordovaFile
+                        .readAsDataURL(
+                          newUri.substring(0, newUri.lastIndexOf('/')),
+                          newUri.substring(newUri.lastIndexOf('/') + 1)
+                        ).then(function(base64) {
+                          arquivoService.upload({
+                            fileName: $scope.usuario.nome + '.jpg',
+                            data: base64.replace('file://', '')
+                          }, function(arquivo) {
 
-                        acessoService.atualizaFoto(arquivo, function() {
+                            acessoService.atualizaFoto(arquivo, function() {
 
-                          $scope.usuario.foto = arquivo;
-                          loadingService.hide();
-                          message({title:'global.title.200',template:'mensagens.MSG-001'});
+                              $scope.usuario.foto = arquivo;
+                              loadingService.hide();
+                              message({title:'global.title.200',template:'mensagens.MSG-001'});
 
+                            }, function(error) {
+                              console.error(error);
+                              message({title:'global.title.500',template:'mensagens.MSG-052'});
+                              loadingService.hide();
+                            });
+
+                          }, function(error) {
+                            console.error(error);
+                            message({title:'global.title.500',template:'mensagens.MSG-052'});
+                            loadingService.hide();
+                          });
                         }, function(error) {
                           console.error(error);
                           message({title:'global.title.500',template:'mensagens.MSG-052'});
                           loadingService.hide();
                         });
-
-                      }, function(error) {
-                        console.error(error);
-                        message({title:'global.title.500',template:'mensagens.MSG-052'});
-                        loadingService.hide();
-                      });
-
                     }, function (error) {
                       console.error(error);
                       message({title:'global.title.500',template:'mensagens.MSG-052'});
