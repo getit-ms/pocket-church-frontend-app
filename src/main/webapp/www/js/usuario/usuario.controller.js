@@ -28,7 +28,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                   var options = {
                     // Some common settings are 20, 50, and 100
-                    quality: 100,
+                    quality: 50,
                     destinationType: Camera.DestinationType.FILE_URI,
                     // In this app, dynamically set the picture source, Camera or photo gallery
                     sourceType: type,
@@ -46,13 +46,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     }
 
                     plugins.crop(function (newUri) {
-                      message({title:'global.title.200',template:newUri});
-
-                      if (ionic.Platform.isAndroid() && newUri.indexOf('://') < 0) {
-                        newUri = 'file://' + newUri;
-                      }
-
-                      message({title:'global.title.200',template:newUri});
 
                       $cordovaFile
                         .readAsDataURL(
@@ -93,7 +86,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     }, imageUri, {
                       targetWidth: 500,
                       targetHeight: 500,
-                      quality: 50
+                      quality: 20
                     });
 
                   }, function (error) {
