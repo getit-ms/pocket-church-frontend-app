@@ -45,7 +45,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       uri = 'file://' + imageUri;
                     }
 
-                    cordova.plugins.crop(function (newUri) {
+                    window.plugins.crop(function (newUri) {
                       arquivoService.upload({
                         fileName: $scope.usuario.nome + '.jpg',
                         data: newUri.replace('file://', '')
