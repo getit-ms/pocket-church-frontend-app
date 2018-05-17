@@ -61,51 +61,46 @@ calvinApp.config(['$stateProvider', function($stateProvider){
               if (hasPermissions) {
                 loadingService.show();
 
-                if (!ionic.Platform.isAndroid()) {
-                  createEvent({}, evento);
-                } else {
-                  window.plugins.calendar.listCalendars(function(calendars){
+                window.plugins.calendar.listCalendars(function(calendars){
 
-                    if (calendars && calendars.length) {
+                  if (calendars && calendars.length) {
 
-                      if (calendars.length == 1) {
-                        createEvent(calendars[0], evento);
-                      } else {
-
-                        var opcoes = [];
-                        calendars.forEach(function(cal) {
-                          opcoes.push({text:cal.name});
-                        });
-
-                        loadingService.hide();
-
-                        $ionicActionSheet.show({
-                          buttons: opcoes,
-                          titleText: $filter('translate')('mensagens.MSG-050'),
-                          cancelText: $filter('translate')('global.cancelar'),
-                          buttonClicked: function(index) {
-                            if (index >= 0) {
-                              loadingService.show();
-
-                              createEvent(calendars[index], evento);
-                            }
-                            return true;
-                          }
-                        });
-
-                      }
-
+                    if (calendars.length == 1) {
+                      createEvent(calendars[0], evento);
                     } else {
-                      message({title:'global.title.500',template:'mensagens.MSG-049'});
+
+                      var opcoes = [];
+                      calendars.forEach(function(cal) {
+                        opcoes.push({text:cal.name});
+                      });
+
                       loadingService.hide();
+
+                      $ionicActionSheet.show({
+                        buttons: opcoes,
+                        titleText: $filter('translate')('mensagens.MSG-050'),
+                        cancelText: $filter('translate')('global.cancelar'),
+                        buttonClicked: function(index) {
+                          if (index >= 0) {
+                            loadingService.show();
+
+                            createEvent(calendars[index], evento);
+                          }
+                          return true;
+                        }
+                      });
+
                     }
 
-                  }, function() {
+                  } else {
                     message({title:'global.title.500',template:'mensagens.MSG-049'});
                     loadingService.hide();
-                  });
+                  }
 
-                }
+                }, function() {
+                  message({title:'global.title.500',template:'mensagens.MSG-049'});
+                  loadingService.hide();
+                });
 
               } else {
                 window.plugins.calendar.requestReadWritePermission();

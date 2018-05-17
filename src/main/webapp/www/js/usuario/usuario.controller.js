@@ -28,12 +28,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                   var options = {
                     // Some common settings are 20, 50, and 100
-                    quality: 50,
                     destinationType: Camera.DestinationType.DATA_URL,
                     // In this app, dynamically set the picture source, Camera or photo gallery
                     sourceType: type,
-                    targetWidth: 500,
-                    targetHeight: 500,
                     encodingType: Camera.EncodingType.JPEG,
                     mediaType: Camera.MediaType.PICTURE,
                     allowEdit: false,
@@ -42,16 +39,29 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                   navigator.camera.getPicture(function cameraSuccess(imageUri) {
 
-                    arquivoService.upload({
-                      fileName: $scope.usuario.nome + '.jpg',
-                      data: imageUri
-                    }, function(arquivo) {
+                    var uri;
 
-                      acessoService.atualizaFoto(arquivo, function() {
+                    if (ionic.Platform.isAndroid()) {
+                      uri = 'file://' + imageUri;
+                    }
 
-                        $scope.usuario.foto = arquivo;
-                        loadingService.hide();
-                        message({title:'global.title.200',template:'mensagens.MSG-001'});
+                    plugins.crop(function (newUri) {
+                      arquivoService.upload({
+                        fileName: $scope.usuario.nome + '.jpg',
+                        data: newUri.replace('file://', '')
+                      }, function(arquivo) {
+
+                        acessoService.atualizaFoto(arquivo, function() {
+
+                          $scope.usuario.foto = arquivo;
+                          loadingService.hide();
+                          message({title:'global.title.200',template:'mensagens.MSG-001'});
+
+                        }, function(error) {
+                          console.error(error);
+                          message({title:'global.title.500',template:'mensagens.MSG-052'});
+                          loadingService.hide();
+                        });
 
                       }, function(error) {
                         console.error(error);
@@ -59,10 +69,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         loadingService.hide();
                       });
 
-                    }, function(error) {
+                    }, function (error) {
                       console.error(error);
                       message({title:'global.title.500',template:'mensagens.MSG-052'});
                       loadingService.hide();
+                    }, uri, {
+                      targetWidth: 500,
+                      targetHeight: 500
                     });
 
                   }, function (error) {
