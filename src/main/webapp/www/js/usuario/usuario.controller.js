@@ -41,17 +41,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                   navigator.camera.getPicture(function cameraSuccess(imageUri) {
 
-                    var uri;
-
                     if (ionic.Platform.isAndroid() && imageUri.indexOf('://') < 0) {
-                      uri = 'file://' + imageUri;
-                    } else {
-                      uri = imageUri;
+                      imageUri = 'file://' + imageUri;
                     }
 
                     plugins.crop(function (newUri) {
-                      if (newUri.indexOf('://') >= 0) {
-                        newUri = newUri.replace(/^.+:\/\//, '');
+                      if (ionic.Platform.isAndroid() && newUri.indexOf('://') < 0) {
+                        newUri = 'file://' + newUri;
                       }
 
                       $cordovaFile
@@ -90,7 +86,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       console.error(error);
                       message({title:'global.title.500',template:'mensagens.MSG-052'});
                       loadingService.hide();
-                    }, uri, {
+                    }, imageUri, {
                       targetWidth: 500,
                       targetHeight: 500,
                       quality: 50
