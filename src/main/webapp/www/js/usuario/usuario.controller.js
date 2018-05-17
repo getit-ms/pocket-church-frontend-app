@@ -28,12 +28,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                   var options = {
                     // Some common settings are 20, 50, and 100
+                    quality: 100,
                     destinationType: Camera.DestinationType.FILE_URI,
                     // In this app, dynamically set the picture source, Camera or photo gallery
                     sourceType: type,
                     encodingType: Camera.EncodingType.JPEG,
                     mediaType: Camera.MediaType.PICTURE,
                     allowEdit: false,
+                    cameraDirection: Camera.Direction.FRONT,
                     correctOrientation: true  //Corrects Android orientation quirks
                   };
 
@@ -48,6 +50,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     }
 
                     plugins.crop(function (newUri) {
+                      if (newUri.indexOf('://') >= 0) {
+                        newUri = newUri.replace(/^.+:\/\//, '');
+                      }
+
                       $cordovaFile
                         .readAsDataURL(
                           newUri.substring(0, newUri.lastIndexOf('/')),
@@ -86,7 +92,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                       loadingService.hide();
                     }, uri, {
                       targetWidth: 500,
-                      targetHeight: 500
+                      targetHeight: 500,
+                      quality: 50
                     });
 
                   }, function (error) {
