@@ -41,7 +41,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                     var uri;
 
-                    if (ionic.Platform.isAndroid()) {
+                    if (ionic.Platform.isAndroid() && imageUri.indexOf('://') < 0) {
                       uri = 'file://' + imageUri;
                     } else {
                       uri = imageUri;
@@ -55,7 +55,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         ).then(function(base64) {
                           arquivoService.upload({
                             fileName: $scope.usuario.nome + '.jpg',
-                            data: base64.replace('file://', '')
+                            data: base64.replace( /^.+;base64,/ , '')
                           }, function(arquivo) {
 
                             acessoService.atualizaFoto(arquivo, function() {
