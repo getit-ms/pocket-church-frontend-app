@@ -65,23 +65,23 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                             }, function(error) {
                               console.error(error);
-                              message({title:'global.title.500',template:'mensagens.MSG-052'});
+                              message({title:'global.title.500',template:error.toString()});
                               loadingService.hide();
                             });
 
                           }, function(error) {
                             console.error(error);
-                            message({title:'global.title.500',template:'mensagens.MSG-052'});
+                            message({title:'global.title.500',template:error.toString()});
                             loadingService.hide();
                           });
                         }, function(error) {
                           console.error(error);
-                          message({title:'global.title.500',template:'mensagens.MSG-052'});
+                          message({title:'global.title.500',template:error.toString()});
                           loadingService.hide();
                         });
                     }, function (error) {
                       console.error(error);
-                      message({title:'global.title.500',template:'mensagens.MSG-052'});
+                      message({title:'global.title.500',template:error.toString()});
                       loadingService.hide();
                     }, imageUri, {
                       targetWidth: 500,
