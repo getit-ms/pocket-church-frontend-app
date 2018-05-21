@@ -1,0 +1,22 @@
+<ion-view cache-view="true">
+  <ion-nav-title>
+    <span>{{resposta.votacao.nome}}</span>
+  </ion-nav-title>
+
+  <ion-content>
+    <ion-slide-box ng-if="resultado">
+      <ion-slide ng-repeat="questao in resultado.questoes">
+        <div class="card">
+          <div class="item">
+            <h2>{{questao.questao}}</h2>
+          </div>
+          <div class="item">
+            <canvas class="chart chart-doughnut"
+                    chart-data="questao.data" chart-labels="questao.labels" ></canvas>
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,25 @@
+<ion-view>
+  <ion-nav-title >
+    <span translate>contato.aniversariantes</span>
+  </ion-nav-title>
+  <ion-content>
+    <ion-list>
+      <div class="item item-divider" ng-repeat-start="contato in aniversariantes"
+           ng-if="primeiroDoMes(aniversariantes, contato)">
+        {{contato.diaAniversarioFormatado}}
+      </div>
+      <ion-item ng-class="{'item-icon-right':contato.pastor || contato.visitante,'item-avatar':true}"
+                ng-click="detalhar(contato)" ng-repeat-end >
+        <div class="item-image" style="background-image: url({{localPath(contato.foto)}})" ng-if="contato.foto"></div>
+        <img src="img/avatar.png" ng-if="!contato.foto">
+
+        <h2>
+          {{contato.nome}}
+          <i class="icon ion-star icon-accessory" ng-if='contato.pastor'></i>
+          <i class="icon ion-person icon-accessory" ng-if='contato.visitante'></i>
+        </h2>
+        <p>{{contato.telefones ? (contato.telefones[0] | telefone) : contato.email}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

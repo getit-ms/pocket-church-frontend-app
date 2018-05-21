@@ -5,7 +5,7 @@ calvinApp.factory('message', ['$ionicPopup', '$filter', '$rootScope', function($
 
             return $ionicPopup.alert({
                 title: $filter('translate')(alert.title),
-                template: $filter('translate')(alert.template)
+                template: $filter('translate')(alert.template, alert.args)
             }).then(function(){
                 $rootScope.popupShown = false;
                 if (callback) callback();

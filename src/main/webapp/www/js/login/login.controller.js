@@ -16,10 +16,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         loadingService.show();
 
                         acessoService.login($scope.auth, function(acesso){
-                          $rootScope.usuario = acesso.membro;
-                          $rootScope.carregaMenu(acesso.menu);
-
                           try {
+                            $rootScope.usuario = acesso.membro;
+                            $rootScope.carregaMenu(acesso.menu);
+
                             configService.save({
                               usuario:$rootScope.usuario,
                               menu:acesso.menu
@@ -28,18 +28,22 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             if ($rootScope.funcionalidadeHabilitada('CONSULTAR_PLANOS_LEITURA_BIBLICA')){
                               leituraService.sincroniza();
                             }
+
+                            loadingService.hide();
+
+                            $ionicHistory.nextViewOptions({
+                              historyRoot: true,
+                              disableBack: true
+                            });
+
+                            $state.go('home');
                           } catch (ex) {
+                            loadingService.hide();
+
+                            message({title:'global.title.500',template:'mensagens.MSG-500',args:{mensagem:ex.message}});
+
                             console.log(ex);
                           }
-
-                          loadingService.hide();
-
-                          $ionicHistory.nextViewOptions({
-                            historyRoot: true,
-                            disableBack: true
-                          });
-
-                          $state.go('home');
                         }, function(){
                           loadingService.hide();
                         });
@@ -92,7 +96,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                     $scope.redefinirSenha = function(){
                         if (!$scope.dados.email){
-                            message({title:'global.title.400',template:'mensagens.MSG-002'})
+                            message({title:'global.title.400',template:'mensagens.MSG-002'});
                             return;
                         }
 

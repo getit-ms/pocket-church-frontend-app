@@ -7,6 +7,10 @@ calvinApp.service('contatoService', ['Restangular', function(Restangular){
             return this.api().get('', filtro).then(callback);
         };
 
+        this.buscaAniversariantes = function(callback) {
+          return this.api().all('aniversariantes').getList().then(callback);
+        };
+
         this.carrega = function(id){
             return this.api().get(id).$object;
         };

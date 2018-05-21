@@ -88,6 +88,53 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 }
             }
         }
+    }).state('contato.aniversariantes', {
+      parent: 'site',
+      url: '/aniversariante',
+      views:{
+        'content@':{
+          templateUrl: 'js/contato/aniversariantes.list.html',
+          controller: function(contatoService, $state, $scope, $filter){
+
+            function aniversario(contato){
+              var dia = contato.diaAniversario.substring(2);
+              var mes = contato.diaAniversario.substring(0, 2);
+
+              var hoje = new Date();
+              var amanha = new Date(hoje.getTime() + 1000 * 60 * 60 * 24);
+
+              if (Number(dia) == hoje.getDate() && Number(mes) == hoje.getMonth()) {
+                return $filter('translate')('contato.hoje');
+              } else if (Number(dia) == amanha.getDate() && Number(mes) == amanha.getMonth()) {
+                return $filter('translate')('contato.amanha');
+              }
+
+              return dia + '/' + mes;
+            }
+
+            $scope.busca = function(){
+              contatoService.buscaAniversariantes(function(aniversariantes) {
+                contatos.resultados.forEach(function(contato){
+                  contato.diaAniversarioFormatado = aniversario(contato);
+                });
+
+                $scope.aniversariantes = aniversariantes;
+              });
+            };
+
+            $scope.detalhar = function(contato){
+              $state.go('contato.view', {id: contato.id});
+            };
+
+            $scope.primeiroDoMes = function(contatos, contato){
+              var idx = contatos.indexOf(contato);
+              return idx == 0 || contatos[idx - 1].diaAniversarioFormatado != contato.diaAniversarioFormatado;
+            };
+
+            $scope.busca();
+          }
+        }
+      }
     }).state('contato.view', {
         parent: 'contato',
         url: '/:id',
