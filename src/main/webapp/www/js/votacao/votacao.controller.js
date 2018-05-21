@@ -5,16 +5,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/votacao/votacao.list.html',
-                controller: function(votacaoService, $state, $scope){
+                controller: function(votacaoService, $state, $scope, message){
                     $scope.searcher = function(page, callback){
                         votacaoService.busca({pagina:page,total:10}, callback);
                     };
 
                     $scope.votar = function(votacao){
-                      if (votacao.respondido) {
-                        message({title: 'global.title.403',template: 'mensagens.MSG-054'});
-                      } else if (votacao.encerrado) {
+                      if (votacao.encerrado) {
                         $state.go('votacao.resultado', {id: votacao.id});
+                      } else if (votacao.respondido) {
+                        message({title: 'global.title.403',template: 'mensagens.MSG-054'});
                       } else {
                         $state.go('votacao.votar', {id: votacao.id});
                       }

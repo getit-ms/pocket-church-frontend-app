@@ -97,8 +97,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
           controller: function(contatoService, $state, $scope, $filter){
 
             function aniversario(contato){
-              var dia = contato.diaAniversario.substring(2);
-              var mes = contato.diaAniversario.substring(0, 2);
+              var dia = contato.diaAniversario % 100;
+              var mes = Math.floor(contato.diaAniversario / 100);
 
               var hoje = new Date();
               var amanha = new Date(hoje.getTime() + 1000 * 60 * 60 * 24);
@@ -109,7 +109,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 return $filter('translate')('contato.amanha');
               }
 
-              return dia + '/' + mes;
+              return dia + ' ' + $filter('translate')('global.mes.' + mes);
             }
 
             $scope.busca = function(){
@@ -121,8 +121,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 $scope.aniversariantes = aniversariantes;
 
                 $scope.$broadcast('scroll.refreshComplete');
-              }, function (err) {
-                $scope.$broadcast('scroll.refreshComplete');
               });
             };
 
@@ -132,7 +130,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
             $scope.primeiroDoMes = function(contatos, contato){
               var idx = contatos.indexOf(contato);
-              return idx == 0 || contatos[idx - 1].diaAniversarioFormatado != contato.diaAniversarioFormatado;
+              return idx == 0 || contatos[idx - 1].diaAniversario != contato.diaAniversario;
             };
 
             $scope.$on('$ionicView.enter', function() {
