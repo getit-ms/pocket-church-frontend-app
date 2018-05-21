@@ -116,7 +116,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/votacao/resultado.form.html',
-                controller: function(votacaoService, $scope, $stateParams, message, $ionicHistory){
+                controller: function(votacaoService, $scope, $stateParams){
                   $scope.clear = function() {
                     votacaoService.resultado($stateParams.id, function(resultado) {
 
@@ -132,7 +132,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                       $scope.resultado = resultado;
                     });
-                  }
+                  };
+
+
+                  $scope.$on('$ionicView.enter', function(){
+                    $scope.clear();
+                  });
                 }
             }
         }
