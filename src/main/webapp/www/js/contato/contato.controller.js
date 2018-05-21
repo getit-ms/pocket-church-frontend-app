@@ -104,7 +104,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
             $scope.busca = function(){
               var hoje = toAniversario(hoje.getDate());
-              var amanha = toAniversario(new Date(hoje.getTime() + MILLIS_DIA));
+              var amanha = toAniversario(new Date(new Date().getTime() + MILLIS_DIA));
 
               function aniversario(contato){
                 if (amanha == contato.diaAniversario) {
