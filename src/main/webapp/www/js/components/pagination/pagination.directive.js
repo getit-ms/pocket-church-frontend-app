@@ -25,11 +25,12 @@ calvinApp.directive('calvinPagination', function(){
                 $scope.more = function(){
                     $scope.page++;
                     $scope.search($scope.page, function(data){
-                        if (data.resultados) {
+                        if (data && data.resultados) {
                           data.resultados.forEach(function(d){
                               $scope.ngModel.push(d);
                           });
                         }
+
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     });
                 };

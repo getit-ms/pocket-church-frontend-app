@@ -4,6 +4,10 @@
   </ion-nav-title>
   <ion-content>
     <ion-list>
+      <ion-refresher
+        pulling-text="{{'global.puxe_para_atualizar' | translate}}"
+        on-refresh='busca()'></ion-refresher>
+
       <div class="item item-divider" ng-repeat-start="contato in aniversariantes"
            ng-if="primeiroDoMes(aniversariantes, contato)">
         {{contato.diaAniversarioFormatado}}

@@ -11,9 +11,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     };
 
                     $scope.votar = function(votacao){
-                      if (votacao.respondida) {
+                      if (votacao.respondido) {
                         message({title: 'global.title.403',template: 'mensagens.MSG-054'});
-                      } else if (votacao.encerrada) {
+                      } else if (votacao.encerrado) {
                         $state.go('votacao.resultado', {id: votacao.id});
                       } else {
                         $state.go('votacao.votar', {id: votacao.id});

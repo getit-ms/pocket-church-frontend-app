@@ -114,11 +114,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
             $scope.busca = function(){
               contatoService.buscaAniversariantes(function(aniversariantes) {
-                contatos.resultados.forEach(function(contato){
+                aniversariantes.forEach(function(contato){
                   contato.diaAniversarioFormatado = aniversario(contato);
                 });
 
                 $scope.aniversariantes = aniversariantes;
+
+                $scope.$broadcast('scroll.refreshComplete');
+              }, function (err) {
+                $scope.$broadcast('scroll.refreshComplete');
               });
             };
 
@@ -131,7 +135,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
               return idx == 0 || contatos[idx - 1].diaAniversarioFormatado != contato.diaAniversarioFormatado;
             };
 
-            $scope.busca();
+            $scope.$on('$ionicView.enter', function() {
+              $scope.busca();
+            });
           }
         }
       }
