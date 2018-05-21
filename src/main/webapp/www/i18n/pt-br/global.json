@@ -141,6 +141,7 @@
     },
     "contato":{
         "aniversariantes":"Aniversariantes",
+        "nenhum_aniversariante_proximos_dias":"Nenhum aniversariante nos próximos dias.",
         "hoje":"Hoje",
         "amanha":"Amanhã",
         "contatos":"Contatos",

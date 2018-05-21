@@ -96,29 +96,39 @@ calvinApp.config(['$stateProvider', function($stateProvider){
           templateUrl: 'js/contato/aniversariantes.list.html',
           controller: function(contatoService, $state, $scope, $filter){
 
-            function aniversario(contato){
-              var dia = contato.diaAniversario % 100;
-              var mes = Math.floor(contato.diaAniversario / 100);
+            var MILLIS_DIA = 1000 * 60 * 60 * 24;
 
-              var hoje = new Date();
-              var amanha = new Date(hoje.getTime() + 1000 * 60 * 60 * 24);
-
-              if (Number(dia) == hoje.getDate() && Number(mes) == hoje.getMonth()) {
-                return $filter('translate')('contato.hoje');
-              } else if (Number(dia) == amanha.getDate() && Number(mes) == amanha.getMonth()) {
-                return $filter('translate')('contato.amanha');
-              }
-
-              return dia + ' ' + $filter('translate')('global.mes.' + mes);
+            function toAniversario(data) {
+              return (data.getMonth() + 1) * data.getDate();
             }
 
             $scope.busca = function(){
+              var hoje = toAniversario(hoje.getDate());
+              var amanha = toAniversario(new Date(hoje.getTime() + MILLIS_DIA));
+
+              function aniversario(contato){
+                if (amanha == contato.diaAniversario) {
+                  return $filter('translate')('contato.amanha');
+                }
+
+                var dia = contato.diaAniversario % 100;
+                var mes = Math.floor(contato.diaAniversario / 100);
+
+                return dia + ' ' + $filter('translate')('global.mes.' + mes);
+              }
+
               contatoService.buscaAniversariantes(function(aniversariantes) {
-                aniversariantes.forEach(function(contato){
-                  contato.diaAniversarioFormatado = aniversario(contato);
+                $scope.hoje = aniversariantes.filter(function(contato) {
+                  return contato.diaAniversario == hoje;
                 });
 
-                $scope.aniversariantes = aniversariantes;
+                $scope.futuros = aniversariantes.filter(function(c) {
+                  return c.diaAniversario != hoje;
+                });
+
+                $scope.futuros.forEach(function(contato){
+                  contato.diaAniversarioFormatado = aniversario(contato);
+                });
 
                 $scope.$broadcast('scroll.refreshComplete');
               });
