@@ -47,7 +47,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                     plugins.crop(function (newUri) {
 
-                      message({title:'global.title.500',template:cordova.file.cacheDirectory + " - " + newUrl});
+                      message({title:'global.title.500',template:newUrl});
 
                       $cordovaFile
                         .readAsDataURL(
