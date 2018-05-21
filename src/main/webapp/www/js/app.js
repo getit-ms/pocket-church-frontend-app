@@ -288,7 +288,7 @@ var calvinApp = angular.module('calvinApp', [
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
 
-    if (window.StatusBar) {
+    if (window.StatusBar && !ionic.Platform.isAndroid()) {
       if ($_statusBarLight) {
         StatusBar.styleLightContent();
       } else {

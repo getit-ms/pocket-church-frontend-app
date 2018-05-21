@@ -47,12 +47,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                     plugins.crop(function (newUri) {
 
-                      message({title:'global.title.500',template:newUrl});
-
                       $cordovaFile
                         .readAsDataURL(
                           newUri.substring(0, newUri.lastIndexOf('/')),
-                          newUri.substring(newUri.lastIndexOf('/') + 1)
+                          newUri.substring(newUri.lastIndexOf('/') + 1).match(/^[^?]+/)[0]
                         ).then(function(base64) {
                           arquivoService.upload({
                             fileName: $scope.usuario.nome + '.jpg',
@@ -67,23 +65,23 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                             }, function(error) {
                               console.error(error);
-                              message({title:'global.title.500',template:error.message});
+                              message({title:'global.title.500',template:'mensagens.MSG-052'});
                               loadingService.hide();
                             });
 
                           }, function(error) {
                             console.error(error);
-                            message({title:'global.title.500',template:error.message});
+                            message({title:'global.title.500',template:'mensagens.MSG-052'});
                             loadingService.hide();
                           });
                         }, function(error) {
                           console.error(error);
-                          message({title:'global.title.500',template:error.message});
+                          message({title:'global.title.500',template:'mensagens.MSG-052'});
                           loadingService.hide();
                         });
                     }, function (error) {
                       console.error(error);
-                      message({title:'global.title.500',template:error.message});
+                      message({title:'global.title.500',template:'mensagens.MSG-052'});
                       loadingService.hide();
                     }, imageUri, {
                       targetWidth: 500,
