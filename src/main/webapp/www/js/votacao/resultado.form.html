@@ -1,18 +1,31 @@
 <ion-view cache-view="true">
   <ion-nav-title>
-    <span>{{resposta.votacao.nome}}</span>
+    <span>{{'votacao.resultado' | translate}}</span>
   </ion-nav-title>
 
-  <ion-content>
+  <ion-content class="has-header">
+    <div class="item">
+      <h2>{{resultado.nome}}</h2>
+      <p>{{resultado.descricao}}</p>
+    </div>
+
     <ion-slide-box ng-if="resultado">
       <ion-slide ng-repeat="questao in resultado.questoes">
         <div class="card">
+          <div class="item item-divider">{{questao.questao}}</div>
           <div class="item">
-            <h2>{{questao.questao}}</h2>
-          </div>
-          <div class="item">
-            <canvas class="chart chart-doughnut"
+            <canvas class="chart chart-doughnut" chart-options="{legend:{display: true, position: bottom}}"
                     chart-data="questao.data" chart-labels="questao.labels" ></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="item item-divider">{{'votacao.votos' | translate}}</div>
+          <div class="item item-input" ng-for="opcao in questao.validos">
+            <div class="input-label">
+              {{opcao.opcao}}
+            </div>
+            <input disabled value="{{opcao.resultado}}" />
           </div>
         </div>
       </ion-slide>

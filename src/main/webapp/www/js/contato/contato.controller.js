@@ -99,11 +99,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             var MILLIS_DIA = 1000 * 60 * 60 * 24;
 
             function toAniversario(data) {
-              return (data.getMonth() + 1) * data.getDate();
+              return (data.getMonth() + 1) * 100 + data.getDate();
             }
 
             $scope.busca = function(){
-              var hoje = toAniversario(hoje.getDate());
+              var hoje = toAniversario(new Date());
               var amanha = toAniversario(new Date(new Date().getTime() + MILLIS_DIA));
 
               function aniversario(contato){

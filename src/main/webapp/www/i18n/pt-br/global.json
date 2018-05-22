@@ -196,6 +196,8 @@
         "concluir":"Concluir",
         "encerrada":"Encerrada",
         "respondida":"Respondida",
+        "resultado":"Resultado da Enquete",
+        "votos":"Distribuição da Votos",
         "questao":{
             "voto":"Voto",
             "voto_index":"Voto {index}",
