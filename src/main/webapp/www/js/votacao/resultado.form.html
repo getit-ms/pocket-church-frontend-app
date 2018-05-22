@@ -9,23 +9,21 @@
       <p>{{resultado.descricao}}</p>
     </div>
 
-    <ion-slide-box ng-if="resultado">
+    <ion-slide-box ng-if="resultado" class="default">
       <ion-slide ng-repeat="questao in resultado.questoes">
         <div class="card">
           <div class="item item-divider">{{questao.questao}}</div>
           <div class="item">
-            <canvas class="chart chart-doughnut" chart-options="{legend:{display: true, position: bottom}}"
+            <canvas class="chart chart-doughnut" chart-options="{ legend:{ display: true, position: 'bottom' } }"
                     chart-data="questao.data" chart-labels="questao.labels" ></canvas>
           </div>
         </div>
 
         <div class="card">
           <div class="item item-divider">{{'votacao.votos' | translate}}</div>
-          <div class="item item-input" ng-for="opcao in questao.validos">
-            <div class="input-label">
-              {{opcao.opcao}}
-            </div>
-            <input disabled value="{{opcao.resultado}}" />
+          <div class="item" ng-repeat="opcao in questao.validos">
+            {{opcao.opcao}}
+            <span class="badge badge-default">{{opcao.resultado}}</span>
           </div>
         </div>
       </ion-slide>
