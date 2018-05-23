@@ -3,7 +3,7 @@
     <span translate>votacao.votacoes</span>
   </ion-nav-title>
   <calvin-pagination searcher='searcher' ng-model="votacoes" cache='votacoes'>
-    <ion-item class="item-text-wrap" ng-repeat="votacao in votacoes" ng-click="votar(votacao)">
+    <ion-item class="votacao item-text-wrap" ng-repeat="votacao in votacoes" ng-click="votar(votacao)">
       <span class="badge badge-calm" ng-if="votacao.encerrado" translate>votacao.encerrada</span>
       <span class="badge badge-stable" ng-if="!votacao.encerrado && votacao.respondido" translate>votacao.respondida</span>
 

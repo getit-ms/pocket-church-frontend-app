@@ -11,7 +11,7 @@
 
     <ion-slide-box ng-if="resultado" class="default">
       <ion-slide ng-repeat="questao in resultado.questoes">
-        <div class="card">
+        <div class="card list">
           <div class="item item-divider">{{questao.questao}}</div>
           <div class="item">
             <canvas class="chart chart-doughnut" chart-options="{ legend:{ display: true, position: 'bottom' } }"
