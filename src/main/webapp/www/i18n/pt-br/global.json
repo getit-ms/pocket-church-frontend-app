@@ -188,7 +188,7 @@
       "paginacao":"{atual} de {total}"
     },
     "votacao":{
-        "votar":"Votar",
+        "votar":"Responder",
         "votacoes":"Enquetes",
         "responder":"Responder",
         "proximo":"Próximo",
@@ -197,11 +197,11 @@
         "encerrada":"Encerrada",
         "respondida":"Respondida",
         "resultado":"Resultado da Enquete",
-        "votos":"Distribuição da Votos",
+        "votos":"Distribuição da Respostas",
         "questao":{
-            "voto":"Voto",
-            "voto_index":"Voto {index}",
-            "votos":"{quantidadeVotos} votos",
+            "voto":"Resposta",
+            "voto_index":"Resposta {index}",
+            "votos":"{quantidadeVotos} respostas",
             "opcao":{
                 "opcao":"Opção",
                 "nulo":"Nulo",

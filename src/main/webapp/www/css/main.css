@@ -69,7 +69,10 @@ h2.title {
   font-weight: bold;
 }
 
-.item.votacao h2,
+.item.votacao h2 {
+  font-size: 18px !important;
+}
+
 .item.contato h2 {
   font-size: 24px !important;
 }
@@ -388,7 +391,7 @@ h2.title {
   border-color: #000 !important;
 }
 
-.card .item:last-child,
+.card.login-container .item:last-child,
 .list-inset .item:last-child {
   border: 0;
 }
