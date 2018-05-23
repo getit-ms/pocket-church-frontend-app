@@ -204,6 +204,10 @@ img.igreja-image {
     height: 100%;
 }
 
+.slider.default .slider-pager {
+  bottom: 3px;
+}
+
 .image {
     width: 100%;
     height: 100%;

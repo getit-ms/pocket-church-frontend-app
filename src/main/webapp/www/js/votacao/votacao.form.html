@@ -10,11 +10,6 @@
         </div>
 
         <div ng-repeat="selection in questao.selections">
-            <div class='item item-divider'>
-                <label ng-if='questao.selections.length == 1'>{{'votacao.questao.voto' | translate:{index:questao.selections.indexOf(selection) + 1} }}</label>
-                <label ng-if='questao.selections.length > 1'>{{'votacao.questao.voto_index' | translate:{index:questao.selections.indexOf(selection) + 1} }}</label>
-            </div>
-
             <ion-radio ng-repeat="opcao in questao.questao.opcoes"
                        ng-model="selection.value" ng-value="opcao" ng-attr-name="opcao{{questao.selections.indexOf(selection)}}">{{opcao.opcao}}</ion-radio>
         </div>
