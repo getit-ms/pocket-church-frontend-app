@@ -197,7 +197,7 @@
         "encerrada":"Encerrada",
         "respondida":"Respondida",
         "resultado":"Resultado da Enquete",
-        "votos":"Distribuição da Respostas",
+        "votos":"Distribuição das Respostas",
         "questao":{
             "voto":"Resposta",
             "voto_index":"Resposta {index}",

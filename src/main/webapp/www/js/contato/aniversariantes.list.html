@@ -11,11 +11,10 @@
       <div class="item item-divider" >
         {{'contato.hoje' | translate}}
       </div>
-      <ion-item ng-class="{'item-icon-right':contato.pastor || contato.visitante,'item-thumbnail-left contato item-text-wrap':true}"
+      <ion-item ng-class="{'item-icon-right':contato.pastor || contato.visitante,'item-thumbnail-left':true}"
                 ng-click="detalhar(contato)" ng-repeat="contato in hoje" >
         <div class="item-image" style="background-image: url({{localPath(contato.foto)}})" ng-if="contato.foto"></div>
         <img src="img/avatar.png" ng-if="!contato.foto">
-
         <h2>
           {{contato.nome}}
           <i class="icon ion-star icon-accessory" ng-if='contato.pastor'></i>
