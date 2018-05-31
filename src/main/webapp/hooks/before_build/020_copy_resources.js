@@ -7,13 +7,13 @@ var exec = require('child_process').exec;
 // Native resources to copy
 var resources = [
     {
-      from: 'resources/native/android/',
+      from: 'resources/native/android/*',
       to: 'platforms/android/res/'
     },
-  {
-    from: 'resources/android/build-extras.gradle',
-    to: 'platform/android/'
-  },
+    {
+      from: 'resources/android/build-extras.gradle',
+      to: 'platforms/android/'
+    },
     {
       from: 'resources/splash.png',
       to: 'resources/ios/splash/Default@2x~universal~anyany.png'
@@ -26,7 +26,7 @@ var resources = [
 
 function copyAndroidResources() {
     resources.forEach(function(resource){
-        exec('cp -Rf ' + resource.from + '* ' + resource.to);
+        exec('cp -Rf ' + resource.from + ' ' + resource.to);
     });
 
     process.stdout.write('Copied native resources');
