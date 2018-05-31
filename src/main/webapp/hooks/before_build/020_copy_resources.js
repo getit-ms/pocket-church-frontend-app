@@ -7,9 +7,13 @@ var exec = require('child_process').exec;
 // Native resources to copy
 var resources = [
     {
-        from: 'resources/native/android/',
-        to: 'platforms/android/res/'
+      from: 'resources/native/android/',
+      to: 'platforms/android/res/'
     },
+  {
+    from: 'resources/android/build-extras.gradle',
+    to: 'platform/android/'
+  },
     {
       from: 'resources/splash.png',
       to: 'resources/ios/splash/Default@2x~universal~anyany.png'
