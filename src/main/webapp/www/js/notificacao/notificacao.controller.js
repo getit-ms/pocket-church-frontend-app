@@ -9,7 +9,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $ionicPopup, $filter, message, $state, shareService, $ionicPlatform, $ionicActionSheet){
                         $scope.searcher = function(page, callback){
                             notificacaoService.busca({pagina: page, total: 10}, function(notificacoes){
+                              try {
                                 $cordovaBadge.clear();
+                              } catch (e) {
+                                console.error(e);
+                              }
 
                                 var ns = [];
                                 if (notificacoes.resultados){

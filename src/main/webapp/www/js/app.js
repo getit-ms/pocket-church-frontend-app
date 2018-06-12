@@ -638,17 +638,21 @@ config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'RestangularPro
       });
 
       push.on('notification', function(data){
-        if (data.additionalData.foreground){
-          message({title: data.title,template: data.message});
-        }else if (data.additionalData.coldstart){
-          $ionicHistory.nextViewOptions({
-            disableBack: true
-          });
-          $state.go('notificacao');
-        } else if (data.badge) {
-          $cordovaBadge.set(data.badge);
-        } else {
-          $cordovaBadge.clear();
+        try {
+          if (data.additionalData.foreground){
+            message({title: data.title,template: data.message});
+          }else if (data.additionalData.coldstart){
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+            $state.go('notificacao');
+          } else if (data.badge) {
+            $cordovaBadge.set(data.badge);
+          } else {
+            $cordovaBadge.clear();
+          }
+        } catch (e) {
+          console.error(e);
         }
       });
     }
