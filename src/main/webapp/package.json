@@ -70,7 +70,7 @@
     "cordova-plugin-camera@2.4.1"
   ],
   "cordovaPlatforms": [
-    "android@6.3.0",
+    "android@6.4.0",
     "ios@4.5.4"
   ]
 }
