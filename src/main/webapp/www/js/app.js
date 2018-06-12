@@ -153,6 +153,17 @@ var calvinApp = angular.module('calvinApp', [
     return false;
   };
 
+  var findMenu = function(mnus, match) {
+    for (var i=0;i<mnus.length;i++){
+      var mnu = mnus[i];
+      if (match(mnu)) {
+        return mnu;
+      }
+    }
+
+    return undefined;
+  };
+
   $rootScope.carregaMenu = function(menu, clearNotificacoes) {
     if (menu && menu.submenus) {
       var total = 0;
@@ -186,12 +197,12 @@ var calvinApp = angular.module('calvinApp', [
     }
 
     if ($rootScope.menu && $rootScope.menu.submenus) {
-      var selecionado = $rootScope.menu.submenus.find(function(mnu) {
+      var selecionado = findMenu($rootScope.menu.submenus, function(mnu) {
         return mnu.selecionado;
       });
 
       if (selecionado) {
-        var aSelecionar = menu.submenus.find(function(mnu) {
+        var aSelecionar = findMenu(menu.submenus, function(mnu) {
           return mnu.nome == selecionado.nome;
         });
 
