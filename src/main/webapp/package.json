@@ -49,8 +49,8 @@
       "variables": {
         "SENDER_ID": "${android.sender.id}"
       },
-      "locator": "phonegap-plugin-push@1.8.4",
-      "id": "phonegap-plugin-push@1.8.4"
+      "locator": "phonegap-plugin-push@1.11.1",
+      "id": "phonegap-plugin-push@1.11.1"
     },
     "cordova-plugin-network-information@1.3.3",
     "cordova-plugin-file@4.3.3",
