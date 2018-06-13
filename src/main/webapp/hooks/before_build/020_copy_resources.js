@@ -11,16 +11,8 @@ var resources = [
       to: 'platforms/android/res/'
     },
     {
-      from: 'resources/android/build-extras.gradle',
-      to: 'platforms/android/'
-    },
-    {
       from: 'resources/splash.png',
       to: 'resources/ios/splash/Default@2x~universal~anyany.png'
-    },
-    {
-      from: 'resources/native/ios/icon.png',
-      to: 'resources/ios/icon/icon-1024.png'
     }
 ];
 
