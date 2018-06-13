@@ -44,7 +44,7 @@ platform :android do
   lane :beta do
     # add actions here: https://docs.fastlane.tools/actions
 
-    upload_to_play_store(track: 'beta', apk: 'build/outputs/apk/release/android-release-final.apk')
+    upload_to_play_store(track: 'beta', apk: 'build/outputs/apk/android-release-final.apk')
   end
 
   lane :release do
