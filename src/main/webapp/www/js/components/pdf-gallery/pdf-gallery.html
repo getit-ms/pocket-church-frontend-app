@@ -1,0 +1,13 @@
+<div class="row row-wrap" ng-if="pages">
+  <div class="col col-50" ng-repeat="page in pages">
+    <div class="card boletim" style="height: 150px" >
+      <div class="item item-complex">
+        <canvas style="width: 100%;margin:auto 0"
+                id="page-canvas-{{page}}"></canvas>
+      </div>
+      <div class="item item-divider text-center">
+        {{page}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,10 @@
   background: rgba(0,0,0,0.9) !important;
 }
 
+.pdf-canvas {
+  width: 100%;
+}
+
 .video-modal {
   width: 100% !important;
   height: 100%;

@@ -3,11 +3,11 @@
         <span>{{boletim.titulo}}</span>
     </ion-nav-title>
     <ion-nav-buttons side="right" >
-        <a data-tap-disabled="true" ng-click="share()" href="" 
+        <a data-tap-disabled="true" ng-click="share()" href=""
            class="button button-icon icon positive ion-android-share-alt"
            title="{{'global.compartilhar' | translate}}"></a>
     </ion-nav-buttons>
     <ion-content>
-        <ion-gallery ng-if="boletim" ion-gallery-row="2" ion-gallery-items="boletim.paginas"></ion-gallery>
+        <pdf-gallery ng-if="boletim" pdf="boletim.boletim"></pdf-gallery>
     </ion-content>
 </ion-view>
