@@ -18,29 +18,34 @@ calvinApp.directive('pdfPage', function(){
         var scaledViewport = scope.page.getViewport(scale);
 
         // Prepare canvas using PDF page dimensions
-        var context = canvas.getContext('2d');
+
         canvas.height = scaledViewport.height;
         canvas.width = scaledViewport.width;
 
-        // Render PDF page into canvas context
-        scope.renderContext = {
-          canvasContext: context,
-          viewport: scaledViewport
-        };
+        scope.deveRenderizar = !scope.scaledViewport ||
+          scaledViewport.width > scope.scaledViewport.width;
 
-        scope.deveRenderizar = true;
-        scope.renderiza(scope.inview);
-
+        if (scope.deveRenderizar) {
+          scope.scaledViewport = scaledViewport;
+          scope.renderiza(scope.inview);
+        }
       };
 
       scope.renderiza = function(inview) {
         scope.inview = inview;
 
         if (scope.inview && scope.deveRenderizar) {
-          scope.page.render(scope.renderContext);
+          var context = canvas.getContext('2d');
+
+          // Render PDF page into canvas context
+          scope.page.render({
+            canvasContext: context,
+            viewport: scope.scaledViewport
+          });
+
+          scope.deveRenderizar = false;
         }
 
-        scope.deveRenderizar = false;
       };
 
       scope.$watch(function() {
