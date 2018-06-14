@@ -1,7 +1,6 @@
 calvinApp.directive('pdfViewer', function(){
     return {
         restrict: 'E',
-        transclude: true,
         scope:{
             arquivo:'=pdf'
         },
@@ -11,13 +10,17 @@ calvinApp.directive('pdfViewer', function(){
           $scope.load = function() {
             pdfService.get($scope.arquivo.id, function(pdf) {
               $scope.pdf = pdf;
+              $scope.$apply();
             });
           };
 
           $scope.buscaPagina = function(nr, callback, ri) {
-            $scope.pdf.getPage(nr).then(function(page) {
-              callback({page: page});
-            });
+            if (nr >= 1 && nr <= $scope.pdf.numPages) {
+              $scope.pdf.getPage(nr).then(function(page) {
+                callback({page: page});
+                $scope.$apply();
+              });
+            }
           };
 
           if ($scope.arquivo && $scope.arquivo.id) {

@@ -1,6 +1,6 @@
 <div class="row row-wrap" >
   <div class="col col-50" ng-repeat="page in pages">
-    <div class="card boletim" >
+    <div class="card boletim" ng-click="openModal(page)" >
       <div class="item item-complex" style="height: 200px">
         <canvas pdf-page="page" style="width: 100%;margin:auto 0"></canvas>
       </div>
