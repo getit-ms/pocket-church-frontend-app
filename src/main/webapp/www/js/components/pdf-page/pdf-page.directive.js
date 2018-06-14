@@ -19,12 +19,15 @@ calvinApp.directive('pdfPage', function(){
         // Prepare canvas using PDF page dimensions
         var context = canvas.getContext('2d');
         canvas.height = scaledViewport.height;
+        canvas.width = scaledViewport.width;
 
         // Render PDF page into canvas context
         var renderContext = {
           canvasContext: context,
           viewport: scaledViewport
         };
+
+        scope.page.render(renderContext);
       };
 
       scope.$watch(function() {

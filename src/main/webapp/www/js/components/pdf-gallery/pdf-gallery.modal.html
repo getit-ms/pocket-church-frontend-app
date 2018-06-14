@@ -1,11 +1,11 @@
-<div class="modal video-modal transparent" ng-click="closeModal()">
+<div class="modal transparent" ng-click="closeModal()">
   <div class="header-item">
     <a data-tap-disabled="true" ng-click="share()" href=""
        class="button-icon pull-right icon ion-android-share-alt"
        title="{{'global.compartilhar' | translate}}"></a>
   </div>
 
-  <ion-scroll zooming="true" max-zoom="5">
+  <ion-scroll zooming="true" max-zoom="5" style="height:100%" >
     <pdf-viewer pdf="arquivo"></pdf-viewer>
   </ion-scroll>
 </div>
