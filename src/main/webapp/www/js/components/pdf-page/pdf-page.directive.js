@@ -1,9 +1,10 @@
 calvinApp.directive('pdfPage', function(){
   return {
-    restrict: 'A',
+    restrict: 'E',
     scope:{
-      page:'=pdfPage'
+      page:'='
     },
+    templateUrl: 'js/components/pdf-page/pdf-page.html',
     link: function(scope, element, attrs, ctrl, transclude) {
 
       scope.load = function() {
@@ -22,12 +23,24 @@ calvinApp.directive('pdfPage', function(){
         canvas.width = scaledViewport.width;
 
         // Render PDF page into canvas context
-        var renderContext = {
+        scope.renderContext = {
           canvasContext: context,
           viewport: scaledViewport
         };
 
-        scope.page.render(renderContext);
+        scope.deveRenderizar = true;
+        scope.renderiza(scope.inview);
+
+      };
+
+      scope.renderiza = function(inview) {
+        scope.inview = inview;
+
+        if (scope.inview && scope.deveRenderizar) {
+          scope.page.render(scope.renderContext);
+        }
+
+        scope.deveRenderizar = false;
       };
 
       scope.$watch(function() {
