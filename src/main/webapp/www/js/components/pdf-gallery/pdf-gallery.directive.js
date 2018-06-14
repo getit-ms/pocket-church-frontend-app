@@ -6,7 +6,7 @@ calvinApp.directive('pdfGallery', function(){
             arquivo:'=pdf'
         },
         templateUrl: 'js/components/pdf-gallery/pdf-gallery.html',
-        controller: ['$scope', 'pdfService', function($scope, pdfService){
+        controller: ['$scope', 'pdfService', '$ionicModal', function($scope, pdfService, $ionicModal){
 
           $scope.load = function() {
             pdfService.get($scope.arquivo.id, function(pdf) {
@@ -22,6 +22,8 @@ calvinApp.directive('pdfGallery', function(){
                   }, function(err) {
                     console.error(err);
                   });
+                } else {
+                  $scope.$apply();
                 }
               };
 
@@ -29,10 +31,43 @@ calvinApp.directive('pdfGallery', function(){
             });
           };
 
+          $scope.openModal = function (page) {
+            $scope.pageIndex = page.pageIndex;
+
+            $ionicModal.fromTemplateUrl('js/components/pdf-gallery/pdf-gallery.modal.html', {
+              scope: $scope,
+              animation: 'slide-in-up'
+            }).then(function(modal) {
+              $scope.modal = modal;
+              $scope.modal.show();
+            });
+          };
+
+          $scope.$on('modal.hidden', function() {
+            $scope.closeModal();
+          });
+
+          $scope.$on('$ionicView.leave', function() {
+            $scope.closeModal();
+          });
+
+          $scope.closeModal = function() {
+            if ($scope.modal){
+              var modal = $scope.modal;
+
+              $scope.modal = undefined;
+
+              modal.hide();
+              modal.remove();
+            }
+          };
+
           if ($scope.arquivo && $scope.arquivo.id) {
             $scope.load();
           } else {
-            var stop = $scope.$watch('arquivo.id', function() {
+            var stop = $scope.$watch(function() {
+              return $scope.arquivo && $scope.arquivo.id;
+            }, function() {
               if ($scope.arquivo && $scope.arquivo.id) {
                 stop();
 
