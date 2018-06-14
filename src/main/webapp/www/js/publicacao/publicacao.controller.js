@@ -46,28 +46,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/publicacao/publicacao.form.html',
-                    controller: function(boletimService, $scope, pdfService, $stateParams, shareService, config, loadingService, $state){
-                        $scope.slide = {totalPaginas:0};
-
-                        var dados = {porcentagem:0};
-
-                        pdfService.get({
-                            chave:'publicacao',
-                            id:$stateParams.id,
-                            errorState:'publicacao',
-                            callback:function(publicacao){
-                                $scope.publicacao = publicacao;
-                                loadingService.hide();
-                                $state.reload();
-                            },
-                            pagina:function(pag, total) {
-                              dados.porcentagem = (pag/total) * 100;
-                            },
-                            supplier:function(id, callback){
-                                loadingService.show(dados);
-                                boletimService.carrega(id, callback);
-                            }
-                        });
+                    controller: function(boletimService, $scope, $stateParams, shareService, config, loadingService){
+                      boletimService.carrega($stateParams.id, function(publicacao) {
+                        $scope.publicacao = publicacao;
+                      });
 
                         $scope.share = function(){
                             loadingService.show();
