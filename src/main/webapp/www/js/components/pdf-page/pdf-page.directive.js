@@ -6,15 +6,15 @@ calvinApp.directive('pdfPage', function(){
         },
         link: function(scope, element, attrs, ctrl, transclude) {
 
-          $scope.load = function() {
-            $scope.lastPage = $scope.page;
+          scope.load = function() {
+            scope.lastPage = scope.page;
 
             var canvas = element;
 
             var desiredWidth = canvas.offsetWidth;
-            var viewport = page.getViewport(1);
+            var viewport = scope.page.getViewport(1);
             var scale = desiredWidth / viewport.width;
-            var scaledViewport = page.getViewport(scale);
+            var scaledViewport = scope.page.getViewport(scale);
 
             // Prepare canvas using PDF page dimensions
             var context = canvas.getContext('2d');
@@ -27,13 +27,13 @@ calvinApp.directive('pdfPage', function(){
             };
           };
 
-          if ($scope.page) {
-            $scope.load();
+          if (scope.page) {
+            scope.load();
           }
 
-          $scope.$watch('page', function() {
-            if ($scope.page && $scope.lastPage != $scope.page) {
-              $scope.load();
+          scope.$watch('page', function() {
+            if (scope.page && scope.lastPage != scope.page) {
+              scope.load();
             }
           });
 

@@ -12,11 +12,20 @@ calvinApp.directive('pdfGallery', function(){
             pdfService.get($scope.arquivo.id, function(pdf) {
               $scope.pdf = pdf;
               $scope.pages = [];
-              for (var i=1;i<=pdf.numPages;i++) {
-                pdf.getPage(nr).then(function(page) {
-                  $scope.pages.push(page);
-                });
-              }
+
+              var buscaPagina = function(i) {
+                if (i<=pdf.numPages) {
+                  pdf.getPage(i).then(function(page) {
+                    $scope.pages.push(page);
+
+                    buscaPagina(i + 1);
+                  }, function(err) {
+                    console.error(err);
+                  });
+                }
+              };
+
+              buscaPagina(1);
             });
           };
 

@@ -1,11 +1,11 @@
 <div class="row row-wrap" ng-if="pages">
   <div class="col col-50" ng-repeat="page in pages">
-    <div class="card boletim" style="height: 150px" >
-      <div class="item item-complex">
+    <div class="card boletim" >
+      <div class="item item-complex" style="height: 200px">
         <canvas pdf-page="page" style="width: 100%;margin:auto 0"></canvas>
       </div>
       <div class="item item-divider text-center">
-        {{page}}
+        {{page.pageIndex + 1}}
       </div>
     </div>
   </div>

@@ -5,7 +5,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', function(cach
             errorCallback = function(){};
           }
 
-          arquivoService.get($scope.arquivo.id, function(loaded) {
+          arquivoService.get(id, function(loaded) {
             if (loaded.success) {
               PDFJS.getDocument(loaded.file).promise.then(function(pdf) {
                 successCallback(pdf);
