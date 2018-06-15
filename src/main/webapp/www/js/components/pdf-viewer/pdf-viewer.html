@@ -1,12 +1,17 @@
-<ion-slides style="height:100%;width:100%" ng-if="pdf"
-            does-continue="true" options="{loop:true,zoom:{maxRatio:5,minRatio:1}}"
-            show-pager="false" slider="slider"
-            delegate-handle="slideshow-slidebox">
-  <ion-slide-page ng-repeat="slide in slides">
-    <div class="swiper-zoom-container">
-      <ion-scroll>
+<ion-scroll scroll='false' zooming="true" direction="xy"
+            scrollable-x="false" overflow-scroll="false"
+            scrollable-y="false" max-zoom="5" min-zoom="1"
+            delegate-handle="scrollHandle"
+            on-scroll="updateSlideStatus()"
+            on-release="updateSlideStatus()">
+  <ion-slides style="height:100%;width:100%" ng-if="pdf"
+              does-continue="true" options="{loop:true}"
+              show-pager="false" slider="slider"
+              delegate-handle="slideshow-slidebox">
+    <ion-slide-page ng-repeat="slide in slides">
+      <div class="swiper-zoom-container">
         <pdf-page render-lazy="false" page="slide.page" ></pdf-page>
-      </ion-scroll>
-    </div>
-  </ion-slide-page>
-</ion-slides>
+      </div>
+    </ion-slide-page>
+  </ion-slides>
+</ion-scroll>

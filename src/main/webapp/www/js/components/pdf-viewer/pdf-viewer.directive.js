@@ -38,8 +38,8 @@ calvinApp.directive('pdfViewer', function(){
             });
           }
 
-          $scope.updateSlideStatus = function(index) {
-            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+          $scope.updateSlideStatus = function() {
+            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle').getScrollPosition().zoom;
             if (zoomFactor == 1) {
               $scope.slider.unlockSwipes();
             } else {
