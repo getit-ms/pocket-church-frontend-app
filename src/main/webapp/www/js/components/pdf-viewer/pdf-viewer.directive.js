@@ -3,7 +3,7 @@ calvinApp.directive('pdfViewer', function(){
         restrict: 'E',
         scope:{
             arquivo:'=pdf',
-            selectedSlide:'@'
+            initialSlide:'='
         },
         templateUrl: 'js/components/pdf-viewer/pdf-viewer.html',
         controller: ['$scope', 'pdfService', '$ionicSlideBoxDelegate', function($scope, pdfService, $ionicSlideBoxDelegate){
@@ -19,7 +19,7 @@ calvinApp.directive('pdfViewer', function(){
           };
 
           $scope.supplier = function(nr, callback) {
-            $scope.pdf.getPage(nr).then(function(page) {
+            $scope.pdf.getPage(Number(nr)).then(function(page) {
               callback({page: page});
               $scope.$apply();
             });
@@ -50,30 +50,23 @@ calvinApp.directive('pdfViewer', function(){
 
             $scope.slideShow = {first: 1, last: $scope.pdf.numPages};
 
+            $scope.showSlide = function (slide) {
+              return (slide.nr >= $scope.slideShow.first && slide.nr <= $scope.slideShow.last);
+            };
 
-            var
-              default_slides_indexes = [0, 1, 2],
-              default_slides = [
-                makeSlide(default_slides_indexes[0]),
-                makeSlide(default_slides_indexes[1]),
-                makeSlide(default_slides_indexes[2])
-              ];
-
-            if (!$scope.selectedSlide) {
-              $scope.selectedSlide = 1; // initial
-
-              $scope.slides = [
-                default_slides[0],
-                default_slides[1],
-                default_slides[2]
-              ];
+            if (!$scope.initialSlide) { // initial
+              $scope.initialSlide = 0;
             } else {
-              $scope.slides = [
-                makeSlide($scope.selectedSlide - 1),
-                makeSlide($scope.selectedSlide),
-                makeSlide($scope.selectedSlide + 1)
-              ];
+              $scope.initialSlide = Number($scope.initialSlide);
             }
+
+            $scope.selectedSlide = 1;
+
+            $scope.slides = [
+              makeSlide($scope.initialSlide - 1),
+              makeSlide($scope.initialSlide),
+              makeSlide($scope.initialSlide + 1)
+            ];
 
             var direction = 0;
 
@@ -119,16 +112,8 @@ calvinApp.directive('pdfViewer', function(){
               }
 
               nr = new_direction === 1 ? tail : head;
-              if (default_slides_indexes.indexOf(nr) !== -1) {
-                return default_slides[default_slides_indexes.indexOf(nr)];
-              }
-              ;
 
               return makeSlide(nr);
-            };
-
-            $scope.showSlide = function (slide) {
-              return (slide.nr >= $scope.slideShow.first && slide.nr <= $scope.slideShow.last);
             };
 
             var getIfromNr = function (nr) {
