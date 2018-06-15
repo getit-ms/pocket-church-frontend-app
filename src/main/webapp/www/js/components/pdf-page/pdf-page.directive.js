@@ -10,7 +10,7 @@ calvinApp.directive('pdfPage', function(){
       scope.load = function() {
         if (!scope.page) return;
 
-        var canvas = element[0];
+        var canvas = element[0].children[0];
 
         var desiredWidth = canvas.offsetWidth;
         var viewport = scope.page.getViewport(1);
@@ -18,7 +18,6 @@ calvinApp.directive('pdfPage', function(){
         var scaledViewport = scope.page.getViewport(scale);
 
         // Prepare canvas using PDF page dimensions
-
         canvas.height = scaledViewport.height;
         canvas.width = scaledViewport.width;
 
@@ -35,6 +34,8 @@ calvinApp.directive('pdfPage', function(){
         scope.inview = inview;
 
         if (scope.inview && scope.deveRenderizar) {
+          var canvas = element[0].children[0];
+
           var context = canvas.getContext('2d');
 
           // Render PDF page into canvas context
