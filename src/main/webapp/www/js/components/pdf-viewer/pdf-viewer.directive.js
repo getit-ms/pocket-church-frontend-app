@@ -6,7 +6,8 @@ calvinApp.directive('pdfViewer', function(){
             initialSlide:'='
         },
         templateUrl: 'js/components/pdf-viewer/pdf-viewer.html',
-        controller: ['$scope', 'pdfService', '$ionicSlideBoxDelegate', function($scope, pdfService, $ionicSlideBoxDelegate){
+        controller: ['$scope', 'pdfService', '$ionicSlideBoxDelegate', '$ionicScrollDelegate',
+          function($scope, pdfService, $ionicSlideBoxDelegate, $ionicScrollDelegate){
 
           $scope.load = function() {
             pdfService.get($scope.arquivo.id, function(pdf) {
@@ -36,6 +37,15 @@ calvinApp.directive('pdfViewer', function(){
               }
             });
           }
+
+          $scope.updateSlideStatus = function(index) {
+            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+            if (zoomFactor == 1) {
+              $ionicSlideBoxDelegate.enableSlide(true);
+            } else {
+              $ionicSlideBoxDelegate.enableSlide(false);
+            }
+          };
 
           function initSlide() {
             var makeSlide = function ( nr ) {
