@@ -74,8 +74,6 @@ calvinApp.directive('pdfViewer', function(){
             $scope.slides = [
               makeSlide($scope.initialSlide),
               makeSlide($scope.initialSlide + 1),
-              makeSlide($scope.initialSlide + 2),
-              makeSlide($scope.initialSlide - 2),
               makeSlide($scope.initialSlide - 1)
             ];
 
@@ -85,8 +83,8 @@ calvinApp.directive('pdfViewer', function(){
               if (isNaN(i) || i == $scope.lastIndex) return;
 
               var
-                previous_index = ($scope.slides.length + i - 2) % $scope.slides.length,
-                direction = $scope.slides[i].nr > $scope.slides[previous_index].nr  ? 2 : -2;
+                previous_index = ($scope.slides.length + i - 1) % $scope.slides.length,
+                direction = $scope.slides[i].nr > $scope.slides[previous_index].nr  ? 1 : -1;
 
               $scope.lastIndex = i;
 

@@ -21,8 +21,8 @@ calvinApp.directive('pdfPage', function(){
 
         var currentViewport = scope.page.getViewport(element[0].offsetWidth / viewport.width);
 
-        element[0].children[0].style.height = currentViewport.height + 'px';
-        element[0].children[0].style.width = currentViewport.width + 'px';
+        element[0].children[0].style.height = Math.round(currentViewport.height) + 'px';
+        element[0].children[0].style.width = Math.round(currentViewport.width) + 'px';
 
         scope.deveRenderizar = true;
         scope.currentViewport = currentViewport;
@@ -43,8 +43,8 @@ calvinApp.directive('pdfPage', function(){
             canvas.height = scope.scaledViewport.height;
             canvas.width = scope.scaledViewport.width;
 
-            canvas.style.height = scope.currentViewport.height + 'px';
-            canvas.style.width = scope.currentViewport.width + 'px';
+            canvas.style.height = Math.round(scope.currentViewport.height) + 'px';
+            canvas.style.width = Math.round(scope.currentViewport.width) + 'px';
 
             var context = canvas.getContext('2d');
 
