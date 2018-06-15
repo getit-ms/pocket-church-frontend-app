@@ -1,8 +1,9 @@
 <ion-scroll zooming="true" direction="y" scrollbar-x="false"
+            style="height:100%;width:100%"
             max-zoom="5" min-zoom="1"
-            delegate-handle="scrollHandle{{$index}}"
-            on-scroll="updateSlideStatus($index)"
-            on-release="updateSlideStatus($index)">
+            delegate-handle="scrollHandle"
+            on-scroll="updateSlideStatus()"
+            on-release="updateSlideStatus()">
   <ion-slide-box style="height:100%;width:100%" ng-if="pdf"
                  on-slide-changed="slideChanged($index)"
                  active-slide="selectedSlide"

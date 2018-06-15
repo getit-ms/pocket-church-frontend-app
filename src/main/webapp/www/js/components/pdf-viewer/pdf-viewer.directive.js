@@ -41,8 +41,8 @@ calvinApp.directive('pdfViewer', function(){
           }
 
           $scope.scrollableX = false;
-          $scope.updateSlideStatus = function(index) {
-            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+          $scope.updateSlideStatus = function() {
+            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle').getScrollPosition().zoom;
             if (zoomFactor == 1) {
               $scope.scrollableX = false;
               $ionicSlideBoxDelegate.enableSlide(true);
