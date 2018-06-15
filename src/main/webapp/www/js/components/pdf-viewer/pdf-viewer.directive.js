@@ -41,11 +41,9 @@ calvinApp.directive('pdfViewer', function(){
           $scope.updateSlideStatus = function(index) {
             var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
             if (zoomFactor == 1) {
-              $scope.slider.allowTouchMove = true;
-              $scope.slider.simulateTouch = true;
+              $scope.slider.unlockSwipes();
             } else {
-              $scope.slider.allowTouchMove = false;
-              $scope.slider.simulateTouch = false;
+              $scope.slider.lockSwipes();
             }
           };
 
@@ -76,6 +74,8 @@ calvinApp.directive('pdfViewer', function(){
             $scope.slides = [
               makeSlide($scope.initialSlide),
               makeSlide($scope.initialSlide + 1),
+              makeSlide($scope.initialSlide + 2),
+              makeSlide($scope.initialSlide - 2),
               makeSlide($scope.initialSlide - 1)
             ];
 
@@ -84,11 +84,15 @@ calvinApp.directive('pdfViewer', function(){
             $scope.$on('$ionicSlides.sliderInitialized', function(event, data) {
               $scope.slider = data.slider;
 
-              $scope.slider.on('slideChange', function() {
+              $scope.$watch('slider.activeIndex', function() {
                 var
                   i = ($scope.slider.activeIndex % $scope.slides.length),
-                  previous_index = ($scope.slides.length + i - 1) % $scope.slides.length,
-                  direction = $scope.slides[i].nr > $scope.slides[previous_index].nr  ? 1 : -1;
+                  previous_index = ($scope.slides.length + i - 2) % $scope.slides.length,
+                  direction = $scope.slides[i].nr > $scope.slides[previous_index].nr  ? 2 : -2;
+
+                if (i == $scope.lastIndex) return;
+
+                $scope.lastIndex = i;
 
                 console.log('Carregando idx ' + i + ' nr ' + $scope.slides[i].nr);
 

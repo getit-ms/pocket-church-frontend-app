@@ -8,21 +8,24 @@ calvinApp.directive('pdfPage', function(){
     templateUrl: 'js/components/pdf-page/pdf-page.html',
     link: function(scope, element, attrs, ctrl, transclude) {
 
+      element[0].style.display = 'block';
+      element[0].style.width = '100%';
+
       scope.load = function() {
         if (!scope.page) return;
 
-        var canvas = element[0].children[0];
-
         var viewport = scope.page.getViewport(1);
-        var desiredWidth = canvas.getBoundingClientRect().width;
+        var desiredWidth = element[0].getBoundingClientRect().width;
         var scale = desiredWidth / viewport.width;
         var scaledViewport = scope.page.getViewport(scale);
 
-        // Prepare canvas using PDF page dimensions
-        canvas.height = scaledViewport.height;
-        canvas.width = scaledViewport.width;
+        var currentViewport = scope.page.getViewport(element[0].offsetWidth / viewport.width);
+
+        element[0].children[0].style.height = currentViewport.height + 'px';
+        element[0].children[0].style.width = currentViewport.width + 'px';
 
         scope.deveRenderizar = true;
+        scope.currentViewport = currentViewport;
         scope.scaledViewport = scaledViewport;
         scope.renderiza(scope.inview);
       };
@@ -34,7 +37,14 @@ calvinApp.directive('pdfPage', function(){
           clearTimeout(scope.rendering);
 
           scope.rendering = setTimeout(function() {
-            var canvas = element[0].children[0];
+            var canvas = document.createElement('canvas');
+
+            // Prepare canvas using PDF page dimensions
+            canvas.height = scope.scaledViewport.height;
+            canvas.width = scope.scaledViewport.width;
+
+            canvas.style.height = scope.currentViewport.height + 'px';
+            canvas.style.width = scope.currentViewport.width + 'px';
 
             var context = canvas.getContext('2d');
 
@@ -42,6 +52,9 @@ calvinApp.directive('pdfPage', function(){
             scope.page.render({
               canvasContext: context,
               viewport: scope.scaledViewport
+            }).then(function() {
+              element[0].removeChild(element[0].children[0]);
+              element[0].appendChild(canvas);
             });
 
             scope.deveRenderizar = false;
@@ -51,7 +64,7 @@ calvinApp.directive('pdfPage', function(){
       };
 
       scope.$watch(function() {
-        return element[0].children[0].getBoundingClientRect().width;
+        return element[0].getBoundingClientRect().width;
       }, function() {
         scope.load();
       });
