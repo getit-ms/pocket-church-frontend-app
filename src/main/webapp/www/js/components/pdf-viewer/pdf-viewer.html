@@ -1,17 +1,12 @@
-<ion-slide-box style="height:100%;width:100%" ng-if="pdf"
-               on-slide-changed="slideChanged($index)"
-               does-continue="true"
-               show-pager="false"
-               class="pdf-viewer"
-               delegate-handle="slideshow-slidebox">
-  <ion-slide ng-repeat="slide in slides">
+<ion-slide-box style="height:100%;width:100%" ng-if="pdf">
+  <ion-slide ng-repeat="page in pages">
     <ion-scroll scroll='false' zooming="true" direction="xy"
                 scrollable-x="false" overflow-scroll="false"
                 scrollable-y="false" max-zoom="5" min-zoom="1"
                 delegate-handle="scrollHandle{{$index}}"
                 on-scroll="updateSlideStatus($index)"
                 on-release="updateSlideStatus($index)">
-      <pdf-page render-lazy="false" page="slide.page" ></pdf-page>
+      <pdf-page render-lazy="true" page="page" ></pdf-page>
     </ion-scroll>
   </ion-slide>
 </ion-slide-box>
