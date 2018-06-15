@@ -9,6 +9,8 @@ calvinApp.directive('pdfViewer', function(){
         controller: ['$scope', 'pdfService', '$ionicSlideBoxDelegate', '$ionicScrollDelegate',
           function($scope, pdfService, $ionicSlideBoxDelegate, $ionicScrollDelegate){
 
+          $scope.selectedSlide = 1;
+
           $scope.load = function() {
             pdfService.get($scope.arquivo.id, function(pdf) {
               $scope.pdf = pdf;
@@ -38,11 +40,14 @@ calvinApp.directive('pdfViewer', function(){
             });
           }
 
+          $scope.scrollableX = false;
           $scope.updateSlideStatus = function(index) {
             var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
             if (zoomFactor == 1) {
+              $scope.scrollableX = false;
               $ionicSlideBoxDelegate.enableSlide(true);
             } else {
+              $scope.scrollableX = true;
               $ionicSlideBoxDelegate.enableSlide(false);
             }
           };
@@ -69,8 +74,6 @@ calvinApp.directive('pdfViewer', function(){
             } else {
               $scope.initialSlide = Number($scope.initialSlide);
             }
-
-            $scope.selectedSlide = 1;
 
             $scope.slides = [
               makeSlide($scope.initialSlide - 1),
