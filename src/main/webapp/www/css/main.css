@@ -11,10 +11,6 @@
   text-align:center;
 }
 
-.pdf-modal .slider-slides {
-  width: initial !important;
-}
-
 .video-modal iframe {
   max-width: 100%;
   max-height: 100%;
