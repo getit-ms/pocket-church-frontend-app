@@ -38,8 +38,6 @@ calvinApp.directive('pdfPage', function(){
 
             var context = canvas.getContext('2d');
 
-            context.clearRect(0, 0, canvas.width, canvas.height);
-
             // Render PDF page into canvas context
             scope.page.render({
               canvasContext: context,
@@ -59,7 +57,11 @@ calvinApp.directive('pdfPage', function(){
       });
 
       scope.$watch('page', function() {
-        scope.load();
+        if (scope.page != scope.lastPage) {
+          scope.lastPage = scope.page;
+
+          scope.load();
+        }
       });
 
       scope.load();

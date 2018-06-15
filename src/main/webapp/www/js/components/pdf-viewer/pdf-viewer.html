@@ -1,5 +1,5 @@
 <ion-slides style="height:100%;width:100%" ng-if="pdf"
-               does-continue="true" option="{loop:true}"
+               does-continue="true" options="{loop:true}"
                show-pager="false" slider="slider"
                delegate-handle="slideshow-slidebox">
   <ion-slide-page ng-repeat="slide in slides">
@@ -9,7 +9,7 @@
                 delegate-handle="scrollHandle{{$index}}"
                 on-scroll="updateSlideStatus($index)"
                 on-release="updateSlideStatus($index)">
-      <pdf-page render-lazy="false" page="slide.page" ></pdf-page>
+      <pdf-page render-lazy="true" page="slide.page" ></pdf-page>
     </ion-scroll>
   </ion-slide-page>
 </ion-slides>
