@@ -2,7 +2,8 @@ calvinApp.directive('pdfViewer', function(){
     return {
         restrict: 'E',
         scope:{
-            arquivo:'=pdf'
+            arquivo:'=pdf',
+            selectedSlide:'@'
         },
         templateUrl: 'js/components/pdf-viewer/pdf-viewer.html',
         controller: ['$scope', 'pdfService', '$ionicSlideBoxDelegate', function($scope, pdfService, $ionicSlideBoxDelegate){
@@ -18,12 +19,10 @@ calvinApp.directive('pdfViewer', function(){
           };
 
           $scope.supplier = function(nr, callback) {
-            if (nr >= 1 && nr <= $scope.pdf.numPages) {
-              $scope.pdf.getPage(nr).then(function(page) {
-                callback({page: page});
-                $scope.$apply();
-              });
-            }
+            $scope.pdf.getPage(nr).then(function(page) {
+              callback({page: page});
+              $scope.$apply();
+            });
           };
 
           if ($scope.arquivo && $scope.arquivo.id) {
@@ -39,58 +38,55 @@ calvinApp.directive('pdfViewer', function(){
           }
 
           function initSlide() {
-            var makeSlide = function ( nr, ri ) {
+            var makeSlide = function ( nr ) {
               var dados = {nr : nr};
-              $scope.supplier(nr, function(d0){
-                angular.extend(dados, d0);
-              });
+              if ($scope.showSlide(dados)) {
+                $scope.supplier(nr, function(d0){
+                  angular.extend(dados, d0);
+                });
+              }
               return dados;
             };
 
             $scope.slideShow = {first: 1, last: $scope.pdf.numPages};
 
-            var
-              default_slides_indexes = [-1, 0, 1],
-              default_slides = [
-                makeSlide(default_slides_indexes[0], 0),
-                makeSlide(default_slides_indexes[1], 1),
-                makeSlide(default_slides_indexes[2], 2)
-              ];
 
-            $scope.slides = [
-              default_slides[0],
-              default_slides[1],
-              default_slides[2]
-            ];
+            var
+              default_slides_indexes = [0, 1, 2],
+              default_slides = [
+                makeSlide(default_slides_indexes[0]),
+                makeSlide(default_slides_indexes[1]),
+                makeSlide(default_slides_indexes[2])
+              ];
 
             if (!$scope.selectedSlide) {
               $scope.selectedSlide = 1; // initial
+
+              $scope.slides = [
+                default_slides[0],
+                default_slides[1],
+                default_slides[2]
+              ];
+            } else {
+              $scope.slides = [
+                makeSlide($scope.selectedSlide - 1),
+                makeSlide($scope.selectedSlide),
+                makeSlide($scope.selectedSlide + 1)
+              ];
             }
-
-            $scope.showDefaultSlides = function () {
-              var
-                i = $ionicSlideBoxDelegate.currentIndex(),
-                previous_index = i === 0 ? 2 : i - 1,
-                next_index = i === 2 ? 0 : i + 1;
-
-              $scope.slides[i] = default_slides[1];
-              $scope.slides[previous_index] = default_slides[0];
-              $scope.slides[next_index] = default_slides[2];
-              direction = 0;
-              head = $scope.slides[previous_index].nr;
-              tail = $scope.slides[next_index].nr;
-            };
 
             var direction = 0;
 
             $scope.slideChanged = function (i) {
+              if (isNaN(i)) return;
+
               var
                 previous_index = i === 0 ? 2 : i - 1,
                 next_index = i === 2 ? 0 : i + 1,
                 new_direction = $scope.slides[i].nr > $scope.slides[previous_index].nr ? 1 : -1;
 
               var ri = new_direction > 0 ? next_index : previous_index;
-              $scope.slides[ri] = createSlideData(new_direction, direction, ri);
+              $scope.slides[ri] = createSlideData(new_direction, direction);
 
               direction = new_direction;
 
@@ -112,7 +108,7 @@ calvinApp.directive('pdfViewer', function(){
               head = $scope.slides[0].nr,
               tail = $scope.slides[$scope.slides.length - 1].nr;
 
-            var createSlideData = function (new_direction, old_direction, ri) {
+            var createSlideData = function (new_direction, old_direction) {
               var nr;
 
               if (new_direction === 1) {
@@ -128,7 +124,7 @@ calvinApp.directive('pdfViewer', function(){
               }
               ;
 
-              return makeSlide(nr, ri);
+              return makeSlide(nr);
             };
 
             $scope.showSlide = function (slide) {

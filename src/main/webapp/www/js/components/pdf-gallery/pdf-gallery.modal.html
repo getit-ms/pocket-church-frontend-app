@@ -1,9 +1,9 @@
-<div class="modal pdf-modal transparent" ng-click="closeModal()">
+<div class="modal pdf-modal transparent" >
   <div class="header-item">
-    <a data-tap-disabled="true" ng-click="share()" href=""
-       class="button-icon pull-right icon ion-android-share-alt"
-       title="{{'global.compartilhar' | translate}}"></a>
+    <a data-tap-disabled="true" ng-click="closeModal()" href=""
+       class="button-icon pull-right icon ion-close"
+       title="{{'global.fechar' | translate}}"></a>
   </div>
 
-  <pdf-viewer pdf="arquivo"></pdf-viewer>
+  <pdf-viewer selected-slide="{{pageIndex + 1}}" pdf="arquivo"></pdf-viewer>
 </div>

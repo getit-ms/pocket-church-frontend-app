@@ -21,13 +21,9 @@ calvinApp.directive('pdfPage', function(){
         canvas.height = scaledViewport.height;
         canvas.width = scaledViewport.width;
 
-        scope.deveRenderizar = !scope.scaledViewport ||
-          scaledViewport.width > scope.scaledViewport.width;
-
-        if (scope.deveRenderizar) {
-          scope.scaledViewport = scaledViewport;
-          scope.renderiza(scope.inview);
-        }
+        scope.deveRenderizar = true;
+        scope.scaledViewport = scaledViewport;
+        scope.renderiza(scope.inview);
       };
 
       scope.renderiza = function(inview) {
