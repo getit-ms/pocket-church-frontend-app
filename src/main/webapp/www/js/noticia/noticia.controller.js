@@ -63,7 +63,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/noticia/noticia.form.html',
-                controller: function($scope, shareService, loadingService, config, pdfService, arquivoService,
+                controller: function($scope, shareService, loadingService, config, arquivoService,
                                      noticiaService, $state, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate, $ionicModal){
                     noticiaService.carrega($stateParams.id, function(noticia) {
                       $scope.noticia = noticia;

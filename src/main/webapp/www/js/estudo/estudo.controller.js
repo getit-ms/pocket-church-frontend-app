@@ -42,36 +42,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         views:{
             'content@':{
                 templateUrl: 'js/estudo/estudo.form.html',
-                controller: function($scope, shareService, loadingService, config, pdfService, estudoService,
+                controller: function($scope, shareService, loadingService, config, estudoService,
                                      $state, $stateParams, $ionicScrollDelegate, $ionicSlideBoxDelegate){
                     estudoService.carrega($stateParams.id, function(estudo) {
-
-                      if (estudo.tipo == 'PDF') {
-                        $scope.slide = {activeSlide:null};
-
-                        var dados = {porcentagem:0};
-
-                        pdfService.get({
-                          chave:'estudo',
-                          id:$stateParams.id,
-                          errorState:'estudo',
-                          callback:function(estudo){
-                            $scope.estudo = estudo;
-                            $scope.totalPaginas = estudo.paginas.length;
-                            loadingService.hide();
-                            $state.reload();
-                          },
-                          pagina:function(pag, total) {
-                            dados.porcentagem = (pag/total) * 100;
-                          },
-                          supplier:function(id, callback){
-                            loadingService.show(dados);
-                            callback(estudo);
-                          }
-                        });
-                      } else {
-                        $scope.estudo = estudo;
-                      }
+                      $scope.estudo = estudo;
                     });
 
                     $scope.share = function(){
