@@ -5,6 +5,8 @@
                show-pager="false"
                delegate-handle="slideshow-slidebox">
   <ion-slide ng-repeat="slide in slides" ng-show="showSlide(slide)">
-    <pdf-page page="slide.page" ></pdf-page>
+    <ion-scroll zooming="true" max-zoom="5" min-zoom="1">
+      <pdf-page page="slide.page" ></pdf-page>
+    </ion-scroll>
   </ion-slide>
 </ion-slide-box>
