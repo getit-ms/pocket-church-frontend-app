@@ -11,6 +11,16 @@
   text-align:center;
 }
 
+pdf-viewer .slider-slides {
+  width: initial !important;
+}
+
+pdf-viewer .scroll-view,
+pdf-viewer .scroll {
+  height: 100%;
+  width: 100%;
+}
+
 .video-modal iframe {
   max-width: 100%;
   max-height: 100%;

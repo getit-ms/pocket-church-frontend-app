@@ -3,7 +3,7 @@ calvinApp.directive('pdfPage', function(){
     restrict: 'E',
     scope:{
       page:'=',
-      scale:'='
+      renderLazy:'='
     },
     templateUrl: 'js/components/pdf-page/pdf-page.html',
     link: function(scope, element, attrs, ctrl, transclude) {
@@ -13,10 +13,10 @@ calvinApp.directive('pdfPage', function(){
 
         var canvas = element[0].children[0];
 
-        var desiredWidth = canvas.offsetWidth;
         var viewport = scope.page.getViewport(1);
+        var desiredWidth = canvas.getBoundingClientRect().width;
         var scale = desiredWidth / viewport.width;
-        var scaledViewport = scope.page.getViewport(scale * (scope.scale || 1));
+        var scaledViewport = scope.page.getViewport(scale);
 
         // Prepare canvas using PDF page dimensions
         canvas.height = scaledViewport.height;
@@ -30,24 +30,30 @@ calvinApp.directive('pdfPage', function(){
       scope.renderiza = function(inview) {
         scope.inview = inview;
 
-        if (scope.inview && scope.deveRenderizar) {
-          var canvas = element[0].children[0];
+        if ((!scope.renderLazy || scope.inview) && scope.deveRenderizar) {
+          clearTimeout(scope.rendering);
 
-          var context = canvas.getContext('2d');
+          scope.rendering = setTimeout(function() {
+            var canvas = element[0].children[0];
 
-          // Render PDF page into canvas context
-          scope.page.render({
-            canvasContext: context,
-            viewport: scope.scaledViewport
-          });
+            var context = canvas.getContext('2d');
 
-          scope.deveRenderizar = false;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Render PDF page into canvas context
+            scope.page.render({
+              canvasContext: context,
+              viewport: scope.scaledViewport
+            });
+
+            scope.deveRenderizar = false;
+          }, 300);
         }
 
       };
 
       scope.$watch(function() {
-        return element[0].children[0].offsetWidth;
+        return element[0].children[0].getBoundingClientRect().width;
       }, function() {
         scope.load();
       });
