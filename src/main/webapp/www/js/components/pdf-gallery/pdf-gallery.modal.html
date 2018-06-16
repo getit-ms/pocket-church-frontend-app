@@ -4,17 +4,14 @@
        class="button-icon pull-right icon ion-close"
        title="{{'global.fechar' | translate}}"></a>
   </ion-header-bar>
-  <ion-content class="padding">
-    <ion-scroll scroll='false' zooming="true" direction="xy"
-                scrollable-x="false" overflow-scroll="false"
-                scrollable-y="false" max-zoom="5" min-zoom="1">
-      <div class="row row-wrap" ng-repeat="page in pages" >
-        <div class="col" >
-          <div class="card" ng-click="openModal(page)" >
-            <pdf-page render-lazy="true" page="page" ></pdf-page>
-          </div>
-        </div>
-      </div>
-    </ion-scroll>
-  </ion-content>
+  <ion-scroll style="width: 100%;height:100%"
+              on-scroll="updateZoomStatus()"
+              on-release="updateZoomStatus()"
+              scroll='false' zooming="true" direction="xy"
+              scrollable-x="false" overflow-scroll="false"
+              scrollable-y="false" max-zoom="5" min-zoom="1">
+    <div ng-repeat="page in pages" >
+      <pdf-page render-lazy="true" page="page" ></pdf-page>
+    </div>
+  </ion-scroll>
 </ion-modal-view>
