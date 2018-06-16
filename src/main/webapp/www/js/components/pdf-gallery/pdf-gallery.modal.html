@@ -5,7 +5,6 @@
        class="button button-icon icon ion-close"
        title="{{'global.fechar' | translate}}"></a>
   </ion-header-bar>
-  <ion-content>
-    <pdf-viewer pdf="arquivo"></pdf-viewer>
-  </ion-content>
+
+  <pdf-viewer initial-slide="pageIndex + 1" pdf="arquivo"></pdf-viewer>
 </ion-modal-view>

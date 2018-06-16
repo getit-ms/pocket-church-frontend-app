@@ -17,8 +17,8 @@ pdf-viewer .slider-slides {
 
 pdf-viewer .scroll-view,
 pdf-viewer .scroll {
-  height: 100% !important;
-  width: 100% !important;
+  height: 100%;
+  width: 100%;
 }
 
 .video-modal iframe {

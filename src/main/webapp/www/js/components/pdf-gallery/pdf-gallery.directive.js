@@ -31,10 +31,6 @@ calvinApp.directive('pdfGallery', function(){
             });
           };
 
-          $scope.updateZoomStatus = function() {
-            $scope.$apply();
-          };
-
           $scope.openModal = function (page) {
             $scope.pageIndex = page.pageIndex;
 
