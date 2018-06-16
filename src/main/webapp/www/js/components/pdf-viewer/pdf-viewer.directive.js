@@ -42,23 +42,11 @@ calvinApp.directive('pdfViewer', function(){
           var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
           if (zoomFactor == 1) {
             $scope.slider.unlockSwipes();
-
-            $scope.slider.isScrolling = undefined;
-            $scope.slider.slider.onTouchMove = $scope.onTouchMove;
-            $scope.slider.onTouchStart = $scope.onTouchStart;
-
-            $scope.onTouchMove = undefined;
-            $scope.onTouchStart = undefined;
+            $scope.slider.params.onlyExternal = false;
+            $scope.slider.params.allowClick = true;
           } else {
-            if (!$scope.onTouchStart) {
-              $scope.onTouchStart = $scope.slider.onTouchStart;
-              $scope.slider.onTouchStart = function(){};
-            }
-            if (!$scope.onTouchMove) {
-              $scope.onTouchMove = $scope.slider.onTouchMove;
-              $scope.slider.onTouchMove = function(){};
-            }
             $scope.slider.lockSwipes();
+            $scope.slider.params.onlyExternal = true;
           }
         };
 
