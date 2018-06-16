@@ -42,14 +42,10 @@ calvinApp.directive('pdfViewer', function(){
           var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
           if (zoomFactor == 1) {
             $scope.slider.unlockSwipes();
-            $scope.slider.onTouchStart = $scope.onTouchStart;
-            $scope.onTouchStart = undefined;
+            $scope.slider.isScrolling = undefined;
           } else {
-            if (!$scope.onTouchStart) {
-              $scope.onTouchStart = $scope.slider.onTouchStart;
-              $scope.slider.onTouchStart = function(){};
-            }
             $scope.slider.lockSwipes();
+            $scope.slider.isScrolling = true;
           }
         };
 
