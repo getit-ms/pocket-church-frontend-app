@@ -67,8 +67,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     controller: function(cifraService, $scope, pdfService, $stateParams, shareService, config, $filter, loadingService){
                         $scope.status = {};
 
-                        cifraService.carrega($stateParams.id, function(cifra) {
-                          $scope.cifra = cifra;
+                        cifraService.carrega($stateParams.id, function(cantico) {
+                          $scope.cantico = cantico;
                         });
 
                         $scope.share = function(){

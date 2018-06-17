@@ -6,11 +6,11 @@ calvinApp.directive('pdfViewer', function(){
       status:'='
     },
     templateUrl: 'js/components/pdf-viewer/pdf-viewer.html',
-    controller: ['$scope', 'pdfService', '$ionicScrollDelegate',
-      function($scope, pdfService, $ionicScrollDelegate, $ionicLoading, message){
+    controller: ['$scope', 'pdfService', '$ionicScrollDelegate', 'loadingService', 'message',
+      function($scope, pdfService, $ionicScrollDelegate, loadingService, message){
 
         $scope.load = function() {
-          $ionicLoading.show();
+          loadingService.show();
 
           pdfService.get($scope.arquivo.id, function(pdf) {
             $scope.pdf = pdf;
@@ -19,9 +19,9 @@ calvinApp.directive('pdfViewer', function(){
 
             $scope.$apply();
 
-            $ionicLoading.hide();
+            loadingService.hide();
           }, function() {
-            $ionicLoading.hide();
+            loadingService.hide();
 
             message({title:'global.title.500',template:'mensagens.MSG-500',args:{mensagem:ex.message}});
           });
