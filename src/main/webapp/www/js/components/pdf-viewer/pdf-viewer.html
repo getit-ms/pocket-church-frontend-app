@@ -9,7 +9,11 @@
                 delegate-handle="scrollHandle{{$index}}"
                 on-scroll="updateSlideStatus($index)"
                 on-release="updateSlideStatus($index)">
-      <pdf-page render-lazy="false" page="slide.page" ></pdf-page>
+      <div class="page-wrapper">
+        <div class="page-content">
+          <pdf-page render-lazy="false" page="slide.page" ></pdf-page>
+        </div>
+      </div>
     </ion-scroll>
   </ion-slide-page>
 </ion-slides>

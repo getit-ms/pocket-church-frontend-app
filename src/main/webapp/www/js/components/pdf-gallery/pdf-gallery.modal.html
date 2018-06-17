@@ -1,10 +1,20 @@
 <ion-modal-view class="pdf-modal transparent">
-  <div class="h1 title"></div>
   <ion-header-bar class="bar bar-header transparent">
+    <div class="h1 title"></div>
     <a ng-click="closeModal()" href=""
        class="button button-icon icon ion-close"
        title="{{'global.fechar' | translate}}"></a>
   </ion-header-bar>
 
-  <pdf-viewer initial-slide="pageIndex + 1" pdf="arquivo"></pdf-viewer>
+  <pdf-viewer status="status" pdf="arquivo"></pdf-viewer>
+
+  <ion-footer-bar class="bar bar-footer transparent">
+    <a ng-click="status.anterior()" href="" ng-disabled="!status.hasAnterior()"
+       class="button button-icon icon ion-arrow-left-a"
+       title="{{'global.anterior' | translate}}"></a>
+    <div class="h1 title">{{'global.paginacao' | translate:{atual:status.pagina, total:status.total} }}</div>
+    <a ng-click="status.proximo()" href="" ng-disabled="!status.hasProximo()"
+       class="button button-icon icon ion-arrow-right-a"
+       title="{{'global.proximo' | translate}}"></a>
+  </ion-footer-bar>
 </ion-modal-view>

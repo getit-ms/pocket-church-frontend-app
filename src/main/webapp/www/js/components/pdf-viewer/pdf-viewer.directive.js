@@ -3,7 +3,7 @@ calvinApp.directive('pdfViewer', function(){
     restrict: 'E',
     scope:{
       arquivo:'=pdf',
-      initialSlide:'='
+      status:'='
     },
     templateUrl: 'js/components/pdf-viewer/pdf-viewer.html',
     controller: ['$scope', 'pdfService', '$ionicScrollDelegate',
@@ -51,6 +51,7 @@ calvinApp.directive('pdfViewer', function(){
         };
 
         function initSlide() {
+
           var makeSlide = function ( nr ) {
             var dados = {nr : nr};
             if ($scope.showSlide(dados)) {
@@ -68,24 +69,50 @@ calvinApp.directive('pdfViewer', function(){
             return (slide.nr >= $scope.slideShow.first && slide.nr <= $scope.slideShow.last);
           };
 
-          if (!$scope.initialSlide) { // initial
-            $scope.initialSlide = 1;
+          if (!$scope.status) {
+            $scope.status = {pagina:1, total:$scope.pdf.numPages};
           } else {
-            $scope.initialSlide = Number($scope.initialSlide);
+            $scope.status.total = $scope.pdf.numPages;
+
+            if (!$scope.status.pagina) { // initial
+              $scope.status.pagina = 1;
+            } else {
+              $scope.status.pagina = Number($scope.status.pagina);
+            }
           }
 
+          $scope.status.hasAnterior = function() {
+            return $scope.slides[i].nr != $scope.slideShow.first;
+          };
+
+          $scope.status.hasProximo = function() {
+            return $scope.slides[i].nr != $scope.slideShow.last;
+          };
+
           $scope.slides = [
-            makeSlide($scope.initialSlide),
-            makeSlide($scope.initialSlide + 1),
-            makeSlide($scope.initialSlide + 2),
-            makeSlide($scope.initialSlide - 2),
-            makeSlide($scope.initialSlide - 1)
+            makeSlide($scope.status.pagina),
+            makeSlide($scope.status.pagina + 1),
+            makeSlide($scope.status.pagina + 2),
+            makeSlide($scope.status.pagina - 2),
+            makeSlide($scope.status.pagina - 1)
           ];
 
-          console.log('Iniciado com nrs ' + $scope.slides[0].nr  + ', ' + $scope.slides[1].nr + ', ' + $scope.slides[2].nr);
+          if (!$scope.status.hasAnterior()){
+            $scope.slider.lockSwipeToPrev();
+          } else if (!$scope.status.hasProximo()) {
+            $scope.slider.unlockSwipeToNext();
+          }
 
           $scope.$on('$ionicSlides.sliderInitialized', function(event, data) {
             $scope.slider = data.slider;
+
+            $scope.status.proximo = function() {
+              $scope.slider.swipeRight();
+            };
+
+            $scope.status.anterior = function() {
+              $scope.slider.swipeLeft();
+            };
 
             $scope.$watch('slider.activeIndex', function() {
               var
@@ -97,21 +124,19 @@ calvinApp.directive('pdfViewer', function(){
 
               $scope.lastIndex = i;
 
-              console.log('Carregando idx ' + i + ' nr ' + $scope.slides[i].nr);
-
               var nrProx = $scope.slides[i].nr + direction;
               var idxProx = ($scope.slides.length + i + direction) % $scope.slides.length;
-
-              console.log('Preparando idx ' + idxProx + ' nr ' + nrProx);
 
               if ($scope.slides[idxProx].nr != nrProx) {
                 $scope.slides[idxProx] = makeSlide(nrProx);
               }
 
-              if ($scope.slides[i].nr < $scope.slideShow.first || $scope.slides[i].nr > $scope.slideShow.last) {
-                console.log('Redirecionando para idx ' + i - direction);
-
-                $scope.slider.slideTo(i - direction);
+              if (!$scope.status.hasAnterior()){
+                $scope.slider.lockSwipeToPrev();
+              } else if (!$scope.status.hasProximo()) {
+                $scope.slider.unlockSwipeToNext();
+              } else {
+                $scope.slider.unlockSwipes();
               }
             });
 

@@ -32,7 +32,7 @@ calvinApp.directive('pdfGallery', function(){
           };
 
           $scope.openModal = function (page) {
-            $scope.pageIndex = page.pageIndex;
+            $scope.status = {pagina: page.pageIndex + 1};
 
             $ionicModal.fromTemplateUrl('js/components/pdf-gallery/pdf-gallery.modal.html', {
               scope: $scope,

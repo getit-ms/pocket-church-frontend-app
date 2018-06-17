@@ -11,8 +11,15 @@
   text-align:center;
 }
 
-pdf-viewer .slider-slides {
-  width: initial !important;
+pdf-viewer .page-wrapper {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+pdf-viewer .page-content {
+  display: table-cell;
+  vertical-align: center;
 }
 
 pdf-viewer .scroll-view,
