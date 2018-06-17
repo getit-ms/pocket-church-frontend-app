@@ -11,14 +11,14 @@
   text-align:center;
 }
 
-.bar.transparent {
+.bar.transparent .title {
   color: white;
 }
 
 pdf-viewer .page-wrapper {
   display: table;
-  height: 100% !important;
-  width: 100% !important;
+  height: 100%;
+  width: 100%;
 }
 
 pdf-viewer .page-content {
@@ -28,8 +28,12 @@ pdf-viewer .page-content {
 
 pdf-viewer .scroll-view,
 pdf-viewer .scroll {
-  height: 100%;
-  width: 100%;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+pdf-gallery .card {
+  margin: 0;
 }
 
 .video-modal iframe {

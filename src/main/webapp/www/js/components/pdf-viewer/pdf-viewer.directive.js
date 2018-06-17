@@ -38,10 +38,23 @@ calvinApp.directive('pdfViewer', function(){
           });
         }
 
+        function lockPadroes() {
+          $scope.slider.unlockSwipes();
+
+          if (!$scope.status.hasAnterior()){
+            $scope.slider.lockSwipeToPrev();
+          }
+
+          if (!$scope.status.hasProximo()) {
+            $scope.slider.lockSwipeToNext();
+          }
+        }
+
         $scope.updateSlideStatus = function(index) {
           var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
           if (zoomFactor == 1) {
-            $scope.slider.unlockSwipes();
+            lockPadroes();
+
             $scope.slider.params.onlyExternal = false;
             $scope.slider.params.allowClick = true;
           } else {
@@ -89,56 +102,56 @@ calvinApp.directive('pdfViewer', function(){
             makeSlide($scope.status.pagina - 1)
           ];
 
+          function cachePaginas() {
+            var
+              i = ((500000 + $scope.slider.activeIndex - 1) % $scope.slides.length),
+              previous_index = (500000 + i - 2) % $scope.slides.length,
+              direction = $scope.slides[i].nr > $scope.slides[previous_index].nr  ? 2 : -2;
+
+            if (i == $scope.lastIndex) return;
+
+            $scope.lastIndex = i;
+
+            $scope.status.pagina = $scope.slides[i].nr;
+
+            var nrProx = $scope.slides[i].nr + direction;
+            var idxProx = ($scope.slides.length + i + direction) % $scope.slides.length;
+
+            if ($scope.slides[idxProx].nr != nrProx) {
+              $scope.slides[idxProx] = makeSlide(nrProx);
+            }
+
+            lockPadroes();
+          };
+
           $scope.status.hasAnterior = function() {
-            return $scope.slider && $scope.slides[$scope.slider.activeIndex].nr != $scope.slideShow.first;
+            return $scope.slider && $scope.slides[(500000 + $scope.slider.activeIndex - 1) % $scope.slides.length].nr > $scope.slideShow.first;
           };
 
           $scope.status.hasProximo = function() {
-            return $scope.slider && $scope.slides[$scope.slider.activeIndex].nr != $scope.slideShow.last;
+            return $scope.slider && $scope.slides[(500000 + $scope.slider.activeIndex - 1) % $scope.slides.length].nr < $scope.slideShow.last;
           };
 
           $scope.$on('$ionicSlides.sliderInitialized', function(event, data) {
             $scope.slider = data.slider;
 
-            if (!$scope.status.hasAnterior()){
-              $scope.slider.lockSwipeToPrev();
-            } else if (!$scope.status.hasProximo()) {
-              $scope.slider.unlockSwipeToNext();
-            }
+            lockPadroes();
 
             $scope.status.proximo = function() {
-              $scope.slider.swipeRight();
+              if ($scope.status.hasProximo()) {
+                $scope.slider.slideNext();
+                cachePaginas();
+              }
             };
 
             $scope.status.anterior = function() {
-              $scope.slider.swipeLeft();
+              if ($scope.status.hasAnterior()) {
+                $scope.slider.slidePrev();
+                cachePaginas();
+              }
             };
 
-            $scope.$watch('slider.activeIndex', function() {
-              var
-                i = ($scope.slider.activeIndex % $scope.slides.length),
-                previous_index = ($scope.slides.length + i - 2) % $scope.slides.length,
-                direction = $scope.slides[i].nr > $scope.slides[previous_index].nr  ? 2 : -2;
-
-              if (i == $scope.lastIndex) return;
-
-              $scope.lastIndex = i;
-
-              var nrProx = $scope.slides[i].nr + direction;
-              var idxProx = ($scope.slides.length + i + direction) % $scope.slides.length;
-
-              if ($scope.slides[idxProx].nr != nrProx) {
-                $scope.slides[idxProx] = makeSlide(nrProx);
-              }
-
-              if (!$scope.status.hasAnterior()){
-                $scope.slider.lockSwipeToPrev();
-              } else if (!$scope.status.hasProximo()) {
-                $scope.slider.unlockSwipeToNext();
-              } else {
-                $scope.slider.unlockSwipes();
-              }
-            });
+            $scope.$watch('slider.activeIndex', cachePaginas);
 
           });
         }
