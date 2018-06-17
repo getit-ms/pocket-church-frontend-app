@@ -64,26 +64,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/cifra/cifra.form.html',
-                    controller: function(cifraService, $scope, pdfService, $stateParams,
-                                         $ionicScrollDelegate, $ionicSlideBoxDelegate, shareService, config, $filter, loadingService){
-                        $scope.totalPaginas = 0;
+                    controller: function(cifraService, $scope, pdfService, $stateParams,shareService, config, $filter, loadingService){
+                        $scope.status = {};
 
-                        loadingService.show();
-                        pdfService.get({
-                            chave:'cifra',
-                            id:$stateParams.id,
-                            errorState:'cifra',
-                            callback:function(cifra){
-                                $scope.cifra = cifra;
-                                $scope.totalPaginas = cifra.paginas.length;
-                                loadingService.hide();
-                            },
-                            supplier:function(id, callback){
-                                cifraService.carrega(id, callback);
-                            }
+                        cifraService.carrega($stateParams.id, function(cantico) {
+                          $scope.cantico = cantico;
                         });
-
-                        $scope.slide = {activeSlide:null};
 
                         $scope.share = function(){
                             loadingService.show();
@@ -97,15 +83,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                               success: loadingService.hide,
                               error: loadingService.hide
                             });
-                        };
-
-                        $scope.updateSlideStatus = function(index) {
-                            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
-                            if (zoomFactor == 1) {
-                                $ionicSlideBoxDelegate.enableSlide(true);
-                            } else {
-                                $ionicSlideBoxDelegate.enableSlide(false);
-                            }
                         };
                     }
                 }

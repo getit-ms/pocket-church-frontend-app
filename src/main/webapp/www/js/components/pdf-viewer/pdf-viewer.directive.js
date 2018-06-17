@@ -7,15 +7,23 @@ calvinApp.directive('pdfViewer', function(){
     },
     templateUrl: 'js/components/pdf-viewer/pdf-viewer.html',
     controller: ['$scope', 'pdfService', '$ionicScrollDelegate',
-      function($scope, pdfService, $ionicScrollDelegate){
+      function($scope, pdfService, $ionicScrollDelegate, $ionicLoading, message){
 
         $scope.load = function() {
+          $ionicLoading.show();
+
           pdfService.get($scope.arquivo.id, function(pdf) {
             $scope.pdf = pdf;
 
             initSlide();
 
             $scope.$apply();
+
+            $ionicLoading.hide();
+          }, function() {
+            $ionicLoading.hide();
+
+            message({title:'global.title.500',template:'mensagens.MSG-500',args:{mensagem:ex.message}});
           });
         };
 

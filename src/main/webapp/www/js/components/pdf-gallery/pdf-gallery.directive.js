@@ -7,9 +7,11 @@ calvinApp.directive('pdfGallery', function(){
             titulo:'@'
         },
         templateUrl: 'js/components/pdf-gallery/pdf-gallery.html',
-        controller: ['$scope', 'pdfService', '$ionicModal', function($scope, pdfService, $ionicModal){
+        controller: ['$scope', 'pdfService', '$ionicModal', '$ionicLoading', 'message', function($scope, pdfService, $ionicModal, $ionicLoading, message){
 
           $scope.load = function() {
+            $ionicLoading.show();
+
             pdfService.get($scope.arquivo.id, function(pdf) {
               $scope.pdf = pdf;
               $scope.pages = [];
@@ -29,6 +31,12 @@ calvinApp.directive('pdfGallery', function(){
               };
 
               buscaPagina(1);
+
+              $ionicLoading.hide();
+            }, function() {
+              $ionicLoading.hide();
+
+              message({title:'global.title.500',template:'mensagens.MSG-500',args:{mensagem:ex.message}});
             });
           };
 

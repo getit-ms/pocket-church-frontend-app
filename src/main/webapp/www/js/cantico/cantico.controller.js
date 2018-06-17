@@ -64,26 +64,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/cantico/cantico.form.html',
-                    controller: function(cifraService, $scope, pdfService, $stateParams,
-                                         $ionicScrollDelegate, $ionicSlideBoxDelegate, shareService, config, $filter, loadingService){
-                        $scope.totalPaginas = 0;
+                    controller: function(cifraService, $scope, pdfService, $stateParams, shareService, config, $filter, loadingService){
+                        $scope.status = {};
 
-                        loadingService.show();
-                        pdfService.get({
-                            chave:'cantico',
-                            id:$stateParams.id,
-                            errorState:'cantico',
-                            callback:function(cantico){
-                                $scope.cantico = cantico;
-                                $scope.totalPaginas = cantico.paginas.length;
-                                loadingService.hide();
-                            },
-                            supplier:function(id, callback){
-                                cifraService.carrega(id, callback);
-                            }
+                        cifraService.carrega($stateParams.id, function(cifra) {
+                          $scope.cifra = cifra;
                         });
-
-                        $scope.slide = {activeSlide:null};
 
                         $scope.share = function(){
                             loadingService.show();
