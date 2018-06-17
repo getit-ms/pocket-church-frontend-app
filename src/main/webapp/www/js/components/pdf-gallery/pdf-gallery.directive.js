@@ -3,7 +3,8 @@ calvinApp.directive('pdfGallery', function(){
         restrict: 'E',
         transclude: true,
         scope:{
-            arquivo:'=pdf'
+            arquivo:'=pdf',
+            titulo:'@'
         },
         templateUrl: 'js/components/pdf-gallery/pdf-gallery.html',
         controller: ['$scope', 'pdfService', '$ionicModal', function($scope, pdfService, $ionicModal){
@@ -31,8 +32,13 @@ calvinApp.directive('pdfGallery', function(){
             });
           };
 
+          $scope.toggleBarsHidden = function() {
+            $scope.barsHidden = !$scope.barsHidden;
+          };
+
           $scope.openModal = function (page) {
             $scope.status = {pagina: page.pageIndex + 1};
+            $scope.barsHidden = true;
 
             $ionicModal.fromTemplateUrl('js/components/pdf-gallery/pdf-gallery.modal.html', {
               scope: $scope,
