@@ -97,14 +97,14 @@ calvinApp.directive('pdfViewer', function(){
             return $scope.slider && $scope.slides[$scope.slider.activeIndex].nr != $scope.slideShow.last;
           };
 
-          if (!$scope.status.hasAnterior()){
-            $scope.slider.lockSwipeToPrev();
-          } else if (!$scope.status.hasProximo()) {
-            $scope.slider.unlockSwipeToNext();
-          }
-
           $scope.$on('$ionicSlides.sliderInitialized', function(event, data) {
             $scope.slider = data.slider;
+
+            if (!$scope.status.hasAnterior()){
+              $scope.slider.lockSwipeToPrev();
+            } else if (!$scope.status.hasProximo()) {
+              $scope.slider.unlockSwipeToNext();
+            }
 
             $scope.status.proximo = function() {
               $scope.slider.swipeRight();
