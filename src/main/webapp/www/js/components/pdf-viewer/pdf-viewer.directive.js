@@ -81,14 +81,6 @@ calvinApp.directive('pdfViewer', function(){
             }
           }
 
-          $scope.status.hasAnterior = function() {
-            return $scope.slides[i].nr != $scope.slideShow.first;
-          };
-
-          $scope.status.hasProximo = function() {
-            return $scope.slides[i].nr != $scope.slideShow.last;
-          };
-
           $scope.slides = [
             makeSlide($scope.status.pagina),
             makeSlide($scope.status.pagina + 1),
@@ -96,6 +88,14 @@ calvinApp.directive('pdfViewer', function(){
             makeSlide($scope.status.pagina - 2),
             makeSlide($scope.status.pagina - 1)
           ];
+
+          $scope.status.hasAnterior = function() {
+            return $scope.slider && $scope.slides[$scope.slider.activeIndex].nr != $scope.slideShow.first;
+          };
+
+          $scope.status.hasProximo = function() {
+            return $scope.slider && $scope.slides[$scope.slider.activeIndex].nr != $scope.slideShow.last;
+          };
 
           if (!$scope.status.hasAnterior()){
             $scope.slider.lockSwipeToPrev();

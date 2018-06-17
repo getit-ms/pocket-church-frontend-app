@@ -11,15 +11,19 @@
   text-align:center;
 }
 
+.bar.transparent {
+  color: white;
+}
+
 pdf-viewer .page-wrapper {
   display: table;
-  height: 100%;
-  width: 100%;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 pdf-viewer .page-content {
   display: table-cell;
-  vertical-align: center;
+  vertical-align: middle;
 }
 
 pdf-viewer .scroll-view,

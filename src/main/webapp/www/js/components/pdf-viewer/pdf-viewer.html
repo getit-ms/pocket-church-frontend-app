@@ -1,7 +1,6 @@
-<ion-slides style="height:100%;width:100%" ng-if="pdf"
-            does-continue="true" options="{loop:true}"
-            show-pager="false" slider="slider"
-            delegate-handle="slideshow-slidebox">
+<ion-slides style="height:100%;width:100%"
+            ng-if="pdf" pager="false"
+            options="{loop:true}" slider="slider">
   <ion-slide-page ng-repeat="slide in slides">
     <ion-scroll scroll='false' zooming="true" direction="xy"
                 scrollable-x="false" overflow-scroll="false"
