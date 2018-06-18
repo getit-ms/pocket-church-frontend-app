@@ -3,7 +3,7 @@ calvinApp.service('pdfDAO', ['database', '$q', function(database, $q){
     var deferred = $q.defer();
 
     database.db.transaction(function(tx) {
-      tx.executeSql('SELECT hash, scale FROM cache_pdf where tipo = ? and id = ?', [tipo, id], function(tx, rs) {
+      tx.executeSql('SELECT hash, scale FROM cache_pdf where tipo = ? and id = ? and pagina = ?', [tipo, id, pagina], function(tx, rs) {
         if (rs.rows.length) {
           var item = rs.rows.item(0);
           deferred.resolve({

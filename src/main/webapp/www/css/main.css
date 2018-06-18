@@ -40,6 +40,10 @@ pdf-gallery .card {
   margin: 0;
 }
 
+pdf-viewer .swiper-pagination {
+  display: none;
+}
+
 .pdf-page {
   background-position: center center;
   background-repeat: no-repeat;

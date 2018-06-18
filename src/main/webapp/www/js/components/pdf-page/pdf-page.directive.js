@@ -45,8 +45,15 @@ calvinApp.directive('pdfPage', function(){
           scope.rendering = setTimeout(function() {
             scope.pdfService.getPage(scope.tipo, scope.id, scope.page, scope.scale, function(path) {
 
-              element[0].children[0].classList.remove('loading');
-              element[0].children[0].style.backgroundImage = 'url(' + path + ')';
+              var div = document.createElement('div');
+
+              div.classList.add('pdf-page');
+              div.style.backgroundImage = 'url(' + path + ')';
+              div.style.height = Math.round(currentViewport.height) + 'px';
+              div.style.width = Math.round(currentViewport.width) + 'px';
+
+              element[0].addChild(div);
+              element[0].removeChild(element[0].children[0]);
 
               scope.deveRenderizar = false;
             }, function(err) {
