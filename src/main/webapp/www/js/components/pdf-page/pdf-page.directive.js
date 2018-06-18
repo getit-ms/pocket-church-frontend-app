@@ -17,7 +17,7 @@ calvinApp.directive('pdfPage', function(){
       element[0].style.width = '100%';
 
       scope.load = function() {
-        if (!scope.page || !$scope.pdfService) return;
+        if (!scope.page || !scope.pdfService) return;
 
         var viewport = scope.page.getViewport(1);
         var desiredWidth = element[0].getBoundingClientRect().width;
