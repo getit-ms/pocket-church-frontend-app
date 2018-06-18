@@ -74,9 +74,9 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     }
 
     pdfDAO.get(tipo, id, page.pageNumber).then(function(item) {
-      var path = 'pdfs/' + item.hash + '.bin';
-
       if (item) {
+        var path = 'pdfs/' + item.hash + '.bin';
+
         if (item.scale >= scale) {
           pdfDAO.registraUso(tipo, id, page.pageNumber, item.scale);
 
@@ -92,6 +92,8 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
         }
       } else {
         pdfDAO.cadastra(tipo, id, page.pageNumber, scale).then(function(item) {
+          var path = 'pdfs/' + item.hash + '.bin';
+
           renderPageToFile(page, scale, path, function (url) {
             successCallback(url);
           }, function (err) {
