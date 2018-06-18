@@ -99,7 +99,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     var context = canvas.getContext('2d');
 
     // Render PDF page into canvas context
-    scope.page.render({
+    page.render({
       canvasContext: context,
       viewport: viewport
     }).then(function() {
