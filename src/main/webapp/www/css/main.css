@@ -2,6 +2,10 @@
   background: rgba(0,0,0,0.9) !important;
 }
 
+.bar.transparent {
+  background: rgba(0,0,0,0.9) !important;
+}
+
 .pdf-modal,
 .video-modal {
   width: 100% !important;
@@ -40,6 +44,7 @@ pdf-gallery .card {
   background-position: center center;
   background-repeat: no-repeat;
   background-color: white;
+  background-size: contain;
 }
 
 .pdf-page.loading {
