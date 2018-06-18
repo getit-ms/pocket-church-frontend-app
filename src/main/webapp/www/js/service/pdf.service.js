@@ -82,6 +82,8 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
 
           successCallback(parseFilename(cordova.file.dataDirectory + path, scale));
         } else {
+          successCallback(parseFilename(cordova.file.dataDirectory + path, scale));
+
           renderPageToFile(page, scale, path, function (url) {
             pdfDAO.registraUso(tipo, id, page.pageNumber, scale > LIMITE ? item.scale : scale);
 
