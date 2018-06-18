@@ -71,19 +71,19 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                           $scope.cifra = cifra;
                         });
 
-                        $scope.share = function(){
-                            loadingService.show();
+                      $scope.share = function(){
+                        loadingService.show();
 
-                            shareService.share({
-                              subject:$scope.cifra.titulo,
-                              file:config.server + '/rest/arquivo/download/' +
-                                        $scope.cifra.cifra.id + '/' +
-                                        $scope.cifra.cifra.filename + '?Dispositivo=' +
-                                        config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
-                              success: loadingService.hide,
-                              error: loadingService.hide
-                            });
-                        };
+                        arquivoService.get($scope.cifra.cifra.id, function(file) {
+                          shareService.share({
+                            subject:$scope.cifra.titulo,
+                            file: 'file://' + file.file,
+                            success: loadingService.hide,
+                            error: loadingService.hide
+                          });
+                        }, function(){}, loadingService.hide);
+                      };
+
                     }
                 }
             }

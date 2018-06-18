@@ -51,9 +51,16 @@ pdf-viewer .swiper-pagination {
   background-size: contain;
 }
 
-.pdf-page.loading {
-  background-image: url(../img/spinner.gif);
-  background-size: 70px 70px;
+.pdf-page.loading:before {
+  content: ' ';
+  height: 70px;
+  width: 70px;
+  background: url(../img/spinner.gif) no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: calc(50% - 35px);
+  right: calc(50% - 35px);
+  transform: none !important;
 }
 
 .video-modal iframe {

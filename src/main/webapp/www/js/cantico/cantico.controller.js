@@ -65,34 +65,23 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 'content@':{
                     templateUrl: 'js/cantico/cantico.form.html',
                     controller: function(cifraService, $scope, pdfService, $stateParams, shareService, config, $filter, loadingService){
-                        $scope.status = {};
-
                         cifraService.carrega($stateParams.id, function(cantico) {
                           $scope.cantico = cantico;
                         });
 
                         $scope.share = function(){
-                            loadingService.show();
+                          loadingService.show();
 
+                          arquivoService.get($scope.cantico.boletim.id, function(file) {
                             shareService.share({
                               subject:$scope.cantico.titulo,
-                              file:config.server + '/rest/arquivo/download/' +
-                                        $scope.cantico.cifra.id + '/' +
-                                        $scope.cantico.cifra.filename + '?Dispositivo=' +
-                                        config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+                              file: 'file://' + file.file,
                               success: loadingService.hide,
                               error: loadingService.hide
                             });
+                          }, function(){}, loadingService.hide);
                         };
 
-                        $scope.updateSlideStatus = function(index) {
-                            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
-                            if (zoomFactor == 1) {
-                                $ionicSlideBoxDelegate.enableSlide(true);
-                            } else {
-                                $ionicSlideBoxDelegate.enableSlide(false);
-                            }
-                        };
                     }
                 }
             }

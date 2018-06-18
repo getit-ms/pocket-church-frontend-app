@@ -1,4 +1,4 @@
-calvinApp.service('boletimService', ['Restangular', 'arquivoService', '$q', function(Restangular, arquivoService, $q){
+calvinApp.service('boletimService', ['Restangular', 'arquivoService', 'pdfService', '$q', function(Restangular, arquivoService, pdfService, $q){
         this.api = function(){
             return Restangular.one('boletim');
         };
@@ -17,9 +17,19 @@ calvinApp.service('boletimService', ['Restangular', 'arquivoService', '$q', func
             try{
                 this.busca({pagina:1,total:1}, function(boletins){
                   if (boletins.resultados && boletins.resultados.length) {
-                    arquivoService.get(boletins.resultados[0].boletim,
-                      function(){}, function(){}, function(){});
-                  };
+                    var boletim = boletins.resultados[0];
+
+                    pdfService.get(boletim.boletim.id, function(pdf) {
+
+                      for (var i=1;i<=pdf.numPages;i++) {
+                        var page = pdf.getPage(i);
+
+                        pdfService.getPage('boletim', boletim.boletim.id,
+                          page, 1, function() {}, function(){ });
+                      }
+
+                    });
+                  }
 
                   deferred.resolve()
                 }, deferred.reject);

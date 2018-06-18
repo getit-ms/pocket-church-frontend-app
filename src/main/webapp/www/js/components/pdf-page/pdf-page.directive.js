@@ -26,8 +26,8 @@ calvinApp.directive('pdfPage', function(){
 
         var currentViewport = scope.page.getViewport(element[0].offsetWidth / viewport.width);
 
+        element[0].children[0].classList.add('loading');
         element[0].children[0].style.height = Math.round(currentViewport.height) + 'px';
-        element[0].children[0].style.width = Math.round(currentViewport.width) + 'px';
 
         scope.deveRenderizar = true;
         scope.scale = scale;
@@ -39,9 +39,9 @@ calvinApp.directive('pdfPage', function(){
       scope.renderiza = function(inview) {
         scope.inview = inview;
 
-        if ((!scope.renderLazy || scope.inview) && scope.deveRenderizar) {
-          clearTimeout(scope.rendering);
+        clearTimeout(scope.rendering);
 
+        if ((!scope.renderLazy || scope.inview) && scope.deveRenderizar) {
           scope.rendering = setTimeout(function() {
             scope.pdfService.getPage(scope.tipo, scope.id, scope.page, scope.scale, function(path) {
 
@@ -50,7 +50,7 @@ calvinApp.directive('pdfPage', function(){
               div.classList.add('pdf-page');
               div.style.backgroundImage = 'url(' + path + ')';
               div.style.height = Math.round(scope.currentViewport.height) + 'px';
-              div.style.width = Math.round(scope.currentViewport.width) + 'px';
+              div.style.width = '100%';
 
               element[0].appendChild(div);
               element[0].removeChild(element[0].children[0]);

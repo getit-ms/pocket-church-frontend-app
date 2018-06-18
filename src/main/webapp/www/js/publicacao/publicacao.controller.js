@@ -46,24 +46,24 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/publicacao/publicacao.form.html',
-                    controller: function(boletimService, $scope, $stateParams, shareService, config, loadingService){
+                    controller: function(boletimService, $scope, $stateParams, shareService, config, loadingService, arquivoService){
                       boletimService.carrega($stateParams.id, function(publicacao) {
                         $scope.publicacao = publicacao;
                       });
 
-                        $scope.share = function(){
-                            loadingService.show();
+                      $scope.share = function(){
+                        loadingService.show();
 
-                            shareService.share({
-                                subject:$scope.publicacao.titulo,
-                                file:config.server + '/rest/arquivo/download/' +
-                                        $scope.publicacao.boletim.id + '/' +
-                                        $scope.publicacao.boletim.filename + '?Dispositivo=' +
-                                        config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
-                                success: loadingService.hide,
-                                error: loadingService.hide
-                            });
-                        };
+                        arquivoService.get($scope.publicacao.boletim.id, function(file) {
+                          shareService.share({
+                            subject:$scope.boletim.titulo,
+                            file: 'file://' + file.file,
+                            success: loadingService.hide,
+                            error: loadingService.hide
+                          });
+                        }, function(){}, loadingService.hide);
+                      };
+
                     }
                 }
             }

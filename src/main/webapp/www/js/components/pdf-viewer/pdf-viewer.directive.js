@@ -133,12 +133,29 @@ calvinApp.directive('pdfViewer', function(){
             lockPadroes();
           };
 
+          $scope.toggleZoom = function(index) {
+            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+            if (zoomFactor == 1) {
+              $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(2);
+            } else {
+              $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(1);
+            }
+          };
+
+          $scope.actionClick = function() {
+            if ($scope.status.click) {
+              $scope.status.click();
+            }
+          };
+
           $scope.status.hasAnterior = function() {
-            return $scope.slider && $scope.slides[(500000 + $scope.slider.activeIndex - 1) % $scope.slides.length].nr > $scope.slideShow.first;
+            return $scope.slider && !$scope.slider.params.onlyExternal &&
+              $scope.slides[(500000 + $scope.slider.activeIndex - 1) % $scope.slides.length].nr > $scope.slideShow.first;
           };
 
           $scope.status.hasProximo = function() {
-            return $scope.slider && $scope.slides[(500000 + $scope.slider.activeIndex - 1) % $scope.slides.length].nr < $scope.slideShow.last;
+            return $scope.slider && !$scope.slider.params.onlyExternal &&
+              $scope.slides[(500000 + $scope.slider.activeIndex - 1) % $scope.slides.length].nr < $scope.slideShow.last;
           };
 
           $scope.$on('$ionicSlides.sliderInitialized', function(event, data) {
