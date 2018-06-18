@@ -52,7 +52,7 @@ calvinApp.directive('pdfPage', function(){
               div.style.height = Math.round(scope.currentViewport.height) + 'px';
               div.style.width = Math.round(scope.currentViewport.width) + 'px';
 
-              element[0].addChild(div);
+              element[0].appendChild(div);
               element[0].removeChild(element[0].children[0]);
 
               scope.deveRenderizar = false;
