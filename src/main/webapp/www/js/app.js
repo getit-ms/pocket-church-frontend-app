@@ -26,7 +26,7 @@ var calvinApp = angular.module('calvinApp', [
   'angular-inview'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
                  arquivoService, cacheService, $cordovaNetwork, acessoService, boletimService, $cordovaBadge, bibliaService,
-                 database, hinoService, leituraService, $q) {
+                 database, hinoService, leituraService, $q, pdfService) {
   $rootScope.toggleMenu = function(menu) {
     if ($rootScope._menuSelecionado) {
       $rootScope._menuSelecionado.selecionado = false;
@@ -232,6 +232,7 @@ var calvinApp = angular.module('calvinApp', [
       function(){ return carregaFuncionalidades(); },
       function(){ return cacheService.clean(); },
       function(){ return arquivoService.clean(); },
+      function(){ return pdfService.init(); },
       function(){
         if ($rootScope.funcionalidadeHabilitada('BIBLIA')){
           return bibliaService.sincroniza();

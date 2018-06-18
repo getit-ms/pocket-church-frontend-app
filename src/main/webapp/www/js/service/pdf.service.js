@@ -4,11 +4,40 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     var deferred = $q.defer();
 
     try{
-      pdfDAO.removeAntigos();
-
-      $cordovaFile.checkDir(cordova.file.tempDirectory, "pdfs").then(function(){}, function(){
-        $cordovaFile.createDir(cordova.file.tempDirectory, "pdfs");
+      $cordovaFile.checkDir(cordova.file.dataDirectory, "pdfs").then(function(){}, function(){
+        $cordovaFile.createDir(cordova.file.dataDirectory, "pdfs");
       });
+
+      pdfDAO.recuperaAntigos().then(function(itens) {
+        function removeChain(i) {
+          if (i < itens.length) {
+            var item = itens[i];
+
+            pdfDAO.remove(item.tipo, item.id, item.pagina).then(function() {
+              try{
+                $cordovaFile.removeFile(cordova.file.dataDirectory, 'pdfs/' + item.hash + '.bin').then(function() {
+                  removeChain(i+1);
+                }, function() {
+                  removeChain(i+1);
+                });
+              }catch(e){
+                console.error(e);
+
+                removeChain(i+1);
+              }
+            }, function() {
+              removeChain(i+1);
+            })
+          } else {
+            deferred.resolve();
+          }
+        }
+
+        removeChain(0);
+      }, function (err) {
+        deferred.reject(err);
+      });
+
     }catch(e){
       console.log(e);
       deferred.reject();
@@ -46,15 +75,15 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
 
         var path = 'pdfs/' + item.hash + '.bin';
         if (item.scale >= scale) {
-          $cordovaFile.checkFile(cordova.file.tempDirectory, path).then(function () {
+          $cordovaFile.checkFile(cordova.file.dataDirectory, path).then(function () {
             pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
 
-            successCallback(cordova.file.tempDirectory + path);
+            successCallback(cordova.file.dataDirectory + path);
           }, function () {
             renderPageToFile(page, scale, path, function () {
               pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
 
-              successCallback(cordova.file.tempDirectory + path);
+              successCallback(cordova.file.dataDirectory + path);
             }, function (err) {
               errorCallback(err);
             });
@@ -63,7 +92,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
           renderPageToFile(page, scale, path, function () {
             pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
 
-            successCallback(cordova.file.tempDirectory + path);
+            successCallback(cordova.file.dataDirectory + path);
           }, function (err) {
             errorCallback(err);
           });
@@ -71,7 +100,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
       } else {
         pdfDAO.cadastra(tipo, id, page.pageNumber, scale).then(function(item) {
           renderPageToFile(page, scale, path, function () {
-            successCallback(cordova.file.tempDirectory + path);
+            successCallback(cordova.file.dataDirectory + path);
           }, function (err) {
             errorCallback(err);
           });
@@ -105,7 +134,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     }).then(function() {
       var base64 = canvas.toDataURL("image/jpeg").replace(/data:image\/[a-z]+;base64,/, '');
 
-      $cordovaFile.writeFile(cordova.file.tempDirectory, path, base64toBlob(base64), true).then(
+      $cordovaFile.writeFile(cordova.file.dataDirectory, path, base64toBlob(base64), true).then(
         function(success){
           successCallback();
         },

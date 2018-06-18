@@ -59,11 +59,38 @@ calvinApp.service('pdfDAO', ['database', '$q', function(database, $q){
 
   var LIMITE = 1000 * 60 * 60 * 24 * 5;
 
-  this.removeAntigos = function(){
+  this.recuperaAntigos = function(){
     var deferred = $q.defer();
 
     database.db.transaction(function(tx) {
-      tx.executeSql('DELETE FROM cache_pdf WHERE ultimo_acesso <= ?', [new Date().getTime() - LIMITE], function(tx, rs) {
+      tx.executeSql('SELECT tipo, id, pagina FROM cache_pdf WHERE ultimo_acesso <= ?', [new Date().getTime() - LIMITE], function(tx, rs) {
+        var itens = [];
+
+        for (var i=0;i<rs.rows.length;i++) {
+          var item = rs.rows.item(i);
+          itens.push({
+            tipo: item.tipo,
+            id: item.id,
+            pagina: item.pagina,
+            hash: item.hash
+          });
+        }
+
+        deferred.resolve(itens);
+      }, function(tx, error) {
+        deferred.reject(error);
+      });
+    });
+
+    return deferred.promise;
+  };
+
+
+  this.remove = function(tipo, id, pagina){
+    var deferred = $q.defer();
+
+    database.db.transaction(function(tx) {
+      tx.executeSql('DELETE FROM cache_pdf WHERE tipo = ? and id = ? and pagina = ?', [tipo, id, pagina], function(tx, rs) {
         deferred.resolve();
       }, function(tx, error) {
         deferred.reject(error);

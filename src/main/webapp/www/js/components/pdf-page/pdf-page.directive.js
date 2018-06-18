@@ -45,13 +45,13 @@ calvinApp.directive('pdfPage', function(){
           scope.rendering = setTimeout(function() {
             scope.pdfService.getPage(scope.tipo, scope.id, scope.page, scope.scale, function(path) {
 
-              element[0].children[0].removeClass('loading');
+              element[0].children[0].classList.remove('loading');
               element[0].children[0].style.backgroundImage = 'url(' + path + ')';
 
               scope.deveRenderizar = false;
             }, function(err) {
 
-              element[0].children[0].removeClass('loading');
+              element[0].children[0].classList.remove('loading');
               element[0].children[0].style.backgroundImage = 'url(img/fail.png)';
 
               console.error(err);
