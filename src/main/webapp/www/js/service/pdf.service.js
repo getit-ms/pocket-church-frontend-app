@@ -1,4 +1,4 @@
-calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$cordovaFile', function(cacheService, arquivoService, pdfDAO, $cordovaFile){
+calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$cordovaFile', '$q', function(cacheService, arquivoService, pdfDAO, $cordovaFile, $q){
 
   this.init = function(){
     var deferred = $q.defer();
@@ -16,7 +16,6 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
 
     return deferred.promise;
   };
-
 
   this.clean = function(){
     var deferred = $q.defer();
