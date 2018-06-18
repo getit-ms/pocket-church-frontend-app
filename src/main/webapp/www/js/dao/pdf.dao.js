@@ -6,12 +6,12 @@ calvinApp.service('pdfDAO', ['database', '$q', function(database, $q){
       tx.executeSql('SELECT hash, scale FROM cache_pdf where tipo = ? and id = ?', [tipo, id], function(tx, rs) {
         if (rs.rows.length) {
           var item = rs.rows.item(0);
-          rx.resolve({
+          deferred.resolve({
             hash: item.hash,
             scale: item.scale
           });
         } else {
-          rx.resolve(undefined);
+          deferred.resolve(undefined);
         }
       }, function(tx, error) {
         deferred.reject(error);
