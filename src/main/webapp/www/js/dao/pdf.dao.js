@@ -11,7 +11,7 @@ calvinApp.service('pdfDAO', ['database', '$q', function(database, $q){
             scale: item.scale
           });
         } else {
-          this.cadastra(tipo, id, pagina, scale, hash).then(function(hash) {
+          cadastra(tipo, id, pagina, scale, hash).then(function(hash) {
             deferred.resolve({
               hash: hash,
               scale: scale
@@ -42,7 +42,7 @@ calvinApp.service('pdfDAO', ['database', '$q', function(database, $q){
     return deferred.promise;
   };
 
-  this.cadastra = function(tipo, id, pagina, scale){
+  function cadastra(tipo, id, pagina, scale){
     var deferred = $q.defer();
 
     var hash = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

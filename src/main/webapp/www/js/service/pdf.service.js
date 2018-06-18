@@ -49,7 +49,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
 
           successCallback(cordova.file.tempDirectory + path);
         }, function() {
-          this.renderPageToFile(page, path, function() {
+          renderPageToFile(page, path, function() {
             pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
 
             successCallback(cordova.file.tempDirectory + path);
@@ -58,7 +58,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
           });
         });
       } else {
-        this.renderPageToFile(page, path, function() {
+        renderPageToFile(page, path, function() {
           pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
 
           successCallback(cordova.file.tempDirectory + path);
@@ -71,7 +71,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     })
   };
 
-  this.renderPageToFile = function(page, path, successCallback, errorCallback) {
+  function renderPageToFile(page, path, successCallback, errorCallback) {
     if (!errorCallback) {
       errorCallback = function(){};
     }
