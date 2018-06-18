@@ -18,7 +18,7 @@
         <div class="item item-body " ng-if="estudo.tipo == 'TEXTO'">
           <p class="html-div" ng-bind-html='estudo.texto'></p>
         </div>
-        <pdf-gallery titulo="{{estudo.titulo}}" ng-if="estudo && estudo.tipo == 'PDF'" pdf="estudo.pdf"></pdf-gallery>
+        <pdf-gallery tipo="estudo" titulo="{{estudo.titulo}}" ng-if="estudo && estudo.tipo == 'PDF'" pdf="estudo.pdf"></pdf-gallery>
     </ion-content>
     </ion-footer-bar>
 </ion-view>

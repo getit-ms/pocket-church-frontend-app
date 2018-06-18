@@ -2,17 +2,22 @@ calvinApp.directive('pdfPage', function(){
   return {
     restrict: 'E',
     scope:{
+      tipo:'@',
+      id:'=',
       page:'=',
       renderLazy:'='
     },
     templateUrl: 'js/components/pdf-page/pdf-page.html',
+    controller: ['$scope', 'pdfService', function($scope, pdfService) {
+      $scope.pdfService = pdfService;
+    }],
     link: function(scope, element, attrs, ctrl, transclude) {
 
       element[0].style.display = 'block';
       element[0].style.width = '100%';
 
       scope.load = function() {
-        if (!scope.page) return;
+        if (!scope.page || !$scope.pdfService) return;
 
         var viewport = scope.page.getViewport(1);
         var desiredWidth = element[0].getBoundingClientRect().width;
@@ -25,6 +30,7 @@ calvinApp.directive('pdfPage', function(){
         element[0].children[0].style.width = Math.round(currentViewport.width) + 'px';
 
         scope.deveRenderizar = true;
+        scope.scale = scale;
         scope.currentViewport = currentViewport;
         scope.scaledViewport = scaledViewport;
         scope.renderiza(scope.inview);
@@ -37,30 +43,24 @@ calvinApp.directive('pdfPage', function(){
           clearTimeout(scope.rendering);
 
           scope.rendering = setTimeout(function() {
-            var canvas = document.createElement('canvas');
+            scope.pdfService.getPage(scope.tipo, scope.id, scope.page, scope.scale, function(path) {
 
-            // Prepare canvas using PDF page dimensions
-            canvas.height = scope.scaledViewport.height;
-            canvas.width = scope.scaledViewport.width;
+              element[0].children[0].removeClass('loading');
+              element[0].children[0].style.backgroundImage = 'url(' + path + ')';
 
-            canvas.style.height = Math.round(scope.currentViewport.height) + 'px';
-            canvas.style.width = Math.round(scope.currentViewport.width) + 'px';
+              scope.deveRenderizar = false;
+            }, function(err) {
 
-            var context = canvas.getContext('2d');
+              element[0].children[0].removeClass('loading');
+              element[0].children[0].style.backgroundImage = 'url(img/fail.png)';
 
-            // Render PDF page into canvas context
-            scope.page.render({
-              canvasContext: context,
-              viewport: scope.scaledViewport
-            }).then(function() {
-              element[0].removeChild(element[0].children[0]);
-              element[0].appendChild(canvas);
+              console.error(err);
+
+              scope.deveRenderizar = false;
             });
 
-            scope.deveRenderizar = false;
           }, 300);
         }
-
       };
 
       scope.$watch(function() {

@@ -2,6 +2,7 @@ calvinApp.directive('pdfViewer', function(){
   return {
     restrict: 'E',
     scope:{
+      tipo: '@',
       arquivo:'=pdf',
       status:'='
     },

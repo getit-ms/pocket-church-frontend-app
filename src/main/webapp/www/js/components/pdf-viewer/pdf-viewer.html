@@ -1,6 +1,6 @@
 <ion-slides style="height:100%;width:100%"
             ng-if="pdf" pager="false"
-            options="{loop:true}" slider="slider">
+            options="{loop:true,paginationHide:true}" slider="slider">
   <ion-slide-page ng-repeat="slide in slides">
     <ion-scroll scroll='false' zooming="true" direction="xy"
                 scrollable-x="false" overflow-scroll="false"
@@ -10,7 +10,7 @@
                 on-release="updateSlideStatus($index)">
       <div class="page-wrapper">
         <div class="page-content">
-          <pdf-page render-lazy="false" page="slide.page" ></pdf-page>
+          <pdf-page tipo="{{tipo}}" id="arquivo.id" render-lazy="false" page="slide.page" ></pdf-page>
         </div>
       </div>
     </ion-scroll>

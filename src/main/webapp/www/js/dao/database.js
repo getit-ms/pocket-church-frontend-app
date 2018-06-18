@@ -29,6 +29,8 @@ calvinApp.service('database', ['$q', function($q){
 
         tx.executeSql('CREATE TABLE IF NOT EXISTS config(value)');
 
+        tx.executeSql('CREATE TABLE IF NOT EXISTS cache_pdf(tipo, id, pagina, hash, scale, ultimo_acesso)');
+
         tx.executeSql('DROP INDEX IF EXISTS idx_id_leitura_biblia');
         tx.executeSql('DROP INDEX IF EXISTS idx_data_leitura_biblia');
         tx.executeSql('DROP TABLE IF EXISTS leitura_biblica');

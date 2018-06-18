@@ -36,6 +36,16 @@ pdf-gallery .card {
   margin: 0;
 }
 
+.pdf-page {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: white;
+}
+
+.pdf-page.loading {
+  background-image: url(../img/spinner.gif);
+}
+
 .video-modal iframe {
   max-width: 100%;
   max-height: 100%;

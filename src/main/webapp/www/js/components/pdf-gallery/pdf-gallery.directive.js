@@ -3,6 +3,7 @@ calvinApp.directive('pdfGallery', function(){
         restrict: 'E',
         transclude: true,
         scope:{
+            tipo: '@',
             arquivo:'=pdf',
             titulo:'@'
         },

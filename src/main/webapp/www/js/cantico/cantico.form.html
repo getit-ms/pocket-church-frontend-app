@@ -8,7 +8,7 @@
            title="{{'global.compartilhar' | translate}}"></a>
     </ion-nav-buttons>
     <ion-content ng-class="{'has-footer': cantico.paginas.length > 1}" class='has-header'>
-      <pdf-viewer pdf="cantico.cifra" status="status"></pdf-viewer>
+      <pdf-viewer tipo="cantico" pdf="cantico.cifra" status="status"></pdf-viewer>
     </ion-content>
     <ion-footer-bar ng-hide="cantico.paginas.length <= 1" class="bar-stable" align-title="center">
         <h1 class="title">{{'cantico.paginacao' | translate:{atual:status.pagina,total:status.total} }}</h1>
