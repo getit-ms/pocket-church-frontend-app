@@ -8,6 +8,21 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
         $cordovaFile.createDir(cordova.file.dataDirectory, "pdfs");
       });
 
+      deferred.resolve();
+    }catch(e){
+      console.log(e);
+      deferred.reject();
+    }
+
+    return deferred.promise;
+  };
+
+
+  this.clean = function(){
+    var deferred = $q.defer();
+
+    try{
+
       pdfDAO.recuperaAntigos().then(function(itens) {
         function removeChain(i) {
           if (i < itens.length) {

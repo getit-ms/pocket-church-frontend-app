@@ -224,6 +224,7 @@ var calvinApp = angular.module('calvinApp', [
     $rootScope.offline = !$cordovaNetwork.isOnline();
 
     arquivoService.init();
+    pdfService.init();
     database.init();
 
     var next = { then: function(callback){ callback(); } };
@@ -232,7 +233,7 @@ var calvinApp = angular.module('calvinApp', [
       function(){ return carregaFuncionalidades(); },
       function(){ return cacheService.clean(); },
       function(){ return arquivoService.clean(); },
-      function(){ return pdfService.init(); },
+      function(){ return pdfService.clean(); },
       function(){
         if ($rootScope.funcionalidadeHabilitada('BIBLIA')){
           return bibliaService.sincroniza();
