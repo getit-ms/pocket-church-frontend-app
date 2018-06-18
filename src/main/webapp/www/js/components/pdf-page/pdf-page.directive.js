@@ -49,8 +49,8 @@ calvinApp.directive('pdfPage', function(){
 
               div.classList.add('pdf-page');
               div.style.backgroundImage = 'url(' + path + ')';
-              div.style.height = Math.round(currentViewport.height) + 'px';
-              div.style.width = Math.round(currentViewport.width) + 'px';
+              div.style.height = Math.round(scope.currentViewport.height) + 'px';
+              div.style.width = Math.round(scope.currentViewport.width) + 'px';
 
               element[0].addChild(div);
               element[0].removeChild(element[0].children[0]);
