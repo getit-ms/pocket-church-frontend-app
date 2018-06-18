@@ -74,10 +74,9 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     }
 
     pdfDAO.get(tipo, id, page.pageNumber).then(function(item) {
+      var path = 'pdfs/' + item.hash + '.bin';
+
       if (item) {
-
-        var path = 'pdfs/' + item.hash + '.bin';
-
         if (item.scale >= scale) {
           pdfDAO.registraUso(tipo, id, page.pageNumber, item.scale);
 
