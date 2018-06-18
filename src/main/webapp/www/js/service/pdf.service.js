@@ -42,29 +42,42 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     }
 
     pdfDAO.get(tipo, id, page.pageNumber).then(function(item) {
-      var path = 'pdfs/' + item.hash + '.bin';
-      if (item.scale >= scale) {
-        $cordovaFile.checkFile(cordova.file.tempDirectory, path).then(function() {
-          pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
+      if (item) {
 
-          successCallback(cordova.file.tempDirectory + path);
-        }, function() {
-          renderPageToFile(page, path, function() {
+        var path = 'pdfs/' + item.hash + '.bin';
+        if (item.scale >= scale) {
+          $cordovaFile.checkFile(cordova.file.tempDirectory, path).then(function () {
             pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
 
             successCallback(cordova.file.tempDirectory + path);
-          }, function(err) {
+          }, function () {
+            renderPageToFile(page, path, function () {
+              pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
+
+              successCallback(cordova.file.tempDirectory + path);
+            }, function (err) {
+              errorCallback(err);
+            });
+          });
+        } else {
+          renderPageToFile(page, path, function () {
+            pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
+
+            successCallback(cordova.file.tempDirectory + path);
+          }, function (err) {
             errorCallback(err);
           });
-        });
+        }
       } else {
-        renderPageToFile(page, path, function() {
-          pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
-
-          successCallback(cordova.file.tempDirectory + path);
-        }, function(err) {
+        pdfDAO.cadastra(tipo, id, page.pageNumber, scale).then(function(item) {
+          renderPageToFile(page, path, function () {
+            successCallback(cordova.file.tempDirectory + path);
+          }, function (err) {
+            errorCallback(err);
+          });
+        }, function (err) {
           errorCallback(err);
-        });
+        })
       }
     }, function(err) {
       errorCallback(err);

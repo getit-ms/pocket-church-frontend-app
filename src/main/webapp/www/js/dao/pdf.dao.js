@@ -11,14 +11,7 @@ calvinApp.service('pdfDAO', ['database', '$q', function(database, $q){
             scale: item.scale
           });
         } else {
-          cadastra(tipo, id, pagina, scale, hash).then(function(hash) {
-            deferred.resolve({
-              hash: hash,
-              scale: scale
-            });
-          }, function(err) {
-            deferred.reject(err);
-          });
+          rx.resolve(undefined);
         }
       }, function(tx, error) {
         deferred.reject(error);
@@ -42,7 +35,7 @@ calvinApp.service('pdfDAO', ['database', '$q', function(database, $q){
     return deferred.promise;
   };
 
-  function cadastra(tipo, id, pagina, scale){
+  this.cadastra = function(tipo, id, pagina, scale){
     var deferred = $q.defer();
 
     var hash = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -52,7 +45,10 @@ calvinApp.service('pdfDAO', ['database', '$q', function(database, $q){
 
     database.db.transaction(function(tx) {
       tx.executeSql('INSERT into cache_pdf(tipo, id, pagina, hash, scale, ultimo_acesso) VALUES (?, ?, ?, ?, ?, ?)', [tipo, id, pagina, hash, scale, new Date().getTime()], function(tx, rs) {
-        deferred.resolve(hash);
+        deferred.resolve({
+          hash: hash,
+          scale: scale
+        });
       }, function(tx, error) {
         deferred.reject(error);
       });
