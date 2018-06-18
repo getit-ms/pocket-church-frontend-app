@@ -144,8 +144,6 @@ calvinApp.directive('pdfViewer', function(){
           $scope.$on('$ionicSlides.sliderInitialized', function(event, data) {
             $scope.slider = data.slider;
 
-            $scope.slider.params.paginationHide = true;
-
             lockPadroes();
 
             $scope.status.proximo = function() {

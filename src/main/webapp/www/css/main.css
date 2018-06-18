@@ -3,7 +3,7 @@
 }
 
 .bar.transparent {
-  background: rgba(0,0,0,0.9) !important;
+  background: rgba(0,0,0,0.5) !important;
 }
 
 .pdf-modal,
@@ -53,6 +53,7 @@ pdf-viewer .swiper-pagination {
 
 .pdf-page.loading {
   background-image: url(../img/spinner.gif);
+  background-size: 70px 70px;
 }
 
 .video-modal iframe {

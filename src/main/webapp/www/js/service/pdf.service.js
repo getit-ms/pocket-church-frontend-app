@@ -65,6 +65,9 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     });
   };
 
+  // O limite garante que o usuário não ficará com o celular lotado por estar visualizando as imagens em zoom
+  var LIMITE = 1.5;
+
   this.getPage = function(tipo, id, page, scale, successCallback, errorCallback) {
     if (!errorCallback) {
       errorCallback = function(){};
@@ -76,24 +79,22 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
         var path = 'pdfs/' + item.hash + '.bin';
 
         if (item.scale >= scale) {
-          pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
+          pdfDAO.registraUso(tipo, id, page.pageNumber, item.scale);
 
-          successCallback(parseFilename(cordova.file.dataDirectory + path));
+          successCallback(parseFilename(cordova.file.dataDirectory + path, scale));
         } else {
-          successCallback(parseFilename(cordova.file.dataDirectory + path));
+          renderPageToFile(page, scale, path, function (url) {
+            pdfDAO.registraUso(tipo, id, page.pageNumber, scale > LIMITE ? item.scale : scale);
 
-          renderPageToFile(page, scale, path, function () {
-            pdfDAO.registraUso(tipo, id, page.pageNumber, scale);
-
-            successCallback(parseFilename(cordova.file.dataDirectory + path));
+            successCallback(url);
           }, function (err) {
             errorCallback(err);
           });
         }
       } else {
         pdfDAO.cadastra(tipo, id, page.pageNumber, scale).then(function(item) {
-          renderPageToFile(page, scale, path, function () {
-            successCallback(parseFilename(cordova.file.dataDirectory + path));
+          renderPageToFile(page, scale, path, function (url) {
+            successCallback(url);
           }, function (err) {
             errorCallback(err);
           });
@@ -106,8 +107,8 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     })
   };
 
-  function parseFilename(filename) {
-    return filename.replace('file://', '') + '?dt' + new Date().getTime();
+  function parseFilename(filename, scale) {
+    return filename.replace('file://', '') + '?scl=' + scale;
   }
 
 
@@ -130,16 +131,23 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
       canvasContext: context,
       viewport: viewport
     }).then(function() {
-      var base64 = canvas.toDataURL("image/jpeg").replace(/data:image\/[a-z]+;base64,/, '');
+      var url = canvas.toDataURL("image/jpeg");
 
-      $cordovaFile.writeFile(cordova.file.dataDirectory, path, base64toBlob(base64), true).then(
-        function(success){
-          successCallback();
-        },
-        function(error){
-          errorCallback(error)
-        }
-      )
+      if (scale > LIMITE) {
+        successCallback(url);
+      } else {
+        var base64 = url.replace(/data:image\/[a-z]+;base64,/, '');
+
+        $cordovaFile.writeFile(cordova.file.dataDirectory, path, base64toBlob(base64), true).then(
+          function(success){
+            successCallback(parseFilename(cordova.file.dataDirectory + path, scale));
+          },
+          function(error){
+            errorCallback(error)
+          }
+        )
+      }
+
     }, function(err) {
       errorCallback(err);
     });
