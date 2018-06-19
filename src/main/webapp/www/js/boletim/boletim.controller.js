@@ -46,8 +46,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             loadingService.show();
 
             shareService.shareArquivo({
-              nome:$scope.boletim.titulo + '.pdf',
-              id: $scope.boletim.boletim.id,
+              arquivo: $scope.boletim.boletim,
               success: loadingService.hide,
               error: loadingService.hide
             });

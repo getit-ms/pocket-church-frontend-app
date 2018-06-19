@@ -73,8 +73,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                           loadingService.show();
 
                           shareService.shareArquivo({
-                            nome:$scope.cantico.titulo + '.pdf',
-                            id: $scope.cantico.cifra.id,
+                            arquivo:$scope.cantico.cifra,
                             success: loadingService.hide,
                             error: loadingService.hide
                           });

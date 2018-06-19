@@ -54,8 +54,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         if ($scope.estudo.tipo == 'PDF') {
 
                           shareService.shareArquivo({
-                            nome:$scope.estudo.filename,
-                            id: $scope.estudo.pdf.id,
+                            arquivo: $scope.estudo.pdf,
                             success: loadingService.hide,
                             error: loadingService.hide
                           });

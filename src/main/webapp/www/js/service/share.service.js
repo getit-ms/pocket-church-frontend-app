@@ -5,10 +5,10 @@ calvinApp.service('shareService', ['$cordovaSocialSharing', '$cordovaFile', func
         };
 
         this.shareArquivo = function(notificacao) {
-          var path = 'arquivos/' + notificacao.id + '.bin';
+          var path = 'arquivos/' + notificacao.arquivo.id + '.bin';
 
           $cordovaFile.readAsDataURL(cordova.file.dataDirectory, path).then(function(success){
-            $cordovaSocialSharing.share(null, notificacao.nome, [success], undefined).then(
+            $cordovaSocialSharing.share(null, notificacao.arquivo.filename, success.replace(/data:image\/[a-z]+;base64,/, 'data:image/' + (notificacao.mimeType || 'application/pdf' ) + ';base64,'), undefined).then(
               notificacao.success,
               notificacao.error);
           }, notificacao.error);
