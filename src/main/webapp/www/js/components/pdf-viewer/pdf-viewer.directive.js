@@ -147,9 +147,9 @@ calvinApp.directive('pdfViewer', function(){
                 if ($scope.status.click) {
                   $scope.status.click();
                 }
-              }, 300);
 
-              $scope.$apply();
+                $scope.$apply();
+              }, 300);
             } else {
               $scope.clearTap();
 
