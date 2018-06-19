@@ -45,22 +45,20 @@ pdf-viewer .swiper-pagination {
 }
 
 .pdf-page {
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-color: white;
+  position: relative;
+  background: white no-repeat center center;
   background-size: contain;
 }
 
 .pdf-page.loading:before {
   content: ' ';
-  height: 70px;
-  width: 70px;
+  height: 30%;
+  width: 30%;
   background: url(../img/spinner.gif) no-repeat;
   background-size: contain;
   position: absolute;
-  top: calc(50% - 35px);
-  right: calc(50% - 35px);
-  transform: none !important;
+  top: 35%;
+  right: 35%;
 }
 
 .video-modal iframe {

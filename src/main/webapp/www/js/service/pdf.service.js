@@ -146,7 +146,9 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     // Render PDF page into canvas context
     page.render({
       canvasContext: context,
-      viewport: viewport
+      viewport: viewport,
+      enableWebGL: true,
+      intent: 'print'
     }).then(function() {
       var url = canvas.toDataURL("image/jpeg");
 

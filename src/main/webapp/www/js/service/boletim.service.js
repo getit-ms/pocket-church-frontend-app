@@ -21,17 +21,23 @@ calvinApp.service('boletimService', ['Restangular', 'arquivoService', 'pdfServic
 
                     pdfService.get(boletim.boletim.id, function(pdf) {
 
-                      for (var i=1;i<=pdf.numPages;i++) {
-                        var page = pdf.getPage(i);
-
-                        pdfService.getPage('boletim', boletim.boletim.id,
-                          page, 1, function() {}, function(){ });
+                      function loadPageChain(i) {
+                        if (i<=pdf.numPages) {
+                          pdf.getPage(i).then(function(page) {
+                            pdfService.getPage('boletim', boletim.boletim.id,
+                              page, 1, function() {
+                              loadPageChain(i + 1);
+                              }, function(){
+                                loadPageChain(i + 1);
+                              });
+                          });
+                        }
                       }
 
                     });
                   }
 
-                  deferred.resolve()
+                  deferred.resolve();
                 }, deferred.reject);
             }catch(e){
                 console.log(e);
