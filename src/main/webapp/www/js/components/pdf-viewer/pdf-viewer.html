@@ -1,4 +1,6 @@
 <ion-slides style="height:100%;width:100%"
+            on-drag="clearTap()"
+            on-tap="actionClick($index)"
             ng-if="pdf" pager="false"
             options="{loop:true}" slider="slider">
   <ion-slide-page ng-repeat="slide in slides">
@@ -9,7 +11,7 @@
                 on-scroll="updateSlideStatus($index)"
                 on-release="updateSlideStatus($index)">
       <div class="page-wrapper">
-        <div class="page-content" on-drag="clearTap()" on-tap="actionClick($index)">
+        <div class="page-content" >
           <pdf-page tipo="{{tipo}}" id="arquivo.id" render-lazy="false" page="slide.page" ></pdf-page>
         </div>
       </div>
