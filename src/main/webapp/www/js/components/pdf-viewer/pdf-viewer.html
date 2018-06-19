@@ -9,7 +9,7 @@
                 on-scroll="updateSlideStatus($index)"
                 on-release="updateSlideStatus($index)">
       <div class="page-wrapper">
-        <div class="page-content" ion-track-doubletap="" on-double-tap="toggleZoom()" on-tap="actionClick()">
+        <div class="page-content" ng-dblclick="toggleZoom()" ng-click="actionClick()">
           <pdf-page tipo="{{tipo}}" id="arquivo.id" render-lazy="false" page="slide.page" ></pdf-page>
         </div>
       </div>
