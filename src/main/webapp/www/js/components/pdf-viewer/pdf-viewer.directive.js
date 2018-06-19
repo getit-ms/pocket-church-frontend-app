@@ -134,6 +134,8 @@ calvinApp.directive('pdfViewer', function(){
           };
 
           $scope.toggleZoom = function(index) {
+            clearTimeout($scope.tap);
+
             var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
             if (zoomFactor == 1) {
               $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(2);
@@ -144,7 +146,9 @@ calvinApp.directive('pdfViewer', function(){
 
           $scope.actionClick = function() {
             if ($scope.status.click) {
-              $scope.status.click();
+              $scope.tap = setTimeout(function() {
+                $scope.status.click();
+              }, 300);
             }
           };
 
