@@ -138,17 +138,20 @@ calvinApp.directive('pdfViewer', function(){
             $scope.tap = undefined;
           };
 
-          $scope.actionClick = function(index) {
+          $scope.actionClick = function() {
 
             if (!$scope.tap) {
               $scope.tap = setTimeout(function() {
-                $scope.tap = undefined;
+                $scope.clearTap();
+
                 if ($scope.status.click) {
                   $scope.status.click();
                 }
               }, 300);
             } else {
               $scope.clearTap();
+
+              var index = ($scope.slider.activeIndex - 1);
 
               var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
               if (zoomFactor == 1) {
