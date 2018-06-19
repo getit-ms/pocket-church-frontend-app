@@ -52,13 +52,13 @@ pdf-viewer .swiper-pagination {
 
 .pdf-page.loading:before {
   content: ' ';
-  height: 30%;
-  width: 30%;
+  height: 70px;
+  width: 70px;
   background: url(../img/spinner.gif) no-repeat;
   background-size: contain;
   position: absolute;
-  top: 35%;
-  right: 35%;
+  top: calc(50% - 70px);
+  right: calc(50% - 70px);
 }
 
 .video-modal iframe {

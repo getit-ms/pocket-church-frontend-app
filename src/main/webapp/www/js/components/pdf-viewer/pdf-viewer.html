@@ -9,7 +9,7 @@
                 on-scroll="updateSlideStatus($index)"
                 on-release="updateSlideStatus($index)">
       <div class="page-wrapper">
-        <div class="page-content" on-swipe="clearTap()" on-click="actionClick()">
+        <div class="page-content" on-swipe="clearTap()" ng-click="actionClick()">
           <pdf-page tipo="{{tipo}}" id="arquivo.id" render-lazy="false" page="slide.page" ></pdf-page>
         </div>
       </div>

@@ -148,6 +148,8 @@ calvinApp.directive('pdfViewer', function(){
                   $scope.status.click();
                 }
               }, 300);
+
+              $scope.$apply();
             } else {
               $scope.clearTap();
 
@@ -160,7 +162,9 @@ calvinApp.directive('pdfViewer', function(){
                 $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(1, true);
               }
 
-              $scope.$apply();
+              setTimeout(function() {
+                $scope.$apply();
+              }, 100);
             }
           };
 
