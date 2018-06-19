@@ -133,6 +133,11 @@ calvinApp.directive('pdfViewer', function(){
             lockPadroes();
           };
 
+          $scope.clearTap = function() {
+            clearTimeout($scope.tap);
+            $scope.tap = undefined;
+          };
+
           $scope.actionClick = function(index) {
 
             if (!$scope.tap) {
@@ -143,8 +148,7 @@ calvinApp.directive('pdfViewer', function(){
                 }
               }, 300);
             } else {
-              clearTimeout($scope.tap);
-              $scope.tap = undefined;
+              $scope.clearTap();
 
               var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
               if (zoomFactor == 1) {
@@ -152,6 +156,8 @@ calvinApp.directive('pdfViewer', function(){
               } else {
                 $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(1, true);
               }
+
+              $scope.$apply();
             }
           };
 
