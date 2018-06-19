@@ -52,11 +52,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         loadingService.show();
 
                         if ($scope.estudo.tipo == 'PDF') {
-                          shareService.share({
-                            subject:$scope.estudo.titulo,
-                            file:config.server + '/rest/arquivo/download/' +
-                            $scope.estudo.pdf.id + '/' +  $scope.estudo.pdf.filename + '?Dispositivo=' +
-                            config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
+
+                          shareService.shareArquivo({
+                            nome:$scope.estudo.filename,
+                            id: $scope.estudo.pdf.id,
                             success: loadingService.hide,
                             error: loadingService.hide
                           });

@@ -133,22 +133,26 @@ calvinApp.directive('pdfViewer', function(){
             lockPadroes();
           };
 
-          $scope.toggleZoom = function(index) {
-            clearTimeout($scope.tap);
+          $scope.actionClick = function(index) {
 
-            var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
-            if (zoomFactor == 1) {
-              $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(2);
-            } else {
-              $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(1);
-            }
-          };
-
-          $scope.actionClick = function() {
-            if ($scope.status.click) {
+            if (!$scope.tap) {
               $scope.tap = setTimeout(function() {
-                $scope.status.click();
+                $scope.tap = undefined;
+                if ($scope.status.click) {
+                  $scope.status.click();
+                }
               }, 300);
+            } else {
+              clearTimeout($scope.tap);
+
+              $scope.tap = undefined;
+
+              var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + index).getScrollPosition().zoom;
+              if (zoomFactor == 1) {
+                $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(2);
+              } else {
+                $ionicScrollDelegate.$getByHandle('scrollHandle' + index).zoomTo(1);
+              }
             }
           };
 
