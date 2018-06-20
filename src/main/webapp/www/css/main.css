@@ -57,8 +57,8 @@ pdf-viewer .swiper-pagination {
   background: url(../img/spinner.gif) no-repeat;
   background-size: contain;
   position: absolute;
-  top: calc(50% - 70px);
-  right: calc(50% - 70px);
+  top: calc(50% - 35px);
+  right: calc(50% - 35px);
 }
 
 .video-modal iframe {

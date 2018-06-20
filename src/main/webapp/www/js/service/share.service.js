@@ -8,7 +8,8 @@ calvinApp.service('shareService', ['$cordovaSocialSharing', '$cordovaFile', func
           var path = 'arquivos/' + notificacao.arquivo.id + '.bin';
 
           $cordovaFile.readAsDataURL(cordova.file.dataDirectory, path).then(function(success){
-            $cordovaSocialSharing.share(null, notificacao.arquivo.filename, success.replace(/data:[a-z\/]+;base64,/, 'data:' + (notificacao.mimeType || 'application/pdf' ) + ';base64,'), undefined).then(
+            $cordovaSocialSharing.share(null, notificacao.arquivo.filename.replace(' ', '_'),
+              success.replace(/data:[a-z\/]+;base64,/, 'data:' + (notificacao.mimeType || 'application/pdf' ) + ';base64,'), undefined).then(
               notificacao.success,
               notificacao.error);
           }, notificacao.error);

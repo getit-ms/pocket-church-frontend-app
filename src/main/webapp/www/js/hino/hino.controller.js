@@ -8,9 +8,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 controller: function(hinoService, $scope, $ionicFilterBar, $filter, $ionicScrollDelegate,
                             $ionicFilterBarConfig, $ionicConfig, sincronizacaoHino){
                     $scope.sincronizacao = sincronizacaoHino;
-                    
+
                     $scope.filtro = {total:50};
-                    
+
                     $scope.searcher = function(page, callback){
                         hinoService.busca(angular.extend({pagina:page}, $scope.filtro)).then(callback);
                     };
@@ -19,7 +19,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $ionicFilterBar.show({
                             items:[{}],
                             update: function(filter){
-                                
+
                             },
                             expression: function(filterText){
                                 if (filterText !== $scope.filtro.filtro){
@@ -63,7 +63,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             registraWatcher();
                         }
                     });
-                    
+
                     function registraWatcher(){
                         var stop = $scope.$watch('sincronizacao.porcentagem', function(){
                             if (!$scope.sincronizacao.executando){
@@ -94,7 +94,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                         shareService.share({
                             subject:$scope.hino.nome,
-                            file:config.server + '/rest/hino/' + $scope.hino.id + '/' + $scope.hino.filename + '.pdf?Dispositivo=' +
+                            file:config.server + '/rest/hino/' + $scope.hino.id + '/' + $scope.hino.filename.replace(' ', '_') + '.pdf?Dispositivo=' +
                                 config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja,
                             success: loadingService.hide,
                             error: loadingService.hide
