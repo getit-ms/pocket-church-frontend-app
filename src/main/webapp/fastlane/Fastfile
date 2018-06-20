@@ -27,7 +27,7 @@ platform :ios do
     enable_automatic_code_signing(path: "${nomeAplicativo.igreja}.xcodeproj")
     gym(xcargs: "-allowProvisioningUpdates", export_method: "app-store")
 
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_to_testflight(skip_waiting_for_build_processing: false)
   end
 
   lane :release do
