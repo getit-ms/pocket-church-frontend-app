@@ -78,7 +78,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         $scope.datepicker.callback(new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()));
 
                                         leituraService.buscaDatasLidas(function(datas){
-                                            datas.forEach(function(dt){
+                                            angular.forEach(datas, function(dt){
                                                 $scope.datepicker.highlights.push({
                                                     date:dt,
                                                     color:'#bbb'
@@ -106,7 +106,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             leituraService.atualizaLeitura($scope.leitura.dia.id, $scope.leitura.lido);
                             var idx = -1;
 
-                            $scope.datepicker.highlights.forEach(function(h, i){
+                            angular.forEach($scope.datepicker.highlights, function(h, i){
                                 if (h.date.getTime() === $scope.leitura.dia.data.getTime()){
                                     idx = i;
                                 }
@@ -115,7 +115,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             if ($scope.leitura.lido && idx < 0){
                                 $scope.datepicker.highlights.push({
                                     date:$scope.leitura.dia.data,
-                                    color:'#bbb'
+                                    color:'#333'
                                 });
                             }else if (!$scope.leitura.lido && idx >= 0){
                                 $scope.datepicker.highlights.splice(idx, 1);

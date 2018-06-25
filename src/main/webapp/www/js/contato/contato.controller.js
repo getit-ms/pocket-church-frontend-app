@@ -26,9 +26,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                     $scope.searcher = function(page, callback){
                         contatoService.busca(angular.extend({pagina:page}, $scope.filtro), function(contatos) {
                           if (contatos.resultados) {
-                            contatos.resultados.forEach(function(contato){
+                            angular.forEach(contatos.resultados, function(contato){
                               contato.letra = letra(contato);
-                            })
+                            });
                           }
 
                           callback(contatos);
@@ -126,7 +126,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                   return c.diaAniversario != hoje;
                 });
 
-                $scope.futuros.forEach(function(contato){
+                angular.forEach($scope.futuros, function(contato){
                   contato.diaAniversarioFormatado = aniversario(contato);
                 });
 

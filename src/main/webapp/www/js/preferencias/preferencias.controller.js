@@ -31,7 +31,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     $scope.ministeriosSelecionados = [];
                                     $scope.todosMinisterios = false;
                                 }else{
-                                    $scope.ministerios.forEach(function(min){
+                                    angular.forEach($scope.ministerios, function(min){
                                         $scope.ministeriosSelecionados[min.id] = true;
                                     });
                                     $scope.todosMinisterios = true;

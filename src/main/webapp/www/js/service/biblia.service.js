@@ -7,7 +7,7 @@ calvinApp.
 
         this.sincroniza = function(){
             var deferred = $q.defer();
-            
+
             var api = this.api;
             var busca = function(pagina, ultimaAtualizacao){
                 var filtro = {
@@ -21,7 +21,7 @@ calvinApp.
 
                 api().customGET('', filtro).then(function(livros){
                     if (livros.resultados){
-                        livros.resultados.forEach(bibliaDAO.mergeLivroBiblia);
+                        angular.forEach(livros.resultados, bibliaDAO.mergeLivroBiblia);
                         sincronizacaoBiblia.porcentagem = Math.ceil(100 * livros.pagina / livros.totalPaginas);
                     }
 
@@ -35,14 +35,14 @@ calvinApp.
                 }, function(){
                     sincronizacaoBiblia.executando = false;
                     deferred.reject();
-                    
+
                 });
             };
 
             var filtro = window.localStorage.getItem('filtro_incompleto_biblia');
 
             try{
-    
+
                 if (filtro){
                     var ofiltro = angular.fromJson(filtro);
                     busca(ofiltro.pagina, ofiltro.ultimaAtualizacao);
@@ -55,10 +55,10 @@ calvinApp.
                 console.log(e);
                 deferred.reject();
             }
-            
+
             return deferred.promise;
         };
-        
+
         this.incompleto = function(){
             return window.localStorage.getItem('filtro_incompleto_biblia');
         };

@@ -17,7 +17,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                                 var ns = [];
                                 if (notificacoes.resultados){
-                                    notificacoes.resultados.forEach(function(n){
+                                    angular.forEach(notificacoes.resultados, function(n){
                                         var diff = diferenca(new Date(), n.data);
                                         if (diff == 0){
                                             n.dataFormatada = $filter('translate')('notificacao.hoje');
@@ -69,11 +69,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 }
 
                                 if ($rootScope.menu && $rootScope.menu.submenus) {
-                                  $rootScope.menu.submenus.forEach(function(menu) {
+                                  angular.forEach($rootScope.menu.submenus, function(menu) {
                                     if (menu.funcionalidade == 'NOTIFICACOES') {
                                       menu.notificacoes = 0;
                                     } else if (menu.submenus) {
-                                      menu.submenus.forEach(function(sbm) {
+                                      angular.forEach(menu.submenus, function(sbm) {
                                         if (sbm.funcionalidade == 'NOTIFICACOES') {
                                           menu.notificacoes = Math.max(0, menu.notificacoes - sbm.notificacoes);
                                           sbm.notificacoes = 0;
@@ -131,7 +131,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 $window.open(message.links[0], '_system');
                               } else if (message.links.length > 1) {
                                 var opcoes = [];
-                                message.links.forEach(function(link) {
+                                angular.forEach(message.links, function(link) {
                                   opcoes.push({text:link});
                                 });
 
@@ -213,7 +213,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         $scope.atualizaExcluirTodos = function(){
                             $scope.excluir.clear();
                             if ($scope.excluir.todos){
-                                $scope.messages.forEach(function(m){
+                                angular.forEach($scope.messages, function(m){
                                     $scope.excluir.selecionados.push(m);
                                 });
                             }

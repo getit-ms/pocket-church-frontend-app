@@ -7,11 +7,11 @@ calvinApp.
 
         this.sincroniza = function(){
             var deferred = $q.defer();
-            
+
             var api = this.api;
-            
+
             var atualizaLeitura = this.atualizaLeitura;
-            
+
             var busca = function(pagina, ultimaAtualizacao){
                 var filtro = {
                     ultimaAtualizacao: ultimaAtualizacao,
@@ -24,7 +24,7 @@ calvinApp.
 
                 api().one('leitura').customGET('', filtro).then(function(leituras){
                     if (leituras.resultados){
-                        leituras.resultados.forEach(leituraDAO.mergeLeitura);
+                        angular.forEach(leituras.resultados, leituraDAO.mergeLeitura);
                         sincronizacaoLeitura.porcentagem = Math.ceil(100 * leituras.pagina / leituras.totalPaginas);
                     }
 
@@ -35,7 +35,7 @@ calvinApp.
                             leituras.forEach(function(leitura){
                                 atualizaLeitura(leitura.dia.id, leitura.lido);
                             });
-                            
+
                             sincronizacaoLeitura.executando = false;
                             window.localStorage.removeItem('filtro_incompleto_leitura');
                             deferred.resolve();
@@ -66,14 +66,14 @@ calvinApp.
                 console.log(e);
                 deferred.reject();
             }
-            
+
             return deferred.promise;
         };
-        
+
         this.incompleto = function(){
             return window.localStorage.getItem('filtro_incompleto_leitura');
         };
-        
+
         this.selecionaPlano = function(plano, success, error){
             this.api().one('leitura/' + plano).put().then(success, error);
         };
@@ -92,7 +92,7 @@ calvinApp.
 
         this.atualizaLeitura = function(id, lido){
             var api = this.api;
-            
+
             leituraDAO.atualizaLeitura(id, lido ? true : false, function(){
                 if (lido){
                     api().one('leitura/dia/' + id).put().then(function(){
@@ -109,15 +109,15 @@ calvinApp.
                 }
             });
         };
-        
+
         this.findPorcentagem = function(callback){
             leituraDAO.findPorcentagem().then(callback);
         };
-        
+
         this.buscaDatasLidas = function(callback){
             leituraDAO.findDatasLidas().then(callback);
         };
-        
+
         this.findPlanosDisponiveis = function(filtro, callback){
             this.api().customGET('', filtro).then(callback);
         };

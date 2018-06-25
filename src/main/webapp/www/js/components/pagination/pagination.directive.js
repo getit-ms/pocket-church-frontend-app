@@ -26,7 +26,7 @@ calvinApp.directive('calvinPagination', function(){
                     $scope.page++;
                     $scope.search($scope.page, function(data){
                         if (data && data.resultados) {
-                          data.resultados.forEach(function(d){
+                          angular.forEach(data.resultados, function(d){
                               $scope.ngModel.push(d);
                           });
                         }

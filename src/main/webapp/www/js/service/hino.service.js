@@ -7,7 +7,7 @@ calvinApp.
 
         this.sincroniza = function(){
             var deferred = $q.defer();
-            
+
             var api = this.api;
             var busca = function(pagina, ultimaAtualizacao){
                 var filtro = {
@@ -21,7 +21,7 @@ calvinApp.
 
                 api().customGET('', filtro).then(function(hinos){
                     if (hinos.resultados){
-                        hinos.resultados.forEach(hinoDAO.mergeHino);
+                        angular.forEach(hinos.resultados, hinoDAO.mergeHino);
                         sincronizacaoHino.porcentagem = Math.ceil(100 * hinos.pagina / hinos.totalPaginas);
                     }
 
@@ -53,10 +53,10 @@ calvinApp.
                 console.log(e);
                 deferred.reject();
             }
-            
+
             return deferred.promise;
         };
-        
+
         this.incompleto = function(){
             return window.localStorage.getItem('filtro_incompleto_hino');
         };

@@ -40,7 +40,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                   respostas: []
                 };
 
-                votacao.questoes.forEach(function(questao){
+                angular.forEach(votacao.questoes, function(questao){
                   var respQuestao = {
                     questao: questao,
                     selections: []
@@ -82,10 +82,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             $scope.parse = function(original){
               var parsed = angular.merge({votacao:original.votacao,respostas:[]});
 
-              original.respostas.forEach(function(respQuestao){
+              angular.forEach(original.respostas, function(respQuestao){
                 var respParsed = {questao:respQuestao.questao,opcoes:[]};
 
-                respQuestao.selections.forEach(function(selection){
+                angular.forEach(respQuestao.selections, function(selection){
                   respParsed.opcoes.push({opcao:selection.value});
                 });
 
@@ -120,7 +120,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                   $scope.clear = function() {
                     votacaoService.resultado($stateParams.id, function(resultado) {
 
-                      resultado.questoes.forEach(function(questao) {
+                      angular.forEach(resultado.questoes, function(questao) {
                         questao.data = questao.validos.map(function (opcao) {
                           return opcao.resultado;
                         });

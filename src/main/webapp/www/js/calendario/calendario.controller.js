@@ -68,7 +68,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 } else {
 
                   var opcoes = [];
-                  calendars.forEach(function(cal) {
+                  angular.forEach(calendars, function(cal) {
                     opcoes.push({text:cal.name});
                   });
 
@@ -116,7 +116,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
           $scope.append = function(novaPagina) {
             if (novaPagina.eventos) {
-              novaPagina.eventos.forEach(function(evento) {
+              angular.forEach(novaPagina.eventos, function(evento) {
                 var dia = $scope.eventos.dias[$scope.eventos.dias.length - 1];
 
                 if (dia &&

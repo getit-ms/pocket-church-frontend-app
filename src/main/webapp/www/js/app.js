@@ -168,7 +168,7 @@ var calvinApp = angular.module('calvinApp', [
     if (menu && menu.submenus) {
       var total = 0;
 
-      menu.submenus.forEach(function(mnu) {
+      angular.forEach(menu.submenus, function(mnu) {
         if (mnu.selecionado) {
           mnu.selecionado = undefined;
         }
@@ -176,7 +176,7 @@ var calvinApp = angular.module('calvinApp', [
         if (clearNotificacoes) {
           mnu.notificacoes = 0;
           if (mnu.submenus) {
-            mnu.submenus.forEach(function(sbm) {
+            angular.forEach(mnu.submenus, function(sbm) {
               sbm.notificacoes = 0;
             });
           }
@@ -341,25 +341,21 @@ var calvinApp = angular.module('calvinApp', [
   }
 }).service('configService', ['config', 'configDAO', '$window', '$q', function (defaultConfig, configDAO, $window, $q) {
 
-  this.load = function () {
-    var cfg = $window.localStorage.getItem('config');
+  this.config;
 
+  this.load = function () {
     var deferred = $q.defer();
 
-    if (!cfg) {
+    if (!this.config) {
       configDAO.get(function(config) {
-        var finalConfig = config || defaultConfig;
+        this.config = config || defaultConfig;
 
-        $window.localStorage.setItem('config', angular.toJson(finalConfig));
-
-        deferred.resolve(finalConfig);
+        deferred.resolve(this.config);
       });
     } else {
-      var config = angular.fromJson(cfg);
+      configDAO.set(this.config);
 
-      configDAO.set(config);
-
-      deferred.resolve(config);
+      deferred.resolve(this.config);
     }
 
     return deferred.promise;
@@ -372,7 +368,7 @@ var calvinApp = angular.module('calvinApp', [
 
       var merged = angular.merge(config, cfg);
 
-      $window.localStorage.setItem('config', angular.toJson(merged));
+      this.config = merged;
 
       configDAO.set(merged);
 
@@ -433,7 +429,7 @@ function configureHttpInterceptors($httpProvider) {
               });
 
               if (rejection.data.validations) {
-                rejection.data.validations.forEach(function (erro) {
+                angular.forEach(rejection.data.validations, function (erro) {
                   backendErrors.set(erro.field, erro.message, erro.args);
                 });
               }

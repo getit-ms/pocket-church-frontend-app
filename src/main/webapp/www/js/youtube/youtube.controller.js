@@ -11,7 +11,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             $scope.presentes = [];
                             $scope.passados = [];
                             youtubeService.busca(function(videos){
-                                videos.forEach(function(v){
+                                angular.forEach(videos, function(v){
                                     if (v.aoVivo){
                                         $scope.presentes.push(v);
                                     }else if (v.agendamento){

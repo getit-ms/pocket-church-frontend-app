@@ -126,7 +126,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                         function atualizaHorarios(value){
                             $scope.horariosDia = [];
-                            $scope.horarios.forEach(function(horario){
+                            angular.forEach($scope.horarios, function(horario){
                                 var date = new Date(horario.dataInicio);
                                 if (date.getDate() === $scope.datepicker.date.getDate() &&
                                         date.getMonth() === $scope.datepicker.date.getMonth() &&
@@ -160,7 +160,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     }
 
                                     $scope.horarios = horarios;
-                                    $scope.horarios.forEach(function(horario){
+                                    angular.forEach($scope.horarios, function(horario){
                                         $scope.datepicker.highlights.push({
                                             date:horario.dataInicio,
                                             color:'#bbb'
