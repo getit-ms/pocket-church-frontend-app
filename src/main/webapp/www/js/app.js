@@ -346,11 +346,13 @@ var calvinApp = angular.module('calvinApp', [
   this.load = function () {
     var deferred = $q.defer();
 
+    var self = this;
+
     if (!this.config) {
       configDAO.get(function(config) {
-        this.config = config || defaultConfig;
+        self.config = config || defaultConfig;
 
-        deferred.resolve(this.config);
+        deferred.resolve(self.config);
       });
     } else {
       configDAO.set(this.config);
@@ -364,15 +366,15 @@ var calvinApp = angular.module('calvinApp', [
   this.save = function (cfg) {
     var deferred = $q.defer();
 
+    var self = this;
+
     this.load().then(function(config){
 
-      var merged = angular.merge(config, cfg);
+      self.config = angular.merge(config, cfg);
 
-      this.config = merged;
+      configDAO.set(self.config);
 
-      configDAO.set(merged);
-
-      deferred.resolve(merged);
+      deferred.resolve(self.config);
     });
 
     return deferred.promise;
