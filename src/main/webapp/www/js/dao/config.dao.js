@@ -22,11 +22,10 @@ calvinApp.service('configDAO', ['database', '$q', function(database, $q){
   this.set = function(config){
     try {
       database.db.transaction(function(tx) {
-        tx.executeSql('delete from config');
-
-        tx.executeSql('insert into config(value) values(?)',
-          [angular.toJson(config)]);
-
+        tx.executeSql('delete from config', [], function(tx, rs) {
+          tx.executeSql('insert into config(value) values(?)',
+            [angular.toJson(config)]);
+        });
       }, function(tx, error) {
         console.log(error);
       });

@@ -341,23 +341,21 @@ var calvinApp = angular.module('calvinApp', [
   }
 }).service('configService', ['config', 'configDAO', '$window', '$q', function (defaultConfig, configDAO, $window, $q) {
 
-  this.config;
-
   this.load = function () {
     var deferred = $q.defer();
 
     var self = this;
 
-    if (!this.config) {
+    if (!self.config) {
       configDAO.get(function(config) {
         self.config = config || defaultConfig;
 
         deferred.resolve(self.config);
       });
     } else {
-      configDAO.set(this.config);
+      configDAO.set(self.config);
 
-      deferred.resolve(this.config);
+      deferred.resolve(self.config);
     }
 
     return deferred.promise;
