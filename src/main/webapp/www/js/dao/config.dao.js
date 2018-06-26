@@ -1,5 +1,15 @@
 calvinApp.service('configDAO', ['database', '$q', function(database, $q){
   this.get  = function(callback){
+    doGet(callback);
+  };
+
+  function doGet(callback) {
+    if (!database.db) {
+      setTimeout(function(){
+        doGet(callback);
+      }, 300);
+    }
+
     try {
       database.db.transaction(function(tx) {
         tx.executeSql('SELECT value FROM config', [], function(tx, rs) {
@@ -17,9 +27,19 @@ calvinApp.service('configDAO', ['database', '$q', function(database, $q){
 
       callback(undefined);
     }
-  };
+  }
 
   this.set = function(config){
+    return doSet(config);
+  };
+
+  function doSet(config) {
+    if (!database.db) {
+      setTimeout(function() {
+        doSet(config);
+      }, 300);
+    }
+
     try {
       database.db.transaction(function(tx) {
         tx.executeSql('delete from config', [], function(tx, rs) {
@@ -32,6 +52,6 @@ calvinApp.service('configDAO', ['database', '$q', function(database, $q){
     } catch (ex) {
       console.log(ex);
     }
-  };
+  }
 
 }]);
