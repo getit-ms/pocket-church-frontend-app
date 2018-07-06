@@ -314,14 +314,33 @@ var calvinApp = angular.module('calvinApp', [
   });
 
 }).factory('$exceptionHandler', ['chamadoService', '$rootScope', function(chamadoService, $rootScope) {
+
+  var lastErrors = [];
+
   return function (exception, cause) {
+
     try {
-      chamadoService.cadastra({
-        tipo: 'ERRO',
-        descricao: 'Chamado automático de erro de interface: ' + exception.message + '\n' +exception.stack,
-        nomeSolicitante: 'Suporte GET IT - Chamado Automático',
-        emailSolicitante: 'suporte@getitmobilesolutions.com'
-      }, function(){});
+      if (lastErrors.indexOf(exception.message) < 0) {
+        lastErrors.push(exception.message);
+
+        while (lastErrors.length > 5) {
+          lastErrors.splice(0, 1);
+        }
+
+        var device = ionic.Platform.device();
+
+        chamadoService.cadastra({
+          tipo: 'ERRO',
+          descricao: 'Chamado automático de erro de interface: \n' +
+          (device ? 'Dispositivo: ' + device.manufacturer + ' ' + device.model + ' ' + device.version + '\n' : '' ) +
+          ($rootScope.usuario ? 'Usuário: ' + $rootScope.usuario.nome + ' (' + $rootScope.usuario.email + ')\n' : '') +
+          'Mensagem: ' + exception.message + '\n' +
+          (cause ? 'Causa: ' + cause + '\n' : '') +
+          'Stacktrace: ' + exception.stack,
+          nomeSolicitante: 'Suporte GET IT - Chamado Automático',
+          emailSolicitante: 'suporte@getitmobilesolutions.com'
+        }, function(){});
+      }
     } catch (ex) {
       console.error(ex);
     }
@@ -334,7 +353,7 @@ var calvinApp = angular.module('calvinApp', [
 
     $ionicLoading.show({
       template:'<ion-spinner class="spinner-light"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando')
-                + '<div ng-if="dadosLoading.porcentagem">{{dadosLoading.porcentagem | number:2}}%</div>',
+      + '<div ng-if="dadosLoading.porcentagem">{{dadosLoading.porcentagem | number:2}}%</div>',
       animation: 'fade-in',
       scope: $rootScope
     });
