@@ -1,24 +1,20 @@
 #!/usr/bin/env node
 
 // Copy native resources
-var rootdir = process.argv[2] + '/';
+var rootdir = process.argv[2];
 var exec = require('child_process').exec;
 
 // Native resources to copy
 var resources = [
     {
-      from: 'resources/native/android/*',
-      to: 'platforms/android/res/'
-    },
-    {
-      from: 'resources/splash.png',
-      to: 'platforms/ios/${nomeAplicativo.igreja}/Images.xcassets/LaunchStoryboard.imageset/Default@2x~universal~anyany.png'
+      from: 'resources/native/coios/icon.png',
+      to: 'platforms/ios/${nomeAplicativo.igreja}/Images.xcassets/AppIcon.appiconset/icon-1024.png'
     }
 ];
 
 function copyAndroidResources() {
     resources.forEach(function(resource){
-        exec('cp -Rf ' + rootdir + resource.from + ' ' + rootdir + resource.to);
+        exec('cp -Rf ' + resource.from + ' ' + resource.to);
     });
 
     process.stdout.write('Copied native resources');

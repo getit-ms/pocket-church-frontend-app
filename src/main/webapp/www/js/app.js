@@ -313,7 +313,7 @@ var calvinApp = angular.module('calvinApp', [
     $rootScope.initApp();
   });
 
-}).factory('$exceptionHandler', ['chamadoService', '$rootScope', function(chamadoService, $rootScope) {
+}).factory('$exceptionHandler', ['$injector', function($injector) {
 
   var lastErrors = [];
 
@@ -327,19 +327,25 @@ var calvinApp = angular.module('calvinApp', [
           lastErrors.splice(0, 1);
         }
 
-        var device = ionic.Platform.device();
+        ionic.Platform.ready(function() {
+          try {
+            var device = ionic.Platform.device();
+            var usuario = $injector.get('$rootScope').usuario;
 
-        chamadoService.cadastra({
-          tipo: 'ERRO',
-          descricao: 'Chamado automático de erro de interface: \n' +
-          (device ? 'Dispositivo: ' + device.manufacturer + ' ' + device.model + ' ' + device.version + '\n' : '' ) +
-          ($rootScope.usuario ? 'Usuário: ' + $rootScope.usuario.nome + ' (' + $rootScope.usuario.email + ')\n' : '') +
-          'Mensagem: ' + exception.message + '\n' +
-          (cause ? 'Causa: ' + cause + '\n' : '') +
-          'Stacktrace: ' + exception.stack,
-          nomeSolicitante: 'Suporte GET IT - Chamado Automático',
-          emailSolicitante: 'suporte@getitmobilesolutions.com'
-        }, function(){});
+            $injector.get('chamadoService').cadastra({
+              tipo: 'ERRO',
+              descricao: 'Chamado automático de erro de interface: \n' +
+              (device ? 'Dispositivo: ' + device.manufacturer + ' ' + device.model + ' ' + device.version + '\n' : '' ) +
+              'Mensagem: ' + exception.message + '\n' +
+              (cause ? 'Causa: ' + cause + '\n' : '') +
+              'Stacktrace: ' + exception.stack,
+              nomeSolicitante: 'Suporte GET IT - Chamado Automático',
+              emailSolicitante: 'suporte@getitmobilesolutions.com'
+            }, function(){});
+          } catch (ex) {
+            console.error(ex);
+          }
+        })
       }
     } catch (ex) {
       console.error(ex);

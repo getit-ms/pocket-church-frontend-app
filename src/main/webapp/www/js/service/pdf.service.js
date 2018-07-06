@@ -157,14 +157,18 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
       } else {
         var base64 = url.replace(/data:image\/[a-z]+;base64,/, '');
 
-        $cordovaFile.writeFile(cordova.file.dataDirectory, path, base64toBlob(base64), true).then(
-          function(success){
-            successCallback(parseFilename(cordova.file.dataDirectory + path, scale));
-          },
-          function(error){
-            errorCallback(error)
-          }
-        )
+        try {
+          $cordovaFile.writeFile(cordova.file.dataDirectory, path, base64toBlob(base64), true).then(
+            function(success){
+              successCallback(parseFilename(cordova.file.dataDirectory + path, scale));
+            },
+            function(error){
+              errorCallback(error)
+            }
+          )
+        } catch (ex) {
+          errorCallback(ex);
+        }
       }
 
     }, function(err) {

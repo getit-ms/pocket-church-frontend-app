@@ -18,6 +18,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                 var ns = [];
                                 if (notificacoes.resultados){
                                     angular.forEach(notificacoes.resultados, function(n){
+
                                         var diff = diferenca(new Date(), n.data);
                                         if (diff == 0){
                                             n.dataFormatada = $filter('translate')('notificacao.hoje');
@@ -96,8 +97,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             return day(d1) - day(d2);
                         }
 
-                        function day(d){
+                        function day(d) {
                           if (d) {
+                            if (!(d instanceof Date)) d = new Date(d);
+
                             return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate();
                           }
 

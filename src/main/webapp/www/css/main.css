@@ -405,18 +405,13 @@ h2.title {
   background-color: #BBBBBB !important;
 }
 
-.onezone-datepicker-day {
-  background: #b3b3b3 !important;
-  color: #fff !important;
-  border-color: #b3b3b3 !important;
+.calvin .onezone-datepicker-day {
+  background: #b3b3b3;
+  color: #fff;
+  border-color: #b3b3b3;
 }
 
-.onezone-datepicker-day.onezone-datepicker-disable-day {
-  background: #fff !important;
-  color: #000 !important;
-  border: 1px solid #000 !important;
-}
-
+.calvin .onezone-datepicker-day.onezone-datepicker-disable-day,
 .onezone-datepicker-day.onezone-datepicker-different-month {
   background: #fff !important;
   color: #b3b3b3 !important;

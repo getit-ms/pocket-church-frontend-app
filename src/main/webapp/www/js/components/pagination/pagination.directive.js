@@ -6,7 +6,7 @@ calvinApp.directive('calvinPagination', function(){
             ngModel: '=',
             cache: '@',
             searcher: '=',
-            notFoundMessage: '='
+            notFoundMessage: '=?'
         },
         templateUrl: 'js/components/pagination/pagination.html',
         controller: ['$scope', 'cacheService', function($scope, cacheService){
