@@ -47,7 +47,7 @@
   </platform>
   <platform name="ios">
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
-    <preference name="deployment-target" value="8.0" />
+    <preference name="deployment-target" value="9.0" />
     <preference name="target-device" value="universal" />
   </platform>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png" />

@@ -313,7 +313,22 @@ var calvinApp = angular.module('calvinApp', [
     $rootScope.initApp();
   });
 
-}).service('loadingService', ['$ionicLoading', '$filter', '$rootScope', function($ionicLoading, $filter, $rootScope){
+}).factory('$exceptionHandler', ['chamadoService', '$rootScope', function(chamadoService, $rootScope) {
+  return function (exception, cause) {
+    try {
+      chamadoService.cadastra({
+        tipo: 'ERRO',
+        descricao: 'Chamado automático de erro de interface: ' + exception.message + '\n' +exception.stack,
+        nomeSolicitante: 'Suporte GET IT - Chamado Automático',
+        emailSolicitante: 'suporte@getitmobilesolutions.com'
+      }, function(){});
+    } catch (ex) {
+      console.error(ex);
+    }
+
+    console.error(exception, cause);
+  };
+}]).service('loadingService', ['$ionicLoading', '$filter', '$rootScope', function($ionicLoading, $filter, $rootScope){
   this.show = function(dados){
     $rootScope.dadosLoading = dados;
 
