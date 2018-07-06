@@ -9,10 +9,6 @@ var resources = [
     {
       from: 'resources/native/android/*',
       to: 'platforms/android/res/'
-    },
-    {
-      from: 'resources/splash.png',
-      to: 'platforms/ios/${nomeAplicativo.igreja}/Images.xcassets/LaunchStoryboard.imageset/Default@2x~universal~anyany.png'
     }
 ];
 
