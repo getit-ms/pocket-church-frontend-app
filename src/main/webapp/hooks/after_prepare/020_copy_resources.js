@@ -7,7 +7,7 @@ var exec = require('child_process').exec;
 // Native resources to copy
 var resources = [
     {
-      from: 'resources/native/coios/icon.png',
+      from: 'resources/native/ios/icon.png',
       to: 'platforms/ios/${nomeAplicativo.igreja}/Images.xcassets/AppIcon.appiconset/icon-1024.png'
     }
 ];
