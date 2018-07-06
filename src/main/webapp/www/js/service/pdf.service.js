@@ -60,7 +60,7 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
     return deferred.promise;
   };
 
-  this.get = function (id, successCallback, errorCallback){
+  this.get = function (id, successCallback, errorCallback, progressCallback){
     if (!errorCallback) {
       errorCallback = function(){};
     }
@@ -74,9 +74,9 @@ calvinApp.service('pdfService', ['cacheService', 'arquivoService', 'pdfDAO', '$c
         errorCallback();
       }
 
-    }, function(){}, function(){
+    }, function(progress){}, function(){
       errorCallback();
-    });
+    }, progressCallback);
   };
 
   // O limite garante que o usuário não ficará com o celular lotado por estar visualizando as imagens em zoom

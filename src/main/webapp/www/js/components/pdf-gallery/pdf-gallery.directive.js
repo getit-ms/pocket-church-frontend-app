@@ -11,7 +11,8 @@ calvinApp.directive('pdfGallery', function(){
         controller: ['$scope', 'pdfService', '$ionicModal', 'loadingService', 'message', function($scope, pdfService, $ionicModal, loadingService, message){
 
           $scope.load = function() {
-            loadingService.show();
+            var dados = {porcentagem:0};
+            loadingService.show(dados);
 
             pdfService.get($scope.arquivo.id, function(pdf) {
               $scope.pdf = pdf;
@@ -38,6 +39,8 @@ calvinApp.directive('pdfGallery', function(){
               loadingService.hide();
 
               message({title:'global.title.500',template:'mensagens.MSG-500',args:{mensagem:ex.message}});
+            }, function (progress) {
+              dados.porcentagem = (progress.loaded / progress.total) * 100;
             });
           };
 

@@ -32,7 +32,7 @@ calvinApp.service('arquivoService', ['Restangular', '$cordovaFileTransfer', '$co
           this.api().one('upload/base64').customPOST(arquivo).then(success, error);
         };
 
-        this.get = function(id, callback, tempCallback, errorCallback){
+        this.get = function(id, callback, tempCallback, errorCallback, progressCallback){
             if (!id || !callback) console.error("arquivoService.get: id and callback are required");
 
             var cache = load(id);
@@ -44,7 +44,7 @@ calvinApp.service('arquivoService', ['Restangular', '$cordovaFileTransfer', '$co
                 if (tempCallback) {
                     tempCallback({loading:true, file:'img/loading.gif'});
                 }
-                download(id, callback, tempCallback, errorCallback);
+                download(id, callback, tempCallback, errorCallback, progressCallback);
             }
         };
 
@@ -110,7 +110,7 @@ calvinApp.service('arquivoService', ['Restangular', '$cordovaFileTransfer', '$co
           }
         }
 
-        function download(id, callback, tempCallback, errorCallback){
+        function download(id, callback, tempCallback, errorCallback, progressCallback){
             var path = 'arquivos/' + id + '.bin';
             var temp = 'tmp/' + new Date().getTime() + '.' + id + '.bin';
             var url = config.server + '/rest/arquivo/download/' + id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
@@ -129,7 +129,7 @@ calvinApp.service('arquivoService', ['Restangular', '$cordovaFileTransfer', '$co
                         errorCallback({error:true, file:'img/fail.png'});
                         remove(id);
                         console.error(error);
-                    });
+                    }, progressCallback);
                 }else{
                     errorCallback({error:true, file:'img/fail.png'});
                     remove(id);
