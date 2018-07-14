@@ -136,10 +136,10 @@ calvinApp.directive('pdfViewer', function(){
             lockPadroes();
           };
 
-          $scope.clearTap = function() {
-            clearTimeout($scope.tap);
-            $scope.tap = undefined;
-          };
+            $scope.clearTap = function() {
+              clearTimeout($scope.tap);
+              $scope.tap = undefined;
+            };
 
           $scope.actionClick = function() {
 
