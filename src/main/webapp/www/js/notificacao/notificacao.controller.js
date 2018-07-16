@@ -169,7 +169,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                         loadingService.show();
 
                                         if ($scope.excluir.todos){
-                                            notificacaoService.clear(function(){
+                                            notificacaoService.clear($scope.excluir.selecionados, function(){
                                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
                                                 $scope.cancelarExclusao();
                                                 $scope.$broadcast('pagination.search');
@@ -204,21 +204,17 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             }
                         };
 
+                        $scope.toggleExcluirTodos = function() {
+                          $scope.excluir.todos = !$scope.excluir.todos;
+                          $scope.excluir.selecionados = [];
+                        };
+
                         $scope.toggleExcluir = function(message){
                             var idx = $scope.excluir.selecionados.indexOf(message);
                             if (idx >= 0){
                                 $scope.excluir.selecionados.splice(idx, 1);
                             }else{
                                 $scope.excluir.selecionados.push(message);
-                            }
-                        };
-
-                        $scope.atualizaExcluirTodos = function(){
-                            $scope.excluir.clear();
-                            if ($scope.excluir.todos){
-                                angular.forEach($scope.messages, function(m){
-                                    $scope.excluir.selecionados.push(m);
-                                });
                             }
                         };
 

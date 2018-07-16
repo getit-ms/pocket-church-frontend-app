@@ -359,7 +359,7 @@ var calvinApp = angular.module('calvinApp', [
 
     $ionicLoading.show({
       template:'<ion-spinner class="spinner-light"></ion-spinner><br/><br/>' + $filter('translate')('global.carregando')
-      + '<div ng-if="dadosLoading.porcentagem">{{dadosLoading.porcentagem | number:2}}%</div>',
+      + '<div ng-if="dadosLoading.porcentagem">{{dadosLoading.porcentagem | number:0}}%</div>',
       animation: 'fade-in',
       scope: $rootScope
     });

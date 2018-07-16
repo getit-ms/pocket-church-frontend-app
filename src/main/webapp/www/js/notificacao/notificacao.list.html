@@ -9,14 +9,16 @@
     </ion-nav-buttons>
     <calvin-pagination ng-model="messages" searcher="searcher" cache="messages"
                        ng-class="{'has-footer': excluir}">
-        <ion-checkbox ng-if='excluir' ng-model="excluir.todos">
+        <ion-checkbox ng-if='excluir'
+                      ng-checked="excluir.todos && !excluir.selecionados.length"
+                      ng-click="toggleExcluirTodos()">
             <p translate>notificacao.excluir_todos</p>
         </ion-checkbox>
         <div class="item item-divider" ng-repeat-start="message in messages" ng-if="showData(message, messages)">
             {{message.dataFormatada}}
         </div>
         <ion-checkbox class="item-text-wrap" ng-if='excluir'
-                      ng-checked="excluir.todos || excluir.selecionados.indexOf(message) >= 0"
+                      ng-checked="(excluir.todos && excluir.selecionados.indexOf(message) < 0) || excluir.selecionados.indexOf(message) >= 0"
                       ng-click="toggleExcluir(message)">
             <h2>
                 {{message.title}}
