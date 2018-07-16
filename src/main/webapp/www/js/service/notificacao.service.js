@@ -12,7 +12,7 @@ calvinApp.service('notificacaoService', ['Restangular', function(Restangular){
         };
 
         this.clear = function(excecoes, success, error){
-            this.api().one('clear').customRemove('', {
+            this.api().one('clear').customDELETE('', {
               excecao: excecoes
             }).then(success, error);
         };
