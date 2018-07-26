@@ -81,7 +81,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                             angular.forEach(datas, function(dt){
                                                 $scope.datepicker.highlights.push({
                                                     date:dt,
-                                                    color:'#bbb'
+                                                    color:'#b3b3b3'
                                                 });
                                             });
                                         });
@@ -115,7 +115,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             if ($scope.leitura.lido && idx < 0){
                                 $scope.datepicker.highlights.push({
                                     date:$scope.leitura.dia.data,
-                                    color:'#333'
+                                    color:'#b3b3b3'
                                 });
                             }else if (!$scope.leitura.lido && idx >= 0){
                                 $scope.datepicker.highlights.splice(idx, 1);

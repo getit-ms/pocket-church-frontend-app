@@ -406,9 +406,9 @@ h2.title {
 }
 
 .calvin .onezone-datepicker-day {
-  background: #b3b3b3;
-  color: #fff;
-  border-color: #b3b3b3;
+  background: #fff;
+  color: #000;
+  border-color: #000;
 }
 
 .calvin .onezone-datepicker-day.onezone-datepicker-disable-day,

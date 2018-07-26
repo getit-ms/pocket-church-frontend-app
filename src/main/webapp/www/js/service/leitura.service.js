@@ -32,7 +32,7 @@ calvinApp.
                         busca(pagina + 1, ultimaAtualizacao);
                     }else{
                         leituraDAO.findNaoSincronizados().then(function(leituras){
-                            leituras.forEach(function(leitura){
+                            angular.forEach(leituras, function(leitura){
                                 atualizaLeitura(leitura.dia.id, leitura.lido);
                             });
 
