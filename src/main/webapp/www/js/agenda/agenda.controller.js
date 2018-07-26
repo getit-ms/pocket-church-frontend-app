@@ -163,7 +163,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     angular.forEach($scope.horarios, function(horario){
                                         $scope.datepicker.highlights.push({
                                             date:horario.dataInicio,
-                                            color:'#bbb'
+                                            color:'#bcbcbc'
                                         });
                                     });
 
