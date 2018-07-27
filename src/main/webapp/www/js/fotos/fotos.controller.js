@@ -22,7 +22,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/fotos/fotos.form.html',
-        controller: function($scope, foto, $state, $stateParams, fotoService, $ionicModal){
+        controller: function($scope, $state, $stateParams, fotoService, $ionicModal){
           $scope.searcher = function(page, callback){
             fotoService.buscafotos($stateParams.galeria, page, function(pagina) {
               $scope.totalFotos = pagina.totalResultados;
@@ -44,7 +44,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             } else {
               var fto = $scope.fotos[nr - 1];
 
-              callback({url: 'https://farm' + fto.farm + '.staticflickr.com/'+ fto.server + '/' + fto.id + '_' + fto.server + '.jpg'});
+              callback({url: 'https://farm' + fto.farm + '.staticflickr.com/'+ fto.server + '/' + fto.id + '_' + fto.secret + '_b.jpg'});
             }
           };
 
