@@ -409,6 +409,10 @@
         "progresso":"Progresso",
         "concluida":"Concluída",
         "trocar_plano_leitura":"Trocar Plano de Leitura"
+    },
+    "foto":{
+        "galerias":"Galerias",
+        "fotos":"Fotos"
     }
 }
 

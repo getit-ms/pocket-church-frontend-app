@@ -24,7 +24,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
         templateUrl: 'js/fotos/fotos.form.html',
         controller: function($scope, $state, $stateParams, fotoService, $ionicModal){
           $scope.searcher = function(page, callback){
-            fotoService.buscafotos($stateParams.galeria, page, function(pagina) {
+            fotoService.buscaFotos($stateParams.galeria, page, function(pagina) {
               $scope.totalFotos = pagina.totalResultados;
               callback(pagina);
             });

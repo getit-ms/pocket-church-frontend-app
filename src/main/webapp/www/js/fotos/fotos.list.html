@@ -6,18 +6,14 @@
       <div class="list card" ng-click="detalhar(galeria)" ng-repeat="galeria in galerias">
 
         <div class="item item-text-wrap">
-          <h2 class="title">
-            {{galeria.nome}}
-          </h2>
-          <span class="badge badge-positive pull-right" >{{galeria.quantidadeFotos}}</span>
+          <h2 class="title">{{galeria.nome}}</h2>
+          <span class="item-note" >{{galeria.quantidadeFotos}}</span>
         </div>
 
         <div class="item item-body">
-          <img class="full-image" src="https://farm{{galeria.fotoPrimaria.farm}}.staticflickr.com/{{galeria.fotoPrimaria.server}}/{{galeria.fotoPrimaria.id}}_{{galeria.fotoPrimaria.secret}}_z.jpg">
+          <img class="full-image" src="https://farm{{galeria.fotoPrimaria.farm}}.staticflickr.com/{{galeria.fotoPrimaria.server}}/{{galeria.fotoPrimaria.id}}_{{galeria.fotoPrimaria.secret}}_c.jpg">
 
-          <p>
-            {{galeria.descricao}}
-          </p>
+          <p>{{galeria.descricao}}</p>
         </div>
 
       </div>
