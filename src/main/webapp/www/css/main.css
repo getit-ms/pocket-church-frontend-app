@@ -45,6 +45,11 @@ pdf-viewer .swiper-pagination {
   display: none;
 }
 
+.card.foto {
+  padding: 0;
+}
+
+.gallery-page,
 .pdf-page {
   position: relative;
   background: white no-repeat center center;
