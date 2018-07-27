@@ -410,9 +410,10 @@
         "concluida":"Concluída",
         "trocar_plano_leitura":"Trocar Plano de Leitura"
     },
-    "foto":{
+    "fotos":{
         "galerias":"Galerias",
-        "fotos":"Fotos"
+        "fotos":"Fotos",
+        "quantidade":"{qtde} fotos"
     }
 }
 

@@ -7,7 +7,7 @@
            ng-repeat="galeria in galerias"
            ng-click="detalhar(galeria)" >
         <img src="https://farm{{galeria.fotoPrimaria.farm}}.staticflickr.com/{{galeria.fotoPrimaria.server}}/{{galeria.fotoPrimaria.id}}_{{galeria.fotoPrimaria.secret}}_s.jpg">
-        <h2>{galeria.nome}}</h2>
+        <h2>{{galeria.nome}}</h2>
         <p>{{galeria.descricao}}</p>
         <p>{{'fotos.quantidade' | translate:{qtde:galeria.quantidadeFotos} }}</p>
       </div>

@@ -6,8 +6,8 @@
     <div class="row row-wrap" >
       <div class="col col-50" ng-repeat="foto in fotos">
         <div class="card" ng-click="openModal(foto)" >
-          <div style="width: 100%" class="gallery-page"
-               style="background-image: url(https://farm{{foto.farm}}.staticflickr.com/{{foto.server}}/{{foto.id}}_{{foto.secret}}_q.jpg)" ></div>
+          <img style="width: 100%" class="gallery-page"
+               src="https://farm{{foto.farm}}.staticflickr.com/{{foto.server}}/{{foto.id}}_{{foto.secret}}_q.jpg" ></img>
         </div>
       </div>
     </div>
