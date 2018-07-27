@@ -3,19 +3,13 @@
         <span translate>fotos.galerias</span>
     </ion-nav-title>
     <calvin-pagination searcher='searcher' ng-model="galerias" cache='galerias'>
-      <div class="list card" ng-click="detalhar(galeria)" ng-repeat="galeria in galerias">
-
-        <div class="item item-text-wrap">
-          <h2 class="title">{{galeria.nome}}</h2>
-          <span class="item-note" >{{galeria.quantidadeFotos}}</span>
-        </div>
-
-        <div class="item item-body">
-          <img class="full-image" src="https://farm{{galeria.fotoPrimaria.farm}}.staticflickr.com/{{galeria.fotoPrimaria.server}}/{{galeria.fotoPrimaria.id}}_{{galeria.fotoPrimaria.secret}}_c.jpg">
-
-          <p>{{galeria.descricao}}</p>
-        </div>
-
+      <div class="item item-thumbnail-left item-text-wrap"
+           ng-repeat="galeria in galerias"
+           ng-click="detalhar(galeria)" >
+        <img src="https://farm{{galeria.fotoPrimaria.farm}}.staticflickr.com/{{galeria.fotoPrimaria.server}}/{{galeria.fotoPrimaria.id}}_{{galeria.fotoPrimaria.secret}}_s.jpg">
+        <h2>{galeria.nome}}</h2>
+        <p>{{galeria.descricao}}</p>
+        <p>{{'fotos.quantidade' | translate:{qtde:galeria.quantidadeFotos} }}</p>
       </div>
     </calvin-pagination>
 </ion-view>

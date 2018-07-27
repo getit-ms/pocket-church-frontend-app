@@ -4,11 +4,11 @@ calvinApp.service('fotoService', ['Restangular', function(Restangular){
         };
 
         this.buscaGalerias = function(pagina, callback){
-            return this.api().all('galeria').get('', {pagina:pagina}).then(callback);
+            return this.api().one('galeria').get('', {pagina:pagina}).then(callback);
         };
 
         this.buscaFotos = function(galeria, pagina, callback){
-            return this.api().all('galeria').get('/' + galeria, {pagina:pagina}).then(callback);
+            return this.api().one('galeria/' + galeria).get('', {pagina:pagina}).then(callback);
         };
 
 }]);

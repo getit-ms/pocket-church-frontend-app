@@ -3,7 +3,7 @@
         <span translate>noticia.noticia</span>
     </ion-nav-title>
     <ion-content class='noticia has-header'>
-        <div class="item">
+        <div class="item item-text-wrap">
           <h2 class="title">{{noticia.titulo}}</h2>
           <span class="item-note">{{noticia.dataPublicacao | date:'dd MMMM yyyy HH:mm'}}</span>
           <p>{{'noticia.publicado_por' | translate:{autor: noticia.autor.nome} }}</p>
