@@ -1,0 +1,25 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>fotos.galerias</span>
+    </ion-nav-title>
+    <calvin-pagination searcher='searcher' ng-model="galerias" cache='galerias'>
+      <div class="list card" ng-click="detalhar(galeria)" ng-repeat="galeria in galerias">
+
+        <div class="item">
+          <h2 class="title">
+            {{galeria.titulo}}
+          </h2>
+          <span class="badge badge-positive pull-right" >{{galeria.quantidadeFotos}}</span>
+        </div>
+
+        <div class="item item-body">
+          <img class="full-image" src="{{galeria.fotoPrimaria}}">
+
+          <p>
+            {{galeria.descricao}}
+          </p>
+        </div>
+
+      </div>
+    </calvin-pagination>
+</ion-view>

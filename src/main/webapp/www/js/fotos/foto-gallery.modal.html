@@ -1,0 +1,20 @@
+<ion-modal-view class="gallery-modal transparent" >
+  <ion-header-bar class="bar bar-header transparent" ng-hide="barsHidden">
+    <div class="h1 title">{{titulo}}</div>
+    <a ng-click="closeModal()" href=""
+       class="button button-icon icon ion-close"
+       title="{{'global.fechar' | translate}}"></a>
+  </ion-header-bar>
+
+  <gallery-viewer status="status" total="totalFotos" supplier="fotoSupplier" ></gallery-viewer>
+
+  <ion-footer-bar class="bar bar-footer transparent" ng-hide="barsHidden">
+    <a ng-click="status.anterior()" href="" ng-disabled="!status.hasAnterior()"
+       class="button button-icon icon ion-arrow-left-a"
+       title="{{'global.anterior' | translate}}"></a>
+    <div class="h1 title">{{'global.paginacao' | translate:{atual:status.pagina, total:status.total} }}</div>
+    <a ng-click="status.proximo()" href="" ng-disabled="!status.hasProximo()"
+       class="button button-icon icon ion-arrow-right-a"
+       title="{{'global.proximo' | translate}}"></a>
+  </ion-footer-bar>
+</ion-modal-view>

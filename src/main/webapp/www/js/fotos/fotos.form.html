@@ -1,0 +1,16 @@
+<ion-view>
+  <ion-nav-title>
+    <span translate>fotos.fotos</span>
+  </ion-nav-title>
+  <calvin-pagination searcher='searcher' ng-model="fotos" >
+    <div class="row row-wrap" >
+      <div class="col col-50" ng-repeat="foto in fotos">
+        <div class="card" ng-click="openModal(foto)" >
+          <div style="width: 100%" class="gallery-page"
+               style="background-image: url({{foto}})" ></div>
+        </div>
+      </div>
+    </div>
+  </calvin-pagination>
+</ion-view>
+

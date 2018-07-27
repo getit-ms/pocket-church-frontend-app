@@ -6,6 +6,7 @@
   background: rgba(0,0,0,0.5) !important;
 }
 
+.gallery-modal,
 .pdf-modal,
 .video-modal {
   width: 100% !important;
@@ -44,12 +45,14 @@ pdf-viewer .swiper-pagination {
   display: none;
 }
 
+.gallery-page,
 .pdf-page {
   position: relative;
   background: white no-repeat center center;
   background-size: contain;
 }
 
+.gallery-page.loading:before,
 .pdf-page.loading:before {
   content: ' ';
   height: 70px;
