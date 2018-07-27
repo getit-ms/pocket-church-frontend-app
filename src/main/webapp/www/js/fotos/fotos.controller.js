@@ -42,7 +42,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 }
               });
             } else {
-              callback($scope.fotos[nr - 1]);
+              var fto = $scope.fotos[nr - 1];
+
+              callback({url: 'https://farm' + fto.farm + '.staticflickr.com/'+ fto.server + '/' + fto.id + '_' + fto.server + '.jpg'});
             }
           };
 

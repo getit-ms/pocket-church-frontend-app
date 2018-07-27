@@ -7,7 +7,7 @@
       <div class="col col-50" ng-repeat="foto in fotos">
         <div class="card" ng-click="openModal(foto)" >
           <div style="width: 100%" class="gallery-page"
-               style="background-image: url({{foto}})" ></div>
+               style="background-image: url(https://farm{{foto.farm}}.staticflickr.com/{{foto.server}}/{{foto.id}}_{{foto.server}}.jpg)" ></div>
         </div>
       </div>
     </div>
