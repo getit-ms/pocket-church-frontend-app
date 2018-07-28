@@ -23,24 +23,45 @@ calvinApp.config(['$stateProvider', function($stateProvider){
       'content@':{
         templateUrl: 'js/fotos/fotos.form.html',
         controller: function($scope, $state, $stateParams, fotoService, $ionicModal){
-          $scope.searcher = function(page, callback){
+          $scope.refresh = function(){
+            $scope.page = 0;
+            $scope.fotos = [];
+            $scope.hasMore = false;
+
+            $scope.more();
+          };
+
+          $scope.more = function(callback){
+            $scope.page++;
+
             fotoService.buscaFotos($stateParams.galeria, page, function(pagina) {
+              if (pagina && pagina.resultados) {
+                angular.forEach(pagina.resultados, function(d){
+                  $scope.fotos.push(d);
+                });
+              }
+
+              if (callback) {
+                callback();
+              }
+
+              $scope.$broadcast('scroll.infiniteScrollComplete');
+
               $scope.totalFotos = pagina.totalResultados;
-              callback(pagina);
+              $scope.hasMore = pagina.hasProxima;
+            }, function() {
+              $scope.$broadcast('scroll.infiniteScrollComplete');
             });
+
           };
 
           $scope.fotoSupplier = function(nr, callback) {
             if (nr > $scope.fotos.length) {
-              $scope.searcher(Math.ceil($scope.fotos.length / 30) + 1, function(pagina) {
-                angular.forEach(pagina.resultados, function(i) {
-                  $scope.fotos.push(i);
-                });
-
-                if (nr <= pagina.totalResultados) {
+              if (nr <= $scope.totalFotos) {
+                $scope.more(function() {
                   $scope.fotoSupplier(nr, callback);
-                }
-              });
+                });
+              }
             } else {
               var fto = $scope.fotos[nr - 1];
 
@@ -48,8 +69,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             }
           };
 
-          $scope.openModal = function (page) {
-            $scope.status = {pagina: page.pageIndex + 1,click:function() {
+          $scope.openModal = function (foto) {
+            $scope.status = {pagina: $scope.fotos.indexOf(foto) + 1,click:function() {
               $scope.barsHidden = !$scope.barsHidden;
             }};
             $scope.barsHidden = true;
@@ -82,9 +103,19 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             }
           };
 
-          $scope.$on('$ionicView.enter', function(){
-            $scope.$broadcast('pagination.search');
+          $scope.$on('pagination.search', function() {
+            $scope.refresh();
           });
+
+          $scope.$on('pagination.refresh', function() {
+            $scope.refresh();
+          });
+
+          $scope.$on('pagination.more', function() {
+            $scope.more();
+          });
+
+          $scope.refresh();
         }
       }
     }

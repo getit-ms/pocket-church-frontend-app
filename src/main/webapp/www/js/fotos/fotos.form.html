@@ -2,12 +2,27 @@
   <ion-nav-title>
     <span translate>fotos.fotos</span>
   </ion-nav-title>
-  <calvin-pagination searcher='searcher' ng-model="fotos" >
-    <div class="images" >
+  <ion-content class="has-header">
+    <ion-refresher
+      pulling-text="{{'global.puxe_para_atualizar' | translate}}"
+      on-refresh='refresh()'></ion-refresher>
+    <div ng-if="!fotos.length" class="row row-center">
+      <div class="col col-center text-center">
+        <span translate>global.nenhum_registro_encontrado</span>
+      </div>
+    </div>
+
+    <div class="images" data-masonry='{ "itemSelector": ".one-image", "columnWidth": 250 }'>
       <div class="one-image" ng-repeat="foto in fotos" ng-click="openModal(foto)">
         <img ng-src="https://farm{{foto.farm}}.staticflickr.com/{{foto.server}}/{{foto.id}}_{{foto.secret}}_n.jpg" />
       </div>
     </div>
-  </calvin-pagination>
+
+    <ion-infinite-scroll
+      ng-if="hasMore"
+      on-infinite="more()"
+      distance="5%">
+    </ion-infinite-scroll>
+  </ion-content>
 </ion-view>
 

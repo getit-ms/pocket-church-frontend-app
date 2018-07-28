@@ -51,44 +51,6 @@ pdf-viewer .swiper-pagination {
   display: none;
 }
 
-.images img {
-  width: 100%;
-}
-
-@media (min-width: 0px) {
-  .images {
-    column-count: 2;
-    -moz-column-count: 2;
-    -webkit-column-count: 2;
-  }
-}
-
-@media (min-width: 420px) {
-  .images {
-    column-count: 3;
-    -moz-column-count: 3;
-    -webkit-column-count: 3;
-  }
-}
-
-@media (min-width: 720px) {
-  .images {
-    column-count: 4;
-    -moz-column-count: 4;
-    -webkit-column-count: 4;
-  }
-}
-
-.images {
-  -webkit-column-gap:0;
-  -moz-column-gap:0;
-  column-gap:0;
-}
-
-.one-image {
-  margin-bottom: -5px;
-}
-
 .gallery-page,
 .pdf-page {
   position: relative;
