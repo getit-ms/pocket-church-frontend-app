@@ -34,7 +34,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
           $scope.more = function(callback){
             $scope.page++;
 
-            fotoService.buscaFotos($stateParams.galeria, page, function(pagina) {
+            fotoService.buscaFotos($stateParams.galeria, $scope.page, function(pagina) {
               if (pagina && pagina.resultados) {
                 angular.forEach(pagina.resultados, function(d){
                   $scope.fotos.push(d);
