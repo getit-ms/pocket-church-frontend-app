@@ -23,7 +23,8 @@ var calvinApp = angular.module('calvinApp', [
   'jett.ionic.filter.bar',
   'youtube-embed',
   'chart.js',
-  'angular-inview'
+  'angular-inview',
+  'wu.masonry'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
                  arquivoService, cacheService, $cordovaNetwork, acessoService, boletimService, $cordovaBadge, bibliaService,
                  database, hinoService, leituraService, $q, pdfService) {

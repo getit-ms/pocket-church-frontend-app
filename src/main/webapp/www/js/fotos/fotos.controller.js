@@ -23,8 +23,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
       'content@':{
         templateUrl: 'js/fotos/fotos.form.html',
         controller: function($scope, $state, $stateParams, fotoService, $ionicModal){
-          var masonry = new Masonry('.images', {itemSelector:'.one-image',columnWidth:'.one-image',isInitLayout:false});
-
           $scope.refresh = function(){
             $scope.page = 0;
             $scope.fotos = [];
@@ -51,10 +49,6 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
               $scope.totalFotos = pagina.totalResultados;
               $scope.hasMore = pagina.hasProxima;
-
-              setTimeout(function(){
-                masonry.layout();
-              }, 150);
             }, function() {
               $scope.$broadcast('scroll.infiniteScrollComplete');
             });
