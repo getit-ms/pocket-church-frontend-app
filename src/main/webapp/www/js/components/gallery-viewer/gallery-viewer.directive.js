@@ -39,7 +39,6 @@ calvinApp.directive('galleryViewer', function(){
         if ($scope.showSlide(dados)) {
           $scope.supplier(nr, function(d0){
             angular.extend(dados, d0);
-            $scope.$apply();
           });
         }
         return dados;
