@@ -1,5 +1,8 @@
 <ion-modal-view class="gallery-modal transparent" >
   <ion-header-bar class="bar bar-header transparent" ng-hide="barsHidden">
+    <a ng-click="compartilhar()" href=""
+       class="button button-icon icon ion-share"
+       title="{{'global.compartilhar' | translate}}"></a>
     <div class="h1 title">{{titulo}}</div>
     <a ng-click="closeModal()" href=""
        class="button button-icon icon ion-close"

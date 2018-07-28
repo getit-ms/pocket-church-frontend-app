@@ -2,7 +2,7 @@
   <ion-nav-title>
     <span translate>fotos.fotos</span>
   </ion-nav-title>
-  <ion-content class="has-header">
+  <ion-content class="has-header has-footer">
     <ion-refresher
       pulling-text="{{'global.puxe_para_atualizar' | translate}}"
       on-refresh='refresh()'></ion-refresher>
@@ -24,5 +24,9 @@
       distance="5%">
     </ion-infinite-scroll>
   </ion-content>
+
+  <ion-footer-bar class="bar-stable" align-title="center">
+    <p>{{'fotos.note_flickr' | translate }}</p>
+  </ion-footer-bar>
 </ion-view>
 

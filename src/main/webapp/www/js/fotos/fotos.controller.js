@@ -22,7 +22,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/fotos/fotos.form.html',
-        controller: function($scope, $state, $stateParams, fotoService, $ionicModal){
+        controller: function($scope, $state, $stateParams, fotoService, $ionicModal, shareService){
           $scope.refresh = function(){
             $scope.page = 0;
             $scope.fotos = [];
@@ -54,6 +54,14 @@ calvinApp.config(['$stateProvider', function($stateProvider){
               $scope.$broadcast('scroll.infiniteScrollComplete');
             });
 
+          };
+
+          $scope.compartilhar = function() {
+            var fto = $scope.fotos[$scope.status.pagina - 1];
+
+            shareService.share({
+              link: 'https://farm' + fto.farm + '.staticflickr.com/'+ fto.server + '/' + fto.id + '_' + fto.secret + '_b.jpg'
+            });
           };
 
           $scope.fotoSupplier = function(nr, callback) {

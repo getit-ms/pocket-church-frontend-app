@@ -411,9 +411,11 @@
         "trocar_plano_leitura":"Trocar Plano de Leitura"
     },
     "fotos":{
-        "galerias":"Galerias",
+        "galerias":"Galeria de Fotos",
         "fotos":"Fotos",
-        "quantidade":"{qtde} fotos"
+        "quantidade":"{qtde} fotos",
+        "data_atualizacao": "Atualizado em {data}",
+        "note_flickr": "Esse produto utiliza a API Flickr mas não é patrocionado nem certificado pela SmugMug, Inc."
     }
 }
 

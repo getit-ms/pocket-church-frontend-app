@@ -33,6 +33,10 @@ pdf-viewer .page-content {
   vertical-align: middle;
 }
 
+gallery-viewer .page-content {
+  object-fit: contain;
+}
+
 gallery-viewer .scroll-view,
 gallery-viewer .scroll,
 pdf-viewer .scroll-view,

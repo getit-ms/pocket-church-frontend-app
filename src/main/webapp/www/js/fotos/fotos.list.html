@@ -1,15 +1,21 @@
 <ion-view>
-    <ion-nav-title>
-        <span translate>fotos.galerias</span>
-    </ion-nav-title>
-    <calvin-pagination searcher='searcher' ng-model="galerias" cache='galerias'>
-      <div class="item item-thumbnail-left item-text-wrap"
-           ng-repeat="galeria in galerias"
-           ng-click="detalhar(galeria)" >
-        <img ng-src="https://farm{{galeria.fotoPrimaria.farm}}.staticflickr.com/{{galeria.fotoPrimaria.server}}/{{galeria.fotoPrimaria.id}}_{{galeria.fotoPrimaria.secret}}_s.jpg">
-        <h2>{{galeria.nome}}</h2>
-        <p>{{galeria.descricao}}</p>
-        <p>{{'fotos.quantidade' | translate:{qtde:galeria.quantidadeFotos} }}</p>
-      </div>
-    </calvin-pagination>
+  <ion-nav-title>
+    <span translate>fotos.galerias</span>
+  </ion-nav-title>
+
+  <calvin-pagination searcher='searcher' ng-model="galerias" cache='galerias'>
+    <div class="item item-thumbnail-left item-text-wrap"
+         ng-repeat="galeria in galerias"
+         ng-click="detalhar(galeria)" >
+      <img ng-src="https://farm{{galeria.fotoPrimaria.farm}}.staticflickr.com/{{galeria.fotoPrimaria.server}}/{{galeria.fotoPrimaria.id}}_{{galeria.fotoPrimaria.secret}}_s.jpg">
+      <h2>{{galeria.nome}}</h2>
+      <span class="item-note">{{'fotos.data_atualizacao' | translate:{data:(galeria.dataAtualizacao | date:'dd/MM/yyyy HH:mm')} }}</span>
+      <p>{{galeria.descricao}}</p>
+      <p>{{'fotos.quantidade' | translate:{qtde:galeria.quantidadeFotos} }}</p>
+    </div>
+  </calvin-pagination>
+
+  <ion-footer-bar class="bar-stable" align-title="center">
+    <p>{{'fotos.note_flickr' | translate }}</p>
+  </ion-footer-bar>
 </ion-view>
