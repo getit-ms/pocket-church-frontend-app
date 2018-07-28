@@ -5,7 +5,7 @@
     <ion-content class="usuario">
         <div class="card">
           <div class="item" ng-click="trocarFoto()">
-            <img class="full-image" src="{{localPath(usuario.foto)}}" ng-if="usuario.foto" />
+            <img class="full-image" ng-src="{{localPath(usuario.foto)}}" ng-if="usuario.foto" />
             <img class="full-image" src="img/avatar.png" ng-if="!usuario.foto" />
             <a class="item-note">
               <i class="fa fa-camera"></i>

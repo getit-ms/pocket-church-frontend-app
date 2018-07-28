@@ -9,7 +9,7 @@
           <p>{{'noticia.publicado_por' | translate:{autor: noticia.autor.nome} }}</p>
         </div>
         <div class="item item-body " >
-          <img class="full-image" ng-click="zoomIlustracao()" src="{{ilustracao(noticia)}}" ng-if="noticia.ilustracao">
+          <img class="full-image" ng-click="zoomIlustracao()" ng-src="{{ilustracao(noticia)}}" ng-if="noticia.ilustracao">
             <p class="html-div" ng-bind-html='noticia.texto'></p>
         </div>
     </ion-content>

@@ -1,5 +1,4 @@
-<ion-slides style="height:100%;width:100%"
-            ng-if="supplier && total" pager="false"
+<ion-slides style="height:100%;width:100%" pager="false"
             options="{loop:true}" slider="slider">
   <ion-slide-page ng-repeat="slide in slides">
     <ion-scroll scroll='false' zooming="true" direction="xy"
@@ -10,7 +9,7 @@
                 on-release="updateSlideStatus($index)">
       <div class="page-wrapper">
         <div class="page-content" on-swipe="clearTap()" ng-click="actionClick()">
-          <img style="width: 100%" src="{{slide.url}}" />
+          <img style="width: 100%" ng-src="{{slide.url}}" />
         </div>
       </div>
     </ion-scroll>

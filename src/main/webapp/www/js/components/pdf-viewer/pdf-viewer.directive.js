@@ -22,7 +22,7 @@ calvinApp.directive('pdfViewer', function(){
             $scope.$apply();
 
             loadingService.hide();
-          }, function() {
+          }, function(ex) {
             loadingService.hide();
 
             message({title:'global.title.500',template:'mensagens.MSG-500',args:{mensagem:ex.message}});
