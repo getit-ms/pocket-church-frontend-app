@@ -51,6 +51,28 @@ pdf-viewer .swiper-pagination {
   display: none;
 }
 
+@media (min-width: 0px) {
+  .images {
+    width: 50%;
+  }
+}
+
+@media (min-width: 420px) {
+  .images {
+    width: 33.33%
+  }
+}
+
+@media (min-width: 720px) {
+  .images {
+    width: 25%;
+  }
+}
+
+.one-image {
+  margin-bottom: -5px;
+}
+
 .gallery-page,
 .pdf-page {
   position: relative;
