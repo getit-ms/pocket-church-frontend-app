@@ -52,19 +52,19 @@ pdf-viewer .swiper-pagination {
 }
 
 @media (min-width: 0px) {
-  .images {
+  .images .one-image {
     width: 50%;
   }
 }
 
 @media (min-width: 420px) {
-  .images {
+  .images .one-image {
     width: 33.33%
   }
 }
 
 @media (min-width: 720px) {
-  .images {
+  .images .one-image {
     width: 25%;
   }
 }

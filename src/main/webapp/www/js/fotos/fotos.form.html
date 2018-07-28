@@ -12,10 +12,9 @@
       </div>
     </div>
 
-    <div class="images  js-masonry" data-masonry-options='{ "itemSelector": "img", "columnWidth": ".one-image" }'>
-      <div class="one-image" >
-        <img ng-src="https://farm{{foto.farm}}.staticflickr.com/{{foto.server}}/{{foto.id}}_{{foto.secret}}_n.jpg"
-             ng-repeat="foto in fotos" ng-click="openModal(foto)"/>
+    <div class="images" data-masonry='{ "itemSelector": "img", "columnWidth": ".one-image" }'>
+      <div class="one-image" ng-repeat="foto in fotos" ng-click="openModal(foto)">
+        <img ng-src="https://farm{{foto.farm}}.staticflickr.com/{{foto.server}}/{{foto.id}}_{{foto.secret}}_n.jpg" />
       </div>
     </div>
 
