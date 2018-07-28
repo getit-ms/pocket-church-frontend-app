@@ -53,7 +53,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
           };
 
           $scope.play = function(audio) {
-            configService.get().then(function(config) {
+            configService.load().then(function(config) {
               var url = config.server + '/rest/arquivo/download/' + audio.audio.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
               var capa = undefined;
 
