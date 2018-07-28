@@ -1,4 +1,4 @@
-calvinApp.service('agendaService', ['Restangular', '$filter', function(Restangular, $filter){
+calvinApp.service('audioService', ['Restangular', '$filter', function(Restangular, $filter){
         this.api = function(){
             return Restangular.one('audio');
         };
