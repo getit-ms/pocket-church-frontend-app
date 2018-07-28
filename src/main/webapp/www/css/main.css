@@ -69,6 +69,10 @@ pdf-viewer .swiper-pagination {
   }
 }
 
+.one-image {
+  margin-bottom: -5px;
+}
+
 .one-image img {
   width: 100%;
 }

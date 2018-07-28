@@ -13,7 +13,7 @@
     </div>
 
     <div class="images" masonry load-images="true" masonry-options="{itemSelector:'.one-image',columnWidth:'.one-image'}">
-      <div class="one-image" ng-repeat="foto in fotos" ng-click="openModal(foto)">
+      <div masonry-brick class="one-image" ng-repeat="foto in fotos" ng-click="openModal(foto)">
         <img ng-src="https://farm{{foto.farm}}.staticflickr.com/{{foto.server}}/{{foto.id}}_{{foto.secret}}_n.jpg" />
       </div>
     </div>
