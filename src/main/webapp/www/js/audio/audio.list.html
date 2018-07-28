@@ -1,0 +1,15 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>audios.audios</span>
+    </ion-nav-title>
+    <calvin-pagination searcher="searcher" ng-model="audios"
+                       cache="audios" not-found-message="usuario.pastor" >
+        <ion-list>
+            <ion-item class="item-text-wrap"
+                      ng-click="play(audio)"
+                      ng-repeat="audio in audios">
+                <h2>{{audio.titulo}}</h2>
+            </ion-item>
+        </ion-list>
+    </calvin-pagination>
+</ion-view>

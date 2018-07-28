@@ -1,0 +1,11 @@
+<ion-view>
+    <ion-nav-title>
+        <span translate>audio.audios</span>
+    </ion-nav-title>
+  <ion-content class="has-header">
+    <ion-item ui-sref="audio.categoria({categoria: cat.id})"
+              ng-repeat="cat in categorias" >
+      <h2>{{cat.nome}}</h2>
+    </ion-item>
+  </ion-content>
+</ion-view>
