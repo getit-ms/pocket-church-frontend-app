@@ -46,6 +46,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
               }
 
               $scope.$broadcast('scroll.infiniteScrollComplete');
+              $scope.$broadcast('masonry.reload');
 
               $scope.totalFotos = pagina.totalResultados;
               $scope.hasMore = pagina.hasProxima;
