@@ -20,27 +20,33 @@
   color: white;
 }
 
+gallery-viewer .page-wrapper,
 pdf-viewer .page-wrapper {
   display: table;
   height: 100%;
   width: 100%;
 }
 
+gallery-viewer .page-content,
 pdf-viewer .page-content {
   display: table-cell;
   vertical-align: middle;
 }
 
+gallery-viewer .scroll-view,
+gallery-viewer .scroll,
 pdf-viewer .scroll-view,
 pdf-viewer .scroll {
   height: 100% !important;
   width: 100% !important;
 }
 
+gallery-gallery .card,
 pdf-gallery .card {
   margin: 0;
 }
 
+gallery-viewer .swiper-pagination,
 pdf-viewer .swiper-pagination {
   display: none;
 }
