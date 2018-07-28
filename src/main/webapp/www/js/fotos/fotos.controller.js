@@ -60,7 +60,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             var fto = $scope.fotos[$scope.status.pagina - 1];
 
             shareService.share({
-              link: 'https://farm' + fto.farm + '.staticflickr.com/'+ fto.server + '/' + fto.id + '_' + fto.secret + '_b.jpg'
+              file: 'https://farm' + fto.farm + '.staticflickr.com/'+ fto.server + '/' + fto.id + '_' + fto.secret + '_b.jpg'
             });
           };
 

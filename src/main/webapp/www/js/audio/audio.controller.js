@@ -25,7 +25,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/audio/audio.list.html',
-        controller: function(audioService, $scope, $stateParams, playerService, configService, message, $ionicPopup, $filter, $ionicHistory, $state){
+        controller: function(audioService, $scope, $stateParams, playerService, configService, arquivoService, message, $ionicPopup, $filter, $ionicHistory, $state){
           $scope.searcher = function(page, callback){
             audioService.busca({categoria: $stateParams.categoria, pagina:page, total:10}, function(audios){
               callback(audios);
@@ -54,11 +54,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
           $scope.play = function(audio) {
             configService.load().then(function(config) {
-              var url = config.server + '/rest/arquivo/stream/' + audio.audio.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
-              var capa = undefined;
+              var url = config.server + '/rest/arquivo/stream/' + audio.audio.id +
+                '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
 
+              var capa = undefined;
               if (audio.capa) {
-                capa = config.server + '/rest/arquivo/download/' + audio.capa.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
+                capa = config.server + '/rest/arquivo/download/' + audio.capa.id +
+                  '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
               }
 
               playerService.start({

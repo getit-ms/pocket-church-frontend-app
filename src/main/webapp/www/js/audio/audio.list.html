@@ -5,8 +5,7 @@
   <calvin-pagination searcher="searcher" ng-model="audios"  >
     <ion-list>
       <ion-item class="item-thumbnail-left item-text-wrap"
-                ng-click="play(audio)"
-                ng-repeat="audio in audios">
+                ng-click="play(audio)" ng-repeat="audio in audios">
         <img ng-src="{{capa(audio)}}"
              title="{{'audio.clique_para_ouvir' | translate}}" />
 
