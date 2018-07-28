@@ -54,18 +54,18 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
           $scope.play = function(audio) {
             configService.load().then(function(config) {
-              var url = config.server + '/rest/arquivo/download/' + audio.audio.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
+              var url = config.server + '/rest/arquivo/stream/' + audio.audio.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
               var capa = undefined;
 
               if (audio.capa) {
                 capa = config.server + '/rest/arquivo/download/' + audio.capa.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
               }
 
-              playerService.playStream({
+              playerService.start({
                 url: url,
                 titulo: audio.nome,
                 artista: audio.autor,
-                imagem: capa
+                capa: capa
               });
             });
           };

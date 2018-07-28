@@ -1,165 +1,177 @@
-calvinApp.service('playerService', ['arquivoService', '$q', function(arquivoService, $q){
+calvinApp.service('playerService', ['arquivoService', '$q', '$filter', function(arquivoService, $q, $filter){
 
-  this.init = function() {
-    var deferred = $q.defer();
+  this.callback = function(event) {
+      const message = JSON.parse(action).message;
+      switch(message) {
+        case 'music-controls-next':
+          // Do something
+          break;
+        case 'music-controls-previous':
+          // Do something
+          break;
+        case 'music-controls-pause':
+          self.pause();
+          break;
+        case 'music-controls-play':
+          self.continue();
+          break;
+        case 'music-controls-destroy':
+          self.stop();
+          break;
 
-    window.audioplayer.configure( function(event) {
-      console.log('init', event);
+        // External controls (iOS only)
+        case 'music-controls-toggle-play-pause' :
+          // Do something
+          self.togglePlaying();
+          break;
+        case 'music-controls-seek-to':
+          self.seekTo(Number(JSON.parse(action).position));
+          break;
 
-      deferred.resolve({
-
-      });
-    }, function(err) {
-      deferred.reject(err);
-    });
-
-    return deferred.promise;
-  };
-
-  this.playStream = function(stream){
-    var deferred = $q.defer();
-
-    window.audioplayer.playstream(
-      function(event) {
-        console.log('playStream', event);
-
-        deferred.resolve({
-
-        });
-      },
-      function(err) {
-        deferred.reject(err);
-      },
-      // stream urls to play on android/ios
-      {
-        android: stream.url,
-        ios: stream.url
-      },
-      // metadata used for iOS lock screen, Android 'Now Playing' notification
-      {
-        "title": stream.titulo,
-        "artist": stream.artista,
-        "image": {
-          "url": stream.imagem
-        },
-        "name": stream.titulo,
-        "description": stream.descricao
-      },
-      // javascript-specific json represenation of audio to be played, which will be passed back to
-      // javascript via successCallback when a stream is launched from a local notification (eg, the
-      // alarm clock
-      stream
-    );
-
-    return deferred.promise;
-  };
-
-  this.playFile = function(file) {
-    var deferred = $q.defer();
-
-    window.audioplayer.playfile(
-      function(event) {
-        console.log('playFile', event);
-
-        deferred.resolve({
-
-        });
-      },
-      function(err) {
-        deferred.reject(err)
-      },
-      file.arquivo,
-      // metadata used for iOS lock screen, Android 'Now Playing' notification
-      {
-        "title": file.titulo,
-        "artist": file.artista,
-        "image": {
-          "url": file.imagem
-        }
+        // Headset events (Android only)
+        // All media button events are listed below
+        case 'music-controls-media-button' :
+          self.togglePlaying();
+          break;
+        default:
+          break;
       }
-    );
-
-    return deferred.promise;
   };
 
-  this.pause = function() {
+  this.start = function(media) {
     var deferred = $q.defer();
 
-    window.audioplayer.pause( function(event) {
-      console.log('pause', event);
+    var self = this;
 
-      deferred.resolve({
+    this.track = media;
+    this.loading = true;
+    this.playing = false;
 
+    this.media = new Media(media.url, function(event) {
+      console.log(event);
+
+      MusicControls.create({
+        track       : media.titulo,
+        artist      : media.artista,
+        cover       : media.capa,
+        isPlaying   : true,
+        dismissable : true,
+
+        hasPrev   : false,		// show previous button, optional, default: true
+        hasNext   : false,		// show next button, optional, default: true
+        hasClose  : true,		// show close button, optional, default: false
+
+        // iOS only, optional
+        duration : self.media.duration, // optional, default: 0
+        elapsed : self.media.position, // optional, default: 0
+        hasSkipForward : true, //optional, default: false. true value overrides hasNext.
+        hasSkipBackward : true, //optional, default: false. true value overrides hasPrev.
+        skipForwardInterval : 15, //optional. default: 0.
+        skipBackwardInterval : 15, //optional. default: 0.
+
+        // Android only, optional
+        // text displayed in the status bar when the notification (and the ticker) are updated
+        ticker	  : $filter('translate')('audio.ticker_tocando', {titulo: media.titulo})
+      }, function(event) {
+        console.log(event);
+
+        self.loading = false;
+        self.playing = true;
+
+        MusicControls.subscribe(self.callback);
+
+        MusicControls.listen();
+
+        self.configureStatusTimeout();
+
+        deferred.resolve({
+        });
+      }, function(err) {
+        self.track = undefined;
+        self.loading = false;
+
+        self.media.stop();
+
+        deferred.reject(err);
       });
+
     }, function(err) {
+      self.track = undefined;
+      self.loading = false;
+
       deferred.reject(err);
     });
 
     return deferred.promise;
+  };
+
+  this.continue = function () {
+    if (this.media) {
+      MusicControls.updateIsPlaying(true);
+      MusicControls.updateDismissable(false);
+      this.media.play();
+      this.playing = true;
+    }
+  };
+
+  this.togglePlaying = function() {
+    if (this.media) {
+      if (this.playing) {
+        this.pause();
+      } else {
+        this.continue();
+      }
+    }
+  };
+
+  this.pause = function () {
+    if (this.media) {
+      MusicControls.updateIsPlaying(false);
+      MusicControls.updateDismissable(true);
+      this.media.pause();
+      this.playing = false;
+    }
   };
 
   this.stop = function() {
-    var deferred = $q.defer();
-
-    window.audioplayer.stop( function(event) {
-      console.log('stop', event);
-
-      deferred.resolve({
+    if (this.media) {
+      MusicControls.destroy(function() {
+        console.log(event);
+      }, function(err) {
 
       });
-    }, function(err) {
-      deferred.reject(err);
-    });
 
-    return deferred.promise;
+      this.media.stop();
+
+      this.playing = false;
+    }
   };
 
-  this.seek = function(seconds) {
-    var deferred = $q.defer();
-
-    window.audioplayer.seek( function(event) {
-      console.log('seek', event);
-
-      deferred.resolve({
-
+  this.seekTo = function(sec) {
+    if (this.media) {
+      MusicControls.updateElapsed({
+        elapsed: sec
       });
-    }, function(err) {
-      deferred.reject(err);
-    }, seconds );
-
-    return deferred.promise;
+      this.media.seekTo(sec * 1000);
+    }
   };
 
-  this.seekTo = function(seconds) {
-    var deferred = $q.defer();
+  this.configureStatusTimeout = function() {
+    var self = this;
 
-    window.audioplayer.seekto( function(event) {
-      console.log('seekTo', event);
+    clearInterval(self.statusInterval);
 
-      deferred.resolve({
+    self.statusInterval = setInterval(function() {
 
+      self.media.getCurrentPosition(function(pos) {
+        MusicControls.updateElapsed({
+          elapsed: pos,
+          isPlaying: true
+        });
       });
-    }, function(err) {
-      deferred.reject(err);
-    }, seconds );
 
-    return deferred.promise;
-  };
 
-  this.state = function() {
-    var deferred = $q.defer();
-
-    window.audioplayer.getaudiostate( function(event) {
-      console.log('state', event);
-
-      deferred.resolve({
-
-      });
-    }, function(err) {
-      deferred.reject(err);
-    } );
-
-    return deferred.promise;
+    }, 1000);
   }
 
 }]);

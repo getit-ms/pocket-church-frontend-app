@@ -44,7 +44,8 @@
     "cordova-plugin-splashscreen@5.0.2",
     "ionic-plugin-keyboard@1.0.9",
     "cordova-plugin-inappbrowser@1.7.1",
-    "cordova-plugin-transport-security@0.1.2",
+    "cordova-plugin-media@5.0.2",
+    "cordova-plugin-music-controls@2.1.4",
     {
       "variables": {
         "SENDER_ID": "${android.sender.id}"
@@ -57,7 +58,7 @@
     "cordova-plugin-file-transfer@1.6.3",
     "cordova-plugin-badge@0.8.7",
     "de.appplant.cordova.plugin.local-notification@0.8.4",
-    "https://github.com/wnyc/cordova-plugin-playerhater.git",
+    "https://github.com/homerours/cordova-music-controls-plugin#2.1.4",
     "cordova-plugin-x-socialsharing@5.1.8",
     "cordova-sqlite-storage@2.0.4",
     {
