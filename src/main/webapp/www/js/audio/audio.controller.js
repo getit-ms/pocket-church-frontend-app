@@ -36,6 +36,22 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             $scope.$broadcast('pagination.search');
           });
 
+          $scope.capa = function(audio){
+            if (!audio.capa) return 'img/home.png';
+
+            if (!audio.capa.localPath){
+              audio.capa.localPath = '#';
+              arquivoService.get(audio.capa.id, function(file){
+                audio.capa.localPath = file.file;
+              }, function(file){
+                audio.capa.localPath = file.file;
+              }, function(file){
+                audio.capa.localPath = file.file;
+              });
+            }
+            return audio.capa.localPath;
+          };
+
           $scope.play = function(audio) {
             configService.get().then(function(config) {
               var url = config.server + '/rest/arquivo/download/' + audio.audio.id + '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
