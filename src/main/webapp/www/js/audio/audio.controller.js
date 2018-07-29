@@ -54,7 +54,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
           $scope.play = function(audio) {
             configService.load().then(function(config) {
-              var url = config.server + '/rest/arquivo/stream/' + audio.audio.id +
+              var url = config.server + '/rest/arquivo/stream/' + audio.audio.id + '/' + audio.audio.nome +
                 '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
 
               var capa = undefined;

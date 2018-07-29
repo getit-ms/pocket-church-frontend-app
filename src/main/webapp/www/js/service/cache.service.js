@@ -81,7 +81,7 @@ calvinApp.service('cacheService', ['$window', '$cordovaNetwork', 'message', '$st
                 var now = new Date().getTime();
                 for (i=0;i<$window.localStorage.length;i++){
                     var key = $window.localStorage.key(i);
-                    if (key.startsWith('cache.')){
+                    if (key.indexOf('cache.') === 0){
                         var cache = angular.fromJson($window.localStorage.getItem(key));
 
                         if (cache){

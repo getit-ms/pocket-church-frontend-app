@@ -57,7 +57,7 @@ calvinApp.service('arquivoService', ['Restangular', '$cordovaFileTransfer', '$co
                 while (i < $window.localStorage.length){
                     var key = $window.localStorage.key(i);
 
-                    if (key.startsWith('arquivo.')){
+                    if (key.indexOf('arquivo.') == 0){
                         var cache = $window.localStorage.getItem(key);
 
                         if (cache){
