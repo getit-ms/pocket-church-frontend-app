@@ -50,56 +50,59 @@ calvinApp.service('playerService', ['arquivoService', '$q', '$filter', function(
     this.media = new Media(media.url, function(event) {
       console.log(event);
 
-      MusicControls.create({
-        track       : media.titulo,
-        artist      : media.artista,
-        cover       : media.capa,
-        isPlaying   : true,
-        dismissable : true,
-
-        hasPrev   : false,		// show previous button, optional, default: true
-        hasNext   : false,		// show next button, optional, default: true
-        hasClose  : true,		// show close button, optional, default: false
-
-        // iOS only, optional
-        duration : self.media.duration, // optional, default: 0
-        elapsed : self.media.position, // optional, default: 0
-        hasSkipForward : true, //optional, default: false. true value overrides hasNext.
-        hasSkipBackward : true, //optional, default: false. true value overrides hasPrev.
-        skipForwardInterval : 15, //optional. default: 0.
-        skipBackwardInterval : 15, //optional. default: 0.
-
-        // Android only, optional
-        // text displayed in the status bar when the notification (and the ticker) are updated
-        ticker	  : $filter('translate')('audio.ticker_tocando', {titulo: media.titulo})
-      }, function(event) {
-        console.log(event);
-
-        self.loading = false;
-        self.playing = true;
-
-        MusicControls.subscribe(self.callback);
-
-        MusicControls.listen();
-
-        self.configureStatusTimeout();
-
-        deferred.resolve({
-        });
-      }, function(err) {
-        self.track = undefined;
-        self.loading = false;
-
-        self.media.stop();
-
-        deferred.reject(err);
-      });
-
     }, function(err) {
       self.track = undefined;
       self.loading = false;
 
       deferred.reject(err);
+    }, function (status) {
+      if (status = Media.MEDIA_RUNNING) {
+
+        MusicControls.create({
+          track       : media.titulo,
+          artist      : media.artista,
+          cover       : media.capa,
+          isPlaying   : true,
+          dismissable : true,
+
+          hasPrev   : false,		// show previous button, optional, default: true
+          hasNext   : false,		// show next button, optional, default: true
+          hasClose  : true,		// show close button, optional, default: false
+
+          // iOS only, optional
+          duration : self.media.duration, // optional, default: 0
+          elapsed : self.media.position, // optional, default: 0
+          hasSkipForward : true, //optional, default: false. true value overrides hasNext.
+          hasSkipBackward : true, //optional, default: false. true value overrides hasPrev.
+          skipForwardInterval : 15, //optional. default: 0.
+          skipBackwardInterval : 15, //optional. default: 0.
+
+          // Android only, optional
+          // text displayed in the status bar when the notification (and the ticker) are updated
+          ticker	  : $filter('translate')('audio.ticker_tocando', {titulo: media.titulo})
+        }, function(event) {
+          console.log(event);
+
+          self.loading = false;
+          self.playing = true;
+
+          MusicControls.subscribe(self.callback);
+
+          MusicControls.listen();
+
+          self.configureStatusTimeout();
+
+          deferred.resolve({
+          });
+        }, function(err) {
+          self.track = undefined;
+          self.loading = false;
+
+          self.media.stop();
+
+          deferred.reject(err);
+        });
+      }
     });
 
     return deferred.promise;
