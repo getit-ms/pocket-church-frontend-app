@@ -1,180 +1,190 @@
-calvinApp.service('playerService', ['arquivoService', '$q', '$filter', function(arquivoService, $q, $filter){
+calvinApp.service('playerService', ['arquivoService', '$q', '$filter', '$ionicPlatform', '$rootScope', '$ionicModal',
+  function(arquivoService, $q, $filter, $ionicPlatform, $rootScope, $ionicModal){
 
-  this.callback = function(event) {
-      const message = JSON.parse(action).message;
-      switch(message) {
-        case 'music-controls-next':
-          // Do something
+    var self = this;
+
+    this.callback = function(status) {
+      switch(status.type) {
+        case 10: // loading
+        case 25: // buffering
+          self.loading = true;
           break;
-        case 'music-controls-previous':
-          // Do something
+
+        case 35: // paused
+          self.playing = false;
+          self.paused = true;
           break;
-        case 'music-controls-pause':
-          self.pause();
+
+        case 30: // playing
+          self.paused = false;
+        case 40: // playback position
+          self.loading = false;
+          self.playing = true;
+          if (status.value && self.updatePosition) {
+            self.position = status.value.currentPosition;
+          }
           break;
-        case 'music-controls-play':
-          self.continue();
+
+        case 45: // seek
+          self.play();
           break;
-        case 'music-controls-destroy':
+
+        case 50: // completed
+        case 105: //playlist completed
           self.stop();
           break;
 
-        // External controls (iOS only)
-        case 'music-controls-toggle-play-pause' :
-          // Do something
-          self.togglePlaying();
-          break;
-        case 'music-controls-seek-to':
-          self.seekTo(Number(JSON.parse(action).position));
+        case 60: // stopped
+        case 120: // playlist cleared
+        case 200: // view disappear
+          self.loading = false;
+          self.playing = false;
+          self.paused = false;
+          self.hidePlaying();
           break;
 
-        // Headset events (Android only)
-        // All media button events are listed below
-        case 'music-controls-media-button' :
-          self.togglePlaying();
-          break;
-        default:
-          break;
       }
-  };
 
-  this.start = function(media) {
-    var deferred = $q.defer();
+      try {
+        $rootScope.$apply();
+      }catch(e){}
+    };
 
-    var self = this;
+    this.showPlaying = function() {
+      if (this.loading || this.playing || this.paused) {
+        var scope = $rootScope.$new();
 
-    this.track = media;
-    this.loading = true;
-    this.playing = false;
+        $ionicModal.fromTemplateUrl('js/audio/playing.modal.html', {
+          scope: scope,
+          animation: 'slide-in-up'
+        }).then(function(modal) {
+          $rootScope.playingModal = modal;
+          $rootScope.playingModal.show();
+        });
+      }
+    };
 
-    this.media = new Media(media.url, function(event) {
-      console.log(event);
+    this.hidePlaying = function() {
+      if ($rootScope.playingModal){
+        var modal = $rootScope.playingModal;
 
-    }, function(err) {
-      self.track = undefined;
+        $rootScope.playingModal = undefined;
+
+        modal.hide().then(function(){
+          modal.remove();
+        });
+      }
+    };
+
+    this.play = function(media) {
+      var deferred = $q.defer();
+
+      if (media) {
+
+        var self = this;
+
+        function doPlay() {
+          self.track = media;
+          self.loading = true;
+          self.playing = false;
+
+          window.plugins.AudioPlayer.AudioPlayer.setPlaylistItems(function(event) {
+            console.log(event);
+
+            deferred.resolve(event);
+          }, function(err) {
+            console.error(err);
+
+            self.loading = false;
+
+            deferred.reject(err);
+          }, [{
+            isStream: true,
+            trackId     : media.url,
+            assetUrl    : media.url,
+            title       : media.titulo,
+            artist      : media.artista,
+            album       : media.album,
+            albumArt    : media.capa
+          }], {startPaused:false});
+        }
+
+        this.stop().then(doPlay, doPlay);
+
+      } else {
+        window.plugins.AudioPlayer.AudioPlayer.play();
+
+        deferred.resolve();
+      }
+
+      return deferred.promise;
+    };
+
+    this.togglePlaying = function() {
+      if (this.paused) {
+        this.play();
+      } else {
+        this.pause();
+      }
+    };
+
+    this.pause = function () {
+      window.plugins.AudioPlayer.AudioPlayer.pause();
+    };
+
+    this.stop = function() {
+      var deferred = $q.defer();
+
+      this.pause();
       self.loading = false;
-
-      deferred.reject(err);
-    }, function (status) {
-      if (status = Media.MEDIA_RUNNING) {
-
-        MusicControls.create({
-          track       : media.titulo,
-          artist      : media.artista,
-          cover       : media.capa,
-          isPlaying   : true,
-          dismissable : true,
-
-          hasPrev   : false,		// show previous button, optional, default: true
-          hasNext   : false,		// show next button, optional, default: true
-          hasClose  : true,		// show close button, optional, default: false
-
-          // iOS only, optional
-          duration : self.media.duration, // optional, default: 0
-          elapsed : self.media.position, // optional, default: 0
-          hasSkipForward : true, //optional, default: false. true value overrides hasNext.
-          hasSkipBackward : true, //optional, default: false. true value overrides hasPrev.
-          skipForwardInterval : 15, //optional. default: 0.
-          skipBackwardInterval : 15, //optional. default: 0.
-
-          // Android only, optional
-          // text displayed in the status bar when the notification (and the ticker) are updated
-          ticker	  : $filter('translate')('audio.ticker_tocando', {titulo: media.titulo})
-        }, function(event) {
-          console.log(event);
-
-          self.loading = false;
-          self.playing = true;
-
-          MusicControls.subscribe(self.callback);
-
-          MusicControls.listen();
-
-          self.configureStatusTimeout();
-
-          deferred.resolve({
-          });
-        }, function(err) {
-          self.track = undefined;
-          self.loading = false;
-
-          self.media.stop();
-
+      self.playing = false;
+      self.paused = false;
+      self.hidePlaying();
+      window.plugins.AudioPlayer.AudioPlayer
+        .clearAllItems(function(){
+          deferred.resolve();
+        }, function(err){
           deferred.reject(err);
         });
-      }
+
+      return deferred.promise;
+    };
+
+    this.updatePosition = true;
+
+    this.seekTo = function(sec, successCallback, errorCallback) {
+      var self = this;
+
+      self.updatePosition = false;
+      clearTimeout(self.seeking);
+
+      self.seeking = setTimeout(function() {
+        window.plugins.AudioPlayer.AudioPlayer.seekTo(function(){
+          self.updatePosition = true;
+          if (successCallback) {
+            successCallback();
+          }
+        }, function(){
+          self.updatePosition = true;
+          if (errorCallback) {
+            errorCallback();
+          }
+        }, sec)
+      }, 350);
+    };
+
+    this.init = function() {
+      $rootScope.playerStatus = this;
+    };
+
+    $ionicPlatform.on("deviceready", function() {
+      window.plugins.AudioPlayer.AudioPlayer.on('status', self.callback);
+
+      window.plugins.AudioPlayer.AudioPlayer.initialize();
+
+      window.plugins.AudioPlayer.AudioPlayer.setOptions(function(){}, function(){}, {
+        resetStreamOnPause: false
+      });
     });
 
-    return deferred.promise;
-  };
-
-  this.continue = function () {
-    if (this.media) {
-      MusicControls.updateIsPlaying(true);
-      MusicControls.updateDismissable(false);
-      this.media.play();
-      this.playing = true;
-    }
-  };
-
-  this.togglePlaying = function() {
-    if (this.media) {
-      if (this.playing) {
-        this.pause();
-      } else {
-        this.continue();
-      }
-    }
-  };
-
-  this.pause = function () {
-    if (this.media) {
-      MusicControls.updateIsPlaying(false);
-      MusicControls.updateDismissable(true);
-      this.media.pause();
-      this.playing = false;
-    }
-  };
-
-  this.stop = function() {
-    if (this.media) {
-      MusicControls.destroy(function() {
-        console.log(event);
-      }, function(err) {
-
-      });
-
-      this.media.stop();
-
-      this.playing = false;
-    }
-  };
-
-  this.seekTo = function(sec) {
-    if (this.media) {
-      MusicControls.updateElapsed({
-        elapsed: sec
-      });
-      this.media.seekTo(sec * 1000);
-    }
-  };
-
-  this.configureStatusTimeout = function() {
-    var self = this;
-
-    clearInterval(self.statusInterval);
-
-    self.statusInterval = setInterval(function() {
-
-      self.media.getCurrentPosition(function(pos) {
-        MusicControls.updateElapsed({
-          elapsed: pos,
-          isPlaying: true
-        });
-      });
-
-
-    }, 1000);
-  }
-
-}]);
+  }]);

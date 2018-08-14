@@ -26,8 +26,8 @@ var calvinApp = angular.module('calvinApp', [
   'angular-inview',
   'wu.masonry'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
-                 arquivoService, cacheService, $cordovaNetwork, acessoService, boletimService, $cordovaBadge, bibliaService,
-                 database, hinoService, leituraService, $q, pdfService) {
+                 arquivoService, cacheService, $cordovaNetwork, acessoService, boletimService, $cordovaBadge, $state, $ionicHistory,
+                 database, $q, pdfService, playerService) {
   $rootScope.toggleMenu = function(menu) {
     if ($rootScope._menuSelecionado) {
       $rootScope._menuSelecionado.selecionado = false;
@@ -39,6 +39,8 @@ var calvinApp = angular.module('calvinApp', [
       $rootScope._menuSelecionado = undefined;
     }
   };
+
+  playerService.init();
 
   $rootScope.$on( "$stateChangeSuccess", function( event, toState, toParams, fromState, fromParams ) {
     var body = angular.element(window.document.body);

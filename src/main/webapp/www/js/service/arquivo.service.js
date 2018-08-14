@@ -110,6 +110,24 @@ calvinApp.service('arquivoService', ['Restangular', '$cordovaFileTransfer', '$co
           }
         }
 
+        this.downloadAndSave = function(url, filename, success, error) {
+          function doDownload() {
+            $cordovaFileTransfer.download(url, parseFilename(cordova.file.externalRootDirectory + 'Download/' + filename))
+              .then(success, error)
+          }
+
+          function createDownloads () {
+            $cordovaFile.createDir(cordova.file.externalRootDirectory, 'Download')
+              .then(function() {
+                doDownload();
+              }, function() {
+                doDownload();
+              });
+          }
+
+          createDownloads();
+        };
+
         function download(id, callback, tempCallback, errorCallback, progressCallback){
             var path = 'arquivos/' + id + '.bin';
             var temp = 'tmp/' + new Date().getTime() + '.' + id + '.bin';

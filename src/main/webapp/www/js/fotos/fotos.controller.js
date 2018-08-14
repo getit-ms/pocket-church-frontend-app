@@ -22,11 +22,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/fotos/fotos.form.html',
-        controller: function($scope, $state, $stateParams, fotoService, $ionicModal, shareService){
+        controller: function($scope, $state, $stateParams, fotoService, $ionicModal, shareService, arquivoService, message, loadingService){
           $scope.refresh = function(){
             $scope.page = 0;
             $scope.fotos = [];
             $scope.hasMore = false;
+            $scope.android = ionic.Platform.isAndroid();
 
             $scope.more();
           };
@@ -54,6 +55,24 @@ calvinApp.config(['$stateProvider', function($stateProvider){
               $scope.$broadcast('scroll.infiniteScrollComplete');
             });
 
+          };
+
+          $scope.salvar = function() {
+            loadingService.show();
+
+            var fto = $scope.fotos[$scope.status.pagina - 1];
+            var filename = fto.id + '_' + fto.secret + '_b.jpg';
+            var url = 'https://farm' + fto.farm + '.staticflickr.com/'+ fto.server + '/' + filename;
+
+            arquivoService.downloadAndSave(url, filename, function() {
+              loadingService.hide();
+              message({title: 'global.title.200',template: 'mensagens.MSG-056',args:{filename:filename}});
+            }, function(err) {
+              loadingService.hide();
+              console.error(err);
+
+              message({title: 'global.title.500',template: 'mensagens.MSG-055'});
+            })
           };
 
           $scope.compartilhar = function() {

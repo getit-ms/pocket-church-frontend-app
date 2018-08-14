@@ -22,6 +22,7 @@
         <ios.app_id>aeiou</ios.app_id>
         <pacote.app>br.com.getit.calvin.${chave.igreja}</pacote.app>
         <light.statusbar>false</light.statusbar>
+        <background.modes.igreja></background.modes.igreja>
     </properties>
     
     <scm>

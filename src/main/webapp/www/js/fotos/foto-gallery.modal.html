@@ -1,11 +1,14 @@
 <ion-modal-view class="gallery-modal transparent" >
   <ion-header-bar class="bar bar-header transparent" ng-hide="barsHidden">
     <a ng-click="compartilhar()" href=""
-       class="button button-icon icon ion-android-share-alt"
+       class="button button-icon ion-android-share-alt"
        title="{{'global.compartilhar' | translate}}"></a>
+    <a ng-click="salvar()" href="" ng-if="android"
+       class="button button-icon ion-android-download"
+       title="{{'global.salvar' | translate}}"></a>
     <div class="h1 title">{{titulo}}</div>
     <a ng-click="closeModal()" href=""
-       class="button button-icon icon ion-close"
+       class="button button-icon ion-close"
        title="{{'global.fechar' | translate}}"></a>
   </ion-header-bar>
 
@@ -13,11 +16,11 @@
 
   <ion-footer-bar class="bar bar-footer transparent" ng-hide="barsHidden">
     <a ng-click="status.anterior()" href="" ng-disabled="!status.hasAnterior()"
-       class="button button-icon icon ion-arrow-left-a"
+       class="button button-icon ion-arrow-left-a"
        title="{{'global.anterior' | translate}}"></a>
     <div class="h1 title">{{'global.paginacao' | translate:{atual:status.pagina, total:status.total} }}</div>
     <a ng-click="status.proximo()" href="" ng-disabled="!status.hasProximo()"
-       class="button button-icon icon ion-arrow-right-a"
+       class="button button-icon ion-arrow-right-a"
        title="{{'global.proximo' | translate}}"></a>
   </ion-footer-bar>
 </ion-modal-view>

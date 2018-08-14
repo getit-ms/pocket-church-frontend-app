@@ -5,11 +5,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/audio/categoria.list.html',
-        controller: function(audioService, $scope, message, $ionicPopup, $filter, $ionicHistory, $state){
+        controller: function(audioService, $scope, playerService){
           $scope.buscaCategorias = function(){
             audioService.buscaCategorias(function(categorias){
               $scope.categorias = categorias;
             });
+          };
+
+          $scope.isPlaying = function(categoria) {
+            return playerService.playing && playerService.track.categoria == categoria.id;
           };
 
           $scope.$on('$ionicView.enter', function(){
@@ -25,9 +29,11 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/audio/audio.list.html',
-        controller: function(audioService, $scope, $stateParams, playerService, configService, arquivoService, message, $ionicPopup, $filter, $ionicHistory, $state){
+        controller: function(audioService, $scope, $stateParams, playerService, configService, arquivoService){
           $scope.searcher = function(page, callback){
             audioService.busca({categoria: $stateParams.categoria, pagina:page, total:10}, function(audios){
+              $scope.categoria = audios.categoria;
+
               callback(audios);
             });
           };
@@ -52,24 +58,47 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             return audio.capa.localPath;
           };
 
-          $scope.play = function(audio) {
-            configService.load().then(function(config) {
-              var url = config.server + '/rest/arquivo/stream/' + audio.audio.id + '/' + audio.audio.filename +
-                '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
+          $scope.isLoading = function(audio) {
+            return playerService.loading && playerService.track.id == audio.id;
+          };
 
-              var capa = undefined;
-              if (audio.capa) {
-                capa = config.server + '/rest/arquivo/download/' + audio.capa.id +
+          $scope.isPlaying = function(audio) {
+            return playerService.playing && playerService.track.id == audio.id;
+          };
+
+          $scope.isPaused = function(audio) {
+            return playerService.paused && playerService.track.id == audio.id;
+          };
+
+          $scope.toggle = function(audio) {
+            if ($scope.isPaused(audio)) {
+              playerService.play();
+            } else if ($scope.isPlaying(audio)) {
+              playerService.pause();
+            } else {
+              configService.load().then(function(config) {
+                var url = config.server + '/rest/arquivo/stream/' + audio.audio.id + '/' + audio.audio.filename +
                   '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
-              }
 
-              playerService.start({
-                url: url,
-                titulo: audio.nome,
-                artista: audio.autor,
-                capa: capa
+                var capa = undefined;
+                if (audio.capa) {
+                  capa = config.server + '/rest/arquivo/download/' + audio.capa.id + '/' + audio.capa.filename +
+                    '?Dispositivo=' + config.headers.Dispositivo + '&Igreja=' + config.headers.Igreja;
+                }
+
+                playerService.play({
+                  id: audio.id,
+                  url: url,
+                  categoria: $stateParams.categoria,
+                  titulo: audio.nome,
+                  artista: audio.autor,
+                  album: $scope.categoria.nome,
+                  capa: capa,
+                  duracao: audio.tempoAudio
+                });
               });
-            });
+            }
+
           };
 
         }

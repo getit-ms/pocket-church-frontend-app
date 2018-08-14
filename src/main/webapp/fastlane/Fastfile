@@ -44,7 +44,15 @@ platform :android do
   lane :beta do
     # add actions here: https://docs.fastlane.tools/actions
 
-    upload_to_play_store(track: 'beta', apk: 'build/outputs/apk/android-release-final.apk')
+    sh("touch \"../app/build/outputs/apk/release/app-release-aligned.apk\"")
+
+    sh("rm \"../app/build/outputs/apk/release/app-release-aligned.apk\"")
+
+    sh("/Users/mydoctors/Library/Android/sdk/build-tools/27.0.3/zipalign -v 4 \"../app/build/outputs/apk/release/app-release-unsigned.apk\" \"../app/build/outputs/apk/release/app-release-aligned.apk\"")
+
+    sh("/Users/mydoctors/Library/Android/sdk/build-tools/27.0.3/apksigner sign --ks ../../../my-release-key-${chave.igreja}.keystore --ks-pass file:../../../my-release-pass-${chave.igreja}.txt --out \"../app/build/outputs/apk/release/app-release-final.apk\" \"../app/build/outputs/apk/release/app-release-aligned.apk\"")
+
+    upload_to_play_store(track: 'beta', apk: 'app/build/outputs/apk/release/app-release-final.apk')
   end
 
   lane :release do

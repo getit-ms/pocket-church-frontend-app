@@ -8,7 +8,7 @@ var exec = require('child_process').exec;
 var resources = [
     {
       from: 'resources/native/android/*',
-      to: 'platforms/android/res/'
+      to: 'platforms/android/app/src/main/res/'
     }
 ];
 

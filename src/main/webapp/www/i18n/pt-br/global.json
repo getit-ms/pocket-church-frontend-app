@@ -98,6 +98,8 @@
         "MSG-052":"Não foi possível salvar a foto. Tente novamente e se o problema persistir envie-nos uma mensagem explicando o ocorrido através das Sugestões.",
         "MSG-053":"Os resultados estarão disponíveis após a enquete estar encerrada.",
         "MSG-054":"Você já respondeu essa enquete. Aguarde o término do período para visualizar o resultado.",
+        "MSG-055":"Não foi possível salvar a foto. Verifique se você possui memória disponível no aparelho.",
+        "MSG-056":"Foto salva com sucesso na pasta de Downloads com o nome '{filename}'.",
         "MSG-302":"Parece que você está sem acesso à Internet. Verifique sua conexão e tente novamente.",
         "MSG-403":"Você não tem permissão para fazer isso.",
         "MSG-404":"O servidor parece estar fora do ar. Aguarde alguns minutos e tente novamente.",
@@ -120,6 +122,11 @@
         "pinterest":"Clique para acessar página do Pinterest da igreja",
         "google_plus":"Clique para acessar página do Google Plus da igreja",
         "instagram":"Clique para acessar página do Instagram da igreja"
+    },
+    "audio":{
+      "audios":"Áudios",
+      "duracao":"Duração",
+      "tocando":"Tocando"
     },
     "login":{
         "password":"Senha",
