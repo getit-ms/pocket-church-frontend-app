@@ -27,7 +27,7 @@ var calvinApp = angular.module('calvinApp', [
   'wu.masonry'
 ]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
                  arquivoService, cacheService, $cordovaNetwork, acessoService, boletimService, $cordovaBadge, $state, $ionicHistory,
-                 database, $q, pdfService, playerService) {
+                 database, $q, pdfService, playerService, hinoService, bibliaService, leituraService) {
   $rootScope.toggleMenu = function(menu) {
     if ($rootScope._menuSelecionado) {
       $rootScope._menuSelecionado.selecionado = false;
