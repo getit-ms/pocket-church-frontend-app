@@ -146,7 +146,7 @@
     </head>
     <body ng-app="calvinApp" class="calvin" ng-init>
 
-    <ion-side-menus>
+    <ion-side-menus ng-class="{'has-footer-toolbar':offline || playerStatus.paused || playerStatus.playing}">
         <ion-side-menu-content class="post-size-14px">
             <ion-nav-bar class="bar app-top-bar">
                 <ion-nav-back-button title="{{'global.voltar' | translate}}"></ion-nav-back-button>
@@ -163,12 +163,23 @@
                 </ion-nav-buttons>
             </ion-nav-bar>
             <ion-nav-view name="content"></ion-nav-view>
-            <ion-footer-bar class='bar-assertive' ng-show='offline'>
+            <div class="bar bar-footer playing" ng-show="!offline && (playerStatus.paused || playerStatus.playing)" >
+              <span ng-click="playerStatus.showPlaying()" class='button button-icon ion-chevron-up' role="presentation" ></span>
+
+              <div class='title' ng-click="playerStatus.showPlaying()">
+                {{playerStatus.track.titulo}}
+              </div>
+
+              <span ng-click="playerStatus.togglePlaying()"
+                    ng-class="{'ion-play':playerStatus.paused,'ion-pause':!playerStatus.paused}"
+                    class='button button-icon ' role="presentation" ></span>
+            </div>
+            <div class='bar bar-footer bar-assertive' ng-show='offline'>
                 <h1 class="title">
                     <i class='fa fa-chain-broken'></i>
                     {{'mensagens.MSG-605' | translate}}
                 </h1>
-            </ion-footer-bar>
+            </div>
         </ion-side-menu-content>
 
         <ion-side-menu side="left" class="main-menu" expose-aside-when="large">
@@ -208,6 +219,7 @@
                                 ng-if="!mnu.submenus.length" ui-sref="{{mnu.link}}" title="{{mnu.nome}}">
                         <span class='icon {{mnu.icone}}' role="presentation" ng-if="mnu.icone"></span>
                         <h2 class="menu-text" id="menu_{{menu.submenus.indexOf(menu)}}" >{{mnu.nome}}</h2>
+                        <span ng-if="mnu.notificacoes" class="badge badge-stable pull-right">{{mnu.notificacoes}}</span>
                       </ion-item>
 
                       <ion-item class="item-accordion item" ng-class="{'item-icon-left':sbm.icone}" ng-repeat-end
