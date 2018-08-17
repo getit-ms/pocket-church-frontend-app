@@ -561,6 +561,7 @@ h2.title {
 
 .calvin .bar.playing .title {
   color: #fff !important;
+  margin: 0 60px;
 }
 
 .calvin .bar.playing .button,
@@ -574,6 +575,10 @@ h2.title {
   height: 200px;
   width: auto;
   overflow-x: hidden;
+}
+
+.calvin .playing-modal .card h2 {
+  white-space: pre-wrap;
 }
 
 .has-footer-toolbar .view-container {
