@@ -204,7 +204,7 @@ var calvinApp = angular.module('calvinApp', [
         return mnu.selecionado;
       });
 
-      if (selecionado) {
+      if (selecionado && menu.submenus) {
         var aSelecionar = findMenu(menu.submenus, function(mnu) {
           return mnu.nome == selecionado.nome;
         });
