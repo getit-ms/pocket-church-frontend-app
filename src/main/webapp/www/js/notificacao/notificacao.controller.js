@@ -168,8 +168,15 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                                     if (resp){
                                         loadingService.show();
 
+                                        var ids = [];
+                                        if ($scope.excluir.selecionados) {
+                                          angular.forEach($scope.excluir.selecionados, function(n) {
+                                            ids.push(n.id);
+                                          });
+                                        }
+
                                         if ($scope.excluir.todos){
-                                            notificacaoService.clear($scope.excluir.selecionados, function(){
+                                            notificacaoService.clear(ids, function(){
                                                 message({title:'global.title.200',template:'mensagens.MSG-001'});
                                                 $scope.cancelarExclusao();
                                                 $scope.$broadcast('pagination.search');
