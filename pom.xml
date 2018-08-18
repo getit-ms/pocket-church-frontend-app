@@ -14,8 +14,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd.HHmmssSSS</maven.build.timestamp.format>
         <build.date>${maven.build.timestamp}</build.date>
-        <chave.igreja>tst</chave.igreja>
-        <nome.igreja>Pocket Church</nome.igreja>
         <nomeAplicativo.igreja>${nome.igreja}</nomeAplicativo.igreja>
         <server.url>http://localhost:8081/app</server.url>
         <gcm.sender.id>calvin-app-server</gcm.sender.id>
@@ -184,7 +182,7 @@
                         <version>1.0.0</version>
                         <configuration>
                             <files>
-                                <file>prod.properties</file>
+                                <file>${basedir}/prod.properties</file>
                             </files>
                         </configuration>
                     </plugin>
