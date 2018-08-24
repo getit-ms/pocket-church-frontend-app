@@ -181,6 +181,7 @@
                         <artifactId>properties-maven-plugin</artifactId>
                         <version>1.0.0</version>
                         <configuration>
+                            <encoding>UTF-8</encoding>
                             <files>
                                 <file>${basedir}/prod.properties</file>
                             </files>
