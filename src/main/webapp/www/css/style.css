@@ -243,11 +243,14 @@ img.igreja-image {
     padding-top:22px;
 }
 .main-menu .item.menu-header a img {
-    width: 150px;
+    width: auto;
+    max-height: 65px;
+    max-width: 150px;
 }
 
 .profile-view .user-image-container img {
-    width: 100%;
+  max-width: 300px;
+  max-height: 75px;
 }
 
 .profile-view.home .user-image-container img {
@@ -275,8 +278,9 @@ img.igreja-image {
 
 .calvin .top-content,
 .calvin .main-menu.menu .item.menu-header a {
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .calvin .item h1,
