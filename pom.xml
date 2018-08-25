@@ -18,7 +18,6 @@
         <server.url>http://localhost:8081/app</server.url>
         <gcm.sender.id>calvin-app-server</gcm.sender.id>
         <ios.app_id>aeiou</ios.app_id>
-        <pacote.app>br.com.getit.calvin.${chave.igreja}</pacote.app>
         <light.statusbar>false</light.statusbar>
         <background.modes.igreja />
     </properties>
@@ -150,6 +149,7 @@
             <properties>
                 <chave.igreja>tst</chave.igreja>
                 <nome.igreja>Pocket Church</nome.igreja>
+                <pacote.app>br.com.getit.calvin.${chave.igreja}</pacote.app>
             </properties>
         </profile>
         <profile>
@@ -170,6 +170,7 @@
             <properties>
                 <android.sender.id>65118528623</android.sender.id>
                 <server.url>https://getitmobilesolutions.com/app</server.url>
+                <pacote.app>br.com.getit.calvin.${chave.igreja}</pacote.app>
             </properties>
         </profile>
         <profile>
@@ -181,7 +182,6 @@
                         <artifactId>properties-maven-plugin</artifactId>
                         <version>1.0.0</version>
                         <configuration>
-                            <encoding>UTF-8</encoding>
                             <files>
                                 <file>${basedir}/prod.properties</file>
                             </files>
@@ -190,6 +190,7 @@
                 </plugins>
             </build>
             <properties>
+                <pacote.app>br.com.getit.calvin.${chave.igreja}</pacote.app>
                 <android.sender.id>65118528623</android.sender.id>
                 <server.url>https://getitmobilesolutions.com/app</server.url>
             </properties>
