@@ -81,5 +81,16 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                         };                    }
                 }
             }
+        }).state('politica-privacidade', {
+          parent: 'site',
+          url: '/politica-privacidade',
+          views:{
+            'content@':{
+              templateUrl: 'js/preferencias/politica-privacidade.html',
+              controller: function($scope, message, acessoService, $rootScope, $state, $ionicHistory, loadingService, leituraService){
+
+              }
+            }
+          }
         });
     }]);

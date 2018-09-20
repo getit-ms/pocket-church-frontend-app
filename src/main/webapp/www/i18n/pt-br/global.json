@@ -354,6 +354,7 @@
         "sincronizando":"Sincronizando... {porcentagem}%"
     },
     "preferencias":{
+        "politica_privacidade":"Política de Privacidade",
         "preferencias":"Preferências",
         "versiculo_diario":"Versículo Diário",
         "leitura_biblica":"Leitura Bíblica",
