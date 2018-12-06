@@ -4,7 +4,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             url: '/youtube',
             views:{
                 'content@':{
-                    templateUrl: 'js/video/youtube.list.html',
+                    templateUrl: 'js/video/video.list.html',
                     controller: function(facebookService, youtubeService, $scope, $ionicModal, shareService){
                         $scope.busca = function(){
                             $scope.futuros = [];
