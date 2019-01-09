@@ -38,56 +38,12 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                             });
                         };
 
-                        $scope.openModal = function(video) {
-                            $scope.video = video;
-
+                        $scope.openVideo = function(video) {
                             if (video.tipo == 'facebook') {
                               $window.open(video.streamUrl, '_system');
                             } else {
-                              $ionicModal.fromTemplateUrl('js/video/youtube.modal.html', {
-                                scope: $scope,
-                                animation: 'slide-in-up'
-                              }).then(function(modal) {
-                                $scope.modal = modal;
-                                $scope.modal.show();
-                              });
+                              $window.open('https://www.youtube.com/watch?v=' + video.id, '_system');
                             }
-                        };
-
-                        $scope.share = function(){
-                            if ($scope.video){
-                              if ($scope.video.tipo == 'facebook') {
-
-                              } else {
-                                shareService.share({subject:$scope.video.titulo,link:'https://www.youtube.com/watch?v=' + $scope.video.id});
-                              }
-                            }
-                        };
-
-                        $scope.$on('modal.hidden', function() {
-                          $scope.closeModal();
-                        });
-
-                        $scope.$on('$ionicView.leave', function() {
-                            $scope.closeModal();
-                        });
-
-                        $scope.closeModal = function() {
-                            if ($scope.player){
-                                $scope.player.stopVideo();
-                              $scope.player = undefined;
-                            }
-
-                            if ($scope.modal){
-                                var modal = $scope.modal;
-
-                                $scope.modal = undefined;
-
-                                modal.hide();
-                                modal.remove();
-                            }
-
-                            $scope.video = undefined;
                         };
 
                         $scope.busca();

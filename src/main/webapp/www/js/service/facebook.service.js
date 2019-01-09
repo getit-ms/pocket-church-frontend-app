@@ -1,6 +1,6 @@
 calvinApp.service('facebookService', ['Restangular', function(Restangular){
         this.api = function(){
-            return Restangular.all('facebook');
+            return Restangular.all('facebook/video');
         };
 
         this.busca = function(callback){
