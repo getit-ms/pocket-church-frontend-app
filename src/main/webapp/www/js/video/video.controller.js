@@ -5,7 +5,7 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             views:{
                 'content@':{
                     templateUrl: 'js/video/video.list.html',
-                    controller: function(facebookService, youtubeService, $scope, $ionicModal, shareService){
+                    controller: function(facebookService, youtubeService, $scope, linkService){
                         $scope.busca = function(){
                             $scope.futuros = [];
                             $scope.presentes = [];
@@ -40,9 +40,9 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
                         $scope.openVideo = function(video) {
                             if (video.tipo == 'facebook') {
-                              $window.open(video.streamUrl, '_system');
+                              linkService.site(video.streamUrl);
                             } else {
-                              $window.open('https://www.youtube.com/watch?v=' + video.id, '_system');
+                              linkService.site('https://www.youtube.com/watch?v=' + video.id);
                             }
                         };
 
