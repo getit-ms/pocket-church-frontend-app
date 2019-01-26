@@ -21,7 +21,6 @@ var calvinApp = angular.module('calvinApp', [
   'underscore',
   'ngResource',
   'jett.ionic.filter.bar',
-  'youtube-embed',
   'chart.js',
   'angular-inview',
   'wu.masonry'
