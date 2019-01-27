@@ -72,7 +72,7 @@
       "locator":"cordova-android-support-gradle-release@1.4.4",
       "id":"cordova-android-support-gradle-release@1.4.4"
     },
-    "cordova-plugin-playlist@0.6.0",
+    "cordova-plugin-playlist@0.6.1",
     "cordova-plugin-crop@0.4.0",
     "cordova-plugin-camera@4.0.3"
   ],
