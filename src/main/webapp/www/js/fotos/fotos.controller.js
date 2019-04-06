@@ -5,9 +5,13 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/fotos/fotos.list.html',
-        controller: function(fotoService, $state, $scope){
+        controller: function(fotoService, $state, $scope, $ionicLoading, $filter){
           $scope.searcher = function(page, callback){
             fotoService.buscaGalerias(page, callback);
+          };
+
+          $scope.info = function() {
+            $ionicLoading.show({ template: $filter('translate')('fotos.note_flickr'), noBackdrop: true, duration: 2000 });
           };
 
           $scope.detalhar = function(galeria){
@@ -22,7 +26,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
     views:{
       'content@':{
         templateUrl: 'js/fotos/fotos.form.html',
-        controller: function($scope, $state, $stateParams, fotoService, $ionicModal, shareService, arquivoService, message, loadingService){
+        controller: function($scope, $state, $stateParams, fotoService, $ionicModal,
+                             shareService, arquivoService, message, loadingService, $ionicLoading, $filter){
           $scope.refresh = function(){
             $scope.page = 0;
             $scope.fotos = [];
@@ -30,6 +35,10 @@ calvinApp.config(['$stateProvider', function($stateProvider){
             $scope.android = ionic.Platform.isAndroid();
 
             $scope.more();
+          };
+
+          $scope.info = function() {
+            $ionicLoading.show({ template: $filter('translate')('fotos.note_flickr'), noBackdrop: true, duration: 2000 });
           };
 
           $scope.more = function(callback){
@@ -99,8 +108,8 @@ calvinApp.config(['$stateProvider', function($stateProvider){
 
           $scope.openModal = function (foto) {
             $scope.status = {pagina: $scope.fotos.indexOf(foto) + 1,click:function() {
-              $scope.barsHidden = !$scope.barsHidden;
-            }};
+                $scope.barsHidden = !$scope.barsHidden;
+              }};
             $scope.barsHidden = true;
 
             $ionicModal.fromTemplateUrl('js/fotos/foto-gallery.modal.html', {

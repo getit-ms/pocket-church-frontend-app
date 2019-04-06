@@ -3,7 +3,12 @@
     <span translate>fotos.galerias</span>
   </ion-nav-title>
 
-  <calvin-pagination class="has-footer" searcher='searcher' ng-model="galerias" cache='galerias'>
+  <ion-nav-buttons side="right" >
+    <a data-tap-disabled="true" ng-click="info()" href=""
+       class="button button-icon positive ion-ios-information-outline"></a>
+  </ion-nav-buttons>
+
+  <calvin-pagination searcher='searcher' ng-model="galerias" cache='galerias'>
     <div class="item item-thumbnail-left item-text-wrap"
          ng-repeat="galeria in galerias"
          ng-click="detalhar(galeria)" >
@@ -13,8 +18,4 @@
       <p>{{'fotos.quantidade' | translate:{qtde:galeria.quantidadeFotos} }}</p>
     </div>
   </calvin-pagination>
-
-  <ion-footer-bar class="rodape-fotos bar-stable" align-title="center">
-    {{'fotos.note_flickr' | translate }}
-  </ion-footer-bar>
 </ion-view>

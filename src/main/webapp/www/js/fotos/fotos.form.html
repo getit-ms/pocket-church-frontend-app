@@ -2,7 +2,13 @@
   <ion-nav-title>
     <span translate>fotos.fotos</span>
   </ion-nav-title>
-  <ion-content class="has-header has-footer">
+
+  <ion-nav-buttons side="right" >
+    <a data-tap-disabled="true" ng-click="info()" href=""
+       class="button button-icon positive ion-ios-information-outline"></a>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header">
     <ion-refresher
       pulling-text="{{'global.puxe_para_atualizar' | translate}}"
       on-refresh='refresh()'></ion-refresher>
@@ -24,9 +30,4 @@
       distance="5%">
     </ion-infinite-scroll>
   </ion-content>
-
-  <ion-footer-bar class="rodape-fotos bar-stable" align-title="center">
-    {{'fotos.note_flickr' | translate }}
-  </ion-footer-bar>
 </ion-view>
-

@@ -7,6 +7,10 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
     return new Date(Math.floor(data/10000), Math.floor((data%10000)/100), Math.floor(data%100));
   }
 
+  function decrementDay(date, day) {
+    date.setDate(date.getDate() - day);
+    return date;
+  }
         this.findUltimaAlteracao  = function(callback){
           try {
             database.db.transaction(function (tx) {
@@ -232,8 +236,6 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
             return deferred.promise;
         };
 
-        var MILLIS_DAY = 1000 * 60 * 60 * 24;
-
         this.findPorcentagem = function(){
             var deferred = $q.defer();
 
@@ -249,10 +251,10 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
                         progresso.porcentagem = Math.ceil((rs.rows.item(0).count / totalGeral) * 100);
                         progresso.concluido = progresso.porcentagem === 100;
 
-                        tx.executeSql('SELECT count(*) as count FROM leitura_biblica2 where data < ? and descricao is not null', [toPersitedDate(new Date(new Date().getTime() - MILLIS_DAY))], function(tx, rs) {
+                        tx.executeSql('SELECT count(*) as count FROM leitura_biblica2 where data < ? and descricao is not null', [toPersitedDate(new Date())], function(tx, rs) {
                           if (rs.rows && rs.rows.length){
                             var totalAtual = rs.rows.item(0).count;
-                            tx.executeSql('SELECT count(*) as count FROM leitura_biblica2 where lido = ? and data < ? and descricao is not null', [true, toPersitedDate(new Date(new Date().getTime() - 2 * MILLIS_DAY))], function(tx, rs) {
+                            tx.executeSql('SELECT count(*) as count FROM leitura_biblica2 where lido = ? and data < ? and descricao is not null', [true, toPersitedDate(decrementDay(new Date(), 1))], function(tx, rs) {
                               if (rs.rows && rs.rows.length){
                                 progresso.emDia = (totalAtual - rs.rows.item(0).count) <= 1;
                                 deferred.resolve(progresso);
@@ -296,7 +298,7 @@ calvinApp.service('leituraDAO', ['database', '$q', function(database, $q){
         this.atualizaSincronizacao = function(id, sincronizado){
           try {
             database.db.transaction(function(tx) {
-              tx.executeSql('update leitura_biblica2 set sincronizado = ?, ultima_atualizacao = ? where id = ?', [sincronizado, toPersitedDate(new Date()), id]);
+              tx.executeSql('update leitura_biblica2 set sincronizado = ?, ultima_atualizacao = ? where id = ?', [sincronizado, new Date().getTime(), id]);
             });
           } catch (e) {
             console.log(e);
