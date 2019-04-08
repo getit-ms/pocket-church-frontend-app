@@ -24,7 +24,7 @@ var calvinApp = angular.module('calvinApp', [
   'chart.js',
   'angular-inview',
   'wu.masonry'
-]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService, $cordovaLocalNotification,
+]).run(function ($ionicPlatform, PushNotificationsService, $rootScope, configService, notificacaoService,
                  arquivoService, cacheService, $cordovaNetwork, acessoService, boletimService, $cordovaBadge, $state, $ionicHistory,
                  database, $q, pdfService, playerService, hinoService, bibliaService, leituraService) {
   $rootScope.toggleMenu = function(menu) {
