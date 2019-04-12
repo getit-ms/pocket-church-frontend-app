@@ -235,8 +235,8 @@ img.igreja-image {
 }
 
 .profile-view .user-image-container {
-    max-height: 75px;
-    max-width: 300px;
+    height: 75px;
+    width: 120px;
 }
 .main-menu .item.menu-header a {
     text-align: center;
@@ -244,13 +244,18 @@ img.igreja-image {
 }
 .main-menu .item.menu-header a img {
     width: auto;
-    max-height: 65px;
+    max-height: 70px;
     max-width: 150px;
 }
 
 .profile-view .user-image-container img {
-  max-width: 300px;
+  max-width: 120px;
   max-height: 75px;
+}
+
+.profile-view.home .user-image-container {
+  height: 50px;
+  width: auto;
 }
 
 .profile-view.home .user-image-container img {
@@ -260,8 +265,8 @@ img.igreja-image {
 }
 
 .calvin .main-menu.menu .item.menu-header a {
-    height: 119px;
-    padding: 35px 8%;
+    height: 140px;
+    padding: 35px 15px;
 }
 
 .calvin .home .top-content {
