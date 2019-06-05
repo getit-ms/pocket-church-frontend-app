@@ -475,6 +475,7 @@ function configureHttpInterceptors($httpProvider) {
                   backendErrors.set(erro.field, erro.message, erro.args);
                 });
               }
+
               $rootScope.$broadcast('scroll.infiniteScrollComplete');
             },
             401: function (rejection) { // UNAUTHORIZED
