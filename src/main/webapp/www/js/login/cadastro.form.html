@@ -11,7 +11,7 @@
             <div class="list">
               <label class="item item-text-wrap" translate>login.mensagem_cadastro</label>
               <label class="item item-input">
-                <input placeholder="{{'login.nome' | translate}}"
+                <input placeholder="{{'login.nome' | translate}}" type="text"
                        ng-model="usuario.nome" required maxlength="150">
               </label>
               <label class="item item-input">
@@ -27,9 +27,6 @@
               </label>
               <div class="item item-body">
                 <input type="submit" nav-clear class='button button-positive button-block' value="{{'login.cadastrar' | translate}}" />
-              </div>
-              <div class="item item-body bottom-content text-center">
-                <a class="link" ui-sref="login">{{'global.cancelar' | translate}}</a>
               </div>
             </div>
           </form>
