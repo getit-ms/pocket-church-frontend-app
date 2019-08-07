@@ -143,9 +143,9 @@
         "nome":"Nome",
         "telefone":"Telefone",
         "novo_cadastro":"Novo Cadastro",
-        "cadastrar":"Submeter Cadastro",
-        "mensagem_cadastro":"O cadastro de novos usuários ficarão aguardando aprovação da igreja e assim que ele for aprovado, uma mensagem com sua senha de acesso será enviada para o endereço de e-mail indicado.",
-        "mensagem_autenticacao":"O acesso é disponibilizado apenas aos membros cadastrados. Entre em contato com a administração da igreja para solicitar o seu cadastro."
+        "cadastrar":"Solicitar Cadastro",
+        "mensagem_cadastro":"Seu cadastro ficará aguardando aprovação da igreja e assim que for aprovado, uma mensagem com sua senha de acesso será enviada para o endereço de e-mail indicado.",
+        "mensagem_autenticacao":"O acesso é disponibilizado apenas aos membros cadastrados. Você pode solicitar seu cadastro acessando a opção de 'Novo Cadastro' abaixo."
     },
     "institucional":{
         "institucional":"Institucional",
