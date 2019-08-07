@@ -51,6 +51,48 @@ calvinApp.config(['$stateProvider', function($stateProvider){
                 }
             }
         }
+    }).state('cadastroUsuario', {
+      parent: 'site',
+      url: '/cadastroUsuario',
+      views:{
+        'content@':{
+          templateUrl: 'js/login/cadastro.form.html',
+          controller: function($scope, $rootScope, $state, message, contatoService, configService, $ionicHistory, loadingService){
+            $scope.usuario = {nome:'',email:'',telefone:''};
+            $scope.realizarCadastro = function(form){
+              if (form.$invalid){
+                message({title:'global.title.200',template:'mensagens.MSG-002'});
+                return;
+              }
+
+              loadingService.show();
+
+              contatoService.cadastra($scope.usuario, function(contato){
+                try {
+                  loadingService.hide();
+
+                  message({title:'global.title.200',template:'mensagens.MSG-057'});
+
+                  $ionicHistory.nextViewOptions({
+                    historyRoot: true,
+                    disableBack: true
+                  });
+
+                  $state.go('home');
+                } catch (ex) {
+                  loadingService.hide();
+
+                  message({title:'global.title.500',template:'mensagens.MSG-500',args:{mensagem:ex.message}});
+
+                  console.log(ex);
+                }
+              }, function(){
+                loadingService.hide();
+              });
+            };
+          }
+        }
+      }
     }).state('alteraSenha', {
         parent: 'site',
         url: '/alteraSenha',

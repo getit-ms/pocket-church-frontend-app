@@ -100,6 +100,7 @@
         "MSG-054":"Você já respondeu essa enquete. Aguarde o término do período para visualizar o resultado.",
         "MSG-055":"Não foi possível salvar a foto. Verifique se você possui memória disponível no aparelho.",
         "MSG-056":"Foto salva com sucesso na pasta de Downloads com o nome '{filename}'.",
+        "MSG-057":"Cadastro realizado com sucesso. Assim que seu cadastro for aprovado, você receberá seus dados de acesso.",
         "MSG-302":"Parece que você está sem acesso à Internet. Verifique sua conexão e tente novamente.",
         "MSG-403":"Você não tem permissão para fazer isso.",
         "MSG-404":"O servidor parece estar fora do ar. Aguarde alguns minutos e tente novamente.",
@@ -139,6 +140,11 @@
         "esqueci_senha":"Esqueci minha senha",
         "redefinir_senha":"Redefinir Senha",
         "email":"E-mail",
+        "nome":"Nome",
+        "telefone":"Telefone",
+        "novo_cadastro":"Novo Cadastro",
+        "cadastrar":"Submeter Cadastro",
+        "mensagem_cadastro":"O cadastro de novos usuários ficarão aguardando aprovação da igreja e assim que ele for aprovado, uma mensagem com sua senha de acesso será enviada para o endereço de e-mail indicado.",
         "mensagem_autenticacao":"O acesso é disponibilizado apenas aos membros cadastrados. Entre em contato com a administração da igreja para solicitar o seu cadastro."
     },
     "institucional":{

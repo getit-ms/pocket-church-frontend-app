@@ -15,6 +15,14 @@ calvinApp.service('contatoService', ['Restangular', function(Restangular){
             return this.api().get(id).$object;
         };
 
+        this.cadastra = function(usuario, success, error){
+          this.api().customPUT({
+            nome: usuario.nome,
+            email: usuario.email,
+            telefones: usuario.telefone ? [usuario.telefone] : usuario.telefone,
+          }).then(success, error);
+        };
+
         this.carregaCallback = function(id, callback){
           return this.api().get(id).then(callback);
         };
