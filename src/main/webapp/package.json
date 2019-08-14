@@ -89,7 +89,7 @@
     },
     {
       "variables": {
-        "ANDROID_SUPPORT_VERSION": "27.1.0"
+        "ANDROID_SUPPORT_VERSION": "28.0.0"
       },
       "locator": "cordova-android-support-gradle-release@1.4.4",
       "id": "cordova-android-support-gradle-release@1.4.4"
