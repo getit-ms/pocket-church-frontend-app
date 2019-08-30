@@ -1,0 +1,37 @@
+part of pocket_church.infra;
+
+enum Funcionalidade {
+  INICIO_APLICATIVO,
+  INSTITUCIONAL,
+  BIBLIA,
+  REALIZAR_INSCRICAO_EBD,
+  CONSULTAR_PLANOS_LEITURA_BIBLICA,
+  LISTAR_ESTUDOS,
+  YOUTUBE,
+  LISTAR_BOLETINS,
+  LISTAR_PUBLICACOES,
+  CONSULTAR_HINARIO,
+  CONSULTAR_CIFRAS,
+  CONSULTAR_CANTICOS,
+  PEDIR_ORACAO,
+  PREFERENCIAS,
+  NOTIFICACOES,
+  CHAMADOS,
+  AGENDA,
+  REALIZAR_INSCRICAO_EVENTO,
+  CONSULTAR_CONTATOS_IGREJA,
+  NOTICIAS,
+  AGENDAR_ACONSELHAMENTO,
+  ANIVERSARIANTES,
+  REALIZAR_VOTACAO,
+  GALERIA_FOTOS,
+  AUDIOS,
+
+
+}
+
+Funcionalidade FuncionalidadeByName(String name) {
+  return Funcionalidade.values
+      .firstWhere((fnc) => fnc.toString() == "Funcionalidade.$name",
+      orElse: () => null);
+}

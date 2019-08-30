@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "65118528623",
+    "firebase_url": "https://calvin-app-1469800955782.firebaseio.com",
+    "project_id": "calvin-app-1469800955782",
+    "storage_bucket": "calvin-app-1469800955782.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65118528623:android:4bf50add4e8fa45b",
+        "android_client_info": {
+          "package_name": "br.com.calvin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65118528623-h373d6ekkjia01nrdtamd19jd26uj4mb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMkadprAylXcl9bb25dQEUYEfS2l2CwOk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
