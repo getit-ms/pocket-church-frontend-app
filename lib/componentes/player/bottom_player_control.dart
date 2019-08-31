@@ -64,7 +64,7 @@ class BottomPlayerControlState extends State<BottomPlayerControl>
                 overflow: Overflow.visible,
                 children: <Widget>[
                   new SizedBox(
-                    height: _size.value,
+                    height: _size.value * 55,
                     child: MaterialButton(
                       onPressed: () {
                         NavigatorUtil.navigate(

@@ -53,7 +53,7 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
   }
 
   _initAll() async {
-    await _reset();
+    _reset();
 
     if (widget.cacheLoader != null) {
       List<T> cache = await widget.cacheLoader();
