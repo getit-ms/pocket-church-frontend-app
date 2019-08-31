@@ -124,18 +124,18 @@ class BarraNavegacaoBiblia extends StatelessWidget {
                 color: Colors.black87,
               ),
               onPressed: () async {
-                var controller = showBottomSheet<LivroCapitulo>(
+                PersistentBottomSheetController<LivroCapitulo> controller = showBottomSheet<LivroCapitulo>(
                   context: context,
                   builder: (context) => SelecaoCapitulo(
                     livro: value,
                   ),
                 );
 
-                LivroCapitulo selecionado = await controller.closed;
-
-                if (selecionado != null) {
-                  onChange(selecionado);
-                }
+                controller.closed.then((selecionado) {
+                  if (selecionado != null) {
+                    onChange(selecionado);
+                  }
+                });
               },
             ),
           ),

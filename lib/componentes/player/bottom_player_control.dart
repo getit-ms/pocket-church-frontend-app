@@ -1,8 +1,11 @@
 part of pocket_church.componentes;
 
 class BottomPlayerControl extends StatefulWidget {
+  final bool safeArea;
+
   const BottomPlayerControl({
     Key key,
+    this.safeArea = false,
   }) : super(key: key);
 
   @override
@@ -20,14 +23,14 @@ class BottomPlayerControlState extends State<BottomPlayerControl>
     super.initState();
 
     _animationController = new AnimationController(
-        vsync: this, duration: Duration(milliseconds: 200))
+        vsync: this, duration: const Duration(milliseconds: 200))
       ..addListener(() {
         setState(() {});
       });
     _opacity = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _animationController, curve: Interval(.5, 1)));
-    _size = Tween<double>(begin: 0, end: 55).animate(
-        CurvedAnimation(parent: _animationController, curve: Interval(0, .75)));
+        CurvedAnimation(parent: _animationController, curve: const Interval(.5, 1)));
+    _size = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: _animationController, curve: const Interval(0, .75)));
   }
 
   @override
@@ -52,8 +55,11 @@ class BottomPlayerControlState extends State<BottomPlayerControl>
         return Opacity(
           opacity: _opacity.value,
           child: new Container(
-              height: _size.value,
+              height: _size.value * 55,
               color: tema.primary,
+              padding: EdgeInsets.only(
+                bottom: widget.safeArea ? _size.value * MediaQuery.of(context).padding.bottom : 0
+              ),
               child: new Stack(
                 overflow: Overflow.visible,
                 children: <Widget>[

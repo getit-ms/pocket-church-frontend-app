@@ -106,7 +106,9 @@ class PageTemplateState extends State<PageTemplate> {
         body: Column(
           children: <Widget>[
             Expanded(child: widget.body),
-            BottomPlayerControl()
+            const BottomPlayerControl(
+              safeArea: true,
+            )
           ],
         ),
         drawer: !_isRoot ? null : MenuDrawer(),
