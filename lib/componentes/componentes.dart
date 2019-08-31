@@ -26,6 +26,7 @@ import 'package:pocket_church/funcionalidade/notificacao/notificacao.dart';
 import 'package:pocket_church/model/menu/model.dart';
 import 'package:pocket_church/page_apresentacao.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:transparent_image/transparent_image.dart';

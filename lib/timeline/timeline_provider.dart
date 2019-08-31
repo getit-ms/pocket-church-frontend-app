@@ -12,41 +12,6 @@ class TimelineProvider {
 
   List<Feed> pool = [];
 
-  init() async {
-    SharedPreferences sprefs = await SharedPreferences.getInstance();
-
-    try {
-      if (sprefs.containsKey(_chaveCache)) {
-        List<Feed> cache = (json.decode(
-            sprefs.getString(_chaveCache)) as List<dynamic>)
-            .map((json) => Feed.fromJson(json))
-            .toList();
-
-        if (cache != null && cache.isNotEmpty) {
-          Pagina<Feed> online = await busca(1, 1);
-
-          if (online.resultados?.isNotEmpty??false) {
-            if (!online.resultados[0].data.isAfter(cache[0].data)) {
-              _cache = cache;
-              return;
-            }
-          } else {
-            sprefs.remove(_chaveCache);
-            _finished = true;
-          }
-        }
-      }
-    } catch (ex) {
-      print(ex);
-
-      sprefs.remove(_chaveCache);
-    }
-
-    _nextPage();
-  }
-
-  String get _chaveCache => "cache_timeline_$funcionalidade";
-
   Future<Pagina<Feed>> consulta(int pagina, int tamanhoPagina) async {
     if (pagina == 1) {
       pool.clear();

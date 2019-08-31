@@ -12,6 +12,8 @@ class SliverInfiniteList<T> extends StatefulWidget {
   final ListMerge<T> merger;
   final List<Widget> preSlivers;
   final List<Widget> posSlivers;
+  final Future<List<T>> Function() cacheLoader;
+  final Function(List<T>) cacheSaver;
 
   const SliverInfiniteList(
       {Key key,
@@ -25,6 +27,8 @@ class SliverInfiniteList<T> extends StatefulWidget {
       this.placeholderSize = 250,
       this.tamanhoPagina = 10,
       this.padding,
+      this.cacheSaver,
+      this.cacheLoader,
       this.scrollDirection = Axis.vertical})
       : super(key: key);
 
@@ -45,7 +49,21 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
   void initState() {
     super.initState();
 
-    _reset();
+    _initAll();
+  }
+
+  _initAll() async {
+    await _reset();
+
+    if (widget.cacheLoader != null) {
+      List<T> cache = await widget.cacheLoader();
+
+      if (_loading && resultados.isEmpty && cache != null) {
+        setState(() {
+          resultados.addAll(cache);
+        });
+      }
+    }
   }
 
   refresh() async {
@@ -96,6 +114,10 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
               widget.merger(resultados, resultado.resultados ?? []) ?? [];
         } else {
           resultados.addAll(resultado.resultados ?? []);
+        }
+
+        if (pagina == 1 && widget.cacheSaver != null) {
+          widget.cacheSaver(resultados);
         }
       });
     } catch (ex) {

@@ -1,5 +1,6 @@
 library pocket_church.layout_reativo;
 
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
@@ -19,6 +20,7 @@ import 'package:pocket_church/model/geral/model.dart';
 import 'package:pocket_church/model/institucional/model.dart';
 import 'package:pocket_church/model/menu/model.dart';
 import 'package:pocket_church/timeline/timeline.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 part './layout.dart';

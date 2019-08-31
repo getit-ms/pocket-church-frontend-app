@@ -5,6 +5,8 @@ class TabHome extends StatefulWidget {
   _TabHomeState createState() => _TabHomeState();
 }
 
+final String CHAVE_CACHE_TIMELINE = "cache_timeline";
+
 class _TabHomeState extends State<TabHome> {
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,8 @@ class _TabHomeState extends State<TabHome> {
       ],
       provider: _feedProvider,
       builder: _feedBuilder,
+      cacheLoader: _loadCache,
+      cacheSaver: _saveCache,
     );
   }
 
@@ -100,6 +104,24 @@ class _TabHomeState extends State<TabHome> {
         ],
       ),
     );
+  }
+
+  Future<List<Feed>> _loadCache() async {
+    SharedPreferences sprefs = await SharedPreferences.getInstance();
+
+    if (sprefs.containsKey(CHAVE_CACHE_TIMELINE)) {
+      return (json.decode(sprefs.get(CHAVE_CACHE_TIMELINE)) as List<dynamic>)
+          .map((json) => Feed.fromJson(json))
+          .toList();
+    }
+
+    return null;
+  }
+
+  _saveCache(List<Feed> feeds) async {
+    SharedPreferences sprefs = await SharedPreferences.getInstance();
+
+    sprefs.setString(CHAVE_CACHE_TIMELINE, json.encode(feeds.map((feed) => feed.toJson()).toList()));
   }
 }
 

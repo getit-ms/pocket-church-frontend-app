@@ -34,8 +34,6 @@ void main() async {
 
       await acessoBloc.init();
 
-      await timelineProvider.init();
-
       institucionalBloc.load();
 
       messagingService.register();
