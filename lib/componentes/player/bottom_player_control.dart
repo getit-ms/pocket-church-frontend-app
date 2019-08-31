@@ -55,7 +55,7 @@ class BottomPlayerControlState extends State<BottomPlayerControl>
         return Opacity(
           opacity: _opacity.value,
           child: new Container(
-              height: _size.value * 55,
+              height: _size.value * (widget.safeArea ? 55 + MediaQuery.of(context).padding.bottom : 55),
               color: tema.primary,
               padding: EdgeInsets.only(
                 bottom: widget.safeArea ? _size.value * MediaQuery.of(context).padding.bottom : 0
