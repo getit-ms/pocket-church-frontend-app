@@ -66,7 +66,7 @@ class PaginaPDFImageProvider extends ImageProvider<PaginaPDFImageProvider> {
             format: PDFPageFormat.JPEG,
             width: _getWidth(page.width, page.height),
             height: _getHeight(page.width, page.height),
-            backgroundColor: "#FFFFFF"
+            backgroundColor: "#FFFFFFFF"
         );
       } finally {
         page.close();
