@@ -45,7 +45,7 @@ class VideoFeedProvider extends FeedProvider {
   @override
   resolveAction(BuildContext context, Feed feed) {
     return () {
-      LaunchUtil.site("https://www.youtube.com/watch?v=${feed.id}");
+      LaunchUtil.youtube(feed.id);
     };
   }
 

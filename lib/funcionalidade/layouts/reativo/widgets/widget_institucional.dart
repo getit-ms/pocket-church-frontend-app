@@ -191,7 +191,6 @@ class WidgetInstitucional extends StatelessWidget {
       if (institucional.telefones.length == 1) {
         return () {
           LaunchUtil.telefone(institucional.telefones[0]);
-          Navigator.of(context).pop();
         };
       }
 

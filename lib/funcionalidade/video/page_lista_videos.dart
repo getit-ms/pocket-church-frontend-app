@@ -57,7 +57,7 @@ class PageListaVideos extends StatelessWidget {
     return RawMaterialButton(
       fillColor: Colors.white,
       onPressed: () =>
-          LaunchUtil.site("https://www.youtube.com/watch?v=${video.id}"),
+          LaunchUtil.youtube(video.id),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: ClipRRect(
@@ -119,7 +119,7 @@ class PageListaVideos extends StatelessWidget {
     return RawMaterialButton(
       fillColor: Colors.white,
       onPressed: () =>
-          LaunchUtil.site("https://www.youtube.com/watch?v=${video.id}"),
+          LaunchUtil.youtube(video.id),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(

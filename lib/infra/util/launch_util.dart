@@ -14,6 +14,20 @@ class LaunchUtil {
     launch("tel:0$telefone");
   }
 
+  static youtube(String id) async {
+    String path = "www.youtube.com/watch?v=$id";
+
+    if (Platform.isIOS) {
+      if (await canLaunch('youtube://$path')) {
+        await launch('youtube://$path', forceSafariVC: false);
+      } else {
+        await launch('https://$path');
+      }
+    } else {
+      await launch('https://$path');
+    }
+  }
+
   static site(String site) async {
     if (site.startsWith("http")) {
       launch(site);

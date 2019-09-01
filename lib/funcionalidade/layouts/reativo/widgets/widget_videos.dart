@@ -70,7 +70,7 @@ class _ItemVideo extends StatelessWidget {
       ),
       child: RawMaterialButton(
         onPressed: () {
-          LaunchUtil.site("https://www.youtube.com/watch?v=${video.id}");
+          LaunchUtil.youtube(video.id);
         },
         fillColor: Colors.white,
         shape: RoundedRectangleBorder(

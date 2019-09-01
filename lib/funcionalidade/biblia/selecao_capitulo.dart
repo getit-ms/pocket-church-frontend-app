@@ -2,9 +2,11 @@ part of pocket_church.biblia;
 
 class SelecaoCapitulo extends StatefulWidget {
   final LivroCapitulo livro;
+  final Function(LivroCapitulo) onSelected;
 
   const SelecaoCapitulo({
     this.livro,
+    this.onSelected,
   });
 
   @override
@@ -93,6 +95,9 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
               ),
               onPressed: () {
                 Navigator.of(context).pop(_livro);
+                if (widget.onSelected != null) {
+                  widget.onSelected(_livro);
+                }
               },
             ),
           ),
@@ -219,6 +224,9 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
           ));
 
           Navigator.of(context).pop(_livro);
+          if (widget.onSelected != null) {
+            widget.onSelected(_livro);
+          }
         });
       },
     );
