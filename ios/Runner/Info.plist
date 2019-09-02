@@ -26,6 +26,11 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>remote-notification</string>
+	</array>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Adicionar eventos da igreja ao calendário do celular.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

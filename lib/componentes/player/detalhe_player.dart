@@ -193,6 +193,10 @@ class DetalhePlayer extends StatelessWidget {
                     PlayerFeedback(
                       updateOn: [UpdateEvent.SPEED],
                       builder: (context, snapshot) {
+                        if (Platform.isIOS) {
+                          return Container();
+                        }
+
                         return RawMaterialButton(
                           shape: const CircleBorder(),
                           onPressed: () {
