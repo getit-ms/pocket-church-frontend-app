@@ -38,8 +38,8 @@ sed -i "s#package=\".\+\"#package=\"$bundleAndroid\"#g" android/app/src/debug/An
 sed -i "s#package=\".\+\"#package=\"$bundleAndroid\"#g" android/app/src/profile/AndroidManifest.xml || exit 1
 sed -i "s#android:label=\".\+\"#android:label=\"$nomeAplicativo\"#g" android/app/src/main/AndroidManifest.xml || exit 1
 
-sed -i "s#<string>.\+</string>#<string>$nomeAplicativo</string>#g" ios/Runner/Info.plist || exit 1
 sed -i "s#PRODUCT_BUNDLE_IDENTIFIER = .\+;#PRODUCT_BUNDLE_IDENTIFIER = $bundleIOS;#g" ios/Runner.xcodeproj/project.pbxproj || exit 1
+#sed -i "s#<key>CFBundleName</key>\(\n\t\)<string>.\+</string>#<key>CFBundleName</key>\1<string>$nomeAplicativo</string>#g" ios/Runner/Info.plist || exit 1
 
 echo "Baixando assets"
 
