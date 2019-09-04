@@ -10,7 +10,19 @@ class Endereco {
 
   Endereco({this.id, this.descricao, this.cep, this.cidade, this.estado});
 
-  factory Endereco.fromJson(Map<String, dynamic> json) => _$EnderecoFromJson(json);
+  factory Endereco.fromJson(Map<String, dynamic> json) {
+    if (json['descricao'] == null) {
+      return null;
+    }
+
+    return Endereco(
+      id: json['id'] as int,
+      descricao: json['descricao'] as String,
+      cep: json['cep'] as String,
+      cidade: json['cidade'] as String,
+      estado: json['estado'] as String,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$EnderecoToJson(this);
 }

@@ -36,6 +36,7 @@ class PageInstitucional extends StatelessWidget {
                       child: const IntlText("institucional.quem_somos"),
                     ),
                     Container(
+                      width: double.infinity,
                       color: Colors.white,
                       padding: const EdgeInsets.all(15),
                       child: Text(snapshot.data.quemSomos),

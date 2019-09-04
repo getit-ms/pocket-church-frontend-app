@@ -1,0 +1,8 @@
+app_identifier("br.com.getit.calvin.ibcb") # The bundle identifier of your app
+apple_id("comunicacao@ibcb.org") # Your Apple email address
+
+team_id("CDWMKZQG6X")
+
+json_key_file "./fastlane/acesso-android.json"
+package_name "br.com.getit.calvin.ibcb"
+

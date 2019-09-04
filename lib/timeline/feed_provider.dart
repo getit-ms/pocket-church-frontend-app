@@ -19,7 +19,7 @@ abstract class FeedProvider {
       await _nextPage();
     }
 
-    if (_finished) {
+    if (_current >= _cache.length) {
       return null;
     }
 

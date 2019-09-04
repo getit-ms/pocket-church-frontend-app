@@ -17,20 +17,20 @@ import 'bloc/leitura_bloc.dart';
 import 'funcionalidade/notificacao/notificacao.dart';
 
 void main() async {
-  Intl.defaultLocale = 'pt_BR';
-  initializeDateFormatting();
 
   runApp(PrepareApp(
     execute: (BuildContext context) async {
+      Intl.defaultLocale = 'pt_BR';
+      await initializeDateFormatting();
 
-      await Future.delayed(const Duration(milliseconds: 2000), () {});
+      var min = Future.delayed(const Duration(milliseconds: 2000), () {});
 
       await arquivoService.init();
       await pcDatabase.init();
 
       pdfService.configure(width: 1500);
 
-      await configuracaoBloc.init(context);
+      await configuracaoBloc.init();
 
       await acessoBloc.init();
 
@@ -44,7 +44,9 @@ void main() async {
             builder: (context) => PageListaNotificacoes()),
       );
 
-      Timer(const Duration(milliseconds: 500), () async {
+      await min;
+
+      acessoBloc.menu.listen((meun) async {
         if (acessoBloc.temAcesso(Funcionalidade.BIBLIA)) {
           try {
             await bibliaBloc.init();

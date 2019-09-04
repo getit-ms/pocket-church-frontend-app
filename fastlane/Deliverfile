@@ -1,0 +1,14 @@
+submit_for_review(true)
+
+languages(['pt-BR'])
+
+submission_information({
+  content_rights_contains_third_party_content: false,
+  add_id_info_serves_ads: false,
+  add_id_info_uses_idfa: false,
+  export_compliance_uses_encryption: false,
+  export_compliance_encryption_updated: false
+})
+
+automatic_release(true)
+

@@ -136,7 +136,7 @@ class _ListaVersiculosState extends State<ListaVersiculos> {
               onPressed: (loading) {
                 Share.text(
                     "",
-                    "\"${_versiculoSelecionado.texto}\" (${widget.livro?.livro.nome} ${widget.livro?.capitulo}:${_versiculoSelecionado.versiculo}",
+                    "\"${_versiculoSelecionado.texto}\" (${widget.livro?.livro.nome} ${widget.livro?.capitulo}:${_versiculoSelecionado.versiculo})",
                     "text/txt");
 
                 setState(() {

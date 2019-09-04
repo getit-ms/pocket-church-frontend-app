@@ -115,8 +115,12 @@ abstract class ApiBase {
       if (resp.statusCode != 204) {
         var body = await parseBody(resp);
 
-        if (body != null && typeMapper != null) {
-          return typeMapper(body);
+        if (body != null) {
+          if (typeMapper != null) {
+            return typeMapper(body);
+          } else {
+            return body;
+          }
         }
       }
     } catch (ex) {

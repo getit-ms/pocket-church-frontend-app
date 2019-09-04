@@ -406,7 +406,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ipn;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ibcb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -538,7 +538,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ipn;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ibcb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -564,7 +564,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ipn;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ibcb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
