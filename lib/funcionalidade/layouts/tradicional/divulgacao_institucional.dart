@@ -11,11 +11,13 @@ class DivulgacaoInstitucional extends StatelessWidget {
         if (snapshot.hasData) {
           return Container(
             width: double.infinity,
-            child: FadeInImage(
-              fit: BoxFit.cover,
-              placeholder: MemoryImage(kTransparentImage),
-              image: ArquivoImageProvider(snapshot.data.divulgacao.id),
-            ),
+            child: snapshot.data.divulgacao != null
+                ? FadeInImage(
+                    fit: BoxFit.cover,
+                    placeholder: MemoryImage(kTransparentImage),
+                    image: ArquivoImageProvider(snapshot.data.divulgacao.id),
+                  )
+                : Container(),
           );
         }
 

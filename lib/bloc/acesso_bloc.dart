@@ -52,14 +52,16 @@ class AcessoBloc {
   bool temAcesso(Funcionalidade func, {Menu menu}) {
     menu = menu ?? _menu.value;
 
-    if ("Funcionalidade.${menu.funcionalidade}" == func.toString()) {
-      return true;
-    }
+    if (menu != null) {
+      if ("Funcionalidade.${menu.funcionalidade}" == func.toString()) {
+        return true;
+      }
 
-    if (menu.submenus?.isNotEmpty??false) {
-      for (Menu child in menu.submenus) {
-        if (temAcesso(func, menu: child)) {
-          return true;
+      if (menu.submenus?.isNotEmpty ?? false) {
+        for (Menu child in menu.submenus) {
+          if (temAcesso(func, menu: child)) {
+            return true;
+          }
         }
       }
     }

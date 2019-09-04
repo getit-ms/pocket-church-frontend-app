@@ -53,7 +53,7 @@ class ProgressoUploadArquivoState extends State<ProgressoUploadArquivo> {
 
   @override
   Widget build(BuildContext context) {
-    Tema tema = ConfiguracaoApp.of(context).tema;
+    Tema tema = configuracaoBloc.currentTema;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

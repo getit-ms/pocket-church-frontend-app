@@ -153,7 +153,10 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
     }
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(
+        vertical: 50,
+        horizontal: 20,
+      ),
       alignment: Alignment.center,
       child: IntlText(
         "global.nenhum_registro_encontrado",
@@ -264,7 +267,11 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
         );
       }
 
-      return SizedBox(
+      return Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 50,
+          horizontal: 20,
+        ),
         width: widget.scrollDirection == Axis.horizontal
             ? widget.placeholderSize * widget.placeholderCount
             : double.infinity,
@@ -282,8 +289,12 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
     }
 
     return Container(
-        padding: const EdgeInsets.all(20),
-        alignment: Alignment.center,
-        child: const CircularProgressIndicator());
+      padding: const EdgeInsets.symmetric(
+        vertical: 50,
+        horizontal: 20,
+      ),
+      alignment: Alignment.center,
+      child: const CircularProgressIndicator(),
+    );
   }
 }

@@ -34,7 +34,7 @@ dependencies:
   sqflite: 1.1.6+3
   uuid: 1.0.3
   path_provider: 1.1.0
-  intl: 0.15.7
+  intl: 0.15.8
   flutter_html: ^0.10.4
   shared_preferences: 0.5.3+4
   json_annotation: ^3.0.0
@@ -55,18 +55,22 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_driver:
+    sdk: flutter
+  test: any
 
   flutter_launcher_icons: 0.7.2+1
   build_runner: ^1.0.0
   json_serializable: ^3.2.0
+  screenshots: 2.0.0
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/icons/icon.png"
   image_path_ios: "assets/icons/icon-ios.png"
-#  adaptive_icon_background: "assets/icons/icon-android-background.png"
-#  adaptive_icon_foreground: "assets/icons/icon-android-foreground.png"
+  adaptive_icon_background: "assets/icons/icon-android-background.png"
+  adaptive_icon_foreground: "assets/icons/icon-android-foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -85,7 +89,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/imgs/
-    - assets/bundle/
+    - assets/bundle/pt-br.json
     - assets/splash/splash.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

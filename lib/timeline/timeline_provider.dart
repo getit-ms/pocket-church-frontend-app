@@ -45,7 +45,13 @@ class TimelineProvider {
     List<Feed> lista = [];
 
     for (int i=0;i<tamanhoPagina;i++) {
-      lista.add(await _fromIndex(index + i));
+      var item = await _fromIndex(index + i);
+
+      if (item != null) {
+        lista.add(item);
+      } else {
+        break;
+      }
     }
 
     return lista;
@@ -60,14 +66,8 @@ class TimelineProvider {
     for (FeedProvider provider in providers) {
       DateTime data = await provider.currentDateTime();
 
-      if (next == null) {
+      if (data != null && (next == null || (await next.currentDateTime()).isBefore(data))) {
         next = provider;
-      } else {
-        DateTime dataNext = await next.currentDateTime();
-
-        if (data != null && dataNext.isBefore(data)) {
-          next = provider;
-        }
       }
     }
 

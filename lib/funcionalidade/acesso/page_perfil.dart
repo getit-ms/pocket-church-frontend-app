@@ -60,7 +60,9 @@ class PagePerfil extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => DialogAlterarSenha(),
+                    builder: (context) => const ConfiguracaoApp(
+                      child: DialogAlterarSenha(),
+                    ),
                   );
                 },
               ),
@@ -269,6 +271,8 @@ class PerfilHeader extends StatelessWidget {
 }
 
 class DialogAlterarSenha extends StatefulWidget {
+  const DialogAlterarSenha();
+
   @override
   State<StatefulWidget> createState() => DialogAlterarSenhaState();
 }

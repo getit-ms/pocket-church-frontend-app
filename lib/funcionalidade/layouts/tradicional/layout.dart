@@ -14,9 +14,7 @@ class _LayoutTradicionalState extends State<LayoutTradicional> {
   void didUpdateWidget(LayoutTradicional oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -61,7 +59,16 @@ class _LayoutTradicionalState extends State<LayoutTradicional> {
               _buildBannerHome(tema),
               LinksInstitucional(),
               Expanded(
-                child: DivulgacaoInstitucional(),
+                child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          color: tema.topContentBorder,
+                          width: 3,
+                        ),
+                      ),
+                    ),
+                    child: DivulgacaoInstitucional()),
               )
             ],
           ),

@@ -68,9 +68,8 @@ class BibliaDAO {
 
   Future<LivroBiblia> findLivroById(int id) async {
     List<Map> rs = await pcDatabase.database.rawQuery(
-      "SELECT id, nome, abreviacao FROM livro_biblia where id = ? order by ordem",
-      [id]
-    );
+        "SELECT id, nome, abreviacao FROM livro_biblia where id = ? order by ordem",
+        [id]);
 
     if (rs.isNotEmpty) {
       Map item = rs[0];
@@ -85,12 +84,10 @@ class BibliaDAO {
     return null;
   }
 
-
   Future<LivroCapitulo> findPrimeiroLivro([String testamento = 'VELHO']) async {
     List<Map> rs = await pcDatabase.database.rawQuery(
-      "SELECT id, nome, abreviacao FROM livro_biblia where ordem = 1 and testamento = ? order by ordem",
-      [testamento]
-    );
+        "SELECT id, nome, abreviacao FROM livro_biblia where ordem = 1 and testamento = ? order by ordem",
+        [testamento]);
 
     if (rs.isNotEmpty) {
       Map item = rs[0];
@@ -134,67 +131,71 @@ class BibliaDAO {
         .toList();
   }
 
-  Future<LivroCapitulo> findProximoCapitulo(String testamento, int id, int capitulo) async {
+  Future<LivroCapitulo> findProximoCapitulo(
+      String testamento, int id, int capitulo) async {
     List<int> capitulos = await findCapitulosLivroBiblia(id);
 
     if (capitulos.indexOf(capitulo) + 1 >= capitulos.length) {
       List<LivroBiblia> livros = await findLivrosBibliaByTestamento(testamento);
 
-      if (livros.indexOf(LivroBiblia(id: id)) >= livros.length) {
-
+      if (livros.indexOf(LivroBiblia(id: id)) + 1 >= livros.length) {
         if (testamento == 'VELHO') {
           return await findPrimeiroLivro('NOVO');
         }
 
-        return null;
+        return await findPrimeiroLivro('VELHO');
       }
 
       return LivroCapitulo(
           testamento: testamento,
           livro: livros[livros.indexOf(LivroBiblia(id: id)) + 1],
-          capitulo: 1
-      );
-    }
-
-    return LivroCapitulo(
-      testamento: testamento,
-      livro: await findLivroById(id),
-      capitulo: capitulos[capitulos.indexOf(capitulo) + 1]
-    );
-  }
-
-  Future<LivroCapitulo> findCapituloAnterior(String testamento, int id, int capitulo) async {
-    if (capitulo - 1 < 1) {
-      List<LivroBiblia> livros = await findLivrosBibliaByTestamento(testamento);
-
-      if (livros.indexOf(LivroBiblia(id: id)) == 0) {
-
-        if (testamento == 'NOVO') {
-          List<LivroBiblia> livros = await findLivrosBibliaByTestamento('VELHO');
-          List<int> capitulos = await findCapitulosLivroBiblia(livros[livros.length - 1].id);
-
-          return LivroCapitulo(
-              testamento: 'VELHO',
-              livro: livros[livros.length - 1],
-              capitulo: capitulos[capitulos.length - 1]
-          );
-        }
-
-        return null;
-      }
-
-      return LivroCapitulo(
-          testamento: testamento,
-          livro: livros[livros.indexOf(LivroBiblia(id: id)) - 1],
-          capitulo: 1
-      );
+          capitulo: 1);
     }
 
     return LivroCapitulo(
         testamento: testamento,
         livro: await findLivroById(id),
-        capitulo: capitulo - 1
-    );
+        capitulo: capitulos[capitulos.indexOf(capitulo) + 1]);
+  }
+
+  Future<LivroCapitulo> findCapituloAnterior(
+      String testamento, int id, int capitulo) async {
+    if (capitulo - 1 < 1) {
+      List<LivroBiblia> livros = await findLivrosBibliaByTestamento(testamento);
+
+      if (livros.indexOf(LivroBiblia(id: id)) == 0) {
+        if (testamento == 'NOVO') {
+          List<LivroBiblia> livros =
+              await findLivrosBibliaByTestamento('VELHO');
+          List<int> capitulos =
+              await findCapitulosLivroBiblia(livros[livros.length - 1].id);
+
+          return LivroCapitulo(
+              testamento: 'VELHO',
+              livro: livros[livros.length - 1],
+              capitulo: capitulos[capitulos.length - 1]);
+        } else {
+          List<LivroBiblia> livros = await findLivrosBibliaByTestamento('NOVO');
+          List<int> capitulos =
+              await findCapitulosLivroBiblia(livros[livros.length - 1].id);
+
+          return LivroCapitulo(
+              testamento: 'NOVO',
+              livro: livros[livros.length - 1],
+              capitulo: capitulos[capitulos.length - 1]);
+        }
+      }
+
+      return LivroCapitulo(
+          testamento: testamento,
+          livro: livros[livros.indexOf(LivroBiblia(id: id)) - 1],
+          capitulo: 1);
+    }
+
+    return LivroCapitulo(
+        testamento: testamento,
+        livro: await findLivroById(id),
+        capitulo: capitulo - 1);
   }
 }
 
@@ -210,17 +211,15 @@ class LivroCapitulo {
   });
 
   toJson() => {
-    'testamento': testamento,
-    'livro': livro.toJson(),
-    'capitulo': capitulo,
-  };
+        'testamento': testamento,
+        'livro': livro.toJson(),
+        'capitulo': capitulo,
+      };
 
-  LivroCapitulo.fromJson(Map<String, dynamic> json):
-      testamento = json['testamento'],
-      livro = LivroBiblia.fromJson(json['livro']),
-      capitulo = json['capitulo'];
-
+  LivroCapitulo.fromJson(Map<String, dynamic> json)
+      : testamento = json['testamento'],
+        livro = LivroBiblia.fromJson(json['livro']),
+        capitulo = json['capitulo'];
 }
-
 
 BibliaDAO bibliaDAO = BibliaDAO();

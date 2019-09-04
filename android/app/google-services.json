@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:65118528623:android:4bf50add4e8fa45b",
+        "mobilesdk_app_id": "1:65118528623:android:4d1671c6fd21cc53",
         "android_client_info": {
-          "package_name": "br.com.calvin"
+          "package_name": "br.com.getit.calvin.ibcb"
         }
       },
       "oauth_client": [

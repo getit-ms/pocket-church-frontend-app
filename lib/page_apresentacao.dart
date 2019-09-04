@@ -55,6 +55,7 @@ class _PageApresentacaoState extends State<PageApresentacao>
           child: Stack(
             children: <Widget>[
               TabBarView(
+                key: Key('tab_view_apresentacao'),
                 controller: _tabController,
                 physics: widget.trocaTemplate ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics(),
                 children: <Widget>[
@@ -101,6 +102,7 @@ class _PageApresentacaoState extends State<PageApresentacao>
             height: 20,
           ),
           RawMaterialButton(
+            key: Key('opcao_tradicional'),
             onPressed: () {
               Configuracao config = configuracaoBloc.currentConfig;
               configuracaoBloc.update(
@@ -152,6 +154,7 @@ class _PageApresentacaoState extends State<PageApresentacao>
             height: 20,
           ),
           RawMaterialButton(
+            key: Key('opcao_reativa'),
             onPressed: () {
               Configuracao config = configuracaoBloc.currentConfig;
               configuracaoBloc.update(

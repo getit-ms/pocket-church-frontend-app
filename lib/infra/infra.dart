@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:firebase_messaging/firebase_messaging.dart' as firebase;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:pocket_church/api/api.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:device_calendar/device_calendar.dart';

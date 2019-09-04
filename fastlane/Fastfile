@@ -1,0 +1,54 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Trata iOS"
+
+  lane :beta do
+    # add actions here: https://docs.fastlane.tools/actions
+
+    get_certificates
+    get_provisioning_profile
+
+    enable_automatic_code_signing(path: "ios/Runner/Runner.xcodeproj")
+    gym(xcargs: "-allowProvisioningUpdates", export_method: "app-store")
+
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+  end
+
+  lane :release do
+    deliver(
+      skip_app_version_update: false, # Create the new version
+      force: true,
+      skip_screenshots: true,
+      skip_binary_upload: true
+    )
+  end
+end
+
+platform :android do
+  lane :beta do
+    # add actions here: https://docs.fastlane.tools/actions
+
+    upload_to_play_store(track: 'beta', aab: 'build/app/outputs/bundle/release/app.aab')
+  end
+
+  lane :release do
+    upload_to_play_store(
+      track: 'beta',
+      skip_upload_apk: true,
+      track_promote_to: 'production'
+    )
+  end
+end
+

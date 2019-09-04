@@ -28,8 +28,10 @@ class IconUsuario extends StatelessWidget {
               child: SizedBox(
                   width: size,
                   height: size,
-                  child: FotoMembro(snapshot.data.foto)
-              ),
+                  child: FotoMembro(
+                    snapshot.data.foto,
+                    color: color,
+                  )),
             ),
           );
         }

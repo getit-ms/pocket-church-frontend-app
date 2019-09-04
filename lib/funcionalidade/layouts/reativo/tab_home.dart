@@ -20,6 +20,7 @@ class _TabHomeState extends State<TabHome> {
           pinned: true,
         ),
         new SliverList(
+          key: Key("sliver_list_home"),
           delegate: SliverChildListDelegate(
             [
               StreamBuilder<Institucional>(
@@ -70,8 +71,11 @@ class _TabHomeState extends State<TabHome> {
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
-          image:
-              DecorationImage(image: tema.homeBackground, fit: BoxFit.cover)),
+        image: DecorationImage(
+          image: tema.homeBackground,
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Column(
         children: <Widget>[
           SafeArea(
@@ -121,7 +125,8 @@ class _TabHomeState extends State<TabHome> {
   _saveCache(List<Feed> feeds) async {
     SharedPreferences sprefs = await SharedPreferences.getInstance();
 
-    sprefs.setString(CHAVE_CACHE_TIMELINE, json.encode(feeds.map((feed) => feed.toJson()).toList()));
+    sprefs.setString(CHAVE_CACHE_TIMELINE,
+        json.encode(feeds.map((feed) => feed.toJson()).toList()));
   }
 }
 
@@ -264,9 +269,10 @@ class TabHomeHeader extends SliverPersistentHeaderDelegate {
                     ClipRRect(
                       borderRadius:
                           const BorderRadius.all(Radius.circular(150)),
-                      child: Image(
-                        height: 120,
-                        image: ArquivoImageProvider(snapshot.data.foto?.id),
+                      child: FotoMembro(
+                        snapshot.data.foto,
+                        size: 120,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(

@@ -66,15 +66,14 @@ class Configuracao {
     String template,
   }) =>
       Configuracao(
-        basePath: basePath ?? this.basePath,
-        chaveIgreja: chaveIgreja ?? this.chaveIgreja,
-        nomeAplicativo: nomeAplicativo ?? this.nomeAplicativo,
-        nomeIgreja: nomeIgreja ?? this.nomeIgreja,
-        chaveDispositivo: chaveDispositivo ?? this.chaveDispositivo,
-        version: version ?? this.version,
-        authorization: authorization ?? this.authorization,
-        template: template ?? this.template
-      );
+          basePath: basePath ?? this.basePath,
+          chaveIgreja: chaveIgreja ?? this.chaveIgreja,
+          nomeAplicativo: nomeAplicativo ?? this.nomeAplicativo,
+          nomeIgreja: nomeIgreja ?? this.nomeIgreja,
+          chaveDispositivo: chaveDispositivo ?? this.chaveDispositivo,
+          version: version ?? this.version,
+          authorization: authorization ?? this.authorization,
+          template: template ?? this.template);
 }
 
 class Tema {
@@ -285,12 +284,12 @@ class ConfiguracaoBloc {
 
   Bundle get currentBundle => _bundle.value;
 
-  init(BuildContext context) async {
+  init() async {
     await _initConfig();
 
     _loadTema();
 
-    _initBundle(context);
+    _initBundle();
   }
 
   _addBundle(Bundle bundle) => _bundle.add(bundle);
@@ -317,26 +316,30 @@ class ConfiguracaoBloc {
     _bundle.close();
   }
 
-  _initBundle(BuildContext context) async {
-    String data = await DefaultAssetBundle.of(context)
-        .loadString("assets/bundle/pt-br.json");
+  _initBundle() async {
+    String data = await rootBundle.loadString("assets/bundle/pt-br.json");
 
     _addBundle(new Bundle(json.decode(data)));
-/*
+
+    refreshBundle();
+  }
+
+  refreshBundle() async {
     var sprefs = await SharedPreferences.getInstance();
 
     if (sprefs.containsKey(BUNDLE)) {
       _addBundle(new Bundle(json.decode(sprefs.get(BUNDLE))));
     }
 
-    Bundle bundle = new Bundle(await _assetsApi.buscaPorLocale("pt-br"))
-        .mergeWith(new Bundle(await _assetsApi
-            .buscaPorLocale(_config.value.chaveIgreja)));
+    var base = new Bundle(await _assetsApi.buscaPorLocale("pt-br"));
+    var igreja =
+        new Bundle(await _assetsApi.buscaPorIgreja(_config.value.chaveIgreja));
+
+    Bundle bundle = base.mergeWith(igreja);
 
     _addBundle(bundle);
 
     sprefs.setString(BUNDLE, json.encode(bundle.toJson()));
-    */
   }
 
   _initConfig() async {
@@ -377,14 +380,15 @@ class ConfiguracaoBloc {
     var sprefs = await SharedPreferences.getInstance();
 
     if (sprefs.containsKey(TEMA)) {
-      await _addTemplateTema(sprefs,
-          TemplateAplicativo.fromJson(json.decode(sprefs.get(TEMA))));
+      await _addTemplateTema(
+          sprefs, TemplateAplicativo.fromJson(json.decode(sprefs.get(TEMA))));
     }
 
     await _addTemplateTema(sprefs, await _igrejaApi.buscaTemplate());
   }
 
-  _addTemplateTema(SharedPreferences sprefs, TemplateAplicativo template) async {
+  _addTemplateTema(
+      SharedPreferences sprefs, TemplateAplicativo template) async {
     // Só adicionar o tema após todos os assetes serem carregados, dessa forma
     // se a internet do usuário for lenta ou não responder rápido,
     await _carregaAssets(template);
