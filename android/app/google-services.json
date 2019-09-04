@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:65118528623:android:4d1671c6fd21cc53",
+        "mobilesdk_app_id": "1:65118528623:android:538b14224ea7fee9",
         "android_client_info": {
-          "package_name": "br.com.getit.calvin.ibcb"
+          "package_name": "br.com.getit.calvin.iceso"
         }
       },
       "oauth_client": [
@@ -25,15 +25,20 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65118528623-h373d6ekkjia01nrdtamd19jd26uj4mb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "65118528623-uk98k6arrh011h3iq6olm0cdcnjqc4pr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.getit.calvin.ibcj"
+              }
+            }
+          ]
         }
       }
     }

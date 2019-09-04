@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>65118528623-mkso3e945hcuia3uaefbnm7huek5p0tj.apps.googleusercontent.com</string>
+	<string>65118528623-cvq9frrb0meotlm8ar65oeh362rer8nd.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.65118528623-mkso3e945hcuia3uaefbnm7huek5p0tj</string>
+	<string>com.googleusercontent.apps.65118528623-cvq9frrb0meotlm8ar65oeh362rer8nd</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>65118528623-2dpp644ktce5675pledjckq677q4gv3a.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>br.com.getit.calvin.ibcb</string>
+	<string>br.com.getit.calvin.iceso</string>
 	<key>PROJECT_ID</key>
 	<string>calvin-app-1469800955782</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:65118528623:ios:4d1671c6fd21cc53</string>
+	<string>1:65118528623:ios:538b14224ea7fee9</string>
 	<key>DATABASE_URL</key>
 	<string>https://calvin-app-1469800955782.firebaseio.com</string>
 </dict>
