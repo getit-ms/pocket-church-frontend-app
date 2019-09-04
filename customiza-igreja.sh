@@ -51,16 +51,6 @@ unzip -o /tmp/build-igreja/assets.zip  || exit 1
 
 flutter pub run flutter_launcher_icons:main || exit 1
 
-d1=$(echo $2 | cut -d'.' -f1)
-d2=$(echo $2 | cut -d'.' -f2)
-d3=$(echo $2 | cut -d'.' -f3)
+echo "Removendo diretóri temporário"
 
-BUILD_NUMBER=$(printf "%d%02d%02d" $d1 $d2 $d3) || exit 1
-
-echo "Construindo AppBundle $BUILD_NUMBER"
-
-flutter build appbundle --build-number=$BUILD_NUMBER --build-name=$2 || exit
-
-bundle install || exit
-
-bundle exec fastlane android beta || exit
+rm -Rf $TMP_DIR
