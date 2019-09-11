@@ -19,11 +19,13 @@ class MenuDrawer extends StatelessWidget {
                 )
             ),
             child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(35),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: 120,
+                  maxWidth: 180,
+                ),
                 child: Image(
                   image: tema.menuLogo,
-                  height: 55,
                 ),
               ),
             ),

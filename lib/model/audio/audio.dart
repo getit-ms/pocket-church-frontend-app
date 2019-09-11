@@ -30,5 +30,15 @@ class Audio {
 
   factory Audio.fromJson(Map<String, dynamic> json) => _$AudioFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AudioToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'id': id,
+    'nome': nome,
+    'autor': autor,
+    'descricao': descricao,
+    'tamamnhoArquivo': tamamnhoArquivo,
+    'tempoAudio': tempoAudio,
+    'capa': capa?.toJson(),
+    'audio': audio?.toJson(),
+    'dataCadastro': dataCadastro?.toIso8601String(),
+  };
 }

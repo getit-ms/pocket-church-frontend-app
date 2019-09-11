@@ -79,7 +79,7 @@ class _PageInscricaoEventoState extends State<PageInscricaoEvento> {
                         label: const IntlText("evento.valor_total"),
                         value: Text(
                           StringUtil.formataCurrency(
-                              widget.evento.valor * _inscricoes.length),
+                            (widget.evento.valor ?? 0) * _inscricoes.length),
                         ),
                       )
                     : Container(),

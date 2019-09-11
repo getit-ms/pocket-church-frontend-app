@@ -9,22 +9,23 @@ class DetalhePlayer extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-          image: DecorationImage(
-        image: audio?.capa != null
-            ? ArquivoImageProvider(audio.capa.id)
-            : tema.institucionalBackground,
-        fit: BoxFit.cover,
-      )),
+        image: DecorationImage(
+          image: audio?.capa != null
+              ? ArquivoImageProvider(audio.capa.id)
+              : tema.loginBackground,
+          fit: BoxFit.cover,
+        ),
+      ),
       child: new BackdropFilter(
         filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
         child: Container(
           decoration: BoxDecoration(
-            gradient: RadialGradient(
-              radius: 1.2,
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
               colors: [
-                Colors.black38,
-                tema.primary.withOpacity(0.65),
-                tema.secondary.withOpacity(0.75)
+                tema.primary.withOpacity(.75),
+                tema.secondary.withOpacity(.75)
               ],
             ),
           ),
@@ -32,6 +33,9 @@ class DetalhePlayer extends StatelessWidget {
             backgroundColor: Colors.transparent,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
               elevation: 0,
             ),
             body: Container(
@@ -301,7 +305,7 @@ class DetalhePlayer extends StatelessWidget {
           height: MediaQuery.of(context).size.height - 530,
           image: audio.capa != null
               ? ArquivoImageProvider(audio.capa.id)
-              : tema.institucionalBackground,
+              : tema.loginBackground,
           fit: BoxFit.cover,
         ),
       ),

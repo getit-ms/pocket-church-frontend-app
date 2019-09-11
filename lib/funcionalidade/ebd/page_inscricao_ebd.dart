@@ -79,7 +79,7 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
                         label: const IntlText("ebd.valor_total"),
                         value: Text(
                           StringUtil.formataCurrency(
-                              widget.ebd.valor * _inscricoes.length),
+                            (widget.ebd.valor ?? 0) * _inscricoes.length),
                         ),
                       )
                     : Container(),

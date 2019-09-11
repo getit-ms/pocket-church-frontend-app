@@ -46,7 +46,7 @@ class PageTemplateState extends State<PageTemplate> {
     messagingListener.addWhenNotificatoinOnTop(_onNotificationOnTop);
 
     this._subscriptionMembro = acessoBloc.membro.listen((membro) {
-      if (membro == null) {
+      if (widget.deveEstarAutenticado && membro == null) {
         Navigator.of(context).pop();
       }
     });
@@ -93,38 +93,35 @@ class PageTemplateState extends State<PageTemplate> {
       _isRoot = !navigator.canPop();
     }
 
-
-    return ConfiguracaoApp(
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: widget.withAppBar
-            ? (_searchBar != null
-                ? _searchBar.build(context)
-                : _defaultAppBar(context) as PreferredSizeWidget)
-            : null,
-        backgroundColor: widget.backgroundColor,
-        body: Column(
-          children: <Widget>[
-            Expanded(child: widget.body),
-            const BottomPlayerControl(
-              safeArea: true,
-            )
-          ],
-        ),
-        drawer: !_isRoot ? null : MenuDrawer(),
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: widget.withAppBar
+          ? (_searchBar != null
+              ? _searchBar.build(context)
+              : _defaultAppBar(context) as PreferredSizeWidget)
+          : null,
+      backgroundColor: widget.backgroundColor,
+      body: Column(
+        children: <Widget>[
+          Expanded(child: widget.body),
+          const BottomPlayerControl(
+            safeArea: true,
+          )
+        ],
       ),
+      drawer: !_isRoot ? null : MenuDrawer(),
     );
   }
 
   AppBar _defaultAppBar(BuildContext context) {
-    NavigatorState navigator = Navigator.of(context);
+    Tema tema = ConfiguracaoApp.of(context).tema;
 
     return AppBar(
       centerTitle: true,
       automaticallyImplyLeading: true,
       title: widget.title,
       actions: widget.actions == null && _isRoot
-          ? [IconUsuario()]
+          ? [IconUsuario(color: tema.appBarIcons)]
           : widget.actions,
     );
   }

@@ -57,18 +57,19 @@ class _LayoutTradicionalState extends State<LayoutTradicional> {
           child: Column(
             children: <Widget>[
               _buildBannerHome(tema),
-              LinksInstitucional(),
+              const LinksInstitucional(),
               Expanded(
                 child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          color: tema.topContentBorder,
-                          width: 3,
-                        ),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: tema.topContentBorder,
+                        width: 3,
                       ),
                     ),
-                    child: DivulgacaoInstitucional()),
+                  ),
+                  child: const DivulgacaoInstitucional(),
+                ),
               )
             ],
           ),
@@ -79,7 +80,7 @@ class _LayoutTradicionalState extends State<LayoutTradicional> {
 
   Widget _buildBannerHome(Tema tema) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Image(
         image: tema.homeLogo,
         height: 55,

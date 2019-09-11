@@ -28,8 +28,6 @@ class ArquivoImageProvider extends ImageProvider<ArquivoImageProvider> {
   Future<Codec> _loadAsync(ArquivoImageProvider key) async {
     assert(key == this);
 
-    print('_loadAsync');
-
     var file = await arquivoService.getFile(arquivo);
 
     final Uint8List bytes = await file.readAsBytes();

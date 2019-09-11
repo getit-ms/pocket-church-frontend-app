@@ -115,7 +115,7 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
                   width: double.infinity,
                   child: _resolve(tabs: widget.tabs, menus: widget.menus)),
             ),
-            BottomPlayerControl(),
+            const BottomPlayerControl(),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -130,9 +130,13 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
             items: [
               BottomNavigationBarItem(
                 backgroundColor: Colors.white,
-                icon: const Icon(
-                  FontAwesomeIcons.home,
-                  size: 18,
+                icon: SizedBox(
+                  width: 30,
+                  height: 25,
+                  child: const Icon(
+                    FontAwesomeIcons.home,
+                    size: 18,
+                  ),
                 ),
                 title: const IntlText(
                   "home.inicio",
@@ -148,9 +152,13 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
                     (menu.notificacoes ?? 0).toString(),
                     style: TextStyle(color: tema.badgeText),
                   ),
-                  child: Icon(
-                    IconUtil.fromString(menu.icone),
-                    size: 18,
+                  child: SizedBox(
+                    width: 30,
+                    height: 25,
+                    child: Icon(
+                      IconUtil.fromString(menu.icone),
+                      size: 18,
+                    ),
                   ),
                 ),
                 title: Text(
@@ -164,9 +172,13 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
                   showBadge:
                       widget.menus.any((menu) => (menu.notificacoes ?? 0) > 0),
                   badgeColor: tema.badgeBackground,
-                  child: const Icon(
-                    FontAwesomeIcons.bars,
-                    size: 18,
+                  child: SizedBox(
+                    width: 30,
+                    height: 25,
+                    child: const Icon(
+                      FontAwesomeIcons.bars,
+                      size: 18,
+                    ),
                   ),
                 ),
                 title: const IntlText(

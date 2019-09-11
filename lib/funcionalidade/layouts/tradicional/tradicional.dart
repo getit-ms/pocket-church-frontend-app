@@ -8,7 +8,6 @@ import 'package:pocket_church/infra/infra.dart';
 import 'package:pocket_church/model/institucional/model.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-part 'home.dart';
 part 'layout.dart';
 part 'divulgacao_institucional.dart';
 part 'link_institucional.dart';

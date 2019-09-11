@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:65118528623:android:538b14224ea7fee9",
+        "mobilesdk_app_id": "1:65118528623:android:a17c720d41a30385",
         "android_client_info": {
-          "package_name": "br.com.getit.calvin.iceso"
+          "package_name": "br.com.getit.calvin.ipvm"
         }
       },
       "oauth_client": [
@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "65118528623-uk98k6arrh011h3iq6olm0cdcnjqc4pr.apps.googleusercontent.com",
+              "client_id": "65118528623-vhinc6idb49h2tbnva42e2c82bnba1v9.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "br.com.getit.calvin.ibcj"
+                "bundle_id": "br.com.getit.calvin.ipvm"
               }
             }
           ]

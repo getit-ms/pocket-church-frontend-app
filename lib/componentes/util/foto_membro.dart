@@ -19,11 +19,11 @@ class FotoMembro extends StatelessWidget {
       return Container(
         width: size,
         height: size,
-        color: color,
         child: Image(
           image: placeholder,
           fit: BoxFit.cover,
-          colorBlendMode: BlendMode.color,
+          colorBlendMode: BlendMode.lighten,
+          color: color,
         ),
       );
     } else {

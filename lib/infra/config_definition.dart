@@ -443,13 +443,13 @@ class ConfiguracaoAppState extends State<ConfiguracaoApp> {
 
   Bundle _bundle;
 
-  get tema => _tema;
+  Tema get tema => _tema;
 
-  get config => _config;
+  Configuracao get config => _config;
 
-  get menu => _menu;
+  Menu get menu => _menu;
 
-  get bundle => _bundle;
+  Bundle get bundle => _bundle;
 
   StreamSubscription<Tema> _subscriptionoTema;
   StreamSubscription<Configuracao> _subscriptionoConfig;
@@ -492,7 +492,27 @@ class ConfiguracaoAppState extends State<ConfiguracaoApp> {
   @override
   Widget build(BuildContext context) {
     if (menu != null && config != null && tema != null) {
-      return widget.child;
+      return Theme(
+        data: ThemeData(
+          accentColor: tema.primary,
+          primaryColor: tema.primary,
+          buttonColor: tema.buttonBackground,
+          appBarTheme: AppBarTheme.of(context).copyWith(
+            color: tema.appBarBackground,
+            textTheme: Theme.of(context).primaryTextTheme.apply(
+                  bodyColor: tema.appBarTitle,
+                ),
+            iconTheme: Theme.of(context)
+                .primaryIconTheme
+                .copyWith(color: tema.appBarIcons),
+          ),
+          dividerColor: tema.dividerBackground,
+          iconTheme: Theme.of(context).primaryIconTheme.copyWith(
+                color: tema.iconForeground,
+              ),
+        ),
+        child: widget.child,
+      );
     }
 
     return Container();

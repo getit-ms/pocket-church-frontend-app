@@ -405,15 +405,15 @@ class ItemNotificacao extends StatelessWidget {
                 items: matches
                     .map((match) => BottomMenuItem(
                         icon: Icons.link,
-                        label: Text(match.toString()),
+                        label: Text(match.group(0)),
                         action: () {
-                          LaunchUtil.site(match.toString());
+                          LaunchUtil.site(match.group(0));
                         }))
                     .toList(),
               ),
             );
           } else {
-            LaunchUtil.site(matches[0].toString());
+            LaunchUtil.site(matches[0].group(0));
           }
         };
       }

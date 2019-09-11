@@ -38,12 +38,12 @@ class IconUsuario extends StatelessWidget {
 
         return IconButton(
           iconSize: size,
+          color: color ?? tema.iconForeground,
           onPressed: () {
             NavigatorUtil.navigate(context, builder: (context) => PageLogin());
           },
           icon: Icon(
             Icons.person_outline,
-            color: color ?? tema.iconForeground,
           ),
         );
       },

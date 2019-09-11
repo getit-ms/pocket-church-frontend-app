@@ -80,12 +80,10 @@ class TimelineProvider {
   }
 
   VoidCallback resolveAction(BuildContext context, Feed feed) {
-    if (feed.image != null) {
-      FeedProvider provider = providers.firstWhere((provider) => provider.funcionalidade == feed.funcionalidade);
+    FeedProvider provider = providers.firstWhere((provider) => provider.funcionalidade == feed.funcionalidade);
 
-      if (provider != null) {
-        return provider.resolveAction(context, feed);
-      }
+    if (provider != null) {
+      return provider.resolveAction(context, feed);
     }
 
     return null;

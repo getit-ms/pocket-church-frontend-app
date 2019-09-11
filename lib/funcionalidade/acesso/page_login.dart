@@ -41,9 +41,9 @@ class PageLoginState extends State<PageLogin> {
     });
 
     if (widget.showMensagemAlteracaoSenha) {
-      Timer(Duration(milliseconds: 300), () {
+      Timer(const Duration(milliseconds: 800), () {
         comp.MessageHandler.success(_scaffoldKey.currentState,
-            comp.IntlText("mensagens.MSG-031"));
+            const comp.IntlText("mensagens.MSG-031"));
       });
     }
   }

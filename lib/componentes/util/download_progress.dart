@@ -8,6 +8,8 @@ class DownloadProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tema = ConfiguracaoApp.of(context).tema;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -25,6 +27,8 @@ class DownloadProgress extends StatelessWidget {
                   width: 200,
                   child: LinearProgressIndicator(
                     value: progress,
+                    valueColor: AlwaysStoppedAnimation(tema.primary),
+                    backgroundColor: tema.primary.withOpacity(.3),
                   ),
                 ),
                 SizedBox(height: 10,),

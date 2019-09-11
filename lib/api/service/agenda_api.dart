@@ -40,7 +40,7 @@ class AgendaApi extends ApiBase {
     int agendamento,
   }) async {
     return await post(
-      '/agenda/$calendario/confirmar/$agendamento',
+      '/agenda/$calendario/cancelar/$agendamento',
       typeMapper: (json) => Aconselhamento.fromJson(json),
     );
   }

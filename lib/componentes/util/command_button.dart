@@ -40,7 +40,7 @@ class _CommandButtonState<T> extends State<CommandButton<T>> {
       ),
       padding: widget.padding ?? const EdgeInsets.all(15),
       fillColor: widget.onPressed == null || _loading
-          ? Colors.black54
+          ? (widget.background ?? tema.buttonBackground).withOpacity(.5)
           : widget.background ?? tema.buttonBackground,
       child: _loading
           ? SizedBox(

@@ -1,8 +1,8 @@
-app_identifier("br.com.getit.calvin.iceso") # The bundle identifier of your app
+app_identifier("br.com.getit.calvin.ipvm") # The bundle identifier of your app
 apple_id("${igreja.appleId}") # Your Apple email address
 
 team_id("${igreja.appleTeamId}")
 
 json_key_file "./fastlane/acesso-android.json"
-package_name "br.com.getit.calvin.iceso"
+package_name "br.com.getit.calvin.ipvm"
 

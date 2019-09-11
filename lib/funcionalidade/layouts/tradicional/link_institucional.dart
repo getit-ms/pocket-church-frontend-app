@@ -1,13 +1,15 @@
 part of pocket_church.layout_tradicional;
 
 class LinksInstitucional extends StatelessWidget {
-  final Map<String, IconData> redesSociais = {
+  final Map<String, IconData> redesSociais = const {
     'facebook': FontAwesomeIcons.facebookF,
     'instagram': FontAwesomeIcons.instagram,
     'youtube': FontAwesomeIcons.youtube,
     'foursquare': FontAwesomeIcons.foursquare,
     'twitter': FontAwesomeIcons.twitter
   };
+
+  const LinksInstitucional();
 
   @override
   Widget build(BuildContext context) {

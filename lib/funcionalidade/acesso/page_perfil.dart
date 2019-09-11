@@ -60,9 +60,7 @@ class PagePerfil extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => const ConfiguracaoApp(
-                      child: DialogAlterarSenha(),
-                    ),
+                    builder: (context) => const DialogAlterarSenha(),
                   );
                 },
               ),
@@ -300,7 +298,7 @@ class DialogAlterarSenhaState extends State<DialogAlterarSenha> {
         child: Form(
           key: _formKey,
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: <Widget>[
                 comp.IntlText(
@@ -311,7 +309,7 @@ class DialogAlterarSenhaState extends State<DialogAlterarSenha> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 comp.IntlBuilder(
@@ -327,7 +325,7 @@ class DialogAlterarSenhaState extends State<DialogAlterarSenha> {
                         onSaved: (senha) => this._senha = senha,
                       );
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 comp.IntlBuilder(
@@ -343,7 +341,7 @@ class DialogAlterarSenhaState extends State<DialogAlterarSenha> {
                         onSaved: (senha) => this._confirmacaoSenha = senha,
                       );
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SizedBox(
@@ -361,13 +359,9 @@ class DialogAlterarSenhaState extends State<DialogAlterarSenha> {
                               novaSenha: _senha,
                               confirmacaoSenha: _confirmacaoSenha));
 
-                          // Fecha a Dialog
-                          Navigator.of(context).pop();
-
-                          // Sai da tela de perfil
-                          Navigator.of(context).pop();
-
                           acessoBloc.logout();
+
+                          Navigator.of(context).popUntil((route) => route.isFirst);
 
                           await NavigatorUtil.navigate(
                             context,

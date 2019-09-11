@@ -94,7 +94,7 @@ abstract class ApiBase {
 
       if (body != null) {
         req.headers.add("Content-Type", "application/json");
-        req.write(json.encode(body));
+        req.write(latin1.decode(utf8.encode(json.encode(body))));
       }
 
       HttpClientResponse resp = await req.close();

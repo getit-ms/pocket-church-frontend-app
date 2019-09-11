@@ -57,8 +57,6 @@ class PaginaPDFImageProvider extends ImageProvider<PaginaPDFImageProvider> {
   Future<Codec> _loadAsync(PaginaPDFImageProvider key) async {
     assert(key == this);
 
-    print('_loadAsync');
-
     var pageImage = await lockRenderizacao.synchronized(() async {
       final page = await document.getPage(numeroPagina);
       try {
