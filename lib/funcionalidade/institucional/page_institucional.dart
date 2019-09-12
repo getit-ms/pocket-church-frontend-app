@@ -3,11 +3,9 @@ part of pocket_church.institucional;
 class PageInstitucional extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Tema tema = ConfiguracaoApp
-        .of(context)
-        .tema;
+    Tema tema = ConfiguracaoApp.of(context).tema;
     return PageTemplate(
-      title: IntlText("institucional.institucional"),
+      title: const IntlText("institucional.institucional"),
       body: ListView(
         children: <Widget>[
           Container(
@@ -51,10 +49,11 @@ class PageInstitucional extends StatelessWidget {
           StreamBuilder<Institucional>(
             stream: institucionalBloc.institucional,
             builder: (context, snapshot) {
-              if (snapshot.hasData && (snapshot.data.site != null ||
-                  snapshot.data.email != null ||
-                  snapshot.data.enderecos != null ||
-                  snapshot.data.telefones != null)) {
+              if (snapshot.hasData &&
+                  (snapshot.data.site != null ||
+                      snapshot.data.email != null ||
+                      snapshot.data.enderecos != null ||
+                      snapshot.data.telefones != null)) {
                 return Material(
                   color: Colors.white,
                   child: Column(
@@ -68,11 +67,12 @@ class PageInstitucional extends StatelessWidget {
                       snapshot.data.site != null
                           ? _buildSite(snapshot.data.site)
                           : Container(),
-                    ].followedBy(
-                        (snapshot.data.telefones ?? []).map(_buildTelefone))
+                    ]
                         .followedBy(
-                        (snapshot.data.enderecos ?? []).map(_buildEndereco))
-                    .toList(),
+                            (snapshot.data.telefones ?? []).map(_buildTelefone))
+                        .followedBy(
+                            (snapshot.data.enderecos ?? []).map(_buildEndereco))
+                        .toList(),
                   ),
                 );
               }
@@ -86,7 +86,12 @@ class PageInstitucional extends StatelessWidget {
   }
 
   Widget _buildEndereco(Endereco endereco) {
-    var strEndereco = "${endereco.descricao} - ${endereco.cidade} - ${endereco.estado} - ${StringUtil.formataCep(endereco.cep)}";
+    if (endereco == null || endereco.descricao == null) {
+      return Container();
+    }
+
+    var strEndereco =
+        "${endereco.descricao} - ${endereco.cidade} - ${endereco.estado} - ${StringUtil.formataCep(endereco.cep)}";
 
     return ItemInstitucional(
       icon: Icons.location_on,
