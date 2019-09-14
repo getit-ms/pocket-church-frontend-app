@@ -120,8 +120,8 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
         ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _activeIndex,
-            selectedItemColor: tema.menuIcon,
-            unselectedItemColor: tema.menuActiveIcon,
+            selectedItemColor: tema.menuActiveIcon,
+            unselectedItemColor: tema.menuIcon,
             onTap: (index) {
               setState(() {
                 _activeIndex = index;
