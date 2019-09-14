@@ -38,7 +38,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "br.com.getit.calvin.ipvm"
+        applicationId "br.com.getit.calvin.saf"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
