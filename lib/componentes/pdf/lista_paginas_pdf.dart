@@ -1,7 +1,6 @@
 part of pocket_church.componentes;
 
 class ListaPaginasPDF extends StatelessWidget {
-
   final String titulo;
   final Arquivo arquivo;
 
@@ -32,9 +31,9 @@ class ListaPaginasPDF extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: arquivoPDF.paginas[0].width / arquivoPDF.paginas[0].height
-        ),
-        padding: EdgeInsets.all(10),
+            childAspectRatio:
+                arquivoPDF.paginas[0].width / arquivoPDF.paginas[0].height),
+        padding: const EdgeInsets.all(10),
         itemBuilder: (context, index) {
           return Container(
               decoration: BoxDecoration(
@@ -51,20 +50,17 @@ class ListaPaginasPDF extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 child: InkWell(
                   child: _pagina(index, arquivoPDF),
-                  onTap: (){
+                  onTap: () {
                     NavigatorUtil.navigate(context,
                         builder: (context) => GaleriaPDF(
-                          titulo: titulo,
-                          arquivo: arquivo,
-                          initialPage: index + 1,
-                        )
-                    );
+                              titulo: titulo,
+                              arquivo: arquivo,
+                              initialPage: index + 1,
+                            ));
                   },
                 ),
-              )
-          );
-        }
-    );
+              ));
+        });
   }
 
   Widget _pagina(int index, ArquivoPDF arquivoPDF) {
@@ -87,13 +83,12 @@ class ListaPaginasPDF extends StatelessWidget {
           placeholder: MemoryImage(kTransparentImage),
           image: FileImage(file, scale: .5),
           fit: BoxFit.contain,
-        )
-    );
+        ));
   }
 
   Widget _error(BuildContext context, dynamic ex) {
     return Container(
-      padding: EdgeInsets.all(50),
+      padding: const EdgeInsets.all(50),
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +103,7 @@ class ListaPaginasPDF extends StatelessWidget {
           ),
           DefaultTextStyle(
             child: error.resolveMessage(ex),
-            style: TextStyle(color: Colors.black54),
+            style: const TextStyle(color: Colors.black54),
             textAlign: TextAlign.center,
           )
         ],
@@ -121,7 +116,7 @@ class ListaPaginasPDF extends StatelessWidget {
   }
 
   Widget _waiting() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }

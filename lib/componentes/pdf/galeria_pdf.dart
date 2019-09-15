@@ -29,7 +29,8 @@ class GaleriaPDFState extends State<GaleriaPDF> with TickerProviderStateMixin {
         builder: (context, snapshot) {
           if (snapshot.status == PDFRenderingStatus.done) {
             if (_pageController == null) {
-              _pageController = new PageController(initialPage: widget.initialPage - 1);
+              _pageController =
+                  new PageController(initialPage: widget.initialPage - 1);
               totalPaginas = snapshot.pdf.paginas.length;
             }
 
@@ -49,47 +50,55 @@ class GaleriaPDFState extends State<GaleriaPDF> with TickerProviderStateMixin {
       color: Colors.black,
       child: Stack(
         children: <Widget>[
-        child,
-        Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              AnimatedCrossFade(
-                firstChild: Container(),
-                secondChild: AppBar(
-                  centerTitle: true,
-                  title: Text(widget.titulo ?? ""),
-                  backgroundColor: Colors.transparent,
-                ),
-                crossFadeState: showTools
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 300),
-              ),
-              AnimatedCrossFade(
-                firstChild: Container(),
-                secondChild: Container(
-                  height: MediaQuery.of(context).padding.bottom +
-                      kToolbarHeight,
-                  color: Colors.black45,
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).padding.bottom,
+          child,
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                AnimatedCrossFade(
+                  firstChild: Container(),
+                  secondChild: AppBar(
+                    centerTitle: true,
+                    iconTheme: const IconThemeData(
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      widget.titulo ?? "",
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    backgroundColor: Colors.transparent,
                   ),
-                  child: totalPaginas > 0
-                      ? PageNavigation(
-                    controller: _pageController,
-                    totalPages: totalPaginas,
-                  )
-                      : null,
+                  crossFadeState: showTools
+                      ? CrossFadeState.showSecond
+                      : CrossFadeState.showFirst,
+                  duration: const Duration(milliseconds: 300),
                 ),
-                crossFadeState: showTools
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 300),
-              )
-            ],
-          ),
-        )
+                AnimatedCrossFade(
+                  firstChild: Container(),
+                  secondChild: Container(
+                    height:
+                        MediaQuery.of(context).padding.bottom + kToolbarHeight,
+                    color: Colors.black45,
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).padding.bottom,
+                    ),
+                    child: totalPaginas > 0
+                        ? PageNavigation(
+                            controller: _pageController,
+                            totalPages: totalPaginas,
+                          )
+                        : null,
+                  ),
+                  crossFadeState: showTools
+                      ? CrossFadeState.showSecond
+                      : CrossFadeState.showFirst,
+                  duration: const Duration(milliseconds: 300),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -118,7 +127,9 @@ class GaleriaPDFState extends State<GaleriaPDF> with TickerProviderStateMixin {
 
   Widget _waiting() {
     return const Center(
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation(Colors.white),
+      ),
     );
   }
 }
@@ -151,7 +162,8 @@ class _PageNavigationState extends State<PageNavigation> {
     widget.controller.removeListener(_onChange);
   }
 
-  int get page => (widget.controller.page?.round() ?? widget.controller.initialPage) + 1;
+  int get page =>
+      (widget.controller.page?.round() ?? widget.controller.initialPage) + 1;
 
   @override
   Widget build(BuildContext context) {
