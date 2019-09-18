@@ -167,6 +167,7 @@ class PageListaFotos extends StatelessWidget {
                     url:
                         "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_b.jpg",
                     filename: "${foto.id}_${foto.secret}_b.jpg",
+                    downloadOnly: true,
                   );
 
                   if (sucesso) {

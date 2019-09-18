@@ -72,10 +72,9 @@ class _LoadingSharingDialogState extends State<LoadingSharingDialog> {
           bytes,
           'application/pdf',
         );
-        Navigator.of(context).pop(true);
-      } else {
-        Navigator.of(context).pop(true);
       }
+
+      Navigator.of(context).pop(true);
     } catch (ex) {
       Navigator.of(context).pop(false);
     }
