@@ -76,15 +76,10 @@ class _PageListaCanticosState extends State<PageListaCanticos> {
   }
 
   _share(BuildContext context, Cantico cantico) async {
-    var file = await arquivoService.getFile(cantico.cifra.id);
-
-    final ByteData bytes = await services.rootBundle.load(file.path);
-
-    Share.file(
-      cantico.titulo,
-      cantico.cifra.filename + '.pdf',
-      bytes.buffer.asUint8List(),
-      'application/pdf',
+    ShareUtil.shareArquivo(
+      context,
+      arquivo: cantico.cifra.id,
+      filename: cantico.cifra.filename,
     );
   }
 }

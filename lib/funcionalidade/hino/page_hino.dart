@@ -9,45 +9,41 @@ class PageHino extends StatelessWidget {
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
-    return PageTemplate(
-      title: IntlText(
-        "hino.hino",
-        args: {
-          'numero': hino.numero,
-        },
-      ),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.share),
-          onPressed: () => _share(context),
-        )
-      ],
-      body: FutureBuilder(
-        future: hinoDAO.findHino(hino.id),
-        builder: (context, snapshot) {
-          return Container(
+    return FutureBuilder(
+      future: hinoDAO.findHino(hino.id),
+      builder: (context, snapshot) {
+        return PageTemplate(
+          title: IntlText(
+            "hino.hino",
+            args: {
+              'numero': hino.numero,
+            },
+          ),
+          actions: <Widget>[
+            snapshot.hasData != null
+                ? IconButton(
+                    icon: Icon(Icons.share),
+                    onPressed: () => _share(context, snapshot.data ?? hino),
+                  )
+                : Container()
+          ],
+          body: Container(
             color: Colors.white,
             child: _buildContent(snapshot.data ?? hino, tema),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
-  _share(BuildContext context) async {
+  _share(BuildContext context, Hino hino) async {
     Configuracao config = ConfiguracaoApp.of(context).config;
 
-    String tempFile = await arquivoService.downloadTemp(
-      "${config.basePath}/hino/${hino.id}/${hino.filename.replaceAll(' ', '_')}'.pdf",
-    );
-
-    final ByteData bytes = await services.rootBundle.load(tempFile);
-
-    Share.file(
-      hino.nome,
-      hino.filename + '.pdf',
-      bytes.buffer.asUint8List(),
-      'application/pdf',
+    ShareUtil.shareDownloadedFile(
+      context,
+      url:
+          "${config.basePath}/hino/${hino.id}/${hino?.filename?.replaceAll(' ', '_')}'.pdf",
+      filename: hino.filename,
     );
   }
 
@@ -70,7 +66,8 @@ class PageHino extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: Html(data: hino.texto ?? "",
+              child: Html(
+                data: hino.texto ?? "",
                 defaultTextStyle: TextStyle(
                   color: Colors.black87,
                   fontSize: 17,

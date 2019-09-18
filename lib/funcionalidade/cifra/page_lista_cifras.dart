@@ -76,15 +76,10 @@ class _PageListaCifrasState extends State<PageListaCifras> {
   }
 
   _share(BuildContext context, Cantico cifra) async {
-    var file = await arquivoService.getFile(cifra.cifra.id);
-
-    final ByteData bytes = await services.rootBundle.load(file.path);
-
-    Share.file(
-      cifra.titulo,
-      cifra.cifra.filename + '.pdf',
-      bytes.buffer.asUint8List(),
-      'application/pdf',
+    ShareUtil.shareArquivo(
+      context,
+      arquivo: cifra.cifra.id,
+      filename: cifra.cifra.filename,
     );
   }
 }

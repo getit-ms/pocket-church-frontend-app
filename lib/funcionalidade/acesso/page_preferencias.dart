@@ -232,57 +232,15 @@ class _PagePreferenciasState extends State<PagePreferencias> {
         ),
         AnimatedCrossFade(
           firstChild: Container(),
-          secondChild: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              InputChip(
-                label: IntlText("preferencias.hora._08_00"),
-                onPressed: () {
-                  setState(() {
-                    _preferencias.horaVersiculoDiario = '_08_00';
-                  });
-
-                  _save();
-                },
-                selected: _preferencias.horaVersiculoDiario == '_08_00',
-                labelStyle: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black87,
-                ),
-                padding: const EdgeInsets.all(10),
-              ),
-              InputChip(
-                label: IntlText("preferencias.hora._14_00"),
-                onPressed: () {
-                  setState(() {
-                    _preferencias.horaVersiculoDiario = '_14_00';
-                  });
-
-                  _save();
-                },
-                selected: _preferencias.horaVersiculoDiario == '_14_00',
-                labelStyle: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black87,
-                ),
-                padding: const EdgeInsets.all(10),
-              ),
-              InputChip(
-                label: IntlText("preferencias.hora._20_00"),
-                onPressed: () {
-                  setState(() {
-                    _preferencias.horaVersiculoDiario = '_20_00';
-                  });
-
-                  _save();
-                },
-                selected: _preferencias.horaVersiculoDiario == '_20_00',
-                labelStyle: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black87,
-                ),
-                padding: const EdgeInsets.all(10),
-              ),
+          secondChild: SelectOpcao<String>(
+            value: _preferencias.horaVersiculoDiario,
+            onSaved: (hora) => setState(() {
+              _preferencias.horaVersiculoDiario = hora;
+            }),
+            opcoes: [
+              Opcao(intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
+              Opcao(intlLabel: "preferencias.hora._14_00", valor: "_14_00"),
+              Opcao(intlLabel: "preferencias.hora._20_00", valor: "_20_00"),
             ],
           ),
           crossFadeState: _preferencias.desejaReceberVersiculosDiarios
@@ -318,57 +276,15 @@ class _PagePreferenciasState extends State<PagePreferencias> {
           ),
           AnimatedCrossFade(
             firstChild: Container(),
-            secondChild: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                InputChip(
-                  label: IntlText("preferencias.hora._08_00"),
-                  onPressed: () {
-                    setState(() {
-                      _preferencias.horaLembreteLeitura = '_08_00';
-                    });
-
-                    _save();
-                  },
-                  selected: _preferencias.horaLembreteLeitura == '_08_00',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black87,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                ),
-                InputChip(
-                  label: IntlText("preferencias.hora._14_00"),
-                  onPressed: () {
-                    setState(() {
-                      _preferencias.horaLembreteLeitura = '_14_00';
-                    });
-
-                    _save();
-                  },
-                  selected: _preferencias.horaLembreteLeitura == '_14_00',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black87,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                ),
-                InputChip(
-                  label: IntlText("preferencias.hora._20_00"),
-                  onPressed: () {
-                    setState(() {
-                      _preferencias.horaLembreteLeitura = '_20_00';
-                    });
-
-                    _save();
-                  },
-                  selected: _preferencias.horaLembreteLeitura == '_20_00',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black87,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                ),
+            secondChild: SelectOpcao<String>(
+              value: _preferencias.horaLembreteLeitura,
+              onSaved: (hora) => setState(() {
+                _preferencias.horaLembreteLeitura = hora;
+              }),
+              opcoes: [
+                Opcao(intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
+                Opcao(intlLabel: "preferencias.hora._14_00", valor: "_14_00"),
+                Opcao(intlLabel: "preferencias.hora._20_00", valor: "_20_00"),
               ],
             ),
             crossFadeState: _preferencias.desejaReceberLembreteLeitura

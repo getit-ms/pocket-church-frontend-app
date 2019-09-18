@@ -161,49 +161,39 @@ class PageListaFotos extends StatelessWidget {
         context: context,
         builder: (ctx) => PhotoViewPage(
           onDownload: Platform.isAndroid
-              ? (index) {
-                  arquivoService
-                      .download(
-                    "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_b.jpg",
-                    "${foto.id}_${foto.secret}_b.jpg",
-                  )
-                      .then((file) {
+              ? (index) async {
+                  bool sucesso = await ShareUtil.shareDownloadedFile(
+                    context,
+                    url:
+                        "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_b.jpg",
+                    filename: "${foto.id}_${foto.secret}_b.jpg",
+                  );
+
+                  if (sucesso) {
                     MessageHandler.success(
                       Scaffold.of(context),
                       IntlText(
                         "mensagens.MSG-056",
                         args: {
-                          'filename': file.substring(file.lastIndexOf("/") + 1),
+                          'filename': "${foto.id}_${foto.secret}_b.jpg",
                         },
                       ),
                     );
-                  }).catchError((err) {
+                  } else {
                     MessageHandler.error(
                       Scaffold.of(context),
                       const IntlText("mensagens.MSG-055"),
                     );
-                  });
+                  }
                 }
               : null,
           onShare: (index) {
-            arquivoService
-                .downloadTemp(
-              "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_b.jpg",
-            )
-                .then((file) async {
-              final ByteData bytes = await services.rootBundle.load(file);
-              Share.file(
-                galeria.nome,
-                "${foto.id}_${foto.secret}_b.jpg",
-                bytes.buffer.asUint8List(),
-                'image/jpeg',
-              );
-            }).catchError((err) {
-              MessageHandler.error(
-                Scaffold.of(context),
-                const IntlText("mensagens.MSG-055"),
-              );
-            });
+            ShareUtil.shareDownloadedFile(
+              context,
+              url:
+                  "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_b.jpg",
+              filename: "${foto.id}_${foto.secret}_b.jpg",
+            );
           },
           pageController: PageController(initialPage: index),
           images: itens

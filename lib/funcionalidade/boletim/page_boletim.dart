@@ -30,15 +30,9 @@ class PageBoletim extends StatelessWidget {
   }
 
   _share(BuildContext context) async {
-    var file = await arquivoService.getFile(boletim.boletim.id);
-
-    final ByteData bytes = await services.rootBundle.load(file.path);
-
-    Share.file(
-      boletim.titulo,
-      boletim.boletim.filename + '.pdf',
-      bytes.buffer.asUint8List(),
-      'application/pdf',
+    ShareUtil.shareArquivo(context,
+      arquivo: boletim.boletim.id,
+      filename: boletim.boletim.filename,
     );
   }
 

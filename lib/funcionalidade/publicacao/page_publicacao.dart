@@ -1,10 +1,11 @@
 part of pocket_church.publicacao;
 
 class PagePublicacao extends StatelessWidget {
-
   final Boletim publicacao;
 
-  const PagePublicacao({this.publicacao,});
+  const PagePublicacao({
+    this.publicacao,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +30,10 @@ class PagePublicacao extends StatelessWidget {
   }
 
   _share(BuildContext context) async {
-    var file = await arquivoService.getFile(publicacao.boletim.id);
-
-    final ByteData bytes = await services.rootBundle.load(file.path);
-
-    Share.file(
-      publicacao.titulo,
-      publicacao.boletim.filename + '.pdf',
-      bytes.buffer.asUint8List(),
-      'application/pdf',
+    ShareUtil.shareArquivo(
+      context,
+      arquivo: publicacao.boletim.id,
+      filename: publicacao.boletim.filename,
     );
   }
 

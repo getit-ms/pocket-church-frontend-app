@@ -9,7 +9,7 @@ class _FormSugestaoState extends State<FormSugestao> {
   GlobalKey<FormState> _form = new GlobalKey();
 
   bool _autenticado = false;
-  
+
   Sugestao _sugestao = new Sugestao(
     dataSolicitacao: DateTime.now(),
     tipo: 'SUGESTAO',
@@ -25,13 +25,13 @@ class _FormSugestaoState extends State<FormSugestao> {
 
     _carregaDadosPadroes();
   }
-  
+
   _carregaDadosPadroes() async {
     bool autenticado = acessoBloc.autenticado;
-    
+
     if (autenticado) {
       Membro membro = acessoBloc.currentMembro;
-      
+
       setState(() {
         _autenticado = true;
         _nome.text = membro.nome;
@@ -103,43 +103,32 @@ class _FormSugestaoState extends State<FormSugestao> {
                 ),
               ),
             ),
-            InfoDivider(child: IntlText("chamado.tipo.tipo"),),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                InputChip(
-                  label: IntlText("chamado.tipo.SUGESTAO"),
-                  onPressed: () => setState(() => _sugestao.tipo = 'SUGESTAO'),
-                  selected: _sugestao.tipo == 'SUGESTAO',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black87,
-                  ),
-                  padding: const EdgeInsets.all(10),
+            const InfoDivider(
+              child: IntlText("chamado.tipo.tipo"),
+            ),
+            SelectOpcao<String>(
+              value: _sugestao.tipo,
+              onSaved: (tipo) => setState(() {
+                _sugestao.tipo = tipo;
+              }),
+              opcoes: [
+                Opcao(
+                  intlLabel: "chamado.tipo.SUGESTAO",
+                  valor: "SUGESTAO"
                 ),
-                InputChip(
-                  label: IntlText("chamado.tipo.ERRO"),
-                  onPressed: () => setState(() => _sugestao.tipo = 'ERRO'),
-                  selected: _sugestao.tipo == 'ERRO',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black87,
-                  ),
-                  padding: const EdgeInsets.all(10),
+                Opcao(
+                    intlLabel: "chamado.tipo.ERRO",
+                    valor: "ERRO"
                 ),
-                InputChip(
-                  label: IntlText("chamado.tipo.RECLAMACAO"),
-                  onPressed: () => setState(() => _sugestao.tipo = 'RECLAMACAO'),
-                  selected: _sugestao.tipo == 'RECLAMACAO',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black87,
-                  ),
-                  padding: const EdgeInsets.all(10),
+                Opcao(
+                    intlLabel: "chamado.tipo.RECLAMACAO",
+                    valor: "RECLAMACAO"
                 ),
               ],
             ),
-            InfoDivider(child: IntlText("chamado.tipo.tipo"),),
+            const InfoDivider(
+              child: IntlText("chamado.descricao"),
+            ),
             TextFormField(
               validator: validate([
                 notEmpty(),
@@ -149,7 +138,6 @@ class _FormSugestaoState extends State<FormSugestao> {
               maxLength: 500,
               onSaved: (val) => _sugestao.descricao = val,
               decoration: InputDecoration(
-                labelText: bundle["chamado.descricao"],
                 hintText: bundle['chamado.descricao_explicacao'],
                 contentPadding: const EdgeInsets.symmetric(
                   vertical: 20,
@@ -184,3 +172,4 @@ class _FormSugestaoState extends State<FormSugestao> {
     );
   }
 }
+

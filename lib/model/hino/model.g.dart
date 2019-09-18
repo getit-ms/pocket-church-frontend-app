@@ -14,7 +14,7 @@ Hino _$HinoFromJson(Map<String, dynamic> json) {
     autor: json['autor'] as String,
     nome: json['nome'] as String,
     texto: json['texto'] as String,
-    filename: json['filename'] as String,
+    filename: json['fileName'] as String,
     ultimaAlteracao: json['ultimaAlteracao'] == null
         ? null
         : DateTime.parse(json['ultimaAlteracao'] as String),

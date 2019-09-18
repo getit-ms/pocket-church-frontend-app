@@ -20,7 +20,7 @@ class ItemAudio extends StatelessWidget {
       ),
       child: RawMaterialButton(
         onPressed: () async {
-          if (player.audio == audio) {
+          if (player.currentStatus != 'stopped' && player.audio == audio) {
             if (player.currentStatus == 'playing') {
               await player.pause();
             } else {

@@ -537,13 +537,10 @@ class Bundle {
   }
 
   static String _parsePath(
-      {dynamic bundle,
-      List<String> path,
-      Map<String, Object> args,
-      int index = 0}) {
+      {dynamic bundle, List<String> path, Map<String, Object> args}) {
     if (bundle != null) {
-      if (path.length - 1 == index) {
-        String val = bundle[path[index]] ?? "";
+      if (path.length == 1) {
+        String val = bundle[path[0]] ?? "";
 
         if (args != null) {
           args.forEach((k, v) => val = val.replaceAll("{$k}", v));
@@ -552,10 +549,7 @@ class Bundle {
         return val;
       } else {
         return _parsePath(
-            bundle: bundle[path[index]],
-            path: path,
-            index: index + 1,
-            args: args);
+            bundle: bundle[path[0]], path: path.sublist(1), args: args);
       }
     }
 

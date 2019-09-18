@@ -39,17 +39,30 @@ class PhotoViewPage extends StatelessWidget {
           children: <Widget>[
             AppBar(
               centerTitle: true,
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
               title: title,
+              textTheme: Theme.of(context).textTheme.copyWith(
+                    title: Theme.of(context).textTheme.title.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
               backgroundColor: Colors.transparent,
               actions: <Widget>[
-                onDownload != null ? IconButton(
-                  icon: Icon(Icons.cloud_download),
-                  onPressed: () => onDownload(pageController?.page?.round()),
-                ) : Container(),
-                onShare != null ? IconButton(
-                  icon: Icon(Icons.share),
-                  onPressed: () => onShare(pageController?.page?.round()),
-                ) : Container(),
+                onDownload != null
+                    ? IconButton(
+                        icon: Icon(Icons.cloud_download),
+                        onPressed: () =>
+                            onDownload(pageController?.page?.round()),
+                      )
+                    : Container(),
+                onShare != null
+                    ? IconButton(
+                        icon: Icon(Icons.share),
+                        onPressed: () => onShare(pageController?.page?.round()),
+                      )
+                    : Container(),
               ],
             )
           ],
