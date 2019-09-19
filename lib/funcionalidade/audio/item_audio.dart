@@ -31,8 +31,7 @@ class ItemAudio extends StatelessWidget {
           }
         },
         fillColor: Colors.white,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+        shape: const Border(),
         padding: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
@@ -85,7 +84,7 @@ class ItemAudio extends StatelessWidget {
             ),
             Container(
               width: double.infinity,
-              height: 50,
+              height: 60,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,

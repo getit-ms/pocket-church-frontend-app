@@ -160,34 +160,6 @@ class PageListaFotos extends StatelessWidget {
       showCupertinoModalPopup(
         context: context,
         builder: (ctx) => PhotoViewPage(
-          onDownload: Platform.isAndroid
-              ? (index) async {
-                  bool sucesso = await ShareUtil.shareDownloadedFile(
-                    context,
-                    url:
-                        "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_b.jpg",
-                    filename: "${foto.id}_${foto.secret}_b.jpg",
-                    downloadOnly: true,
-                  );
-
-                  if (sucesso) {
-                    MessageHandler.success(
-                      Scaffold.of(context),
-                      IntlText(
-                        "mensagens.MSG-056",
-                        args: {
-                          'filename': "${foto.id}_${foto.secret}_b.jpg",
-                        },
-                      ),
-                    );
-                  } else {
-                    MessageHandler.error(
-                      Scaffold.of(context),
-                      const IntlText("mensagens.MSG-055"),
-                    );
-                  }
-                }
-              : null,
           onShare: (index) {
             ShareUtil.shareDownloadedFile(
               context,

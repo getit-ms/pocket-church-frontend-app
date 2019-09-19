@@ -12,7 +12,7 @@ class PageContato extends StatelessWidget {
     return PageTemplate(
       withAppBar: false,
       deveEstarAutenticado: true,
-      title: IntlText("contato.contato"),
+      title: const IntlText("contato.contato"),
       body: FutureBuilder<Membro>(
           future: membroApi.detalha(membro.id),
           builder: (context, snapshot) {
@@ -20,32 +20,18 @@ class PageContato extends StatelessWidget {
 
             return CustomScrollView(
               slivers: <Widget>[
-                SliverAppBar(
+                SliverPersistentHeader(
                   pinned: true,
-                  expandedHeight: MediaQuery.of(context).size.width,
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    title: Text(StringUtil.nomeResumido(snapshot.data?.nome ?? membro.nome)),
-                    background: Stack(
-                      children: <Widget>[
-                        SizedBox(
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: FotoMembro(
-                            snapshot.data?.foto ?? membro.foto,
-                            placeholder: tema.institucionalBackground,
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            gradient: RadialGradient(
-                                colors: [Colors.transparent, Colors.black],
-                                radius: 2),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  delegate: HeaderContato(
+                      minExtent:
+                          MediaQuery.of(context).padding.top + kToolbarHeight,
+                      maxExtent: MediaQuery.of(context).padding.top + 350,
+                      background: FotoMembro(
+                        snapshot.data?.foto ?? membro.foto,
+                        placeholder: tema.institucionalBackground,
+                      ),
+                      title: Text(StringUtil.nomeResumido(
+                          snapshot.data?.nome ?? membro.nome))),
                 ),
                 SliverList(
                     delegate: SliverChildListDelegate([
@@ -65,7 +51,8 @@ class PageContato extends StatelessWidget {
                         ),
                       ]
                           .followedBy(
-                        (snapshot.data?.telefones ?? membro.telefones ?? []).map(
+                        (snapshot.data?.telefones ?? membro.telefones ?? [])
+                            .map(
                           (tel) => ItemContato(
                             icon: Icons.phone,
                             text: StringUtil.formatTelefone(tel),
@@ -123,4 +110,91 @@ class ItemContato extends StatelessWidget {
 
     return Container();
   }
+}
+
+class HeaderContato extends SliverPersistentHeaderDelegate {
+  final List<Widget> actions;
+  final Widget title;
+  final double minExtent;
+  final double maxExtent;
+  final Widget background;
+
+  const HeaderContato({
+    this.title,
+    this.background,
+    this.actions,
+    this.minExtent,
+    this.maxExtent,
+  });
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    Tema tema = ConfiguracaoApp.of(context).tema;
+    var mediaQueryData = MediaQuery.of(context);
+
+    double currentExtent = max(minExtent, maxExtent - shrinkOffset);
+    double factor = min(
+        1,
+        (currentExtent - minExtent) /
+            (min(minExtent + 120, maxExtent) - minExtent));
+
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(child: background ?? Container()),
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: lerpDouble(3, 0, factor),
+                  color: Colors.black54,
+                ),
+              ],
+              color: Color.lerp(
+                tema.appBarBackground,
+                Colors.transparent,
+                factor,
+              ),
+            ),
+          ),
+          Positioned(
+            top: mediaQueryData.padding.top + 3,
+            left: 5,
+            child: BackButton(
+              color: Color.lerp(
+                tema.appBarIcons,
+                Colors.white,
+                factor,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 15,
+            left: lerpDouble(33, 3, factor),
+            width: lerpDouble(
+              mediaQueryData.size.width - 66,
+              mediaQueryData.size.width - 6,
+              factor,
+            ),
+            child: DefaultTextStyle(
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: lerpDouble(21, 32, factor),
+                color: Color.lerp(
+                  tema.appBarTitle,
+                  Colors.white,
+                  factor,
+                ),
+              ),
+              child: title ?? Container(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }

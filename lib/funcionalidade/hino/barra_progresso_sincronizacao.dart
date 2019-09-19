@@ -19,7 +19,7 @@ class BarraProgressoSincronizacao extends StatelessWidget {
                   "hino.sincronizando",
                   args: {
                     'porcentagem':
-                    (snapshot.data?.porcentagem ?? 0).floor().toString()
+                        (snapshot.data?.porcentagem ?? 0).floor().toString()
                   },
                   style: TextStyle(
                     fontSize: 15,
@@ -33,6 +33,8 @@ class BarraProgressoSincronizacao extends StatelessWidget {
                   height: 10,
                   child: LinearProgressIndicator(
                     value: (snapshot.data?.porcentagem ?? 0) / 100,
+                    valueColor: AlwaysStoppedAnimation(tema.primary),
+                    backgroundColor: tema.primary.withOpacity(.5),
                   ),
                 ),
               ],
@@ -47,4 +49,3 @@ class BarraProgressoSincronizacao extends StatelessWidget {
     );
   }
 }
-

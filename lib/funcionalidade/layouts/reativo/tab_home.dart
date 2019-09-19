@@ -242,12 +242,12 @@ class TabHomeHeader extends SliverPersistentHeaderDelegate {
 
   Positioned _buildLogo(MediaQueryData queryData, double factor, Tema tema) {
     return Positioned(
-      top: queryData.padding.top + lerpDouble(5, 15, factor),
-      left: lerpDouble(10, queryData.size.width / 2 - 125, factor),
+      top: queryData.padding.top + lerpDouble(10, 15, factor),
+      left: lerpDouble(10, queryData.size.width / 2 - 100, factor),
       child: Image(
         alignment: Alignment(lerpDouble(-1, 0, factor), 0),
-        height: lerpDouble(minExtent - queryData.padding.top - 10, 80, factor),
-        width: lerpDouble(150, 250, factor),
+        height: lerpDouble(minExtent - queryData.padding.top - 20, 80, factor),
+        width: lerpDouble(150, 200, factor),
         image: tema.homeLogo,
       ),
     );
@@ -471,13 +471,25 @@ class FeedItem extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(5)),
-                  child: FadeInImage(
-                    placeholder: MemoryImage(kTransparentImage),
-                    image: timelineProvider.resolveImageProvider(feed) ??
-                        tema.institucionalBackground,
-                    fit: BoxFit.cover,
-                    width: 100,
-                    height: 100,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          tema.primary,
+                          tema.secondary,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: FadeInImage(
+                      placeholder: MemoryImage(kTransparentImage),
+                      image: timelineProvider.resolveImageProvider(feed) ??
+                          tema.institucionalBackground,
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                    ),
                   ),
                 ),
               ),
@@ -591,13 +603,27 @@ class FeedItem extends StatelessWidget {
         Expanded(
           child: ClipRRect(
             borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(5), topLeft: Radius.circular(5)),
-            child: SizedBox(
-              width: double.infinity,
-              child: FadeInImage(
-                placeholder: MemoryImage(kTransparentImage),
-                image: timelineProvider.resolveImageProvider(feed),
-                fit: BoxFit.cover,
+              topRight: Radius.circular(5),
+              topLeft: Radius.circular(5),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    tema.primary,
+                    tema.secondary,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: FadeInImage(
+                  placeholder: MemoryImage(kTransparentImage),
+                  image: timelineProvider.resolveImageProvider(feed),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

@@ -13,12 +13,6 @@ class IconBlock extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         color: tema.iconBackground,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black54,
-            blurRadius: 3
-          )
-        ],
       ),
       child: Icon(
         icon,

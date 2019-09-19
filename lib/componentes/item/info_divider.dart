@@ -10,19 +10,21 @@ class InfoDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      Tema tema = ConfiguracaoApp.of(context).tema;
+    Tema tema = ConfiguracaoApp.of(context).tema;
 
-      return Container(
-        width: double.infinity,
-        color: tema.dividerBackground,
-        padding: const EdgeInsets.all(15),
-        child: DefaultTextStyle(
-          style: TextStyle(
-            color: tema.dividerText,
-            fontWeight: FontWeight.bold
-          ),
-          child: child,
+    return Container(
+      width: double.infinity,
+      color: tema.dividerBackground,
+      padding: const EdgeInsets.all(15),
+      child: DefaultTextStyle(
+        style: TextStyle(
+          color: tema.dividerText,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 1.4,
+          fontSize: 16,
         ),
-      );
+        child: child,
+      ),
+    );
   }
 }

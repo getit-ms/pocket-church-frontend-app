@@ -46,6 +46,8 @@ class BarraProgressoSincronizacao extends StatelessWidget {
                   height: 10,
                   child: LinearProgressIndicator(
                     value: (snapshot.data?.porcentagem ?? 0) / 100,
+                    valueColor: AlwaysStoppedAnimation(tema.primary),
+                    backgroundColor: tema.primary.withOpacity(.5),
                   ),
                 ),
               ],

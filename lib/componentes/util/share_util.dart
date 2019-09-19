@@ -13,13 +13,12 @@ class ShareUtil {
   }
 
   static Future<bool> shareDownloadedFile(BuildContext context,
-      {String url, String filename, bool downloadOnly = false}) async {
+      {String url, String filename}) async {
     return await showCupertinoDialog(
       context: context,
       builder: (context) => LoadingSharingDialog(
         filename: filename,
         url: url,
-        downloadOnly: downloadOnly,
       ),
     );
   }
@@ -29,10 +28,8 @@ class LoadingSharingDialog extends StatefulWidget {
   final int arquivo;
   final String url;
   final String filename;
-  final bool downloadOnly;
 
-  const LoadingSharingDialog(
-      {this.arquivo, this.downloadOnly = false, this.url, this.filename});
+  const LoadingSharingDialog({this.arquivo, this.url, this.filename});
 
   @override
   _LoadingSharingDialogState createState() => _LoadingSharingDialogState();
@@ -52,27 +49,20 @@ class _LoadingSharingDialogState extends State<LoadingSharingDialog> {
 
       if (widget.arquivo != null) {
         file = await arquivoService.getFile(widget.arquivo);
-      } else if (widget.downloadOnly) {
-        file = File(await arquivoService.download(
-          widget.url,
-          widget.filename,
-        ));
       } else {
         file = File(await arquivoService.downloadTemp(
           widget.url,
         ));
       }
 
-      if (!widget.downloadOnly) {
-        final Uint8List bytes = await file.readAsBytes();
+      final Uint8List bytes = await file.readAsBytes();
 
-        await Share.file(
-          widget.filename,
-          widget.filename + '.pdf',
-          bytes,
-          'application/pdf',
-        );
-      }
+      await Share.file(
+        widget.filename,
+        widget.filename + '.pdf',
+        bytes,
+        'application/pdf',
+      );
 
       Navigator.of(context).pop(true);
     } catch (ex) {

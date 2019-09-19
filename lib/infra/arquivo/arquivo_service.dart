@@ -27,7 +27,8 @@ class ArquivoService {
 
   Future<String> _tmpDir() async {
     var base = await getTemporaryDirectory();
-    var path = "${base.uri.path.replaceAll(RegExp('\/?[^\/]*flutter[^\/]*'), "")}tmp";
+    var path =
+        "${base.uri.path.replaceAll(RegExp('\/?[^\/]*flutter[^\/]*'), "")}tmp";
     var dir = Directory(path);
 
     if (!dir.existsSync()) {
@@ -105,35 +106,13 @@ class ArquivoService {
     return await _file(idArquivo);
   }
 
-  Future<String> download(String url, String filename, {ProgressCallback onProgress}) async {
-    Directory dir = await DownloadsPathProvider.downloadsDirectory;
-
-    if (!dir.existsSync()) {
-      dir.createSync(recursive: true);
-    }
-
-    File file = new File(dir.path + "/" + filename);
-
-    if (filename.contains(".")) {
-      while (await file.exists()) {
-        file = File(file.path.substring(0, file.path.lastIndexOf(".")) + "_1" +
-            file.path.substring(file.path.lastIndexOf(".")));
-      }
-    }
-
-    await arquivoApi.downloadFromURL(url, file.path,
-        onProgress: onProgress);
-
-    return file.path;
-  }
-
   Future<String> downloadTemp(String url, {ProgressCallback onProgress}) async {
     Directory dir = await getTemporaryDirectory();
 
-    File file = new File(dir.path + "/" + DateTime.now().millisecondsSinceEpoch.toString());
+    File file = new File(
+        dir.path + "/" + DateTime.now().millisecondsSinceEpoch.toString());
 
-    await arquivoApi.downloadFromURL(url, file.path,
-        onProgress: onProgress);
+    await arquivoApi.downloadFromURL(url, file.path, onProgress: onProgress);
 
     return file.path;
   }
