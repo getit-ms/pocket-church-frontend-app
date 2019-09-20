@@ -4,7 +4,8 @@ class PageLogin extends StatefulWidget {
   final bool showMensagemAlteracaoSenha;
   final bool cadastro;
 
-  const PageLogin({this.cadastro = false, this.showMensagemAlteracaoSenha = false});
+  const PageLogin(
+      {this.cadastro = false, this.showMensagemAlteracaoSenha = false});
 
   @override
   State<StatefulWidget> createState() => PageLoginState();
@@ -216,14 +217,13 @@ class PageLoginState extends State<PageLogin> {
         label: "login.telefone",
         enabled: _page == 'cadastro',
         validator: validate(
-          [
-            notEmpty(),
-          ],
+          [],
           bundle: _bundle,
           enabled: _page == 'cadastro',
         ),
         inputFormatters: [
-          services.TextInputFormatter.withFunction(TextFormatUtil.formatTelefone)
+          services.TextInputFormatter.withFunction(
+              TextFormatUtil.formatTelefone)
         ],
         onSaved: (val) => _telefone = StringUtil.unformatTelefone(val),
       ),
@@ -336,7 +336,8 @@ class PageLoginState extends State<PageLogin> {
                 await loading(membroApi.cadastra(Membro(
                   nome: _nome,
                   email: _email,
-                  telefones: [_telefone],
+                  telefones:
+                      (_telefone?.isNotEmpty ?? false) ? [_telefone] : null,
                   endereco: Endereco(),
                 )));
 
@@ -440,7 +441,7 @@ class LoginInput extends StatelessWidget {
             cursorColor: Colors.white,
             enabled: enabled,
             obscureText: obscureText,
-              inputFormatters: inputFormatters,
+            inputFormatters: inputFormatters,
             style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               focusedBorder: const UnderlineInputBorder(
