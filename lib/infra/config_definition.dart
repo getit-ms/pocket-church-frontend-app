@@ -317,7 +317,8 @@ class ConfiguracaoBloc {
   }
 
   _initBundle() async {
-    String data = await rootBundle.loadString("assets/bundle/pt-br.json");
+    String data =
+        await services.rootBundle.loadString("assets/bundle/pt-br.json");
 
     _addBundle(new Bundle(json.decode(data)));
 
@@ -494,6 +495,7 @@ class ConfiguracaoAppState extends State<ConfiguracaoApp> {
     if (menu != null && config != null && tema != null) {
       return Theme(
         data: ThemeData(
+          brightness: Brightness.light,
           accentColor: tema.primary,
           primaryColor: tema.primary,
           buttonColor: tema.buttonBackground,

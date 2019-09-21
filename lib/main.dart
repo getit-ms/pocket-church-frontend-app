@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:pocket_church/bloc/acesso_bloc.dart';
@@ -8,7 +9,6 @@ import 'package:pocket_church/bloc/institucional_bloc.dart';
 import 'package:pocket_church/funcionalidade/layouts/reativo/reativo.dart';
 import 'package:pocket_church/funcionalidade/layouts/tradicional/tradicional.dart';
 import 'package:pocket_church/page_apresentacao.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './infra/infra.dart';
 import 'bloc/biblia_bloc.dart';
@@ -17,6 +17,15 @@ import 'bloc/leitura_bloc.dart';
 import 'funcionalidade/notificacao/notificacao.dart';
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.white54,
+      systemNavigationBarColor: Colors.black,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
+
   runApp(
     PrepareApp(
       execute: _loadingExecute,
@@ -102,6 +111,8 @@ class _PrepareAppState extends State<PrepareApp> {
   }
 
   _prepare() async {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+
     setState(() {
       _loading = true;
     });
@@ -111,6 +122,11 @@ class _PrepareAppState extends State<PrepareApp> {
     } catch (ex) {
       print("Falha no splash : $ex");
     }
+
+    SystemChrome.setEnabledSystemUIOverlays([
+      SystemUiOverlay.top,
+      SystemUiOverlay.bottom,
+    ]);
 
     setState(() {
       _loading = false;
@@ -142,7 +158,6 @@ class PocketChurchApp extends StatefulWidget {
 }
 
 class _PocketChurchAppState extends State<PocketChurchApp> {
-
   @override
   Widget build(BuildContext context) {
     var configuracaoApp = ConfiguracaoApp.of(context);
