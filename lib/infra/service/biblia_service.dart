@@ -59,6 +59,19 @@ class BibliaService {
           json.decode(sprefs.getString(_CHAVE_CACHE_SINCRONISMO_BIBLIA)));
     } else {
       var ultimaAlteracao = await bibliaDAO.findUltimaAlteracaoLivroBiblia();
+
+      if (ultimaAlteracao != null) {
+        int qtde = await bibliaDAO.findQuantidadeTotalLivros();
+        var pagina = await bibliaApi.consulta(
+          pagina: 1,
+          tamanhoPagina: 0,
+        );
+
+        if (qtde < pagina.totalResultados) {
+          ultimaAlteracao = null;
+        }
+      }
+
       return FiltroSincronismoBiblia(ultimaAtualizacao: ultimaAlteracao);
     }
   }

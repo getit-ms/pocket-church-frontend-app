@@ -12,6 +12,17 @@ class BibliaDAO {
     return null;
   }
 
+  Future<int> findQuantidadeTotalLivros() async {
+    List<Map> rs = await pcDatabase.database
+        .rawQuery("SELECT count(*) as qtde FROM livro_biblia");
+
+    if (rs.isNotEmpty && rs[0]['qtde'] != null) {
+      return rs[0]['qtde'];
+    }
+
+    return 0;
+  }
+
   mergeLivroBiblia(LivroBiblia livro) async {
     await pcDatabase.database.transaction((txn) async {
       await txn.execute(
