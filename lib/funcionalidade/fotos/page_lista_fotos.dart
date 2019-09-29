@@ -68,7 +68,7 @@ class PageListaFotos extends StatelessWidget {
             return Container();
           },
           preSlivers: <Widget>[
-            _header(),
+            _header(context),
             _descricao(),
           ],
         ),
@@ -76,40 +76,21 @@ class PageListaFotos extends StatelessWidget {
     );
   }
 
-  SliverAppBar _header() {
-    return SliverAppBar(
+  Widget _header(BuildContext context) {
+    return SliverPersistentHeader(
       pinned: true,
-      expandedHeight: 350,
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
-        collapseMode: CollapseMode.parallax,
-        title: Text(galeria.nome),
+      delegate: HeaderFotos(
+        minExtent: MediaQuery.of(context).padding.top + kToolbarHeight,
+        maxExtent: MediaQuery.of(context).padding.top + 350,
         background: Hero(
           tag: "galeria_" + galeria.id,
-          child: Material(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                      "https://farm${galeria.fotoPrimaria.farm}.staticflickr.com/${galeria.fotoPrimaria.server}/${galeria.fotoPrimaria.id}_${galeria.fotoPrimaria.secret}_n.jpg"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    radius: 1.3,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black87,
-                    ],
-                  ),
-                ),
-              ),
-            ),
+          child: Image(
+            image: NetworkImage(
+                "https://farm${galeria.fotoPrimaria.farm}.staticflickr.com/${galeria.fotoPrimaria.server}/${galeria.fotoPrimaria.id}_${galeria.fotoPrimaria.secret}_n.jpg"),
+            fit: BoxFit.cover,
           ),
         ),
+        title: Text(galeria.nome),
       ),
     );
   }
@@ -180,4 +161,101 @@ class PageListaFotos extends StatelessWidget {
       );
     };
   }
+}
+
+class HeaderFotos extends SliverPersistentHeaderDelegate {
+  final List<Widget> actions;
+  final Widget title;
+  final double minExtent;
+  final double maxExtent;
+  final Widget background;
+
+  const HeaderFotos({
+    this.title,
+    this.background,
+    this.actions,
+    this.minExtent,
+    this.maxExtent,
+  });
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    Tema tema = ConfiguracaoApp.of(context).tema;
+    var mediaQueryData = MediaQuery.of(context);
+
+    double currentExtent = max(minExtent, maxExtent - shrinkOffset);
+    double factor = min(
+        1,
+        (currentExtent - minExtent) /
+            (min(minExtent + 120, maxExtent) - minExtent));
+
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: lerpDouble(3, 0, factor),
+                    color: Colors.black54,
+                  ),
+                ],
+              ),
+              child: background ?? Container(),
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  colors: [
+                    Color.lerp(Colors.white, Colors.transparent, factor),
+                    Color.lerp(Colors.white, Colors.black54, factor),
+                  ],
+                  radius: 1.5,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: mediaQueryData.padding.top + 3,
+            left: 5,
+            child: BackButton(
+              color: Color.lerp(
+                tema.appBarIcons,
+                Colors.white,
+                factor,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 15,
+            left: lerpDouble(33, 3, factor),
+            width: lerpDouble(
+              mediaQueryData.size.width - 66,
+              mediaQueryData.size.width - 6,
+              factor,
+            ),
+            child: DefaultTextStyle(
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: lerpDouble(21, 32, factor),
+                color: Color.lerp(
+                  tema.appBarTitle,
+                  Colors.white,
+                  factor,
+                ),
+              ),
+              child: title ?? Container(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }

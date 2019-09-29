@@ -142,19 +142,29 @@ class HeaderContato extends SliverPersistentHeaderDelegate {
     return Container(
       child: Stack(
         children: <Widget>[
-          Positioned.fill(child: background ?? Container()),
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: lerpDouble(3, 0, factor),
-                  color: Colors.black54,
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: lerpDouble(3, 0, factor),
+                    color: Colors.black54,
+                  ),
+                ],
+              ),
+              child: background ?? Container(),
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  colors: [
+                    Color.lerp(Colors.white, Colors.transparent, factor),
+                    Color.lerp(Colors.white, Colors.black54, factor),
+                  ],
+                  radius: 1.5,
                 ),
-              ],
-              color: Color.lerp(
-                tema.appBarBackground,
-                Colors.transparent,
-                factor,
               ),
             ),
           ),
