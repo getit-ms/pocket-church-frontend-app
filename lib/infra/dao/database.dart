@@ -7,7 +7,7 @@ class PCDatabase {
     // Get a location using getDatabasesPath
     var databasesPath = await getDatabasesPath();
 
-    String path = join(databasesPath, 'pocket-church.db');
+    String path = join(databasesPath, 'pchurch.db');
 
     try {
       await _doOpenDatabase(path);
@@ -17,7 +17,7 @@ class PCDatabase {
 
       File file = new File(path);
 
-      await file.delete();
+      await file.delete(recursive: true);
 
       await _doOpenDatabase(path);
     }
