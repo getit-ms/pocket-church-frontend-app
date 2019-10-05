@@ -38,52 +38,54 @@ class _NoticiaContent extends StatelessWidget {
                 child: Container(
                   child: Column(
                     children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          NavigatorUtil.navigate(context,
-                              builder: (context) => PhotoViewPage(
-                                    images: [
-                                      ImageView(
-                                          image: ArquivoImageProvider(
-                                              noticia.ilustracao.id)),
-                                    ],
-                                    title: Text(noticia.titulo),
-                                  ));
-                        },
-                        child: Stack(
-                          children: <Widget>[
-                            Image(
-                              image:
-                                  ArquivoImageProvider(noticia.ilustracao.id),
-                              width: double.infinity,
-                              height: 270,
-                              fit: BoxFit.cover,
-                            ),
-                            Positioned.fill(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.transparent,
-                                      Colors.black26,
-                                    ],
+                      noticia.ilustracao == null
+                          ? Container()
+                          : InkWell(
+                              onTap: () {
+                                NavigatorUtil.navigate(context,
+                                    builder: (context) => PhotoViewPage(
+                                          images: [
+                                            ImageView(
+                                                image: ArquivoImageProvider(
+                                                    noticia.ilustracao.id)),
+                                          ],
+                                          title: Text(noticia.titulo),
+                                        ));
+                              },
+                              child: Stack(
+                                children: <Widget>[
+                                  Image(
+                                    image: ArquivoImageProvider(
+                                        noticia.ilustracao.id),
+                                    width: double.infinity,
+                                    height: 270,
+                                    fit: BoxFit.cover,
                                   ),
-                                ),
+                                  Positioned.fill(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.black26,
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    child: Icon(
+                                      Icons.zoom_in,
+                                      size: 28,
+                                    ),
+                                    bottom: 10,
+                                    right: 10,
+                                  ),
+                                ],
                               ),
                             ),
-                            Positioned(
-                              child: Icon(
-                                Icons.zoom_in,
-                                size: 28,
-                              ),
-                              bottom: 10,
-                              right: 10,
-                            ),
-                          ],
-                        ),
-                      ),
                       const SizedBox(height: 10),
                       Container(
                         padding: EdgeInsets.symmetric(

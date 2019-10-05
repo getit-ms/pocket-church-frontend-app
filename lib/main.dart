@@ -107,7 +107,7 @@ class PrepareApp extends StatefulWidget {
 
 class _PrepareAppState extends State<PrepareApp> {
   bool _loading = true;
-  String _error;
+  bool _error = false;
 
   @override
   void initState() {
@@ -131,7 +131,7 @@ class _PrepareAppState extends State<PrepareApp> {
       _notificaErroInicializacao(ex);
 
       setState(() {
-        _error = ex.message;
+        _error = true;
       });
     }
 
@@ -170,7 +170,7 @@ class _PrepareAppState extends State<PrepareApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) {
+    if (_error) {
       return Material(
         child: Container(
           color: Colors.white,

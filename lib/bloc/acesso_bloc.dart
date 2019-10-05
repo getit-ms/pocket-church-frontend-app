@@ -12,7 +12,8 @@ const String MEMBRO = "membro";
 const String MENU = "menu";
 
 class AcessoBloc {
-  BehaviorSubject<Membro> _membro = new BehaviorSubject<Membro>(seedValue: null);
+  BehaviorSubject<Membro> _membro =
+      new BehaviorSubject<Membro>(seedValue: null);
   BehaviorSubject<Menu> _menu = new BehaviorSubject<Menu>();
 
   Stream<Menu> get menu => _menu.stream;
@@ -45,7 +46,10 @@ class AcessoBloc {
         refreshMenu(config);
       }
     } catch (ex) {
-      print("Falha ao inicializar acesso: $ex");
+      print(
+          "Falha ao inicializar acesso: $ex. Tentando carregar menu da Internet.");
+
+      refreshMenu();
     }
   }
 
