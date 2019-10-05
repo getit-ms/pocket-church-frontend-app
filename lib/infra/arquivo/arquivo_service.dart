@@ -8,15 +8,24 @@ class ArquivoService {
   init() async {
     Directory baseDir = Directory(await _baseDir());
 
-    if (baseDir.existsSync()) {
-      var limite = new DateTime.now().millisecondsSinceEpoch - MILLIS_7_DIAS;
-      baseDir.listSync().forEach((f) {
-        if (f.statSync().accessed.millisecondsSinceEpoch < limite) {
-          f.delete();
-        }
-      });
-    } else {
-      baseDir.create(recursive: true);
+    try {
+      if (baseDir.existsSync()) {
+        var limite = new DateTime.now().millisecondsSinceEpoch - MILLIS_7_DIAS;
+        baseDir.listSync().forEach((f) {
+          if (f.statSync().accessed.millisecondsSinceEpoch < limite) {
+            f.delete();
+          }
+        });
+      } else {
+        await baseDir.create(recursive: true);
+      }
+    } catch (ex) {
+      print(
+          "Falha ao carregar arquivos. Removendo existentes e criando nova estrutura: $ex");
+
+      await baseDir.delete(recursive: true);
+
+      await baseDir.create(recursive: true);
     }
   }
 

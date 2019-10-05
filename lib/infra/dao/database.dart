@@ -7,13 +7,13 @@ class PCDatabase {
     // Get a location using getDatabasesPath
     var databasesPath = await getDatabasesPath();
 
-    String path = join(databasesPath, 'pchurch.db');
+    String path = join(databasesPath, 'pocket-church.db');
 
     try {
       await _doOpenDatabase(path);
     } catch (ex) {
       print(
-          "Falha ao carregar o banco de dados. O banco existente será removido e uma nova tentativa será feita: ${ex.message}");
+          "Falha ao carregar o banco de dados. O banco existente será removido e uma nova tentativa será feita: $ex");
 
       File file = new File(path);
 

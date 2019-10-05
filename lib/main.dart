@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:pocket_church/bloc/acesso_bloc.dart';
@@ -11,10 +12,14 @@ import 'package:pocket_church/funcionalidade/layouts/tradicional/tradicional.dar
 import 'package:pocket_church/page_apresentacao.dart';
 
 import './infra/infra.dart';
+import 'api/api.dart';
 import 'bloc/biblia_bloc.dart';
 import 'bloc/hino_bloc.dart';
 import 'bloc/leitura_bloc.dart';
+import 'componentes/componentes.dart';
+import 'config_values.dart';
 import 'funcionalidade/notificacao/notificacao.dart';
+import 'model/sugestao/model.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -102,6 +107,7 @@ class PrepareApp extends StatefulWidget {
 
 class _PrepareAppState extends State<PrepareApp> {
   bool _loading = true;
+  String _error;
 
   @override
   void initState() {
@@ -121,6 +127,12 @@ class _PrepareAppState extends State<PrepareApp> {
       await widget.execute(context);
     } catch (ex) {
       print("Falha no splash : $ex");
+
+      _notificaErroInicializacao(ex);
+
+      setState(() {
+        _error = ex.message;
+      });
     }
 
     SystemChrome.setEnabledSystemUIOverlays([
@@ -133,8 +145,59 @@ class _PrepareAppState extends State<PrepareApp> {
     });
   }
 
+  void _notificaErroInicializacao(ex) {
+    try {
+      ChamadoApi chamadoApi = new ChamadoApi();
+
+      if (apiConfig.defaultHeaders['Dispositivo'] == null) {
+        apiConfig.defaultHeaders['Dispositivo'] = 'undefined';
+      }
+
+      if (apiConfig.defaultHeaders['Igreja'] == null) {
+        apiConfig.defaultHeaders['Igreja'] = defaultConfig.chaveIgreja;
+      }
+
+      chamadoApi.cadastra(new Sugestao(
+        tipo: 'ERRO',
+        descricao: "Falha ao iniciar app: \n$ex",
+        nomeSolicitante: 'Chamado Automático',
+        emailSolicitante: 'suporte@getitmobilesolutions.com',
+      ));
+    } catch (ex) {
+      print("Falha ao notificar erro: $ex");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_error != null) {
+      return Material(
+        child: Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: const <Widget>[
+              Icon(
+                FontAwesomeIcons.sadCry,
+                size: 30,
+                color: Colors.black54,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              IntlText(
+                "mensagens.MSG-608",
+                style: TextStyle(
+                  color: Colors.black87,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
