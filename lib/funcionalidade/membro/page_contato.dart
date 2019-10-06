@@ -160,8 +160,9 @@ class HeaderContato extends SliverPersistentHeaderDelegate {
               decoration: BoxDecoration(
                 gradient: RadialGradient(
                   colors: [
-                    Color.lerp(Colors.white, Colors.transparent, factor),
-                    Color.lerp(Colors.white, Colors.black54, factor),
+                    Color.lerp(
+                        tema.appBarBackground, Colors.transparent, factor),
+                    Color.lerp(tema.appBarBackground, Colors.black54, factor),
                   ],
                   radius: 1.5,
                 ),

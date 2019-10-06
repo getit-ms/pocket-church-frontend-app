@@ -329,7 +329,11 @@ class ConfiguracaoBloc {
     var sprefs = await SharedPreferences.getInstance();
 
     if (sprefs.containsKey(BUNDLE)) {
-      _addBundle(new Bundle(json.decode(sprefs.get(BUNDLE))));
+      try {
+        _addBundle(new Bundle(json.decode(sprefs.get(BUNDLE))));
+      } catch (ex) {
+        sprefs.remove(BUNDLE);
+      }
     }
 
     var base = new Bundle(await _assetsApi.buscaPorLocale("pt-br"));
@@ -347,7 +351,18 @@ class ConfiguracaoBloc {
     var sprefs = await SharedPreferences.getInstance();
 
     if (sprefs.containsKey(CONFIG)) {
-      _addConfiguracao(Configuracao.fromJson(json.decode(sprefs.get(CONFIG))));
+      try {
+        _addConfiguracao(
+            Configuracao.fromJson(json.decode(sprefs.get(CONFIG))));
+      } catch (ex) {
+        sprefs.remove(CONFIG);
+
+        Configuracao saved = await configDAO.get();
+
+        if (saved != null) {
+          _addConfiguracao(saved);
+        }
+      }
     } else {
       Configuracao saved = await configDAO.get();
 
@@ -381,8 +396,12 @@ class ConfiguracaoBloc {
     var sprefs = await SharedPreferences.getInstance();
 
     if (sprefs.containsKey(TEMA)) {
-      await _addTemplateTema(
-          sprefs, TemplateAplicativo.fromJson(json.decode(sprefs.get(TEMA))));
+      try {
+        await _addTemplateTema(
+            sprefs, TemplateAplicativo.fromJson(json.decode(sprefs.get(TEMA))));
+      } catch (ex) {
+        sprefs.remove(TEMA);
+      }
     }
 
     await _addTemplateTema(sprefs, await _igrejaApi.buscaTemplate());
