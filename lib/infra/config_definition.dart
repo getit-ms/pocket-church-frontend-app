@@ -289,7 +289,7 @@ class ConfiguracaoBloc {
 
     _loadTema();
 
-    _initBundle();
+    await _initBundle();
   }
 
   _addBundle(Bundle bundle) => _bundle.add(bundle);

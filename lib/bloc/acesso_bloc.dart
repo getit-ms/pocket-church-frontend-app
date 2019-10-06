@@ -14,7 +14,8 @@ const String MENU = "menu";
 class AcessoBloc {
   BehaviorSubject<Membro> _membro =
       new BehaviorSubject<Membro>(seedValue: null);
-  BehaviorSubject<Menu> _menu = new BehaviorSubject<Menu>();
+  BehaviorSubject<Menu> _menu =
+      new BehaviorSubject<Menu>(seedValue: Menu(submenus: []));
 
   Stream<Menu> get menu => _menu.stream;
 
@@ -27,29 +28,22 @@ class AcessoBloc {
   AcessoBloc();
 
   init() async {
-    try {
-      Configuracao config = configuracaoBloc.currentConfig;
+    Configuracao config = configuracaoBloc.currentConfig;
 
-      var sprefs = await SharedPreferences.getInstance();
+    var sprefs = await SharedPreferences.getInstance();
 
-      if (sprefs.containsKey(MENU)) {
-        _menu.add(Menu.fromJson(json.decode(sprefs.getString(MENU))));
+    if (sprefs.containsKey(MENU)) {
+      _menu.add(Menu.fromJson(json.decode(sprefs.getString(MENU))));
+    }
+
+    if (config.authorization != null) {
+      if (sprefs.containsKey(MEMBRO)) {
+        _membro.add(Membro.fromJson(json.decode(sprefs.getString(MEMBRO))));
       }
 
-      if (config.authorization != null) {
-        if (sprefs.containsKey(MEMBRO)) {
-          _membro.add(Membro.fromJson(json.decode(sprefs.getString(MEMBRO))));
-        }
-
-        refresh(config);
-      } else {
-        refreshMenu(config);
-      }
-    } catch (ex) {
-      print(
-          "Falha ao inicializar acesso: $ex. Tentando carregar menu da Internet.");
-
-      refreshMenu();
+      refresh(config);
+    } else {
+      refreshMenu(config);
     }
   }
 
