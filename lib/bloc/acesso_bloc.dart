@@ -33,12 +33,20 @@ class AcessoBloc {
     var sprefs = await SharedPreferences.getInstance();
 
     if (sprefs.containsKey(MENU)) {
-      _menu.add(Menu.fromJson(json.decode(sprefs.getString(MENU))));
+      try {
+        _menu.add(Menu.fromJson(json.decode(sprefs.getString(MENU))));
+      } catch (ex) {
+        sprefs.remove(MENU);
+      }
     }
 
     if (config.authorization != null) {
       if (sprefs.containsKey(MEMBRO)) {
-        _membro.add(Membro.fromJson(json.decode(sprefs.getString(MEMBRO))));
+        try {
+          _membro.add(Membro.fromJson(json.decode(sprefs.getString(MEMBRO))));
+        } catch (ex) {
+          sprefs.remove(MEMBRO);
+        }
       }
 
       refresh(config);
