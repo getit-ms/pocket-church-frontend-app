@@ -348,48 +348,61 @@ class ConfiguracaoBloc {
   }
 
   _initConfig() async {
-    var sprefs = await SharedPreferences.getInstance();
+    try {
+      var sprefs = await SharedPreferences.getInstance();
 
-    if (sprefs.containsKey(CONFIG)) {
-      try {
-        _addConfiguracao(
-            Configuracao.fromJson(json.decode(sprefs.get(CONFIG))));
-      } catch (ex) {
-        sprefs.remove(CONFIG);
-
-        Configuracao saved = await configDAO.get();
-
-        if (saved != null) {
-          _addConfiguracao(saved);
-        }
+      if (sprefs.containsKey(CONFIG)) {
+        await _initFromSharedPreferences(sprefs);
+      } else {
+        await _initFromDB();
       }
-    } else {
+
+      Configuracao config = _config.value;
+
+      if (config.chaveDispositivo == null) {
+        config = config.copyWith(
+          chaveDispositivo: Uuid().v4(),
+          chaveIgreja: defaultConfig.chaveIgreja,
+        );
+      }
+
+      config = config.copyWith(
+        version: defaultConfig.version,
+        chaveIgreja: defaultConfig.chaveIgreja,
+      );
+
+      _addConfiguracao(config);
+
+      await configDAO.set(config);
+
+      sprefs.setString(CONFIG, json.encode(config.toJson()));
+    } catch (ex) {
+      print("Não foi possível carregar as configurações: $ex");
+
+      print("Carregando configurações padrões.");
+
+      _addConfiguracao(defaultConfig);
+    }
+  }
+
+  Future _initFromSharedPreferences(SharedPreferences sprefs) async {
+    try {
+      _addConfiguracao(Configuracao.fromJson(json.decode(sprefs.get(CONFIG))));
+    } catch (ex) {
+      sprefs.remove(CONFIG);
+
+      await _initFromDB();
+    }
+  }
+
+  Future _initFromDB() async {
+    try {
       Configuracao saved = await configDAO.get();
 
       if (saved != null) {
         _addConfiguracao(saved);
       }
-    }
-
-    Configuracao config = _config.value;
-
-    if (config.chaveDispositivo == null) {
-      config = config.copyWith(
-        chaveDispositivo: Uuid().v4(),
-        chaveIgreja: defaultConfig.chaveIgreja,
-      );
-    }
-
-    config = config.copyWith(
-      version: defaultConfig.version,
-      chaveIgreja: defaultConfig.chaveIgreja,
-    );
-
-    _addConfiguracao(config);
-
-    await configDAO.set(config);
-
-    sprefs.setString(CONFIG, json.encode(config.toJson()));
+    } catch (ex) {}
   }
 
   _loadTema() async {
