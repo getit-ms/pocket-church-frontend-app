@@ -23,7 +23,8 @@ class Configuracao {
 
   factory Configuracao.fromJson(Map<String, dynamic> json) {
     return Configuracao(
-      basePath: json['server'] ?? defaultConfig.basePath,
+      // A URL base é fixa e não deve mudar
+      basePath: defaultConfig.basePath,
       chaveIgreja: json['headers'] != null
           ? json['headers']['Igreja'] ?? defaultConfig.chaveIgreja
           : defaultConfig.chaveIgreja,
@@ -66,7 +67,7 @@ class Configuracao {
     String template,
   }) =>
       Configuracao(
-          basePath: basePath ?? this.basePath,
+          basePath: defaultConfig.basePath,
           chaveIgreja: chaveIgreja ?? this.chaveIgreja,
           nomeAplicativo: nomeAplicativo ?? this.nomeAplicativo,
           nomeIgreja: nomeIgreja ?? this.nomeIgreja,

@@ -34,9 +34,21 @@ class _TabHomeState extends State<TabHome> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5)),
-                        child: Image(
-                          image:
-                              ArquivoImageProvider(snapshot.data.divulgacao.id),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                                ConfiguracaoApp.of(context).tema.primary,
+                                ConfiguracaoApp.of(context).tema.secondary,
+                              ],
+                            ),
+                          ),
+                          child: Image(
+                            image: ArquivoImageProvider(
+                                snapshot.data.divulgacao.id),
+                          ),
                         ),
                       ),
                     );
