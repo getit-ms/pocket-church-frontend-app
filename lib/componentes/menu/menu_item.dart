@@ -25,10 +25,10 @@ class MenuItemState extends State<MenuItem>
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 180));
     _animation =
-    CurvedAnimation(parent: _animationController, curve: Interval(0, 1))
-      ..addListener(() {
-        setState(() {});
-      });
+        CurvedAnimation(parent: _animationController, curve: Interval(0, 1))
+          ..addListener(() {
+            setState(() {});
+          });
 
     _activeMenuSubscription.onData((active) {
       if ((active == widget.menu) != isActivated) {
@@ -53,9 +53,7 @@ class MenuItemState extends State<MenuItem>
 
   @override
   Widget build(BuildContext context) {
-    Tema tema = ConfiguracaoApp
-        .of(context)
-        .tema;
+    Tema tema = ConfiguracaoApp.of(context).tema;
 
     if (isActivated || _animationController.isAnimating) {
       return Container(
@@ -67,8 +65,9 @@ class MenuItemState extends State<MenuItem>
             vsync: this,
             child: Container(
               color: Colors.black.withAlpha((0x12 * _animation.value).toInt()),
-              height: _animationController.isAnimating ? (50 *
-                  widget.menu.submenus.length) * _animation.value : null,
+              height: _animationController.isAnimating
+                  ? (50 * widget.menu.submenus.length) * _animation.value
+                  : null,
               child: Column(
                 children: widget.menu.submenus.map((m) => MenuItem(m)).toList(),
               ),
@@ -87,7 +86,7 @@ class MenuItemState extends State<MenuItem>
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             border:
-            Border(bottom: BorderSide(width: 1, color: Colors.black12))),
+                Border(bottom: BorderSide(width: 1, color: Colors.black12))),
         child: Row(
           children: <Widget>[
             _translateIcon(tema),
@@ -95,7 +94,12 @@ class MenuItemState extends State<MenuItem>
             Expanded(
               child: Text(
                 widget.menu.nome,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 1.05,
+                  wordSpacing: 2,
+                ),
               ),
             ),
             const SizedBox(width: 20),
@@ -117,9 +121,7 @@ class MenuItemState extends State<MenuItem>
               context,
               replace: true,
               builder: (context) {
-                Configuracao config = ConfiguracaoApp
-                    .of(context)
-                    .config;
+                Configuracao config = ConfiguracaoApp.of(context).config;
 
                 if (config.template == 'tradicional') {
                   return LayoutTradicional();
@@ -136,13 +138,12 @@ class MenuItemState extends State<MenuItem>
             NavigatorUtil.navigate(
               context,
               replace: true,
-              builder: (context) =>
-                  PageFactory.createPage(
-                    context,
-                    Funcionalidade.values.firstWhere((func) =>
+              builder: (context) => PageFactory.createPage(
+                context,
+                Funcionalidade.values.firstWhere((func) =>
                     func.toString() ==
-                        "Funcionalidade.${widget.menu.funcionalidade}"),
-                  ),
+                    "Funcionalidade.${widget.menu.funcionalidade}"),
+              ),
             );
           }
         }

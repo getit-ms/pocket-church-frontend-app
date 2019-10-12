@@ -1,49 +1,5 @@
 part of pocket_church.infra;
 
-class CurrentTrackDataSnapshot {
-  final Audio audio;
-  final double progress;
-  final double position;
-  final double duration;
-  final double speed;
-  final double buffer;
-  final String status;
-
-  const CurrentTrackDataSnapshot({
-    this.audio,
-    this.progress = 0,
-    this.position = 0,
-    this.duration = 0,
-    this.speed = 1,
-    this.buffer = 0,
-    this.status = 'loading',
-  });
-
-  bool get loading {
-    return status == 'loading';
-  }
-
-  bool get playing {
-    return status == 'playing';
-  }
-
-  bool get seeking {
-    return status == 'seeking';
-  }
-
-  bool get stopped {
-    return status == 'stopped';
-  }
-
-  bool get paused {
-    return status == 'paused';
-  }
-
-  bool get completed {
-    return progress == 1;
-  }
-}
-
 typedef FeedbackWidgetBuilder = Widget Function(BuildContext context, CurrentTrackDataSnapshot snapshot);
 
 enum UpdateEvent {
@@ -69,6 +25,7 @@ class PlayerFeedbackState extends State<PlayerFeedback> {
 
   CurrentTrackDataSnapshot _snapshot;
   Timer _speedCheck;
+  StreamSubscription<CurrentTrackDataSnapshot> _subscription;
 
   @override
   void initState() {
@@ -80,7 +37,13 @@ class PlayerFeedbackState extends State<PlayerFeedback> {
         duration: player.audio?.tempoAudio?.toDouble()??0.0
     );
 
-    player.subscribe(_checkStatus);
+    _subscription = player.trackStream.listen((snapshot) {
+      if (_didStatusChanged(snapshot)) {
+        setState(() {
+          _snapshot = snapshot;
+        });
+      }
+    });
 
     if (widget.updateOn.contains(UpdateEvent.SPEED)) {
       this._speedCheck = Timer.periodic(new Duration(seconds: 1), _checkSpeed);
@@ -109,7 +72,9 @@ class PlayerFeedbackState extends State<PlayerFeedback> {
       _speedCheck.cancel();
     }
 
-    player.unsubscribe(_checkStatus);
+    if (_subscription != null) {
+      _subscription.cancel();
+    }
   }
 
   _checkSpeed(timer) async {
@@ -132,51 +97,6 @@ class PlayerFeedbackState extends State<PlayerFeedback> {
         });
       }
 
-    } catch (ex) {
-      print(ex);
-    }
-
-  }
-
-  _checkStatus(String eventName, {dynamic args}) {
-
-    try {
-      if ((args as OnStatusCallbackData).value != null) {
-        dynamic data = (args as OnStatusCallbackData).value;
-
-        double position = (data['currentPosition'] ?? _snapshot.position)
-            .toDouble();
-        double duration = math.max(
-            (data['duration'] ?? _snapshot.duration).toDouble(),
-            _snapshot.audio?.tempoAudio?.toDouble() ?? 0.0
-        );
-        double progress = math.max(
-          (data['playbackPercent'] ?? _snapshot.progress).toDouble(),
-          position / duration * 100,
-        );
-
-        if ((args as OnStatusCallbackData).type ==
-            RmxAudioStatusMessage.RMXSTATUS_COMPLETED) {
-          position = duration;
-          progress = 100;
-        }
-
-        var newSnapshot = new CurrentTrackDataSnapshot(
-          audio: player.audio,
-          status: data['status'] ?? _snapshot.status,
-          position: position,
-          progress: progress,
-          buffer: (data['bufferPercent'] ?? _snapshot.buffer).toDouble(),
-          duration: duration,
-          speed: _snapshot.speed,
-        );
-
-        if (_didStatusChanged(newSnapshot)) {
-          setState(() {
-            _snapshot = newSnapshot;
-          });
-        }
-      }
     } catch (ex) {
       print(ex);
     }

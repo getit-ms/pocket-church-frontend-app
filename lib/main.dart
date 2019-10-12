@@ -214,13 +214,7 @@ class _PrepareAppState extends State<PrepareApp> {
   }
 }
 
-class PocketChurchApp extends StatefulWidget {
-  // This widget is the root of your application.
-  @override
-  _PocketChurchAppState createState() => _PocketChurchAppState();
-}
-
-class _PocketChurchAppState extends State<PocketChurchApp> {
+class PocketChurchApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var configuracaoApp = ConfiguracaoApp.of(context);

@@ -90,8 +90,7 @@ class ArquivoService {
   Future<String> selecionaImagem() async {
     File file = await ImagePicker.pickImage(
       source: ImageSource.gallery,
-      maxWidth: 500,
-      maxHeight: 500,
+      imageQuality: 40,
     );
     return file.path;
   }
@@ -99,8 +98,7 @@ class ArquivoService {
   Future<String> tiraFoto() async {
     File file = await ImagePicker.pickImage(
       source: ImageSource.camera,
-      maxWidth: 500,
-      maxHeight: 500,
+      imageQuality: 40,
     );
     return file.path;
   }

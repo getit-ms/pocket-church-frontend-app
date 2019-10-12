@@ -104,9 +104,9 @@ class AcessoBloc {
 
     sprefs.setString(MEMBRO, json.encode(acesso.membro.toJson()));
     sprefs.setString(MENU, json.encode(acesso.menu.toJson()));
-    configuracaoBloc.update(config.copyWith(
-      authorization: acesso.auth,
-    ));
+    configuracaoBloc.update(
+      config.copyWith(authorization: acesso.auth),
+    );
 
     return acesso.membro;
   }
@@ -155,9 +155,9 @@ class AcessoBloc {
     sprefs.setString(MENU, json.encode(acesso.menu.toJson()));
     sprefs.setString(MEMBRO, json.encode(acesso.membro.toJson()));
 
-    configuracaoBloc.update(config.copyWith(
-      authorization: acesso.auth,
-    ));
+    configuracaoBloc.update(
+      config.copyWith(authorization: acesso.auth),
+    );
   }
 
   refreshMenu([Configuracao config]) async {

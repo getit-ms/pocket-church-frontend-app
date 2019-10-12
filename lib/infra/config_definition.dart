@@ -379,10 +379,6 @@ class ConfiguracaoBloc {
       sprefs.setString(CONFIG, json.encode(config.toJson()));
     } catch (ex) {
       print("Não foi possível carregar as configurações: $ex");
-
-      print("Carregando configurações padrões.");
-
-      _addConfiguracao(defaultConfig);
     }
   }
 
