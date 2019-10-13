@@ -10,9 +10,10 @@ class Opcao<T> {
 class SelectOpcao<T> extends StatelessWidget {
   final T value;
   final FormFieldSetter<T> onSaved;
+  final Function(T value) onChange;
   final List<Opcao<T>> opcoes;
 
-  const SelectOpcao({this.value, this.opcoes, this.onSaved});
+  const SelectOpcao({this.value, this.opcoes, this.onSaved, this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,13 @@ class SelectOpcao<T> extends StatelessWidget {
             builder: (context, snapshot) {
               return InputChip(
                 label: Text(snapshot.data ?? ""),
-                onPressed: () => state.didChange(opcao.valor),
+                onPressed: () {
+                  state.didChange(opcao.valor);
+
+                  if (onChange != null) {
+                    onChange(opcao.valor);
+                  }
+                },
                 selected: state.value == opcao.valor,
                 labelStyle: TextStyle(
                   fontSize: 18,

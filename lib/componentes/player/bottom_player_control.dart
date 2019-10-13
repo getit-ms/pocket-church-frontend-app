@@ -27,10 +27,10 @@ class BottomPlayerControlState extends State<BottomPlayerControl>
       ..addListener(() {
         setState(() {});
       });
-    _opacity = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _animationController, curve: const Interval(.5, 1)));
-    _size = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _animationController, curve: const Interval(0, .75)));
+    _opacity = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: const Interval(.5, 1)));
+    _size = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: const Interval(0, .75)));
   }
 
   @override
@@ -55,11 +55,15 @@ class BottomPlayerControlState extends State<BottomPlayerControl>
         return Opacity(
           opacity: _opacity.value,
           child: new Container(
-              height: _size.value * (widget.safeArea ? 55 + MediaQuery.of(context).padding.bottom : 55),
+              height: _size.value *
+                  (widget.safeArea
+                      ? 55 + MediaQuery.of(context).padding.bottom
+                      : 55),
               color: tema.primary,
               padding: EdgeInsets.only(
-                bottom: widget.safeArea ? _size.value * MediaQuery.of(context).padding.bottom : 0
-              ),
+                  bottom: widget.safeArea
+                      ? _size.value * MediaQuery.of(context).padding.bottom
+                      : 0),
               child: new Stack(
                 overflow: Overflow.visible,
                 children: <Widget>[
@@ -139,14 +143,25 @@ class BottomPlayerControlState extends State<BottomPlayerControl>
     return IconButton(
       iconSize: 35,
       color: Colors.white,
-      onPressed: () {
-        if (snapshot.audio != null && snapshot.paused) {
-          player.unpause();
-        } else {
-          player.play(player.audio);
-        }
-      },
-      icon: Icon(Icons.play_circle_filled),
+      onPressed: snapshot.waiting
+          ? null
+          : () {
+              if (snapshot.audio != null && !snapshot.completed) {
+                player.unpause();
+              } else {
+                player.play(player.audio);
+              }
+            },
+      icon: snapshot.waiting
+          ? SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+                strokeWidth: 2,
+              ),
+            )
+          : Icon(Icons.play_circle_filled),
     );
   }
 }

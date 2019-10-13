@@ -31,6 +31,10 @@ class CurrentTrackDataSnapshot {
     return status == 'seeking';
   }
 
+  bool get waiting {
+    return seeking || loading;
+  }
+
   bool get stopped {
     return status == 'stopped';
   }
@@ -93,12 +97,6 @@ class Player {
         }
 
         String status = data['status'] ?? snapshot.status;
-
-        if (args.type == RmxAudioStatusMessage.RMXSTATUS_BUFFERING ||
-            args.type == RmxAudioStatusMessage.RMXSTATUS_LOADING ||
-            args.type == RmxAudioStatusMessage.RMXSTATUS_STALLED) {
-          status = 'loading';
-        }
 
         var newSnapshot = new CurrentTrackDataSnapshot(
           audio: player.audio,

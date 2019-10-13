@@ -234,6 +234,9 @@ class _PagePreferenciasState extends State<PagePreferencias> {
           firstChild: Container(),
           secondChild: SelectOpcao<String>(
             value: _preferencias.horaVersiculoDiario,
+            onChange: (hora) => setState(() {
+              _preferencias.horaVersiculoDiario = hora;
+            }),
             onSaved: (hora) => setState(() {
               _preferencias.horaVersiculoDiario = hora;
             }),
@@ -278,6 +281,9 @@ class _PagePreferenciasState extends State<PagePreferencias> {
             firstChild: Container(),
             secondChild: SelectOpcao<String>(
               value: _preferencias.horaLembreteLeitura,
+              onChange: (hora) => setState(() {
+                _preferencias.horaLembreteLeitura = hora;
+              }),
               onSaved: (hora) => setState(() {
                 _preferencias.horaLembreteLeitura = hora;
               }),

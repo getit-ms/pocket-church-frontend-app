@@ -377,15 +377,17 @@ class ConfiguracaoBloc {
       await configDAO.set(config);
 
       sprefs.setString(CONFIG, json.encode(config.toJson()));
-    } catch (ex) {
-      print("Não foi possível carregar as configurações: $ex");
+    } catch (ex, stack) {
+      print("Não foi possível carregar as configurações: $ex\n$stack");
     }
   }
 
   Future _initFromSharedPreferences(SharedPreferences sprefs) async {
     try {
       _addConfiguracao(Configuracao.fromJson(json.decode(sprefs.get(CONFIG))));
-    } catch (ex) {
+    } catch (ex, stack) {
+      print("Falha ao carregar configuração de SharedPreferences: " + ex.toString() + "\n" + stack.toString());
+
       sprefs.remove(CONFIG);
 
       await _initFromDB();
@@ -399,7 +401,9 @@ class ConfiguracaoBloc {
       if (saved != null) {
         _addConfiguracao(saved);
       }
-    } catch (ex) {}
+    } catch (ex, stack) {
+      print("Falha ao carregar configuração de banco de dados: " + ex.toString() + "\n" + stack.toString());
+    }
   }
 
   _loadTema() async {

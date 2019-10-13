@@ -165,14 +165,21 @@ class DetalhePlayer extends StatelessWidget {
                             IconButton(
                               iconSize: 60,
                               color: Colors.white,
-                              onPressed: () {
-                                if (snapshot.audio != null && snapshot.paused) {
+                              onPressed: snapshot.waiting ? null : () {
+                                if (snapshot.audio != null && !snapshot.completed) {
                                   player.unpause();
                                 } else {
                                   player.play(player.audio);
                                 }
                               },
-                              icon: Icon(Icons.play_circle_filled),
+                              icon: snapshot.waiting ? SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                                  strokeWidth: 4,
+                                ),
+                              ) : Icon(Icons.play_circle_filled),
                             ),
                             RawMaterialButton(
                               constraints: const BoxConstraints(
