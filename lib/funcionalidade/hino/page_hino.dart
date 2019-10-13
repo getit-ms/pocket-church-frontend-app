@@ -69,9 +69,9 @@ class PageHino extends StatelessWidget {
               child: Html(
                 data: hino.texto ?? "",
                 defaultTextStyle: TextStyle(
-                  color: Colors.black87,
+                  height: 2,
+                  color: Colors.black54,
                   fontSize: 17,
-                  height: 1.35,
                 ),
               ),
             ),

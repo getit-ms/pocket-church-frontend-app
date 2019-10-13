@@ -119,8 +119,9 @@ class _NoticiaContent extends StatelessWidget {
                                 return Html(
                                   data: snapshot.data.texto,
                                   defaultTextStyle: TextStyle(
-                                    height: 1.2,
-                                    letterSpacing: 1.05,
+                                    height: 2,
+                                    color: Colors.black54,
+                                    fontSize: 17,
                                   ),
                                 );
                               },

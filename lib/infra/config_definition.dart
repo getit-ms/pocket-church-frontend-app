@@ -264,10 +264,8 @@ final String TEMA = "tema";
 final String BUNDLE = "bundle";
 
 class ConfiguracaoBloc {
-  BehaviorSubject<Configuracao> _config =
-      new BehaviorSubject<Configuracao>(seedValue: defaultConfig);
-  BehaviorSubject<Tema> _tema =
-      new BehaviorSubject<Tema>(seedValue: defaultTema);
+  BehaviorSubject<Configuracao> _config = new BehaviorSubject<Configuracao>();
+  BehaviorSubject<Tema> _tema = new BehaviorSubject<Tema>(seedValue: defaultTema);
   BehaviorSubject<Bundle> _bundle = new BehaviorSubject<Bundle>();
 
   final IgrejaApi _igrejaApi = new IgrejaApi();
@@ -358,7 +356,7 @@ class ConfiguracaoBloc {
         await _initFromDB();
       }
 
-      Configuracao config = _config.value;
+      Configuracao config = _config.value ?? defaultConfig;
 
       if (config.chaveDispositivo == null) {
         config = config.copyWith(
@@ -379,6 +377,14 @@ class ConfiguracaoBloc {
       sprefs.setString(CONFIG, json.encode(config.toJson()));
     } catch (ex, stack) {
       print("Não foi possível carregar as configurações: $ex\n$stack");
+
+      if (_config.value == null) {
+        print("Configuração não foi carregada com sucesso. Aplicando valores padrões.");
+
+        _config.add(defaultConfig.copyWith(
+          chaveDispositivo: Uuid().v4(),
+        ));
+      }
     }
   }
 

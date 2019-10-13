@@ -96,7 +96,14 @@ class _ListaVersiculosState extends State<ListaVersiculos> {
                                   text: " ",
                                   style: TextStyle(letterSpacing: 20),
                                 ),
-                                TextSpan(text: snapshot.data[index].texto),
+                                TextSpan(
+                                  text: snapshot.data[index].texto,
+                                  style: TextStyle(
+                                    height: 2,
+                                    color: Colors.black54,
+                                    fontSize: 17,
+                                  ),
+                                ),
                               ],
                             ),
                           ),

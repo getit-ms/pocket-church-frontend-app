@@ -50,7 +50,7 @@ class _PagePreferenciasState extends State<PagePreferencias> {
     }
 
     _timer = Timer(
-      const Duration(milliseconds: 1500),
+      const Duration(milliseconds: 500),
       () async {
         await acessoApi.salvaPreferencias(_preferencias);
 
@@ -234,12 +234,13 @@ class _PagePreferenciasState extends State<PagePreferencias> {
           firstChild: Container(),
           secondChild: SelectOpcao<String>(
             value: _preferencias.horaVersiculoDiario,
-            onChange: (hora) => setState(() {
-              _preferencias.horaVersiculoDiario = hora;
-            }),
-            onSaved: (hora) => setState(() {
-              _preferencias.horaVersiculoDiario = hora;
-            }),
+            onChange: (hora) {
+              setState(() {
+                _preferencias.horaVersiculoDiario = hora;
+              });
+
+              _save();
+            },
             opcoes: [
               Opcao(intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
               Opcao(intlLabel: "preferencias.hora._14_00", valor: "_14_00"),
@@ -281,12 +282,13 @@ class _PagePreferenciasState extends State<PagePreferencias> {
             firstChild: Container(),
             secondChild: SelectOpcao<String>(
               value: _preferencias.horaLembreteLeitura,
-              onChange: (hora) => setState(() {
-                _preferencias.horaLembreteLeitura = hora;
-              }),
-              onSaved: (hora) => setState(() {
-                _preferencias.horaLembreteLeitura = hora;
-              }),
+              onChange: (hora) {
+                setState(() {
+                  _preferencias.horaLembreteLeitura = hora;
+                });
+
+                _save();
+              },
               opcoes: [
                 Opcao(intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
                 Opcao(intlLabel: "preferencias.hora._14_00", valor: "_14_00"),

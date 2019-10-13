@@ -91,10 +91,9 @@ class PageEstudo extends StatelessWidget {
           child: Html(
             data: estudo.texto ?? "",
             defaultTextStyle: TextStyle(
-              letterSpacing: 1.05,
-              height: 1.2,
-              fontSize: 16,
-              color: Colors.black87,
+              height: 2,
+              color: Colors.black54,
+              fontSize: 17,
             ),
           ),
         ),

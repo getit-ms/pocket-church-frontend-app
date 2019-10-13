@@ -40,10 +40,9 @@ class PageInstitucional extends StatelessWidget {
                       child: Text(
                         snapshot.data.quemSomos,
                         style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                          letterSpacing: 1.05,
-                          height: 1.4,
+                          height: 2,
+                          color: Colors.black54,
+                          fontSize: 17,
                         ),
                       ),
                     ),

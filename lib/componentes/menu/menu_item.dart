@@ -96,7 +96,7 @@ class MenuItemState extends State<MenuItem>
                 widget.menu.nome,
                 style: TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   letterSpacing: 1.05,
                   wordSpacing: 2,
                 ),
