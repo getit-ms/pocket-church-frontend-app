@@ -5,18 +5,13 @@ class WidgetBody extends StatefulWidget {
   final VoidCallback onMore;
   final Widget body;
 
-  const WidgetBody({
-    this.title,
-    this.onMore,
-    this.body
-  });
+  const WidgetBody({this.title, this.onMore, this.body});
 
   @override
   _WidgetBodyState createState() => _WidgetBodyState();
 }
 
 class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
-
   AnimationController _animationController;
   Animation<double> _animation;
 
@@ -24,7 +19,10 @@ class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _animationController = new AnimationController(vsync: this, duration: Duration(milliseconds: 500),);
+    _animationController = new AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    );
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController);
 
     _animationController.addListener(() {
@@ -53,21 +51,13 @@ class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
     return SizedBox(
       width: double.infinity,
       child: Container(
-        color: const Color(0xF9EFEFEF),
         child: Container(
-          margin: const EdgeInsets.only(
-              bottom: 30
-          ),
+          margin: const EdgeInsets.only(bottom: 30),
           child: Column(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                          color: Colors.black54,
-                          width: .5,
-                        )
-                    )
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,17 +67,22 @@ class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
                         padding: const EdgeInsets.all(10),
                         child: DefaultTextStyle(
                           style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.black
-                          ),
+                              fontSize: 22, color: const Color(0xFF393939)),
                           child: widget.title,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     RawMaterialButton(
                       padding: const EdgeInsets.all(0),
-                      child: const IntlText("global.mais"),
+                      child: const IntlText(
+                        "global.mais",
+                        style: TextStyle(
+                          color: const Color(0xFF393939),
+                        ),
+                      ),
                       onPressed: widget.onMore,
                     )
                   ],
@@ -101,4 +96,3 @@ class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
     );
   }
 }
-

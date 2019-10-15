@@ -36,6 +36,7 @@ import 'package:pocket_church/model/noticia/model.dart';
 import 'package:pocket_church/model/video/model.dart';
 import 'package:pocket_church/model/boletim/model.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 part './widget_factory.dart';
 part './widget_noticias.dart';

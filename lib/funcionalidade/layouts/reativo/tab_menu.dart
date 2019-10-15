@@ -14,10 +14,11 @@ class TabMenu extends StatelessWidget {
         SliverPersistentHeader(
           pinned: true,
           delegate: TabMenuHeader(
-              menu: menu,
-              minExtent: mediaQueryData.padding.top + 60,
-              maxExtent: mediaQueryData.padding.top +
-                  mediaQueryData.size.height * .45),
+            menu: menu,
+            minExtent: mediaQueryData.padding.top + 60,
+            maxExtent:
+                mediaQueryData.padding.top + mediaQueryData.size.height * .45,
+          ),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
@@ -67,76 +68,86 @@ class TabMenuHeader extends SliverPersistentHeaderDelegate {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.lerp(tema.appBarBackground,
-                          tema.buttonBackground.withOpacity(.75), factor),
-                      Color.lerp(
-                          tema.appBarBackground, Colors.transparent, factor)
-                    ]),
-                boxShadow: [
-                  BoxShadow(
-                      color: Color.lerp(
-                          Colors.black54, Colors.transparent, factor),
-                      blurRadius: 5 - 5 * factor)
-                ]),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.lerp(Colors.transparent,
+                      tema.buttonBackground.withOpacity(.75), factor),
+                  Color.lerp(Colors.transparent, Colors.transparent, factor)
+                ],
+              ),
+            ),
             child: Column(
               children: <Widget>[
-                Container(
-                  height: currentExtent - 50,
-                ),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: Color.lerp(tema.appBarBackground,
-                          const Color(0xFFEFEFEF), factor),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(50 * factor),
-                      ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color.lerp(
+                          tema.appBarBackground, Colors.transparent, factor),
                       boxShadow: [
                         BoxShadow(
                           color: Color.lerp(
-                              tema.appBarBackground, Colors.black26, factor),
-                          blurRadius: 5 * factor,
-                          offset: const Offset(0, -5),
+                              Colors.black54, Colors.transparent, factor),
+                          blurRadius: lerpDouble(5, 0, factor),
                         )
-                      ]),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: lerpDouble(0, 50, factor),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFf7f7f7),
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(50),
+                      topLeft: Radius.circular(50),
+                    ),
+                  ),
                 )
               ],
             ),
           ),
           Positioned(
-            top: mediaQueryData.padding.top + (currentExtent - 170) * factor,
-            left: 30 * factor,
+            bottom: lerpDouble(0, 20, factor),
+            left: lerpDouble(0, 30, factor),
             child: Container(
-              height: 60 + 60 * factor,
-              width: 60 + 20 * factor,
-              padding: const EdgeInsets.all(10),
+              height: lerpDouble(
+                  MediaQuery.of(context).padding.top + kToolbarHeight,
+                  120,
+                  factor),
+              width: lerpDouble(60, 80, factor),
+              padding: EdgeInsets.only(
+                top: lerpDouble(
+                    MediaQuery.of(context).padding.top + 10, 10, factor),
+                left: 15,
+                right: 15,
+                bottom: 15,
+              ),
               decoration: BoxDecoration(
                 color: Color.lerp(
                     Colors.transparent, tema.buttonBackground, factor),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(lerpDouble(0, 15, factor)),
+                ),
                 boxShadow: [
                   BoxShadow(
-                      color: Color.lerp(
-                          Colors.transparent, Colors.black54, factor),
-                      blurRadius: 5)
+                    color:
+                        Color.lerp(Colors.transparent, Colors.black54, factor),
+                    blurRadius: 5,
+                  )
                 ],
               ),
               child: Icon(
                 IconUtil.fromString(menu.icone),
-                size: 25 + 10 * factor,
+                size: lerpDouble(25, 35, factor),
                 color: Color.lerp(tema.appBarIcons, tema.buttonText, factor),
               ),
             ),
           ),
           Positioned(
-            top: mediaQueryData.padding.top +
-                20 +
-                (currentExtent - 145) * factor,
-            left: 60 + 60 * factor,
+            bottom: lerpDouble(18.5, 70, factor),
+            left: lerpDouble(60, 120, factor),
             child: Text(
               menu.nome,
               style: TextStyle(
@@ -144,9 +155,10 @@ class TabMenuHeader extends SliverPersistentHeaderDelegate {
                 fontSize: 18 + 12 * factor,
                 shadows: [
                   Shadow(
-                      color: Color.lerp(
-                          Colors.transparent, Colors.black54, factor),
-                      blurRadius: 10)
+                    color:
+                        Color.lerp(Colors.transparent, Colors.black54, factor),
+                    blurRadius: 10,
+                  )
                 ],
               ),
             ),

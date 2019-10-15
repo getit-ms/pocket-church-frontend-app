@@ -14,7 +14,20 @@ class WidgetContatos extends StatelessWidget {
         );
       },
       body: Container(
-        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+            )
+          ],
+        ),
+        margin: EdgeInsets.symmetric(
+          horizontal: 30,
+          vertical: 10,
+        ),
         child: IntlBuilder(
           text: "global.buscar",
           builder: (context, snapshot) {
@@ -55,9 +68,21 @@ class WidgetContatos extends StatelessWidget {
               },
               textFieldConfiguration: TextFieldConfiguration(
                 decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.search),
-                    hintText: snapshot.data ?? "",
-                    border: const OutlineInputBorder()),
+                  suffixIcon: Icon(Icons.search),
+                  hintText: snapshot.data ?? "",
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                ),
               ),
             );
           },

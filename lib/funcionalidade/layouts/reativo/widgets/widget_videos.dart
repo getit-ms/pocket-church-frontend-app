@@ -16,10 +16,10 @@ class WidgetVideos extends StatelessWidget {
         );
       },
       body: Container(
-        height: 250,
+        height: 270,
         child: InfiniteList(
           padding: const EdgeInsets.symmetric(
-            horizontal: 5,
+            horizontal: 20,
             vertical: 10,
           ),
           scrollDirection: Axis.horizontal,
@@ -36,16 +36,15 @@ class WidgetVideos extends StatelessWidget {
           builder: (context, itens, index) {
             return _ItemVideo(video: itens[index]);
           },
-          placeholderSize: 260,
+          placeholderSize: 250,
           placeholderBuilder: (context) {
             return Container(
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(8))),
-              margin: const EdgeInsets.symmetric(
-                horizontal: 5,
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
+              margin: const EdgeInsets.all(10),
             );
           },
         ),
@@ -65,16 +64,14 @@ class _ItemVideo extends StatelessWidget {
 
     return Container(
       width: 250,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 5,
-      ),
       child: RawMaterialButton(
         onPressed: () {
           LaunchUtil.youtube(video.id);
         },
-        fillColor: Colors.white,
+        elevation: 0,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
         padding: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
@@ -82,21 +79,29 @@ class _ItemVideo extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    gradient: RadialGradient(
-                      center: Alignment.topRight,
-                      radius: 2,
-                      colors: [
-                        tema.primary,
-                        tema.primary.withOpacity(.25),
-                      ],
-                    ),
-                    image: DecorationImage(
-                        image: NetworkImage(video.thumbnail),
-                        fit: BoxFit.cover)),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                    )
+                  ],
+                  gradient: RadialGradient(
+                    center: Alignment.topRight,
+                    radius: 2,
+                    colors: [
+                      tema.primary,
+                      tema.primary.withOpacity(.25),
+                    ],
+                  ),
+                  image: DecorationImage(
+                    image: NetworkImage(video.thumbnail),
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
                     color: Colors.black26,
                   ),
                   child: const Icon(
@@ -108,7 +113,7 @@ class _ItemVideo extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 5,
+              height: 15,
             ),
             Container(
               width: double.infinity,

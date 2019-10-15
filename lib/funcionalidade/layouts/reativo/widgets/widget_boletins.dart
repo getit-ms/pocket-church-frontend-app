@@ -16,10 +16,10 @@ class WidgetBoletins extends StatelessWidget {
         );
       },
       body: Container(
-        height: 250,
+        height: 270,
         child: InfiniteList(
           padding: const EdgeInsets.symmetric(
-            horizontal: 5,
+            horizontal: 20,
             vertical: 10,
           ),
           scrollDirection: Axis.horizontal,
@@ -33,14 +33,12 @@ class WidgetBoletins extends StatelessWidget {
           placeholderSize: 190,
           placeholderBuilder: (context) {
             return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 5,
-              ),
+              padding: const EdgeInsets.all(10),
               child: SizedBox(
                 height: double.infinity,
-                width: 180,
+                width: 160,
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
                   child: Container(
                     color: Colors.white,
                   ),
@@ -68,28 +66,26 @@ class _ItemBoletimWidget extends StatelessWidget {
     var tema = ConfiguracaoApp.of(context).tema;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 5,
-      ),
+      padding: const EdgeInsets.all(10),
       child: Container(
         height: double.infinity,
-        width: 180,
+        width: 160,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black54,
-              blurRadius: 5
+              color: Colors.black26,
+              blurRadius: 10
             )
           ],
           image: DecorationImage(
               image: ArquivoImageProvider(boletim.thumbnail.id),
               fit: BoxFit.cover
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
           child: RawMaterialButton(
             child: Container(
               width: double.infinity,

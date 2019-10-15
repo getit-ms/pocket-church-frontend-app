@@ -10,10 +10,9 @@ class ItemEstudo extends StatelessWidget {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 5,
-      ),
+      padding: const EdgeInsets.all(10),
       child: RawMaterialButton(
+        elevation: 10,
         onPressed: () {
           NavigatorUtil.navigate(
             context,
@@ -23,43 +22,84 @@ class ItemEstudo extends StatelessWidget {
           );
         },
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         fillColor: Colors.white,
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          children: <Widget>[
-            const Icon(
-              Icons.insert_drive_file,
-              color: Colors.black54,
-              size: 45,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Container(
-              width: 200,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    estudo.titulo,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                      color: tema.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    estudo.autor,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          child: Container(
+            width: 160,
+            decoration: BoxDecoration(
+              image: estudo.thumbnail != null
+                  ? DecorationImage(
+                      image: ArquivoImageProvider(estudo.thumbnail.id),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  tema.primary,
+                  tema.secondary,
                 ],
               ),
             ),
-          ],
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.insert_drive_file,
+                    size: 120,
+                    color: tema.buttonText.withOpacity(.5),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        tema.buttonBackground,
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 15,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        estudo.titulo,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                        style: TextStyle(
+                          color: tema.buttonText,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                      Text(
+                        estudo.autor,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: tema.buttonText.withOpacity(.7),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

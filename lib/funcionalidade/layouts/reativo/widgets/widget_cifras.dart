@@ -1,7 +1,6 @@
 part of pocket_church.widgets_reativos;
 
 class WidgetCifras extends StatelessWidget {
-
   const WidgetCifras();
 
   @override
@@ -15,7 +14,20 @@ class WidgetCifras extends StatelessWidget {
         );
       },
       body: Container(
-        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+            )
+          ],
+        ),
+        margin: EdgeInsets.symmetric(
+          horizontal: 30,
+          vertical: 10,
+        ),
         child: IntlBuilder(
           text: "global.buscar",
           builder: (context, snapshot) {
@@ -56,9 +68,21 @@ class WidgetCifras extends StatelessWidget {
               },
               textFieldConfiguration: TextFieldConfiguration(
                 decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.search),
-                    hintText: snapshot.data ?? "",
-                    border: const OutlineInputBorder()),
+                  suffixIcon: Icon(Icons.search),
+                  hintText: snapshot.data ?? "",
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                ),
               ),
             );
           },
@@ -66,6 +90,4 @@ class WidgetCifras extends StatelessWidget {
       ),
     );
   }
-
 }
-

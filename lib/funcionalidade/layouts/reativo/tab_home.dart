@@ -416,6 +416,10 @@ class FeedItem extends StatelessWidget {
       child: InkWell(
         onTap: timelineProvider.resolveAction(context, feed),
         child: Card(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15))
+          ),
           child: compact ? _compact(context, tema) : _expanded(context, tema),
         ),
       ),
@@ -482,7 +486,7 @@ class FeedItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -520,11 +524,13 @@ class FeedItem extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(top: 10),
       decoration: const BoxDecoration(
-          border: Border(
-              top: BorderSide(
-        color: Colors.black12,
-        width: .5,
-      ))),
+        border: Border(
+          top: BorderSide(
+            color: Colors.black12,
+            width: .5,
+          ),
+        ),
+      ),
       child: DefaultTextStyle(
         style: TextStyle(
           fontSize: 12,
@@ -557,9 +563,12 @@ class FeedItem extends StatelessWidget {
                       PageFactory.createPage(context, feed.funcionalidade),
                 );
               },
-              child: const Icon(
-                Icons.more_vert,
-                color: Colors.black54,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 5,
+                ),
+                child: IntlText("global.mais"),
               ),
             ),
           ],
@@ -615,8 +624,8 @@ class FeedItem extends StatelessWidget {
         Expanded(
           child: ClipRRect(
             borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(5),
-              topLeft: Radius.circular(5),
+              topRight: Radius.circular(15),
+              topLeft: Radius.circular(15),
             ),
             child: Container(
               decoration: BoxDecoration(

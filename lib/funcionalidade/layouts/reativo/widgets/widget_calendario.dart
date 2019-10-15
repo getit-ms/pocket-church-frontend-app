@@ -14,7 +14,7 @@ class WidgetCalendario extends StatelessWidget {
         );
       },
       body: Container(
-        height: 120,
+        height: 230,
         child: InfiniteList(
           tamanhoPagina: 10,
           scrollDirection: Axis.horizontal,
@@ -22,7 +22,7 @@ class WidgetCalendario extends StatelessWidget {
             return await calendarioApi.consulta(pagina, tamanho);
           },
           padding: const EdgeInsets.symmetric(
-            horizontal: 5,
+            horizontal: 20,
             vertical: 10,
           ),
           builder: (context, itens, index) {
@@ -31,11 +31,14 @@ class WidgetCalendario extends StatelessWidget {
           placeholderSize: 270,
           placeholderBuilder: (context) {
             return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              width: 260,
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              width: 140,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(5))),
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
             );
           },
         ),
@@ -55,77 +58,99 @@ class _EventoAgenda extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool mesmoDia =
+        DateUtil.compareDateOnly(DateTime.now(), evento.inicio) >= 0 &&
+            DateUtil.compareDateOnly(DateTime.now(), evento.termino) <= 0;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: RawMaterialButton(
-        fillColor: Colors.white,
-        padding: const EdgeInsets.all(10),
         shape: const RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(5))),
-        child: Row(
-          children: <Widget>[
-            Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                    color: tema.buttonBackground,
-                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    boxShadow: [
-                      const BoxShadow(
-                        color: Colors.black54,
-                        blurRadius: 2,
-                      )
-                    ]),
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      evento.inicio.day.toString(),
-                      style: TextStyle(
-                        color: tema.buttonText,
-                        fontSize: 35,
-                      ),
-                    ),
-                    Text(
-                      _month.format(evento.inicio),
-                      style: TextStyle(
-                        color: tema.buttonText,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                )),
-            const SizedBox(
-              width: 10,
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+        ),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 20,
+          ),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+              )
+            ],
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                mesmoDia ? tema.primary : const Color(0xFFFAFAFA),
+                mesmoDia ? tema.secondary : const Color(0xFFFAFAFA),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
                   Text(
-                    _time.format(evento.inicio) +
-                        " - " +
-                        _time.format(evento.termino),
-                    style: const TextStyle(
-                        color: Colors.black87, fontWeight: FontWeight.bold),
+                    evento.inicio.day == evento.termino.day
+                        ? evento.inicio.day.toString()
+                        : evento.inicio.day.toString() +
+                            " - " +
+                            evento.termino.day.toString(),
+                    style: TextStyle(
+                      color: mesmoDia ? Colors.white : Colors.black54,
+                      fontSize:  evento.inicio.day == evento.termino.day ? 40 : 30,
+                      height: .75,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 5,
+                  SizedBox(
+                    width: 5,
                   ),
-                  Container(
-                    width: 150,
-                    child: Text(
-                      evento.descricao ?? "",
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+                  Text(
+                    _month.format(evento.inicio),
+                    style: TextStyle(
+                      color: mesmoDia ? Colors.white : Colors.black54,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
-            )
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                _time.format(evento.inicio) +
+                    " - " +
+                    _time.format(evento.termino),
+                style: TextStyle(
+                  color: mesmoDia ? Colors.white : Colors.black54,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 120,
+                child: Text(
+                  evento.descricao ?? "",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  style: TextStyle(
+                    color: mesmoDia ? Colors.white : Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         onPressed: () {
           CalendarioUtil.addEvento(

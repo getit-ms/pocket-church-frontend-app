@@ -15,12 +15,9 @@ class ItemAudio extends StatelessWidget {
 
     return Container(
       width: width,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 5,
-      ),
       child: RawMaterialButton(
         onPressed: () async {
-          if (player.currentStatus != 'stopped' && player.audio == audio) {
+          if (player.audio == audio) {
             if (player.currentStatus == 'playing') {
               await player.pause();
             } else {
@@ -30,8 +27,10 @@ class ItemAudio extends StatelessWidget {
             await player.play(audio);
           }
         },
-        fillColor: Colors.white,
-        shape: const Border(),
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
         padding: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
@@ -45,7 +44,13 @@ class ItemAudio extends StatelessWidget {
                   return Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black54,
+                          blurRadius: 10,
+                        )
+                      ],
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                       gradient: RadialGradient(
                         center: Alignment.topRight,
                         radius: 2,
@@ -55,15 +60,16 @@ class ItemAudio extends StatelessWidget {
                         ],
                       ),
                       image: DecorationImage(
-                          image: audio.capa == null
-                              ? tema.menuBackground
-                              : ArquivoImageProvider(audio.capa.id),
-                          fit: BoxFit.cover),
+                        image: audio.capa == null
+                            ? tema.menuBackground
+                            : ArquivoImageProvider(audio.capa.id),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
+                            const BorderRadius.all(Radius.circular(15)),
                         color: Colors.black26,
                       ),
                       child: Icon(
@@ -80,7 +86,7 @@ class ItemAudio extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 5,
+              height: 15,
             ),
             Container(
               width: double.infinity,

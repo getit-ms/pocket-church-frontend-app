@@ -1,55 +1,123 @@
 part of pocket_church.widgets_reativos;
 
-
 class WidgetNoticias extends StatelessWidget {
-
   const WidgetNoticias();
 
   @override
   Widget build(BuildContext context) {
     return WidgetBody(
-      title: const IntlText("noticia.noticias",),
-      onMore: (){
+      title: const IntlText(
+        "noticia.noticias",
+      ),
+      onMore: () {
         NavigatorUtil.navigate(context,
-            builder: (context) => PageListaNoticias()
-        );
+            builder: (context) => PageListaNoticias());
       },
       body: Container(
-        height: 250,
+        height: 340,
         child: InfiniteList(
           padding: const EdgeInsets.symmetric(
-            horizontal: 5,
+            horizontal: 20,
             vertical: 10,
           ),
           scrollDirection: Axis.horizontal,
           provider: (int pagina, int tamanhoPagina) async {
-            return await noticiaApi.consulta(pagina: pagina, tamanhoPagina: tamanhoPagina);
+            return await noticiaApi.consulta(
+                pagina: pagina, tamanhoPagina: tamanhoPagina);
           },
           builder: (context, itens, index) {
             Noticia noticia = itens[index];
             return new _ItemNoticiaWidget(noticia: noticia);
           },
-          placeholderSize: 285,
+          placeholderSize: 340,
           placeholderBuilder: (context) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 5,
-              ),
-              child: Container(
-                height: 300,
-                width: 275,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                ),
-              ),
-            );
+            return _placeholder();
           },
         ),
       ),
     );
   }
 
+  Widget _placeholder() {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 5,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            height: 180,
+            width: 275,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 15,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Container(
+            height: 19,
+            width: 275,
+            color: Colors.white,
+          ),
+          const SizedBox(height: 10),
+          Container(
+            width: 275,
+            height: 16,
+            color: Colors.white,
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: 275,
+            child: DefaultTextStyle(
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black87,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.person,
+                    color: Colors.black87,
+                    size: 16,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    height: 16,
+                    width: 20,
+                    color: Colors.white,
+                  ),
+                  Expanded(child: Container()),
+                  Icon(
+                    Icons.timer,
+                    color: Colors.black87,
+                    size: 16,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    height: 16,
+                    width: 20,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _ItemNoticiaWidget extends StatelessWidget {
@@ -64,113 +132,115 @@ class _ItemNoticiaWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var tema = ConfiguracaoApp.of(context).tema;
 
-    return Padding(
+    return RawMaterialButton(
+      elevation: 0,
       padding: const EdgeInsets.symmetric(
-        horizontal: 5,
+        horizontal: 10,
+        vertical: 5,
       ),
-      child: RawMaterialButton(
-        onPressed: (){
-          NavigatorUtil.navigate(context,
-              builder: (context) => PageNoticia(noticia: noticia)
-          );
-        },
-        child: Container(
-          height: 300,
-          width: 275,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              const BoxShadow(
-                  color: Colors.black54,
-                  blurRadius: 2
-              )
-            ],
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-          ),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Hero(
-              tag: 'noticia_' + noticia.id.toString(),
-              child: Material(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: noticia.ilustracao != null ?
-                              ArquivoImageProvider(noticia.ilustracao.id) :
-                              tema.menuBackground,
-                              fit: BoxFit.cover,
-                              alignment: Alignment.topCenter,
-                            )
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(
-                              gradient: const LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Colors.transparent,
-                                    Colors.white
-                                  ]
-                              )
-                          ),
-                          alignment: Alignment.bottomLeft,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 85,
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(10),
-                      alignment: Alignment.bottomLeft,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          DefaultTextStyle(
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  color: tema.primary,
-                                  fontWeight: FontWeight.bold
-                              ),
-                              child: Text(noticia.titulo,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                              )
-                          ),
-                          DefaultTextStyle(
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 200,
-                                    child: Text(noticia.autor.nome,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  Text(StringUtil.formatData(noticia.dataPublicacao, pattern: 'dd MMM')),
-                                ],
-                              )
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+      ),
+      onPressed: () {
+        NavigatorUtil.navigate(context,
+            builder: (context) => PageNoticia(noticia: noticia));
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFFCCCCCC),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 15,
+                )
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              child: Hero(
+                tag: 'noticia_' + noticia.id.toString(),
+                child: FadeInImage(
+                  placeholder: MemoryImage(kTransparentImage),
+                  image: noticia.ilustracao != null
+                      ? ArquivoImageProvider(noticia.ilustracao.id)
+                      : tema.menuBackground,
+                  fit: BoxFit.cover,
+                  height: 180,
+                  width: 275,
                 ),
               ),
             ),
           ),
-        ),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: 275,
+            child: Text(
+              noticia.titulo,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(
+                color: tema.primary,
+                fontSize: 19,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: 275,
+            child: Text(
+              noticia.resumo?.trim() ?? "",
+              style: TextStyle(
+                color: Colors.black38,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: 275,
+            child: DefaultTextStyle(
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black87,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.person,
+                    color: Colors.black87,
+                    size: 16,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(StringUtil.primeiroNome(noticia.autor.nome)),
+                  Expanded(child: Container()),
+                  Icon(
+                    Icons.timer,
+                    color: Colors.black87,
+                    size: 16,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    StringUtil.formatData(
+                          noticia.dataPublicacao,
+                          pattern: "dd MMM HH",
+                        ) +
+                        "h",
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-

@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>65118528623-17ahe8hc3dq7rbd0cdq0lg2666qkrjk4.apps.googleusercontent.com</string>
+	<string>390716388079-8qi3vq4dfmvnhovhsci8h8ed39hsqref.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.65118528623-17ahe8hc3dq7rbd0cdq0lg2666qkrjk4</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>65118528623-2dpp644ktce5675pledjckq677q4gv3a.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.390716388079-8qi3vq4dfmvnhovhsci8h8ed39hsqref</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDve2WlxubAuKiscT8RE3-vWCMClwguTxU</string>
+	<string>AIzaSyDA23rXAzKDWVQAG14tW0tsDdsiV3eW6Sk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>65118528623</string>
+	<string>390716388079</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>br.com.getit.calvin.saf</string>
+	<string>br.com.getit.calvin.ipvilamaria</string>
 	<key>PROJECT_ID</key>
-	<string>calvin-app-1469800955782</string>
+	<string>ip-vila-maria</string>
 	<key>STORAGE_BUCKET</key>
-	<string>calvin-app-1469800955782.appspot.com</string>
+	<string>ip-vila-maria.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:65118528623:ios:5683f5a93d3416a1</string>
+	<string>1:390716388079:ios:5c68156e72cf2c7350e11a</string>
 	<key>DATABASE_URL</key>
-	<string>https://calvin-app-1469800955782.firebaseio.com</string>
+	<string>https://ip-vila-maria.firebaseio.com</string>
 </dict>
 </plist>

@@ -19,10 +19,10 @@ class _WidgetAudiosState extends State<WidgetAudios> {
             builder: (context) => PageListaCategoriasAudios());
       },
       body: Container(
-        height: 240,
+        height: 260,
         child: InfiniteList(
           padding: const EdgeInsets.symmetric(
-            horizontal: 5,
+            horizontal: 20,
             vertical: 10,
           ),
           scrollDirection: Axis.horizontal,
@@ -35,14 +35,14 @@ class _WidgetAudiosState extends State<WidgetAudios> {
               audio: itens[index],
             );
           },
-          placeholderSize: 220,
+          placeholderSize: 260,
           placeholderBuilder: (context) {
             return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
               width: 210,
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(8))),
+                  borderRadius: const BorderRadius.all(Radius.circular(15))),
             );
           },
         ),

@@ -14,19 +14,22 @@ class WidgetFotos extends StatelessWidget {
         );
       },
       body: Container(
-        height: 150,
+        height: 220,
         child: InfiniteList(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 5,
+          ),
           scrollDirection: Axis.horizontal,
           provider: _provider,
           builder: _builder,
           placeholderSize: 210,
           placeholderBuilder: (context) => Container(
             width: 200,
-            margin: const EdgeInsets.all(5),
+            margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
             ),
           ),
         ),
@@ -53,14 +56,20 @@ class WidgetFotos extends StatelessWidget {
           child: Container(
             height: double.infinity,
             width: 200,
-            margin: const EdgeInsets.all(5),
+            margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               image: DecorationImage(
                 image: NetworkImage(
                     "https://farm${galeria.fotoPrimaria.farm}.staticflickr.com/${galeria.fotoPrimaria.server}/${galeria.fotoPrimaria.id}_${galeria.fotoPrimaria.secret}_n.jpg"),
                 fit: BoxFit.cover,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black54,
+                  blurRadius: 10,
+                )
+              ]
             ),
             child: Container(
               decoration: BoxDecoration(

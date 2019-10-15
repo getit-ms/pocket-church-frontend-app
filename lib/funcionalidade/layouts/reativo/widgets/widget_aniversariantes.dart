@@ -14,19 +14,22 @@ class WidgetAniversariantes extends StatelessWidget {
         );
       },
       body: Container(
-        height: 150,
+        height: 180,
         child: InfiniteList(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(
+            vertical: 5,
+            horizontal: 20,
+          ),
           provider: _provider,
           builder: _builder,
           scrollDirection: Axis.horizontal,
           placeholderSize: 160,
           placeholderBuilder: (context) => Container(
             width: 130,
-            margin: const EdgeInsets.all(5),
+            margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
             ),
           ),
         ),
@@ -38,11 +41,15 @@ class WidgetAniversariantes extends StatelessWidget {
     Membro item = itens[index];
 
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 15,
+      ),
       child: RawMaterialButton(
+        elevation: 10,
         fillColor: Colors.white,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5))),
+            borderRadius: BorderRadius.all(Radius.circular(15))),
         child: Container(
           width: 130,
           padding: const EdgeInsets.all(10),

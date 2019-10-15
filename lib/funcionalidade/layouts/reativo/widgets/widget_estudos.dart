@@ -14,10 +14,10 @@ class WidgetEstudos extends StatelessWidget {
             builder: (context) => PageListaCategoriasEstudos());
       },
       body: Container(
-        height: 100,
+        height: 270,
         child: InfiniteList(
           padding: const EdgeInsets.symmetric(
-            horizontal: 5,
+            horizontal: 20,
             vertical: 10,
           ),
           scrollDirection: Axis.horizontal,
@@ -28,16 +28,14 @@ class WidgetEstudos extends StatelessWidget {
           builder: (context, itens, index) {
             return ItemEstudo(estudo: itens[index]);
           },
-          placeholderSize: 280,
+          placeholderSize: 270,
           placeholderBuilder: (context) {
             return Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 5,
-              ),
-              width: 270,
+              margin: const EdgeInsets.all(10),
+              width: 160,
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(8))),
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
             );
           },
         ),

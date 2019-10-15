@@ -248,19 +248,24 @@ class _OpcaoItem extends StatelessWidget {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
     return RawMaterialButton(
-      fillColor: Colors.white,
+      elevation: 0,
       shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(5))),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+      ),
       padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
-            width: 50,
-            height: 50,
+          Container(
+            width: 65,
+            height: 65,
+            decoration: BoxDecoration(
+              color: tema.buttonBackground,
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+            ),
             child: Icon(
               icon,
-              color: tema.primary,
+              color: tema.buttonText,
               size: 35,
             ),
           ),

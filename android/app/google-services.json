@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "65118528623",
-    "firebase_url": "https://calvin-app-1469800955782.firebaseio.com",
-    "project_id": "calvin-app-1469800955782",
-    "storage_bucket": "calvin-app-1469800955782.appspot.com"
+    "project_number": "390716388079",
+    "firebase_url": "https://ip-vila-maria.firebaseio.com",
+    "project_id": "ip-vila-maria",
+    "storage_bucket": "ip-vila-maria.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:65118528623:android:5683f5a93d3416a1",
+        "mobilesdk_app_id": "1:390716388079:android:08bd1a0b1a6754c750e11a",
         "android_client_info": {
-          "package_name": "br.com.getit.calvin.saf"
+          "package_name": "br.com.getit.calvin.ipvm"
         }
       },
       "oauth_client": [
         {
-          "client_id": "65118528623-h373d6ekkjia01nrdtamd19jd26uj4mb.apps.googleusercontent.com",
+          "client_id": "390716388079-ltfskv0mfe5a6g3n2g346cmaoqj2fc0r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBMkadprAylXcl9bb25dQEUYEfS2l2CwOk"
+          "current_key": "AIzaSyBgoj7Lkx_VPQYjv61awPBvolfkikLiyJA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "65118528623-h373d6ekkjia01nrdtamd19jd26uj4mb.apps.googleusercontent.com",
+              "client_id": "390716388079-ltfskv0mfe5a6g3n2g346cmaoqj2fc0r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "390716388079-8qi3vq4dfmvnhovhsci8h8ed39hsqref.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.getit.calvin.ipvilamaria"
+              }
             }
           ]
         }

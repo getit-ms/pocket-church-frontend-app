@@ -59,8 +59,10 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
     if (_tabController == null ||
         widget.tabs.length + 2 != _tabController.length) {
       _activeIndex = 0;
-      _tabController =
-          new TabController(length: widget.tabs.length + 2, vsync: this);
+      _tabController = new TabController(
+        length: widget.tabs.length + 2,
+        vsync: this,
+      );
     }
   }
 
@@ -106,14 +108,14 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
       },
       child: Scaffold(
         key: _scaffold,
-        backgroundColor: const Color(0xF9EFEFEF),
+        backgroundColor: const Color(0xFFf7f7f7),
         body: Column(
           children: <Widget>[
             Expanded(
               child: Container(
-                  color: const Color(0xFFEFEFEF),
-                  width: double.infinity,
-                  child: _resolve(tabs: widget.tabs, menus: widget.menus)),
+                width: double.infinity,
+                child: _resolve(tabs: widget.tabs, menus: widget.menus),
+              ),
             ),
             const BottomPlayerControl(),
           ],
@@ -122,6 +124,11 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
             currentIndex: _activeIndex,
             selectedItemColor: tema.menuActiveIcon,
             unselectedItemColor: tema.menuIcon,
+            elevation: 10,
+            iconSize: 25,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
             onTap: (index) {
               setState(() {
                 _activeIndex = index;
@@ -135,7 +142,6 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
                   height: 25,
                   child: const Icon(
                     FontAwesomeIcons.home,
-                    size: 18,
                   ),
                 ),
                 title: const IntlText(
@@ -157,7 +163,6 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
                     height: 25,
                     child: Icon(
                       IconUtil.fromString(menu.icone),
-                      size: 18,
                     ),
                   ),
                 ),
@@ -177,7 +182,6 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
                     height: 25,
                     child: const Icon(
                       FontAwesomeIcons.bars,
-                      size: 18,
                     ),
                   ),
                 ),
