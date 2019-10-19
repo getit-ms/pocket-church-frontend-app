@@ -15,6 +15,8 @@ class InstitucionalBloc {
 
   Stream<Institucional> get institucional => _institucional.stream;
 
+  Institucional get current => _institucional.value;
+
   load() async {
     var sprefs = await SharedPreferences.getInstance();
 

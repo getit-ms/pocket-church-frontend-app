@@ -45,11 +45,7 @@ class WidgetAniversariantes extends StatelessWidget {
         horizontal: 10,
         vertical: 15,
       ),
-      child: RawMaterialButton(
-        elevation: 10,
-        fillColor: Colors.white,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15))),
+      child: ElevatedButton(
         child: Container(
           width: 130,
           padding: const EdgeInsets.all(10),

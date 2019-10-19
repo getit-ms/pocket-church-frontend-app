@@ -2,6 +2,7 @@ library pocket_church.funcionalidade_noticia;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:pocket_church/componentes/util/elevated_button.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../../api/api.dart';

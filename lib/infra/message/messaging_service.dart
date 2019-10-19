@@ -31,7 +31,7 @@ class MessagingService {
     await acessoApi.registerPush(
       pushkey: token,
       version: config.version,
-      tipoDispositivo: TipoDispositivo.ANDROID,
+      tipoDispositivo: Platform.isIOS ? TipoDispositivo.IOS : TipoDispositivo.ANDROID,
     );
   }
 

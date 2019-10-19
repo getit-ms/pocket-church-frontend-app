@@ -16,67 +16,64 @@ class PageListaGalerias extends StatelessWidget {
   Widget _builder(BuildContext context, List<GaleriaFotos> itens, int index) {
     GaleriaFotos galeria = itens[index];
 
-    return InkWell(
-      onTap: () {
-        NavigatorUtil.navigate(
-          context,
-          builder: (context) => PageListaFotos(
-            galeria: galeria,
-          ),
-        );
-      },
-      child: Hero(
-        tag: "galeria_" + galeria.id,
-        child: Material(
-          child: Container(
-            height: 220,
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 5,
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ElevatedButton(
+        onPressed: () {
+          NavigatorUtil.navigate(
+            context,
+            builder: (context) => PageListaFotos(
+              galeria: galeria,
             ),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://farm${galeria.fotoPrimaria.farm}.staticflickr.com/${galeria.fotoPrimaria.server}/${galeria.fotoPrimaria.id}_${galeria.fotoPrimaria.secret}_n.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
+          );
+        },
+        child: Hero(
+          tag: "galeria_" + galeria.id,
+          child: Material(
             child: Container(
+              height: 220,
+              width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black87,
-                  ],
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "https://farm${galeria.fotoPrimaria.farm}.staticflickr.com/${galeria.fotoPrimaria.server}/${galeria.fotoPrimaria.id}_${galeria.fotoPrimaria.secret}_n.jpg"),
+                  fit: BoxFit.cover,
                 ),
               ),
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    galeria.nome,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black87,
+                    ],
                   ),
-                  Text(
-                    galeria.descricao ?? "",
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 18,
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      galeria.nome,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
                     ),
-                  ),
-                ],
+                    Text(
+                      galeria.descricao ?? "",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -11,8 +11,7 @@ class ItemEstudo extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: RawMaterialButton(
-        elevation: 10,
+      child: ElevatedButton(
         onPressed: () {
           NavigatorUtil.navigate(
             context,
@@ -21,10 +20,6 @@ class ItemEstudo extends StatelessWidget {
             ),
           );
         },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        fillColor: Colors.white,
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(15)),
           child: Container(

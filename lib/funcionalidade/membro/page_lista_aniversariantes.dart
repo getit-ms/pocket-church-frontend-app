@@ -103,14 +103,19 @@ class PageListaAniversariantes extends StatelessWidget {
           InfoDivider(
             child: IntlText("global.hoje"),
           ),
-          Card(
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 5,
+            ),
             child: Wrap(
-              runSpacing: 20,
-              spacing: 20,
+              runSpacing: 15,
+              spacing: 10,
+              alignment: WrapAlignment.center,
               children: aniversariantesHoje.map((membro) {
                 return SizedBox(
                   width: 120,
-                  child: RawMaterialButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       NavigatorUtil.navigate(
                         context,
@@ -120,27 +125,31 @@ class PageListaAniversariantes extends StatelessWidget {
                             ),
                       );
                     },
-                    elevation: 0,
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: <Widget>[
-                        ClipRRect(
-                          child: FotoMembro(
-                            membro.foto,
-                            size: 100,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 10,
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          ClipRRect(
+                            child: FotoMembro(
+                              membro.foto,
+                              size: 100,
+                            ),
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(50)),
                           ),
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(50)),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          StringUtil.nomeResumido(membro.nome),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            StringUtil.nomeResumido(membro.nome),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 16),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -181,20 +190,18 @@ class PageListaAniversariantes extends StatelessWidget {
           return Container(
             width: double.infinity,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 InfoDivider(
                   child: _buildLabel(grupo[0].diaAniversario),
                 ),
                 Wrap(
-                  alignment: WrapAlignment.start,
-                  runAlignment: WrapAlignment.start,
-                  crossAxisAlignment: WrapCrossAlignment.start,
                   runSpacing: 5,
                   spacing: 5,
+                  alignment: WrapAlignment.center,
                   children: grupo.map((membro) {
-                    return SizedBox(
+                    return Container(
                       width: 90,
+                      margin: const EdgeInsets.all(5),
                       child: RawMaterialButton(
                         fillColor: Colors.white,
                         onPressed: () {

@@ -39,12 +39,12 @@ class WidgetVideos extends StatelessWidget {
           placeholderSize: 250,
           placeholderBuilder: (context) {
             return Container(
-              width: 250,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-              ),
               margin: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                child: Container(
+                  width: 230,
+                ),
+              ),
             );
           },
         ),
@@ -64,34 +64,23 @@ class _ItemVideo extends StatelessWidget {
 
     return Container(
       width: 250,
-      child: RawMaterialButton(
+      padding: const EdgeInsets.all(10),
+      child: ElevatedButton(
         onPressed: () {
           LaunchUtil.youtube(video.id);
         },
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        padding: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
             Expanded(
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10,
-                    )
-                  ],
                   gradient: RadialGradient(
                     center: Alignment.topRight,
                     radius: 2,
                     colors: [
                       tema.primary,
-                      tema.primary.withOpacity(.25),
+                      tema.secondary,
                     ],
                   ),
                   image: DecorationImage(
@@ -101,8 +90,7 @@ class _ItemVideo extends StatelessWidget {
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    color: Colors.black26,
+                    color: Colors.black12,
                   ),
                   child: const Icon(
                     FontAwesomeIcons.youtube,
@@ -112,12 +100,10 @@ class _ItemVideo extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
             Container(
               width: double.infinity,
-              height: 65,
+              height: 75,
+              padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,18 +117,15 @@ class _ItemVideo extends StatelessWidget {
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        child: Text(
-                          video.descricao ?? "",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                      Text(
+                        StringUtil.formatDataLegivel(
+                          video.publicacao,
+                          configuracaoBloc.currentBundle,
+                          porHora: true,
+                          pattern: "dd MMM",
                         ),
-                      ),
-                      Text(StringUtil.formatData(video.publicacao,
-                          pattern: "dd MMM"))
+                      )
                     ],
                   ),
                 ],

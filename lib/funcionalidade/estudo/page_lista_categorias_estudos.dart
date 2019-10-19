@@ -26,10 +26,10 @@ class PageListaCategoriasEstudos extends StatelessWidget {
                       );
                     },
                     body: Container(
-                      height: 100,
+                      height: 270,
                       child: InfiniteList(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
+                          horizontal: 20,
                           vertical: 10,
                         ),
                         scrollDirection: Axis.horizontal,
@@ -46,10 +46,8 @@ class PageListaCategoriasEstudos extends StatelessWidget {
                         placeholderSize: 180,
                         placeholderBuilder: (context) {
                           return Container(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                            ),
-                            width: 270,
+                            margin: const EdgeInsets.all(10),
+                            width: 160,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:

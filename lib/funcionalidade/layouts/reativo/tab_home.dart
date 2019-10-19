@@ -24,31 +24,18 @@ class _TabHomeState extends State<TabHome> {
           delegate: SliverChildListDelegate(
             [
               StreamBuilder<Institucional>(
+                initialData: institucionalBloc.current,
                 stream: institucionalBloc.institucional,
                 builder: (context, snapshot) {
                   if (snapshot.data?.divulgacao != null) {
-                    return Card(
-                      margin: const EdgeInsets.all(10),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: [
-                                ConfiguracaoApp.of(context).tema.primary,
-                                ConfiguracaoApp.of(context).tema.secondary,
-                              ],
-                            ),
+                    return Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: ElevatedButton(
+                        child: Image(
+                          image: ArquivoImageProvider(
+                            snapshot.data.divulgacao.id,
                           ),
-                          child: Image(
-                            image: ArquivoImageProvider(
-                                snapshot.data.divulgacao.id),
-                          ),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     );
@@ -410,18 +397,15 @@ class FeedItem extends StatelessWidget {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
     return Container(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 10,
+      ),
       width: double.infinity,
       height: compact ? 200 : 350,
-      child: InkWell(
-        onTap: timelineProvider.resolveAction(context, feed),
-        child: Card(
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15))
-          ),
-          child: compact ? _compact(context, tema) : _expanded(context, tema),
-        ),
+      child: ElevatedButton(
+        onPressed: timelineProvider.resolveAction(context, feed),
+        child: compact ? _compact(context, tema) : _expanded(context, tema),
       ),
     );
   }
@@ -551,7 +535,14 @@ class FeedItem extends StatelessWidget {
               menu.nome,
             ),
             const Text(" | "),
-            Text(StringUtil.formatData(feed.data, pattern: "dd MMM")),
+            Text(
+              StringUtil.formatDataLegivel(
+                feed.data,
+                configuracaoBloc.currentBundle,
+                porHora: true,
+                pattern: "dd MMM",
+              ),
+            ),
             Expanded(
               child: Container(),
             ),

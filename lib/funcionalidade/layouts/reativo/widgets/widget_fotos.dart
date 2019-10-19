@@ -40,62 +40,57 @@ class WidgetFotos extends StatelessWidget {
   Widget _builder(BuildContext context, List<GaleriaFotos> itens, int index) {
     GaleriaFotos galeria = itens[index];
 
-    return InkWell(
-      onTap: () {
-        NavigatorUtil.navigate(
-          context,
-          builder: (context) => PageListaFotos(
-            galeria: galeria,
-          ),
-        );
-      },
-      child: Hero(
-        tag: "galeria_" + galeria.id,
-        child: Material(
-          color: Colors.transparent,
-          child: Container(
-            height: double.infinity,
-            width: 200,
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://farm${galeria.fotoPrimaria.farm}.staticflickr.com/${galeria.fotoPrimaria.server}/${galeria.fotoPrimaria.id}_${galeria.fotoPrimaria.secret}_n.jpg"),
-                fit: BoxFit.cover,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black54,
-                  blurRadius: 10,
-                )
-              ]
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ElevatedButton(
+        onPressed: () {
+          NavigatorUtil.navigate(
+            context,
+            builder: (context) => PageListaFotos(
+              galeria: galeria,
             ),
+          );
+        },
+        child: Hero(
+          tag: "galeria_" + galeria.id,
+          child: Material(
+            color: Colors.transparent,
             child: Container(
+              height: double.infinity,
+              width: 200,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black87,
-                  ],
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "https://farm${galeria.fotoPrimaria.farm}.staticflickr.com/${galeria.fotoPrimaria.server}/${galeria.fotoPrimaria.id}_${galeria.fotoPrimaria.secret}_n.jpg"),
+                  fit: BoxFit.cover,
                 ),
               ),
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    galeria.nome,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 19,
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black87,
+                    ],
                   ),
-                ],
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      galeria.nome,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 19,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

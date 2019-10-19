@@ -14,7 +14,7 @@ class WidgetCalendario extends StatelessWidget {
         );
       },
       body: Container(
-        height: 230,
+        height: 250,
         child: InfiniteList(
           tamanhoPagina: 10,
           scrollDirection: Axis.horizontal,
@@ -63,11 +63,8 @@ class _EventoAgenda extends StatelessWidget {
             DateUtil.compareDateOnly(DateTime.now(), evento.termino) <= 0;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: RawMaterialButton(
-        shape: const RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
-        ),
+      padding: const EdgeInsets.all(10),
+      child: ElevatedButton(
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 10,
@@ -104,7 +101,8 @@ class _EventoAgenda extends StatelessWidget {
                             evento.termino.day.toString(),
                     style: TextStyle(
                       color: mesmoDia ? Colors.white : Colors.black54,
-                      fontSize:  evento.inicio.day == evento.termino.day ? 40 : 30,
+                      fontSize:
+                          evento.inicio.day == evento.termino.day ? 40 : 30,
                       height: .75,
                       fontWeight: FontWeight.bold,
                     ),

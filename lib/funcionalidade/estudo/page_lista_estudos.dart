@@ -28,17 +28,31 @@ class PageListaEstudos extends StatelessWidget {
   }
 
   Widget _builder(BuildContext context, List<Estudo> itens, int index) {
-    Estudo estudo = itens[index];
+    if (index % 2 == 0) {
+      Estudo estudo = itens[index];
 
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: ItemEstudo(estudo: estudo),
-          ),
+      return Container(
+        height: 270,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: ItemEstudo(estudo: estudo),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: index + 1 < itens.length ? ItemEstudo(estudo: itens[index + 1]) : Container(),
+              ),
+            ),
+          ],
         ),
-      ],
-    );
+      );
+
+    }
+
+    return Container();
   }
 }

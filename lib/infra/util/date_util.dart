@@ -1,13 +1,17 @@
 part of pocket_church.infra;
 
 class DateUtil {
-  static equalsDateOnly(DateTime data1, DateTime data2) {
+  static bool equalsDateOnly(DateTime data1, DateTime data2) {
     return data1.year == data2.year &&
         data1.month == data2.month &&
         data1.day == data2.day;
   }
 
-  static equalsAniversario(DateTime data1, DateTime data2) {
+  static int diferencaMinutos(DateTime data1, DateTime data2) {
+    return ((data1.millisecondsSinceEpoch - data2.millisecondsSinceEpoch) / 60000).floor().abs();
+  }
+
+  static bool equalsAniversario(DateTime data1, DateTime data2) {
     return data1.month == data2.month && data1.day == data2.day;
   }
 

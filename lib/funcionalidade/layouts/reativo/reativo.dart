@@ -11,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pocket_church/bloc/acesso_bloc.dart';
 import 'package:pocket_church/bloc/institucional_bloc.dart';
 import 'package:pocket_church/componentes/componentes.dart';
+import 'package:pocket_church/componentes/util/elevated_button.dart';
 import 'package:pocket_church/funcionalidade/acesso/acesso.dart';
 import 'package:pocket_church/funcionalidade/layouts/page_factory.dart';
 import 'package:pocket_church/funcionalidade/layouts/reativo/widgets/widgets.dart';

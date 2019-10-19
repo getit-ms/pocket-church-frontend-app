@@ -63,8 +63,50 @@ class StringUtil {
     return formatado;
   }
 
-  static String formatDataLegivel(DateTime data, Bundle bundle) {
+  static String formatDataLegivel(DateTime data, Bundle bundle, {bool porHora = false, String pattern = "dd MMMM yyyy"}) {
     var hoje = DateTime.now().toLocal();
+
+    if (porHora) {
+      int mins = DateUtil.diferencaMinutos(data, hoje);
+
+      if (hoje.isBefore(data)) {
+
+        if (mins < 5) {
+          return bundle['global.agora'];
+        }
+
+        if (mins < 60) {
+          return bundle.get('global.em_minutos', args: {
+            'minutos': mins.toString()
+          });
+        }
+
+        if (mins < 720) {
+          return bundle.get('global.em_horas', args: {
+            'horas': (mins ~/ 60).toString()
+          });
+        }
+
+      } else {
+
+        if (mins < 5) {
+          return bundle['global.agora'];
+        }
+
+        if (mins < 60) {
+          return bundle.get('global.ha_minutos', args: {
+            'minutos': mins.toString()
+          });
+        }
+
+        if (mins < 720) {
+          return bundle.get('global.ha_horas', args: {
+            'horas': (mins ~/ 60).toString()
+          });
+        }
+
+      }
+    }
 
     if (DateUtil.equalsDateOnly(data, hoje)) {
       return bundle['global.hoje'];
@@ -80,7 +122,7 @@ class StringUtil {
       return bundle['global.ontem'];
     }
 
-    return formatData(data, pattern: "dd MMMM yyyy");
+    return formatData(data, pattern: pattern);
   }
 
   static String formataCurrency(double valor) {

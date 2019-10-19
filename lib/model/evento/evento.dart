@@ -40,7 +40,12 @@ class Evento {
     this.inscricoesAbertas,
     this.filename,
     this.comPagamento,
-  });
+  }) {
+    this.dataHoraInicio = dataHoraInicio?.toLocal();
+    this.dataHoraTermino = dataHoraTermino?.toLocal();
+    this.dataInicioInscricao = dataInicioInscricao?.toLocal();
+    this.dataTerminoInscricao = dataTerminoInscricao?.toLocal();
+  }
 
   factory Evento.fromJson(Map<String, dynamic> json) => _$EventoFromJson(json);
 

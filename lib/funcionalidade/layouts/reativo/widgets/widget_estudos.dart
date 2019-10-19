@@ -28,7 +28,7 @@ class WidgetEstudos extends StatelessWidget {
           builder: (context, itens, index) {
             return ItemEstudo(estudo: itens[index]);
           },
-          placeholderSize: 270,
+          placeholderSize: 180,
           placeholderBuilder: (context) {
             return Container(
               margin: const EdgeInsets.all(10),
