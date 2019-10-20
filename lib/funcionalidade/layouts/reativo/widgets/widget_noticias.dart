@@ -65,7 +65,14 @@ class _ItemNoticiaWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          NavigatorUtil.navigate(
+            context,
+            builder: (context) => PageNoticia(
+              noticia: noticia,
+            ),
+          );
+        },
         child: Container(
           width: 275,
           child: Column(
