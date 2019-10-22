@@ -8,6 +8,7 @@ class PageNoticia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
+      backgroundColor: Colors.white,
       title: IntlText("noticia.noticia"),
       body: new _NoticiaContent(noticia: noticia),
     );

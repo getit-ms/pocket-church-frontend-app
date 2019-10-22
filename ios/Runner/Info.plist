@@ -31,6 +31,8 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>Adicionar eventos da igreja ao calendário do celular.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Escolher foto do membro para associar ao perfil do usuario</string>
+	<key>NSCameraUsageDescription</key>
 	<string>Tirar foto do membro para associar ao perfil do usuario</string>
 	<key>UIBackgroundModes</key>
 	<array>

@@ -56,6 +56,8 @@ Future<void> _loadingExecute(BuildContext context) async {
 
   await acessoBloc.init();
 
+  messagingService.init();
+
   institucionalBloc.load();
 
   messagingService.register();
