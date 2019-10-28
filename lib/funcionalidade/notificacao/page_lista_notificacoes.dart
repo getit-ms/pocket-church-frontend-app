@@ -265,7 +265,7 @@ class _PageListaNotificacoesState extends State<PageListaNotificacoes> {
   }
 }
 
-final RegExp REGEXP_LINK = RegExp("(https?://|www.)[^ ]+");
+final RegExp REGEXP_LINK = RegExp("(https?://|www.)[^\\s]+");
 
 class ItemNotificacao extends StatelessWidget {
   const ItemNotificacao({

@@ -95,6 +95,9 @@ class PageEstudo extends StatelessWidget {
               color: Colors.black54,
               fontSize: 17,
             ),
+            onLinkTap: (link) {
+              LaunchUtil.site(link);
+            },
           ),
         ),
       );
