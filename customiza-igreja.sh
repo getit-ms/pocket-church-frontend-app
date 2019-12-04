@@ -2,7 +2,6 @@
 
 TMP_DIR=/tmp/build-igreja
 CONFIG_FILE=$TMP_DIR/config.properties
-ASSETS_FILE=$TMP_DIR/assets.zip
 
 getProperty()
 {
@@ -12,8 +11,6 @@ getProperty()
 }
 
 echo "=== BUILDANDO PARA IGREJA $1 VERSÃO $2 ==="
-
-mkdir /tmp/build-igreja
 
 echo "Baixando propriedades adicionais"
 
@@ -47,11 +44,11 @@ sed -i '' -E "{:a;N;\$!ba;s#<key>CFBundleVersion</key>(\s+)<string>.+</string>#<
 
 echo "Baixando assets"
 
-curl -H "Device-UUID:build-igreja.sh" "https://admin.getitmobilesolutions.com/api/igreja/$1/v/$2/assets.zip?username=gafsel@gmail.com&password=123456" --output $ASSETS_FILE || exit 1
+curl -H "Device-UUID:build-igreja.sh" "https://admin.getitmobilesolutions.com/api/igreja/$1/v/$2/assets.zip?username=gafsel@gmail.com&password=123456" --output assets.zip || exit 1
 
 echo "Aplicando assets no projeto"
 
-unzip -o /tmp/build-igreja/assets.zip  || exit 1
+unzip -o assets.zip  || exit 1
 
 flutter pub run flutter_launcher_icons:main || exit 1
 
