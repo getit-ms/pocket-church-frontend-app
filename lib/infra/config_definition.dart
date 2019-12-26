@@ -265,7 +265,7 @@ final String BUNDLE = "bundle";
 
 class ConfiguracaoBloc {
   BehaviorSubject<Configuracao> _config = new BehaviorSubject<Configuracao>();
-  BehaviorSubject<Tema> _tema = new BehaviorSubject<Tema>(seedValue: defaultTema);
+  BehaviorSubject<Tema> _tema = new BehaviorSubject<Tema>.seeded(defaultTema);
   BehaviorSubject<Bundle> _bundle = new BehaviorSubject<Bundle>();
 
   final IgrejaApi _igrejaApi = new IgrejaApi();

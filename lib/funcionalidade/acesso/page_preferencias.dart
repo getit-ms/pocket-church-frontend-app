@@ -76,6 +76,7 @@ class _PagePreferenciasState extends State<PagePreferencias> {
           _receberNotificacoesVideos(),
           _versiculoDiario(),
           _leituraBiblica(),
+          _notificacaoDevocionario(),
           _ministeriosNotificacao(),
           const InfoDivider(
             child: IntlText("preferencias.outros"),
@@ -296,6 +297,57 @@ class _PagePreferenciasState extends State<PagePreferencias> {
               ],
             ),
             crossFadeState: _preferencias.desejaReceberLembreteLeitura
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 300),
+          ),
+        ],
+      );
+    }
+
+    return Container();
+  }
+
+  _notificacaoDevocionario() {
+    if (acessoBloc.temAcesso(Funcionalidade.DEVOCIONARIO)) {
+      return Column(
+        children: <Widget>[
+          const SizedBox(
+            height: 20,
+          ),
+          const InfoDivider(
+            child: IntlText("preferencias.devocionario"),
+          ),
+          OpcaoPreferencias(
+            icon: Icons.calendar_today,
+            label: IntlText("preferencias.deseja_receber_lembrete_devocionario"),
+            value: _preferencias.desejaReceberNotificacoesDevocionario ?? false,
+            onChanged: (selected) {
+              setState(() {
+                _preferencias.desejaReceberNotificacoesDevocionario = selected;
+              });
+
+              _save();
+            },
+          ),
+          AnimatedCrossFade(
+            firstChild: Container(),
+            secondChild: SelectOpcao<String>(
+              value: _preferencias.horaNotificacoesDevocional,
+              onChange: (hora) {
+                setState(() {
+                  _preferencias.horaNotificacoesDevocional = hora;
+                });
+
+                _save();
+              },
+              opcoes: [
+                Opcao(intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
+                Opcao(intlLabel: "preferencias.hora._14_00", valor: "_14_00"),
+                Opcao(intlLabel: "preferencias.hora._20_00", valor: "_20_00"),
+              ],
+            ),
+            crossFadeState: _preferencias.desejaReceberNotificacoesDevocionario ?? false
                 ? CrossFadeState.showSecond
                 : CrossFadeState.showFirst,
             duration: const Duration(milliseconds: 300),

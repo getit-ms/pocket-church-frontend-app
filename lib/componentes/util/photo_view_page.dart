@@ -29,8 +29,14 @@ class PhotoViewPage extends StatelessWidget {
         PhotoViewGallery(
           pageController: pageController,
           pageOptions: images
-              .map((img) => PhotoViewGalleryPageOptions(
-                  imageProvider: img.image, heroTag: img.heroTag))
+              .map(
+                (img) => PhotoViewGalleryPageOptions(
+                  imageProvider: img.image,
+                  heroAttributes: PhotoViewHeroAttributes(
+                    tag: img.heroTag,
+                  ),
+                ),
+              )
               .toList(),
           gaplessPlayback: true,
           backgroundDecoration: BoxDecoration(color: Colors.black87),

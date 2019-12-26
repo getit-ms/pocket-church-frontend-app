@@ -107,9 +107,14 @@ class GaleriaPDFState extends State<GaleriaPDF> with TickerProviderStateMixin {
   Widget _rendering(ArquivoPDF arquivoPDF) {
     return PhotoViewGallery(
       pageOptions: arquivoPDF.paginas
-          .map((pag) => PhotoViewGalleryPageOptions(
+          .map(
+            (pag) => PhotoViewGalleryPageOptions(
               imageProvider: FileImage(pag.file),
-              heroTag: 'pagina_' + pag.number.toString()))
+              heroAttributes: PhotoViewHeroAttributes(
+                tag: 'pagina_' + pag.number.toString(),
+              ),
+            ),
+          )
           .toList(),
       gaplessPlayback: true,
       pageController: _pageController,

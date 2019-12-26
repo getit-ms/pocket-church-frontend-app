@@ -26,6 +26,7 @@ enum Funcionalidade {
   REALIZAR_VOTACAO,
   GALERIA_FOTOS,
   AUDIOS,
+  DEVOCIONARIO,
 
 
 }

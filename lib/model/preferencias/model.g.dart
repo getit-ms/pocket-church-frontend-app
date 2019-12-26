@@ -16,6 +16,9 @@ Preferencias _$PreferenciasFromJson(Map<String, dynamic> json) {
     desejaReceberVersiculosDiarios:
         json['desejaReceberVersiculosDiarios'] as bool,
     horaLembreteLeitura: json['horaLembreteLeitura'] as String,
+    desejaReceberNotificacoesDevocionario:
+        json['desejaReceberNotificacoesDevocionario'] as bool,
+    horaNotificacoesDevocional: json['horaNotificacoesDevocional'] as String,
     ministeriosInteresse: (json['ministeriosInteresse'] as List)
         ?.map((e) =>
             e == null ? null : Ministerio.fromJson(e as Map<String, dynamic>))
@@ -33,6 +36,9 @@ Map<String, dynamic> _$PreferenciasToJson(Preferencias instance) =>
       'desejaReceberLembreteLeitura': instance.desejaReceberLembreteLeitura,
       'horaLembreteLeitura': instance.horaLembreteLeitura,
       'ministeriosInteresse': instance.ministeriosInteresse,
+      'horaNotificacoesDevocional': instance.horaNotificacoesDevocional,
+      'desejaReceberNotificacoesDevocionario':
+          instance.desejaReceberNotificacoesDevocionario,
     };
 
 Ministerio _$MinisterioFromJson(Map<String, dynamic> json) {

@@ -4,10 +4,10 @@ import './infra/infra.dart';
 
 final Configuracao defaultConfig = const Configuracao(
   basePath: "https://getitmobilesolutions.com/app/rest",
-  chaveIgreja: "ipvm",
+  chaveIgreja: "ipn",
   nomeAplicativo: "IP Vila Maria",
   nomeIgreja: "Igreja Presbiteriana de Vila Maria",
-  version: "7.1.11",
+  version: "8.0.0",
 );
 
 final Tema defaultTema = const Tema(

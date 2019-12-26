@@ -60,7 +60,6 @@ class PageTemplateState extends State<PageTemplate> {
     }
 
     _currentOverlay = showOverlayNotification(
-      context,
       (context) => NotificacaoInterna(
         titulo: notification.title,
         mensagem: notification.message,

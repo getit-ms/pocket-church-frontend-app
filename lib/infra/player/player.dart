@@ -116,7 +116,7 @@ class Player {
 
   }
 
-  Subject<CurrentTrackDataSnapshot> get trackStream => _currentTrackSubject.stream;
+  ValueStream<CurrentTrackDataSnapshot> get trackStream => _currentTrackSubject.stream;
 
   _reloadAudio(String id) async {
     this._audio = await audioApi.detalha(int.parse(id));

@@ -10,7 +10,7 @@ class ArquivoImageProvider extends ImageProvider<ArquivoImageProvider> {
         assert(scale != null);
 
   @override
-  ImageStreamCompleter load(ArquivoImageProvider key) {
+  ImageStreamCompleter load(ArquivoImageProvider key, DecoderCallback decode) {
     return MultiFrameImageStreamCompleter(
         codec: _loadAsync(key),
         scale: key.scale,

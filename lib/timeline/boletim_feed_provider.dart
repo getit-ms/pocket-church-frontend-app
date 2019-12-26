@@ -22,7 +22,7 @@ class BoletimFeedProvider extends FeedProvider {
 
   Feed _mapFeed(Boletim boletim) => Feed(
           id: boletim.id,
-          image: boletim.thumbnail.id,
+          image: boletim.thumbnail?.id,
           data: boletim.dataPublicacao,
           titulo: boletim.titulo,
           funcionalidade: Funcionalidade.LISTAR_BOLETINS,

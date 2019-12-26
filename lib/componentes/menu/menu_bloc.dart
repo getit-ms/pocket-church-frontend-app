@@ -3,11 +3,11 @@ part of pocket_church.componentes;
 
 class MenuBloc {
   final _menuFetcher = BehaviorSubject<Menu>();
-  final _activeMenuFetcher = BehaviorSubject<Menu>(seedValue: null);
+  final _activeMenuFetcher = BehaviorSubject<Menu>.seeded(null);
 
-  Observable<Menu> get menu => _menuFetcher.stream;
+  ValueStream<Menu> get menu => _menuFetcher.stream;
 
-  Observable<Menu> get activeMenu => _activeMenuFetcher.stream;
+  ValueStream<Menu> get activeMenu => _activeMenuFetcher.stream;
 
   MenuBloc() {
     acessoBloc.menu.listen(_menuFetcher.sink.add);

@@ -19,6 +19,7 @@ Map<Funcionalidade, WidgetBuilder>_widgets = {
   Funcionalidade.LISTAR_PUBLICACOES: (context) => const WidgetPublicacoes(),
   Funcionalidade.CONSULTAR_CIFRAS: (context) => const WidgetCifras(),
   Funcionalidade.CONSULTAR_CANTICOS: (context) => const WidgetCanticos(),
+  Funcionalidade.DEVOCIONARIO: (context) => const WidgetDevocionario(),
 };
 
 class WidgetFuncionalidade extends StatelessWidget {

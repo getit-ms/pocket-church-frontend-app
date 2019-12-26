@@ -7,6 +7,7 @@ import 'package:pocket_church/funcionalidade/boletim/boletim.dart';
 import 'package:pocket_church/funcionalidade/calendario/calendario.dart';
 import 'package:pocket_church/funcionalidade/cantico/cantico.dart';
 import 'package:pocket_church/funcionalidade/cifra/cifra.dart';
+import 'package:pocket_church/funcionalidade/devocionario/devocionario.dart';
 import 'package:pocket_church/funcionalidade/ebd/edb.dart';
 import 'package:pocket_church/funcionalidade/enquete/enquete.dart';
 import 'package:pocket_church/funcionalidade/estudo/estudo.dart';
@@ -24,7 +25,7 @@ import 'package:pocket_church/funcionalidade/sugestao/sugestao.dart';
 import 'package:pocket_church/funcionalidade/video/video.dart';
 import 'package:pocket_church/infra/infra.dart';
 
-Map<Funcionalidade, WidgetBuilder>_pages = {
+Map<Funcionalidade, WidgetBuilder> _pages = {
   Funcionalidade.NOTICIAS: (context) => PageListaNoticias(),
   Funcionalidade.NOTIFICACOES: (context) => PageListaNotificacoes(),
   Funcionalidade.INSTITUCIONAL: (context) => PageInstitucional(),
@@ -33,7 +34,8 @@ Map<Funcionalidade, WidgetBuilder>_pages = {
   Funcionalidade.AGENDA: (context) => PageCalendario(),
   Funcionalidade.REALIZAR_INSCRICAO_EBD: (context) => PageListaEBDs(),
   Funcionalidade.REALIZAR_INSCRICAO_EVENTO: (context) => PageListaEventos(),
-  Funcionalidade.AGENDAR_ACONSELHAMENTO: (context) => PageListaAconselhamentos(),
+  Funcionalidade.AGENDAR_ACONSELHAMENTO: (context) =>
+      PageListaAconselhamentos(),
   Funcionalidade.GALERIA_FOTOS: (context) => PageListaGalerias(),
   Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA: (context) => PageLeitura(),
   Funcionalidade.LISTAR_ESTUDOS: (context) => PageListaCategoriasEstudos(),
@@ -49,6 +51,7 @@ Map<Funcionalidade, WidgetBuilder>_pages = {
   Funcionalidade.REALIZAR_VOTACAO: (context) => PageListaEnquetes(),
   Funcionalidade.CHAMADOS: (context) => PageSugestao(),
   Funcionalidade.PREFERENCIAS: (context) => PagePreferencias(),
+  Funcionalidade.DEVOCIONARIO: (context) => PageDevocionario(),
 };
 
 class PageFactory {

@@ -89,6 +89,7 @@ configurations.all {
         force 'androidx.fragment:fragment:1.0.0'
         force 'androidx.legacy:legacy-support-v4:1.0.0'
         force 'androidx.core:core:1.0.2'
+        force 'com.google.firebase:firebase-messaging:20.0.1'
     }
 }
 

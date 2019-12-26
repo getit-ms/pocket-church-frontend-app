@@ -13,9 +13,9 @@ const String MENU = "menu";
 
 class AcessoBloc {
   BehaviorSubject<Membro> _membro =
-      new BehaviorSubject<Membro>(seedValue: null);
+      new BehaviorSubject<Membro>.seeded(null);
   BehaviorSubject<Menu> _menu =
-      new BehaviorSubject<Menu>(seedValue: Menu(submenus: []));
+      new BehaviorSubject<Menu>.seeded(Menu(submenus: []));
 
   Stream<Menu> get menu => _menu.stream;
 

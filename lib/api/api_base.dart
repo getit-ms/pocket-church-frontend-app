@@ -190,10 +190,10 @@ abstract class ApiBase {
     Map<String, String> headers,
     dio.ResponseType responseType = dio.ResponseType.json,
   }) async {
-    dio.FormData formData = new dio.FormData.from({
-      "file": new dio.UploadFileInfo(
-        new File(filePath),
-        filePath.substring(filePath.lastIndexOf("/") + 1),
+    dio.FormData formData = new dio.FormData.fromMap({
+      "file": dio.MultipartFile.fromFileSync(
+        filePath,
+        filename: filePath.substring(filePath.lastIndexOf("/") + 1),
       )
     });
 

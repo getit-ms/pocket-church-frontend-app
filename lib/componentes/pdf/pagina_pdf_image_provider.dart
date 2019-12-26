@@ -15,7 +15,7 @@ class PaginaPDFImageProvider extends ImageProvider<PaginaPDFImageProvider> {
         assert(numeroPagina != null && numeroPagina >= 1);
 
   @override
-  ImageStreamCompleter load(PaginaPDFImageProvider key) {
+  ImageStreamCompleter load(PaginaPDFImageProvider key, DecoderCallback decode) {
     return MultiFrameImageStreamCompleter(
         codec: _loadAsync(key),
         scale: key.scale,

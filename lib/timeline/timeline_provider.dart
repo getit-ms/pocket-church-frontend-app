@@ -8,6 +8,7 @@ class TimelineProvider {
     FotoFeedProvider(),
     AudioFeedProvider(),
     EstudoFeedProvider(),
+    DevocionarioFeedProvider(),
   ];
 
   List<Feed> pool = [];
@@ -39,12 +40,12 @@ class TimelineProvider {
     return feed != null;
   }
 
-  Future<List<Feed>>_buildLista(int pagina, int tamanhoPagina) async {
+  Future<List<Feed>> _buildLista(int pagina, int tamanhoPagina) async {
     var index = _index(pagina, tamanhoPagina);
 
     List<Feed> lista = [];
 
-    for (int i=0;i<tamanhoPagina;i++) {
+    for (int i = 0; i < tamanhoPagina; i++) {
       var item = await _fromIndex(index + i);
 
       if (item != null) {
@@ -66,7 +67,8 @@ class TimelineProvider {
     for (FeedProvider provider in providers) {
       DateTime data = await provider.currentDateTime();
 
-      if (data != null && (next == null || (await next.currentDateTime()).isBefore(data))) {
+      if (data != null &&
+          (next == null || (await next.currentDateTime()).isBefore(data))) {
         next = provider;
       }
     }
@@ -80,7 +82,8 @@ class TimelineProvider {
   }
 
   VoidCallback resolveAction(BuildContext context, Feed feed) {
-    FeedProvider provider = providers.firstWhere((provider) => provider.funcionalidade == feed.funcionalidade);
+    FeedProvider provider = providers.firstWhere(
+        (provider) => provider.funcionalidade == feed.funcionalidade);
 
     if (provider != null) {
       return provider.resolveAction(context, feed);
@@ -91,7 +94,8 @@ class TimelineProvider {
 
   ImageProvider resolveImageProvider(Feed feed) {
     if (feed.image != null) {
-      FeedProvider provider = providers.firstWhere((provider) => provider.funcionalidade == feed.funcionalidade);
+      FeedProvider provider = providers.firstWhere(
+          (provider) => provider.funcionalidade == feed.funcionalidade);
 
       if (provider != null) {
         return provider.resolveImageProvider(feed);

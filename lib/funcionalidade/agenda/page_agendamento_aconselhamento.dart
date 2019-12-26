@@ -102,7 +102,7 @@ class _PageAgendamentoAconselhamentoState
               termino: DateTime.now().add(const Duration(days: 90))),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return CalendarCarousel<HorarioCalendarioAconselhamento>(
+              return CalendarCarousel<EventoCalendario>(
                 width: double.infinity,
                 height: 450,
                 locale: "pt-br",
@@ -125,7 +125,7 @@ class _PageAgendamentoAconselhamentoState
                   fontWeight: FontWeight.bold,
                 ),
                 markedDateShowIcon: true,
-                markedDateIconBuilder: (horario) {
+                markedDateIconBuilder: (_) {
                   return Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -160,7 +160,7 @@ class _PageAgendamentoAconselhamentoState
                 onDayPressed: (date, horarios) {
                   setState(() {
                     _dataSelecionada = date;
-                    _horarios = horarios;
+                    _horarios = horarios.map((e) => e.horario).toList();
                     _horarioSelecionado = null;
                   });
                 },
@@ -248,23 +248,49 @@ class _PageAgendamentoAconselhamentoState
     );
   }
 
-  EventList<HorarioCalendarioAconselhamento> _markedDates({
+  EventList<EventoCalendario> _markedDates({
     DateTime termino,
     List<EventoCalendarioAconselhamento> eventos,
   }) {
-    Map<DateTime, List<HorarioCalendarioAconselhamento>> events = {};
+    Map<DateTime, List<EventoCalendario>> events = {};
 
     eventos.forEach((evento) {
-      DateTime trunc = DateTime(evento.dataInicio.year, evento.dataInicio.month,
-          evento.dataInicio.day);
+      DateTime trunc = DateTime(
+        evento.dataInicio.year,
+        evento.dataInicio.month,
+        evento.dataInicio.day,
+      );
 
       if (!events.containsKey(trunc)) {
         events[trunc] = [];
       }
 
-      events[trunc].add(evento.horario);
+      events[trunc].add(new EventoCalendario(
+        date: trunc,
+        horario: evento.horario,
+      ));
     });
 
     return new EventList(events: events);
   }
+}
+
+class EventoCalendario implements EventInterface {
+  final DateTime date;
+  final HorarioCalendarioAconselhamento horario;
+
+  const EventoCalendario({this.date, this.horario});
+
+  @override
+  DateTime getDate() => date;
+
+  @override
+  Widget getDot() => null;
+
+  @override
+  Widget getIcon() => null;
+
+  @override
+  String getTitle() => null;
+
 }

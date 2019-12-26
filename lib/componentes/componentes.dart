@@ -16,6 +16,7 @@ import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pocket_church/api/api.dart';
 import 'package:pocket_church/bloc/acesso_bloc.dart';

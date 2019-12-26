@@ -6,8 +6,8 @@ import 'package:rxdart/rxdart.dart';
 
 class LeituraBloc {
   BehaviorSubject<PlanoLeitura> _plano = BehaviorSubject();
-  BehaviorSubject<ProgressoLeitura> _leitura = BehaviorSubject(seedValue: ProgressoLeitura());
-  BehaviorSubject<ProgressoSincronismo> _sincronizacao = BehaviorSubject(seedValue: ProgressoSincronismo());
+  BehaviorSubject<ProgressoLeitura> _leitura = BehaviorSubject.seeded(ProgressoLeitura());
+  BehaviorSubject<ProgressoSincronismo> _sincronizacao = BehaviorSubject.seeded(ProgressoSincronismo());
   bool _possuiPlano = false;
 
   init() async {

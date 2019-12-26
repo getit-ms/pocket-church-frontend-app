@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 
 class HinoBloc {
   BehaviorSubject<ProgressoSincronismo> _sincronizacao =
-      BehaviorSubject(seedValue: ProgressoSincronismo());
+      BehaviorSubject.seeded(ProgressoSincronismo());
 
   init() async {
     await sincroniza();
