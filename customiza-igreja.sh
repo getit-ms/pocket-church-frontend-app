@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TMP_DIR=/tmp/build-igreja
+TMP_DIR=/tmp/build-igreja-$1
 CONFIG_FILE=$TMP_DIR/config.properties
 
 getProperty()
