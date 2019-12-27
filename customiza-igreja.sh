@@ -3,6 +3,8 @@
 TMP_DIR=/tmp/build-igreja-$1
 CONFIG_FILE=$TMP_DIR/config.properties
 
+mkdir -p "$TMP_DIR"
+
 getProperty()
 {
    PROP_KEY=$1
