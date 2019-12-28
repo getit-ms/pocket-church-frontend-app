@@ -33,4 +33,3 @@ part 'video_feed_provider.dart';
 part 'estudo_feed_provider.dart';
 part 'audio_feed_provider.dart';
 part 'foto_feed_provider.dart';
-part 'devocionario_feed_provider.dart';

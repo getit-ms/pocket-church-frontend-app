@@ -8,7 +8,6 @@ class TimelineProvider {
     FotoFeedProvider(),
     AudioFeedProvider(),
     EstudoFeedProvider(),
-    DevocionarioFeedProvider(),
   ];
 
   List<Feed> pool = [];

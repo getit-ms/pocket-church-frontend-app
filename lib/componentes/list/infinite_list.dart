@@ -17,18 +17,18 @@ class InfiniteList<T> extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final ListMerge<T> merger;
 
-  const InfiniteList(
-      {Key key,
-      @required this.provider,
-      @required this.builder,
-      this.merger,
-      this.placeholderBuilder,
-      this.placeholderCount = 3,
-      this.placeholderSize = 250,
-      this.tamanhoPagina = 10,
-      this.padding,
-      this.scrollDirection = Axis.vertical})
-      : super(key: key);
+  const InfiniteList({
+    Key key,
+    @required this.provider,
+    @required this.builder,
+    this.merger,
+    this.placeholderBuilder,
+    this.placeholderCount = 3,
+    this.placeholderSize = 250,
+    this.tamanhoPagina = 10,
+    this.padding,
+    this.scrollDirection = Axis.vertical,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => InfiniteListState<T>();
