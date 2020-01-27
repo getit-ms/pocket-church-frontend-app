@@ -29,7 +29,7 @@ class _PageListaCifrasState extends State<PageListaCifras> {
           });
         });
       },
-      deveEstarAutenticado: true,
+      deveEstarAutenticado: false,
       body: InfiniteList<Cantico>(
         key: _listKey,
         tamanhoPagina: 30,

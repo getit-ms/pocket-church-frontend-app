@@ -29,7 +29,7 @@ class _PageListaHinosState extends State<PageListaHinos> {
           });
         });
       },
-      deveEstarAutenticado: true,
+      deveEstarAutenticado: false,
       body: Column(
         children: <Widget>[
           Expanded(
