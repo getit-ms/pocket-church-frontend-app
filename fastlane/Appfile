@@ -1,8 +1,8 @@
-app_identifier("br.com.getit.calvin.ipvilamaria") # The bundle identifier of your app
-apple_id("${igreja.appleId}") # Your Apple email address
+app_identifier("br.com.getit.calvin.ipr") # The bundle identifier of your app
+apple_id("desenvolvedor@ipredencao.org") # Your Apple email address
 
-team_id("${igreja.appleTeamId}")
+team_id("M39J3XRLUG")
 
 json_key_file "./fastlane/acesso-android.json"
-package_name "br.com.getit.calvin.ipvm"
+package_name "br.com.getit.calvin.ipr"
 

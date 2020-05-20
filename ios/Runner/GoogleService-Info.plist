@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>390716388079-8qi3vq4dfmvnhovhsci8h8ed39hsqref.apps.googleusercontent.com</string>
+	<string>156830003829-bns5vdl6djlskgufr0qf93kr7r3erccf.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.390716388079-8qi3vq4dfmvnhovhsci8h8ed39hsqref</string>
+	<string>com.googleusercontent.apps.156830003829-bns5vdl6djlskgufr0qf93kr7r3erccf</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDA23rXAzKDWVQAG14tW0tsDdsiV3eW6Sk</string>
+	<string>AIzaSyBYJZqsTw9zQYwNoGZDF5BAtdd85OlOYzM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>390716388079</string>
+	<string>156830003829</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>br.com.getit.calvin.ipvilamaria</string>
+	<string>br.com.getit.calvin.ipr</string>
 	<key>PROJECT_ID</key>
-	<string>ip-vila-maria</string>
+	<string>ipredencao-e6769</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ip-vila-maria.appspot.com</string>
+	<string>ipredencao-e6769.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:390716388079:ios:5c68156e72cf2c7350e11a</string>
+	<string>1:156830003829:ios:a3821b18b725c9badc3e3c</string>
 	<key>DATABASE_URL</key>
-	<string>https://ip-vila-maria.firebaseio.com</string>
+	<string>https://ipredencao-e6769.firebaseio.com</string>
 </dict>
 </plist>

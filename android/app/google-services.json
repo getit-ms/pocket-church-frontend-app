@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "390716388079",
-    "firebase_url": "https://ip-vila-maria.firebaseio.com",
-    "project_id": "ip-vila-maria",
-    "storage_bucket": "ip-vila-maria.appspot.com"
+    "project_number": "156830003829",
+    "firebase_url": "https://ipredencao-e6769.firebaseio.com",
+    "project_id": "ipredencao-e6769",
+    "storage_bucket": "ipredencao-e6769.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:390716388079:android:08bd1a0b1a6754c750e11a",
+        "mobilesdk_app_id": "1:156830003829:android:0cb245c65c8fa9b2dc3e3c",
         "android_client_info": {
-          "package_name": "br.com.getit.calvin.ipvm"
+          "package_name": "br.com.getit.calvin.ipr"
         }
       },
       "oauth_client": [
         {
-          "client_id": "390716388079-ltfskv0mfe5a6g3n2g346cmaoqj2fc0r.apps.googleusercontent.com",
+          "client_id": "156830003829-3kj8rbia5k3icf371v607dqsc2f9nrhs.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBgoj7Lkx_VPQYjv61awPBvolfkikLiyJA"
+          "current_key": "AIzaSyBFzJZzJM_IUXq-nbf3_c921hQRhGv4Tfk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "390716388079-ltfskv0mfe5a6g3n2g346cmaoqj2fc0r.apps.googleusercontent.com",
+              "client_id": "156830003829-3kj8rbia5k3icf371v607dqsc2f9nrhs.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "390716388079-8qi3vq4dfmvnhovhsci8h8ed39hsqref.apps.googleusercontent.com",
+              "client_id": "156830003829-bns5vdl6djlskgufr0qf93kr7r3erccf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "br.com.getit.calvin.ipvilamaria"
+                "bundle_id": "br.com.getit.calvin.ipr"
               }
             }
           ]

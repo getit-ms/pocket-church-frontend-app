@@ -4,7 +4,7 @@ var lockRenderizacao = new Lock();
 
 class PaginaPDFImageProvider extends ImageProvider<PaginaPDFImageProvider> {
 
-  final PDFDocument document;
+  final PdfDocument document;
   final int numeroPagina;
   final double width;
   final double height;
@@ -61,7 +61,7 @@ class PaginaPDFImageProvider extends ImageProvider<PaginaPDFImageProvider> {
       final page = await document.getPage(numeroPagina);
       try {
         return await page.render(
-            format: PDFPageFormat.JPEG,
+            format: PdfPageFormat.JPEG,
             width: _getWidth(page.width, page.height),
             height: _getHeight(page.width, page.height),
             backgroundColor: "#FFFFFFFF"

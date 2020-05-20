@@ -88,16 +88,8 @@ class PageEstudo extends StatelessWidget {
       return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: Html(
-            data: estudo.texto ?? "",
-            defaultTextStyle: TextStyle(
-              height: 2,
-              color: Colors.black54,
-              fontSize: 17,
-            ),
-            onLinkTap: (link) {
-              LaunchUtil.site(link);
-            },
+          child: CustomHtml(
+            html: estudo.texto ?? "",
           ),
         ),
       );

@@ -156,11 +156,11 @@ class Player {
   }
 
   String _resolveAssetURL(Configuracao config, Audio audio) {
-    return "${config.basePath}/arquivo/stream/${audio.audio.id}/${audio.audio.filename}?Authorization=${config.authorization ?? ""}&Igreja=${config.chaveIgreja}&Dispositivo=${config.chaveDispositivo}";
+    return "${config.basePath}/arquivo/stream/${audio.audio.id}/${audio.audio.filename}?Igreja=${config.chaveIgreja}&Dispositivo=${config.chaveDispositivo}";
   }
 
   Future<String> _resolveAlbumArt(Configuracao config, Audio audio) async {
-    String albumArt = 'assets/imgs/institucional_background.png';
+    String albumArt = 'assets://assets/imgs/institucional_background.png';
     if (audio.capa != null) {
       File ilustracao = await arquivoService.getFileLocation(audio.capa.id);
 
@@ -168,7 +168,7 @@ class Player {
         albumArt = ilustracao.path;
       } else {
         albumArt =
-            "${config.basePath}/arquivo/download/${audio.capa.id}?Authorization=${config.authorization ?? ""}&Igreja=${config.chaveIgreja}&Dispositivo=${config.chaveDispositivo}";
+            "${config.basePath}/arquivo/download/${audio.capa.id}?Igreja=${config.chaveIgreja}&Dispositivo=${config.chaveDispositivo}";
       }
     }
     return albumArt;

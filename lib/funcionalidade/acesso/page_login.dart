@@ -75,55 +75,54 @@ class PageLoginState extends State<PageLogin> {
         return true;
       },
       child: Container(
+        height: mediaQueryData.size.height,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: tema?.loginBackground, fit: BoxFit.cover)),
+          image: DecorationImage(
+            image: tema?.loginBackground,
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
                 tema.primary.withOpacity(.75),
                 tema.secondary.withOpacity(.75)
-              ])),
+              ],
+            ),
+          ),
           child: Scaffold(
               backgroundColor: Colors.transparent,
               key: _scaffoldKey,
               body: Container(
                 width: double.infinity,
                 child: SingleChildScrollView(
-                  child: Container(
-                    height: mediaQueryData.size.height -
-                        (mediaQueryData.padding.top +
-                            mediaQueryData.padding.bottom),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        AppBar(
-                          centerTitle: true,
-                          elevation: 0,
-                          iconTheme: IconThemeData(color: Colors.white),
-                          backgroundColor: Colors.transparent,
-                          title: _buildTitle(),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Image(
-                                image: tema.loginLogo,
-                                height: 80,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              _buildForm(),
-                            ],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      AppBar(
+                        centerTitle: true,
+                        elevation: 0,
+                        iconTheme: IconThemeData(color: Colors.white),
+                        backgroundColor: Colors.transparent,
+                        title: _buildTitle(),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image(
+                            image: tema.loginLogo,
+                            height: 80,
                           ),
-                        ),
-                      ],
-                    ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          _buildForm(),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               )),
@@ -265,35 +264,41 @@ class PageLoginState extends State<PageLogin> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            FlatButton(
-              padding: const EdgeInsets.all(15),
-              child: comp.IntlText(
-                "login.esqueci_senha",
-                style: TextStyle(color: Colors.white),
+            Expanded(
+              child: FlatButton(
+                padding: const EdgeInsets.all(15),
+                child: comp.IntlText(
+                  "login.esqueci_senha",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  setState(
+                    () {
+                      _form.currentState.reset();
+                      _page = 'redefinir_senha';
+                    },
+                  );
+                },
               ),
-              onPressed: () {
-                setState(
-                  () {
-                    _form.currentState.reset();
-                    _page = 'redefinir_senha';
-                  },
-                );
-              },
             ),
-            FlatButton(
-              padding: const EdgeInsets.all(15),
-              child: comp.IntlText(
-                "login.novo_cadastro",
-                style: TextStyle(color: Colors.white),
+            const SizedBox(width: 10),
+            Expanded(
+              child: FlatButton(
+                padding: const EdgeInsets.all(15),
+                child: comp.IntlText(
+                  "login.novo_cadastro",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  setState(
+                    () {
+                      _form.currentState.reset();
+                      _page = 'cadastro';
+                    },
+                  );
+                },
               ),
-              onPressed: () {
-                setState(
-                  () {
-                    _form.currentState.reset();
-                    _page = 'cadastro';
-                  },
-                );
-              },
             ),
           ],
         ),

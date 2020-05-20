@@ -92,7 +92,7 @@ class PDFService {
   Future<ArquivoPDF> renderArquivoPDF(File pdfFile, PDFRenderingCallback onProgress, PDFRenderingSnapshot snapshot, Arquivo arquivo) async {
     ArquivoPDF arq = await _prepareArquivoPDF(pdfFile);
 
-    var doc = await PDFDocument.openFile(pdfFile.path);
+    var doc = await PdfDocument.openFile(pdfFile.path);
 
     try {
       if (onProgress != null) {
@@ -147,8 +147,8 @@ class PDFService {
     return height;
   }
 
-  Future<PaginaPDF> _loadPage(PDFDocument doc, int pgNumber) async {
-    PDFPage page = await doc.getPage(pgNumber);
+  Future<PaginaPDF> _loadPage(PdfDocument doc, int pgNumber) async {
+    PdfPage page = await doc.getPage(pgNumber);
     try {
       return new PaginaPDF(
           number: pgNumber,
@@ -160,17 +160,17 @@ class PDFService {
     }
   }
 
-  Future<PaginaPDF> _renderPage(int arqId, PDFDocument doc, int pgNumber) async {
+  Future<PaginaPDF> _renderPage(int arqId, PdfDocument doc, int pgNumber) async {
     File pageFile = await _pageFile(arqId, pgNumber);
 
-    PDFPage page = await doc.getPage(pgNumber);
+    PdfPage page = await doc.getPage(pgNumber);
     try {
       if (!pageFile.existsSync()) {
         if (!pageFile.parent.existsSync()) {
           pageFile.parent.createSync(recursive: true);
         }
 
-        PDFPageImage pageImage = await page.render(
+        PdfPageImage pageImage = await page.render(
             width: _parseWidth(page.width, page.height),
             height: _parseHeight(page.width, page.height),
             backgroundColor: '#ffffff'
@@ -198,7 +198,7 @@ class PDFService {
   }
 
   Future<ArquivoPDF> _prepareArquivoPDF(File pdfFile) async {
-    var doc = await PDFDocument.openFile(pdfFile.path);
+    var doc = await PdfDocument.openFile(pdfFile.path);
     try {
 
       List<PaginaPDF> paginas = [];

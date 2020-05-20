@@ -43,8 +43,11 @@ class _NoticiaContent extends StatelessWidget {
                               builder: (context) => PhotoViewPage(
                                     images: [
                                       ImageView(
-                                          image: ArquivoImageProvider(
-                                              noticia.ilustracao.id)),
+                                        image: ArquivoImageProvider(
+                                            noticia.ilustracao.id),
+                                        heroTag:
+                                            'noticia_' + noticia.id.toString(),
+                                      ),
                                     ],
                                     title: Text(noticia.titulo),
                                   ));
@@ -116,16 +119,8 @@ class _NoticiaContent extends StatelessWidget {
                             );
                           }
 
-                          return Html(
-                            data: snapshot.data.texto,
-                            defaultTextStyle: TextStyle(
-                              height: 2,
-                              color: Colors.black54,
-                              fontSize: 17,
-                            ),
-                            onLinkTap: (link) {
-                              LaunchUtil.site(link);
-                            },
+                          return CustomHtml(
+                            html: snapshot.data.texto,
                           );
                         },
                       ),

@@ -31,6 +31,9 @@ import 'package:rxdart/rxdart.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
+import 'package:pocket_church/infra/infra.dart';
 
 import '../infra/infra.dart';
 import '../model/geral/model.dart';
@@ -70,3 +73,4 @@ part './util/icon_notificacoes.dart';
 part './util/photo_view_page.dart';
 part './util/share_util.dart';
 part './util/widget_body.dart';
+part './util/custom_html.dart';
