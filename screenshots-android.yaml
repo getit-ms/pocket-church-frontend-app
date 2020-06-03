@@ -1,0 +1,20 @@
+# A list of screen capture tests
+tests:
+# Note: flutter driver expects a pair of files eg, main1.dart and main1_test.dart
+  - test_driver/prints.dart
+
+# Interim location of screenshots from tests
+staging: ./android/fastlane/metadata/android/pt-BR/images/phoneScreenshots
+
+# A list of locales supported by the app
+locales:
+  - pt-BR
+
+# A map of devices to emulate
+devices:
+  android:
+    Nexus 6P:
+      orientation: Portrait
+
+# Frame screenshots
+frame: false

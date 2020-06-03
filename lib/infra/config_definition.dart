@@ -266,7 +266,7 @@ final String BUNDLE = "bundle";
 class ConfiguracaoBloc {
   BehaviorSubject<Configuracao> _config = new BehaviorSubject<Configuracao>();
   BehaviorSubject<Tema> _tema = new BehaviorSubject<Tema>.seeded(defaultTema);
-  BehaviorSubject<Bundle> _bundle = new BehaviorSubject<Bundle>();
+  BehaviorSubject<Bundle> _bundle = new BehaviorSubject<Bundle>.seeded(Bundle.empty());
 
   final IgrejaApi _igrejaApi = new IgrejaApi();
   final AssetsApi _assetsApi = new AssetsApi();
@@ -288,7 +288,7 @@ class ConfiguracaoBloc {
 
     _loadTema();
 
-    await _initBundle();
+    _initBundle();
   }
 
   _addBundle(Bundle bundle) => _bundle.add(bundle);
@@ -347,6 +347,10 @@ class ConfiguracaoBloc {
   }
 
   _initConfig() async {
+    if (_config.value != null) {
+      return;
+    }
+
     try {
       var sprefs = await SharedPreferences.getInstance();
 
@@ -379,7 +383,8 @@ class ConfiguracaoBloc {
       print("Não foi possível carregar as configurações: $ex\n$stack");
 
       if (_config.value == null) {
-        print("Configuração não foi carregada com sucesso. Aplicando valores padrões.");
+        print(
+            "Configuração não foi carregada com sucesso. Aplicando valores padrões.");
 
         _config.add(defaultConfig.copyWith(
           chaveDispositivo: Uuid().v4(),
@@ -392,7 +397,10 @@ class ConfiguracaoBloc {
     try {
       _addConfiguracao(Configuracao.fromJson(json.decode(sprefs.get(CONFIG))));
     } catch (ex, stack) {
-      print("Falha ao carregar configuração de SharedPreferences: " + ex.toString() + "\n" + stack.toString());
+      print("Falha ao carregar configuração de SharedPreferences: " +
+          ex.toString() +
+          "\n" +
+          stack.toString());
 
       sprefs.remove(CONFIG);
 
@@ -408,11 +416,18 @@ class ConfiguracaoBloc {
         _addConfiguracao(saved);
       }
     } catch (ex, stack) {
-      print("Falha ao carregar configuração de banco de dados: " + ex.toString() + "\n" + stack.toString());
+      print("Falha ao carregar configuração de banco de dados: " +
+          ex.toString() +
+          "\n" +
+          stack.toString());
     }
   }
 
   _loadTema() async {
+    if (_tema.value != null) {
+      return;
+    }
+
     var sprefs = await SharedPreferences.getInstance();
 
     if (sprefs.containsKey(TEMA)) {
@@ -467,7 +482,7 @@ class ConfiguracaoApp extends StatefulWidget {
   const ConfiguracaoApp({this.child});
 
   static ConfiguracaoAppState of(BuildContext context) {
-    return context.ancestorStateOfType(new TypeMatcher<ConfiguracaoAppState>());
+    return context.findAncestorStateOfType();
   }
 
   @override
@@ -621,6 +636,10 @@ class Bundle {
   }
 
   Map<String, dynamic> toJson() => _data;
+
+  factory Bundle.empty() {
+    return Bundle({});
+  }
 }
 
 ConfiguracaoBloc configuracaoBloc = new ConfiguracaoBloc();

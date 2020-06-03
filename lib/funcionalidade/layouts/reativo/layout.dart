@@ -174,6 +174,7 @@ class _LayoutScaffoldState extends State<_LayoutScaffold>
               BottomNavigationBarItem(
                 backgroundColor: Colors.white,
                 icon: Badge(
+                  key: Key("opcao_menu"),
                   showBadge:
                       widget.menus.any((menu) => (menu.notificacoes ?? 0) > 0),
                   badgeColor: tema.badgeBackground,

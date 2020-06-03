@@ -5,6 +5,7 @@ class PageInstitucional extends StatelessWidget {
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
     return PageTemplate(
+      key: Key("page_institucional"),
       title: const IntlText("institucional.institucional"),
       body: ListView(
         children: <Widget>[

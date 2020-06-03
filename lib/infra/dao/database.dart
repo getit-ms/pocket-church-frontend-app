@@ -4,22 +4,24 @@ class PCDatabase {
   Database database;
 
   init() async {
-    // Get a location using getDatabasesPath
-    var databasesPath = await getDatabasesPath();
+    if (database == null) {
+      // Get a location using getDatabasesPath
+      var databasesPath = await getDatabasesPath();
 
-    String path = join(databasesPath, 'pocket-church.db');
+      String path = join(databasesPath, 'pocket-church.db');
 
-    try {
-      await _doOpenDatabase(path);
-    } catch (ex) {
-      print(
-          "Falha ao carregar o banco de dados. O banco existente será removido e uma nova tentativa será feita: $ex");
+      try {
+        await _doOpenDatabase(path);
+      } catch (ex) {
+        print(
+            "Falha ao carregar o banco de dados. O banco existente será removido e uma nova tentativa será feita: $ex");
 
-      File file = new File(path);
+        File file = new File(path);
 
-      await file.delete(recursive: true);
+        await file.delete(recursive: true);
 
-      await _doOpenDatabase(path);
+        await _doOpenDatabase(path);
+      }
     }
   }
 

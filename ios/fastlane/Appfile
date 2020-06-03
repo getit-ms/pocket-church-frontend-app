@@ -3,6 +3,3 @@ apple_id("desenvolvedor@ipredencao.org") # Your Apple email address
 
 team_id("M39J3XRLUG")
 
-json_key_file "./fastlane/acesso-android.json"
-package_name "br.com.getit.calvin.ipr"
-

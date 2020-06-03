@@ -22,15 +22,6 @@ import 'funcionalidade/notificacao/notificacao.dart';
 import 'model/sugestao/model.dart';
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.white54,
-      systemNavigationBarColor: Colors.black,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
-
   runApp(
     PrepareApp(
       execute: _loadingExecute,
@@ -42,19 +33,41 @@ void main() async {
 }
 
 Future<void> _loadingExecute(BuildContext context) async {
+  print("Inicialização do app");
+
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.white54,
+      systemNavigationBarColor: Colors.black,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
+
   Intl.defaultLocale = 'pt_BR';
   await initializeDateFormatting();
 
   var min = Future.delayed(const Duration(milliseconds: 2000), () {});
 
+  print("Inicializando arquivos");
+
   await arquivoService.init();
+
+  print("Inicializando database");
+
   await pcDatabase.init();
 
   pdfService.configure(width: 1500);
 
+  print("Inicializando configurações");
+
   await configuracaoBloc.init();
 
+  print("Inicializando acesso");
+
   await acessoBloc.init();
+
+  print("Inicializando messaging");
 
   messagingService.init();
 
@@ -95,6 +108,8 @@ Future<void> _loadingExecute(BuildContext context) async {
       }
     }
   });
+
+  print("Inicialização completa");
 }
 
 class PrepareApp extends StatefulWidget {

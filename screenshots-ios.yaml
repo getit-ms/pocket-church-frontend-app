@@ -2,26 +2,19 @@
 tests:
 # Note: flutter driver expects a pair of files eg, main1.dart and main1_test.dart
   - test_driver/prints.dart
-  - test_driver/prints_test.dart
 
 # Interim location of screenshots from tests
-staging: /tmp/screenshots
+staging: ./ios/fastlane/deliver/fastlane/screenshots/pt-BR
 
 # A list of locales supported by the app
 locales:
-  - en-US
+  - pt-BR
 
 # A map of devices to emulate
 devices:
-#  ios:
-#    iPhone XS Max:
-#      frame: false
-#    iPad Pro (12.9-inch) (3rd generation):
-#      orientation: LandscapeRight
   android:
     Nexus 6P:
       orientation: Portrait
-      frame: false
 
 # Frame screenshots
 frame: false

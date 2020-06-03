@@ -27,6 +27,7 @@ class _PageMaisState extends State<TabMais> {
     var tema = ConfiguracaoApp.of(context).tema;
 
     return Container(
+      key: Key("tab_mais"),
       color: tema.buttonBackground,
       child: CustomScrollView(
         slivers: <Widget>[
@@ -144,6 +145,7 @@ class _PageMaisState extends State<TabMais> {
               color: Colors.white,
             ),
             const IconUsuario(
+              key: Key("icon_usuario"),
               color: Colors.white,
             ),
           ],
@@ -186,6 +188,7 @@ class _PageMaisState extends State<TabMais> {
       row.add(
         Expanded(
           child: RawMaterialButton(
+            key: child.funcionalidade == 'INSTITUCIONAL' ? Key("opcao_institucional") : null,
             onPressed: () {
               _abreFuncionalidade(child.funcionalidade);
             },

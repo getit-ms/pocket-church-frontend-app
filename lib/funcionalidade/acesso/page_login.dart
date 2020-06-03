@@ -75,6 +75,7 @@ class PageLoginState extends State<PageLogin> {
         return true;
       },
       child: Container(
+        key: Key("page_login"),
         height: mediaQueryData.size.height,
         decoration: BoxDecoration(
           image: DecorationImage(

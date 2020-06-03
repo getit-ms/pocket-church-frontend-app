@@ -1,15 +1,12 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:pocket_church/main.dart' as app;
-import 'package:pocket_church/infra/infra.dart';
 
-void main() {
+void main() async {
   // This line enables the extension.
   enableFlutterDriverExtension();
 
-  print('atualizando bundle...');
-  configuracaoBloc.init().then(() {
-    configuracaoBloc.refreshBundle();
-  });
+  await rootBundle.loadString("assets/bundle/pt-br.json");
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.

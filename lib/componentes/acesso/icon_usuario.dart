@@ -5,9 +5,10 @@ class IconUsuario extends StatelessWidget {
   final double size;
 
   const IconUsuario({
+    Key key,
     this.color,
     this.size = 24,
-  });
+  }):super(key: key);
 
   @override
   Widget build(BuildContext context) {

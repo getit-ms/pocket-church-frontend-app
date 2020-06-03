@@ -20,10 +20,13 @@ platform :ios do
     get_certificates
     get_provisioning_profile
 
-    enable_automatic_code_signing(path: "ios/Runner/Runner.xcodeproj")
+    enable_automatic_code_signing(path: "Runner.xcodeproj")
     gym(xcargs: "-allowProvisioningUpdates", export_method: "app-store")
 
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_to_testflight(
+        screenshots_path: './deliver/fastlane/screenshots/pt-BR',
+        skip_waiting_for_build_processing: true
+    )
   end
 
   lane :release do
@@ -32,22 +35,6 @@ platform :ios do
       force: true,
       skip_screenshots: true,
       skip_binary_upload: true
-    )
-  end
-end
-
-platform :android do
-  lane :beta do
-    # add actions here: https://docs.fastlane.tools/actions
-
-    upload_to_play_store(track: 'beta', aab: 'build/app/outputs/bundle/release/app.aab')
-  end
-
-  lane :release do
-    upload_to_play_store(
-      track: 'beta',
-      skip_upload_apk: true,
-      track_promote_to: 'production'
     )
   end
 end
