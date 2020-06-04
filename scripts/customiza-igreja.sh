@@ -52,6 +52,8 @@ echo "Aplicando assets no projeto"
 
 unzip -o assets.zip  || exit 1
 
+flutter pub get 
+
 flutter pub run flutter_launcher_icons:main || exit 1
 
 echo "Removendo diretório temporário"
