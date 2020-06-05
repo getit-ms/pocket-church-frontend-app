@@ -7,7 +7,7 @@ final Configuracao defaultConfig = const Configuracao(
   chaveIgreja: "ipamericas",
   nomeAplicativo: "Igreja das Américas",
   nomeIgreja: "Igreja Presbiteriana das Américas",
-  version: "8.0.7",
+  version: "8.0.8",
 );
 
 final Tema defaultTema = const Tema(

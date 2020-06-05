@@ -28,6 +28,8 @@ void main() async {
     final config = Config();
 
     test('print home', () async {
+      await Future.delayed(const Duration(seconds: 10), () => {});
+
       // Aguarda o splash carregar
       for (final isolateRef in vm.isolates) {
         final isolate = await isolateRef.load();
