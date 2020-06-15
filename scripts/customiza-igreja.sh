@@ -38,11 +38,14 @@ sed -i '' -E "s#package=\".+\"#package=\"$bundleAndroid\"#g" android/app/src/pro
 sed -i '' -E "s#android:label=\".+\"#android:label=\"$nomeAplicativo\"#g" android/app/src/main/AndroidManifest.xml || exit 1
 
 sed -i '' -E "s#PRODUCT_BUNDLE_IDENTIFIER = .+;#PRODUCT_BUNDLE_IDENTIFIER = $bundleIOS;#g" ios/Runner.xcodeproj/project.pbxproj || exit 1
-sed -i '' -E "s#<key>CFBundleName</key>(\s+)<string>.+</string>#<key>CFBundleName</key>\1<string>$nomeAplicativo</string>#g" ios/Runner/Info.plist || exit 1
-sed -i '' -E "{:a;N;\$!ba;s#<key>CFBundleDisplayName</key>(\s+)<string>.+</string>#<key>CFBundleDisplayName</key>\1<string>$nomeAplicativo</string>#g}" ios/Runner/Info.plist
-sed -i '' -E "{:a;N;\$!ba;s#<key>CFBundleName</key>(\s+)<string>.+</string>#<key>CFBundleName</key>\1<string>$nomeAplicativo</string>#g}" ios/Runner/Info.plist
-sed -i '' -E "{:a;N;\$!ba;s#<key>CFBundleShortVersionString</key>(\s+)<string>.+</string>#<key>CFBundleShortVersionString</key>\1<string>$2</string>#g}" ios/Runner/Info.plist
-sed -i '' -E "{:a;N;\$!ba;s#<key>CFBundleVersion</key>(\s+)<string>.+</string>#<key>CFBundleVersion</key>\1<string>$2</string>#g}" ios/Runner/Info.plist
+sed -i '' -E "s#CURRENT_PROJECT_VERSION = .+;#CURRENT_PROJECT_VERSION = $2;#g" ios/Runner.xcodeproj/project.pbxproj || exit 1
+sed -i '' -E "s#DEVELOPMENT_TEAM = .+;#DEVELOPMENT_TEAM = $appleTeamId;#g" ios/Runner.xcodeproj/project.pbxproj || exit 1
+
+plutil -replace CFBundleName -string "$nomeAplicativo" ios/Runner/Info.plist  || exit 1
+plutil -replace CFBundleDisplayName -string "$nomeAplicativo" ios/Runner/Info.plist  || exit 1
+plutil -replace CFBundleName -string "$nomeAplicativo" ios/Runner/Info.plist  || exit 1
+plutil -replace CFBundleShortVersionString -string "$2" ios/Runner/Info.plist  || exit 1
+plutil -replace CFBundleVersion -string "$2" ios/Runner/Info.plist  || exit 1
 
 echo "Baixando assets"
 
@@ -51,6 +54,8 @@ curl -H "Device-UUID:build-igreja.sh" "https://admin.getitmobilesolutions.com/ap
 echo "Aplicando assets no projeto"
 
 unzip -o assets.zip  || exit 1
+
+flutter pub get 
 
 flutter pub run flutter_launcher_icons:main || exit 1
 

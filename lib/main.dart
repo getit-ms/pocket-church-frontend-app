@@ -21,10 +21,10 @@ import 'config_values.dart';
 import 'funcionalidade/notificacao/notificacao.dart';
 import 'model/sugestao/model.dart';
 
-void main() async {
+void main({bool requestPushPermission = true}) async {
   runApp(
     PrepareApp(
-      execute: _loadingExecute,
+      execute: _loadingExecute(requestPushPermission: requestPushPermission),
       child: ConfiguracaoApp(
         child: PocketChurchApp(),
       ),
@@ -32,84 +32,88 @@ void main() async {
   );
 }
 
-Future<void> _loadingExecute(BuildContext context) async {
-  print("Inicialização do app");
+Future<void> Function(BuildContext context) _loadingExecute({bool requestPushPermission = true}) {
+  return (BuildContext context) async {
+    print("Inicialização do app");
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.white54,
-      systemNavigationBarColor: Colors.black,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.white54,
+        systemNavigationBarColor: Colors.black,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
+    );
 
-  Intl.defaultLocale = 'pt_BR';
-  await initializeDateFormatting();
+    Intl.defaultLocale = 'pt_BR';
+    await initializeDateFormatting();
 
-  var min = Future.delayed(const Duration(milliseconds: 2000), () {});
+    var min = Future.delayed(const Duration(milliseconds: 2000), () {});
 
-  print("Inicializando arquivos");
+    print("Inicializando arquivos");
 
-  await arquivoService.init();
+    await arquivoService.init();
 
-  print("Inicializando database");
+    print("Inicializando database");
 
-  await pcDatabase.init();
+    await pcDatabase.init();
 
-  pdfService.configure(width: 1500);
+    pdfService.configure(width: 1500);
 
-  print("Inicializando configurações");
+    print("Inicializando configurações");
 
-  await configuracaoBloc.init();
+    await configuracaoBloc.init();
 
-  print("Inicializando acesso");
+    print("Inicializando acesso");
 
-  await acessoBloc.init();
+    await acessoBloc.init();
 
-  print("Inicializando messaging");
+    print("Inicializando messaging");
 
-  messagingService.init();
+    messagingService.init(requestPushPermission: requestPushPermission);
 
-  institucionalBloc.load();
+    institucionalBloc.load();
 
-  messagingService.register();
+    messagingService.register();
 
-  // On Resume padrão
-  messagingListener.addWhenResume(
-    (notificacao) => NavigatorUtil.navigate(context,
-        builder: (context) => PageListaNotificacoes()),
-  );
+    // On Resume padrão
+    messagingListener.addWhenResume(
+          (notificacao) =>
+          NavigatorUtil.navigate(context,
+              builder: (context) => PageListaNotificacoes()),
+    );
 
-  await min;
+    await min;
 
-  acessoBloc.menu.listen((meun) async {
-    if (acessoBloc.temAcesso(Funcionalidade.BIBLIA)) {
-      try {
-        await bibliaBloc.init();
-      } catch (ex) {
-        print(ex);
+    acessoBloc.menu.listen((meun) async {
+      if (acessoBloc.temAcesso(Funcionalidade.BIBLIA)) {
+        try {
+          await bibliaBloc.init();
+        } catch (ex) {
+          print(ex);
+        }
       }
-    }
 
-    if (acessoBloc.temAcesso(Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA)) {
-      try {
-        await leituraBloc.init();
-      } catch (ex) {
-        print(ex);
+      if (acessoBloc.temAcesso(
+          Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA)) {
+        try {
+          await leituraBloc.init();
+        } catch (ex) {
+          print(ex);
+        }
       }
-    }
 
-    if (acessoBloc.temAcesso(Funcionalidade.CONSULTAR_HINARIO)) {
-      try {
-        await hinoBloc.init();
-      } catch (ex) {
-        print(ex);
+      if (acessoBloc.temAcesso(Funcionalidade.CONSULTAR_HINARIO)) {
+        try {
+          await hinoBloc.init();
+        } catch (ex) {
+          print(ex);
+        }
       }
-    }
-  });
+    });
 
-  print("Inicialização completa");
+    print("Inicialização completa");
+  };
 }
 
 class PrepareApp extends StatefulWidget {

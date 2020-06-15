@@ -12,8 +12,12 @@ locales:
 
 # A map of devices to emulate
 devices:
-  android:
-    Nexus 6P:
+  ios:
+    iPhone 8 Plus:
+      orientation: Portrait
+    iPhone 11 Pro Max:
+      orientation: Portrait
+    iPad Pro (12.9-inch) (4th generation):
       orientation: Portrait
 
 # Frame screenshots

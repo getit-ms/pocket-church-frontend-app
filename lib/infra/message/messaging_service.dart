@@ -9,8 +9,10 @@ class MessagingService {
 
   final firebase.FirebaseMessaging _firebaseMessaging = new firebase.FirebaseMessaging();
 
-  init() {
-    _firebaseMessaging.requestNotificationPermissions();
+  init({bool requestPushPermission = true}) {
+    if (requestPushPermission) {
+      _firebaseMessaging.requestNotificationPermissions();
+    }
 
     _firebaseMessaging.configure(
       onLaunch: _onLaunch,
