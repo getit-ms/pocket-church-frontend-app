@@ -424,10 +424,6 @@ class ConfiguracaoBloc {
   }
 
   _loadTema() async {
-    if (_tema.value != null) {
-      return;
-    }
-
     var sprefs = await SharedPreferences.getInstance();
 
     if (sprefs.containsKey(TEMA)) {

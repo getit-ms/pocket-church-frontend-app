@@ -101,7 +101,6 @@ class PageLoginState extends State<PageLogin> {
                 width: double.infinity,
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       AppBar(
                         centerTitle: true,
@@ -110,18 +109,21 @@ class PageLoginState extends State<PageLogin> {
                         backgroundColor: Colors.transparent,
                         title: _buildTitle(),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Image(
-                            image: tema.loginLogo,
-                            height: 80,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          _buildForm(),
-                        ],
+                      ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: mediaQueryData.size.height - kToolbarHeight),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image(
+                              image: tema.loginLogo,
+                              height: 80,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            _buildForm(),
+                          ],
+                        ),
                       ),
                     ],
                   ),

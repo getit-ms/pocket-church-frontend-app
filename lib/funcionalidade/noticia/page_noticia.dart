@@ -134,11 +134,14 @@ class _NoticiaContent extends StatelessWidget {
         )),
         Container(
           padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-              color: Colors.black54,
-            )
-          ]),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black54,
+              )
+            ],
+          ),
           child: Row(
             children: <Widget>[
               Text(
@@ -150,7 +153,13 @@ class _NoticiaContent extends StatelessWidget {
               const SizedBox(width: 5),
               const Text("|"),
               const SizedBox(width: 5),
-              Text(noticia.autor.nome),
+              Expanded(
+                child: Text(
+                  noticia.autor.nome,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
             ],
           ),
         ),

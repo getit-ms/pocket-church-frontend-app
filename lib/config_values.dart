@@ -4,7 +4,7 @@ import './infra/infra.dart';
 
 final Configuracao defaultConfig = const Configuracao(
   basePath: "https://getitmobilesolutions.com/app/rest",
-  chaveIgreja: "ipr",
+  chaveIgreja: "ipamericas",
   nomeAplicativo: "IPR",
   nomeIgreja: "Igreja Presbiteriana Redenção",
   version: "8.0.5",
