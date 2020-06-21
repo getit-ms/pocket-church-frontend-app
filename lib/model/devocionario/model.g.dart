@@ -19,7 +19,8 @@ DiaDevocionario _$DiaDevocionarioFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$DiaDevocionarioToJson(DiaDevocionario instance) => <String, dynamic>{
+Map<String, dynamic> _$DiaDevocionarioToJson(DiaDevocionario instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'data': instance.data?.toIso8601String(),
       'arquivo': instance.arquivo,

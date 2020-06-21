@@ -87,6 +87,10 @@ class ArquivoService {
     return await arquivoApi.uploadArquivo(filePath, onProgress: onProgress);
   }
 
+  Future<String> selecionaArquivo() async {
+    return await FilePicker.getFilePath();
+  }
+
   Future<String> selecionaImagem() async {
     File file = await ImagePicker.pickImage(
       source: ImageSource.gallery,

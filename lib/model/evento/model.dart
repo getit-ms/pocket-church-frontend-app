@@ -8,3 +8,5 @@ part 'model.g.dart';
 part 'evento.dart';
 part 'inscricao_evento.dart';
 part 'resultado_inscricao.dart';
+part 'campo_evento.dart';
+part 'valor_inscricao_evento.dart';

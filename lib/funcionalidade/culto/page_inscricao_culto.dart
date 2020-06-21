@@ -1,33 +1,24 @@
-part of pocket_church.ebd;
+part of pocket_church.culto;
 
-class PageInscricaoEBD extends StatefulWidget {
-  final Evento ebd;
+class PageInscricaoCulto extends StatefulWidget {
+  final Evento culto;
 
-  const PageInscricaoEBD({this.ebd});
+  const PageInscricaoCulto({this.culto});
 
   @override
-  _PageInscricaoEBDState createState() => _PageInscricaoEBDState();
+  _PageInscricaoCultoState createState() => _PageInscricaoCultoState();
 }
 
-class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
+class _PageInscricaoCultoState extends State<PageInscricaoCulto> {
   List<InscricaoEvento> _inscricoes = [InscricaoEvento()];
 
   GlobalKey<FormState> _form = new GlobalKey();
-
-  Map<CampoEvento, ValorInscricaoEvento> valores = {};
 
   @override
   void initState() {
     super.initState();
 
     _preparaInscricao();
-
-    if (widget.ebd.campos != null) {
-      for (CampoEvento campo in widget.ebd.campos) {
-        valores[campo] =
-            ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
-      }
-    }
   }
 
   @override
@@ -35,8 +26,7 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
     return PageTemplate(
-      deveEstarAutenticado: true,
-      title: IntlText("ebd.inscricao"),
+      title: const IntlText("culto.inscricao"),
       body: Container(
         color: Colors.white,
         child: Form(
@@ -47,21 +37,21 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
                 ListTile(
                   contentPadding: const EdgeInsets.all(10),
                   title: Text(
-                    widget.ebd.nome,
+                    widget.culto.nome,
                     style: TextStyle(
                       color: tema.primary,
                       fontSize: 22,
                     ),
                   ),
                 ),
-                ItemEBD(
-                  label: IntlText("ebd.vagas"),
-                  value: Text(widget.ebd.vagasRestantes.toString()),
+                ItemCulto(
+                  label: const IntlText("culto.vagas"),
+                  value: Text(widget.culto.vagasRestantes.toString()),
                 ),
               ]
                   .followedBy(
                       _inscricoes.map<Widget>((inscricao) => FormInscricao(
-                            widget.ebd,
+                            widget.culto,
                             inscricao,
                             onRemove: _inscricoes.length > 1
                                 ? () {
@@ -72,24 +62,24 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
                                 : null,
                           )))
                   .followedBy(
-                    widget.ebd.vagasRestantes - _inscricoes.length > 0
+                    widget.culto.vagasRestantes - _inscricoes.length > 0
                         ? [_buildAddButton(tema)]
                         : [],
                   )
                   .followedBy([
                 const InfoDivider(
-                  child: IntlText("ebd.concluir_inscricao"),
+                  child: const IntlText("culto.concluir_inscricao"),
                 ),
-                ItemEBD(
-                  label: const IntlText("ebd.total_inscricoes"),
+                ItemCulto(
+                  label: const IntlText("culto.total_inscricoes"),
                   value: Text(_inscricoes.length.toString()),
                 ),
-                widget.ebd.exigePagamento
-                    ? ItemEBD(
-                        label: const IntlText("ebd.valor_total"),
+                widget.culto.exigePagamento
+                    ? ItemCulto(
+                        label: const IntlText("culto.valor_total"),
                         value: Text(
                           StringUtil.formataCurrency(
-                              (widget.ebd.valor ?? 0) * _inscricoes.length),
+                              (widget.culto.valor ?? 0) * _inscricoes.length),
                         ),
                       )
                     : Container(),
@@ -110,14 +100,14 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
         horizontal: 10,
       ),
       child: CommandButton<ResultadoInscricao>(
-        child: const IntlText("ebd.concluir_inscricao"),
+        child: const IntlText("culto.concluir_inscricao"),
         onPressed: (loading) async {
           if (_form.currentState.validate()) {
             _form.currentState.save();
 
             ResultadoInscricao resultado =
                 await loading(eventoApi.realizaInscricao(
-              widget.ebd.id,
+              widget.culto.id,
               inscricoes: _inscricoes,
             ));
 
@@ -142,7 +132,7 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
             } else {
               MessageHandler.success(
                 Scaffold.of(context),
-                IntlText("mensagens.MSG-001"),
+                const IntlText("mensagens.MSG-001"),
               );
             }
           }
@@ -176,7 +166,7 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
               width: 5,
             ),
             IntlText(
-              "ebd.adicionar_inscrito",
+              "culto.adicionar_inscrito",
               style: TextStyle(
                 color: tema.buttonText,
               ),
@@ -190,22 +180,24 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
   void _preparaInscricao() async {
     Membro membro = acessoBloc.currentMembro;
 
-    setState(() {
-      _inscricoes[0].nomeInscrito = membro.nome;
-      _inscricoes[0].emailInscrito = membro.email;
-      if (membro.telefones != null) {
-        _inscricoes[0].telefoneInscrito = membro.telefones[0];
-      }
-    });
+    if (membro != null) {
+      setState(() {
+        _inscricoes[0].nomeInscrito = membro.nome;
+        _inscricoes[0].emailInscrito = membro.email;
+        if (membro.telefones != null) {
+          _inscricoes[0].telefoneInscrito = membro.telefones[0];
+        }
+      });
+    }
   }
 }
 
 class FormInscricao extends StatefulWidget {
-  final Evento ebd;
+  final Evento culto;
   final InscricaoEvento inscricao;
   final VoidCallback onRemove;
 
-  const FormInscricao(this.ebd, this.inscricao, {this.onRemove});
+  const FormInscricao(this.culto, this.inscricao, {this.onRemove});
 
   @override
   _FormInscricaoState createState() => _FormInscricaoState();
@@ -232,10 +224,13 @@ class _FormInscricaoState extends State<FormInscricao> {
       text: StringUtil.formatTelefone(widget.inscricao.telefoneInscrito ?? ""),
     );
 
-    if (widget.ebd.campos != null) {
-      for (CampoEvento campo in widget.ebd.campos) {
-        valores[campo] =
-            ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
+    if (widget.culto.campos != null) {
+      widget.inscricao.valores = [];
+
+      for (CampoEvento campo in widget.culto.campos) {
+        var valorInscricaoEvento = ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
+        widget.inscricao.valores.add(valorInscricaoEvento);
+        valores[campo] = valorInscricaoEvento;
       }
     }
   }
@@ -251,7 +246,7 @@ class _FormInscricaoState extends State<FormInscricao> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              IntlText("ebd.inscrito"),
+              IntlText("culto.inscrito"),
               widget.onRemove != null
                   ? Material(
                       color: Colors.transparent,
@@ -267,52 +262,19 @@ class _FormInscricaoState extends State<FormInscricao> {
             ],
           ),
         ),
-        new TypeAheadFormField<Membro>(
-          autoFlipDirection: true,
+        new TextFormField(
           validator: validate([
             notEmpty(),
             length(max: 150),
           ], bundle: bundle),
           onSaved: (val) => widget.inscricao.nomeInscrito = val,
-          suggestionsCallback: (filtro) async {
-            Pagina<Membro> resultado = await membroApi.consulta(
-              filtro: filtro,
-              tamanhoPagina: 5,
-            );
-            return resultado.resultados ?? [];
-          },
-          onSuggestionSelected: (membro) async {
-            _nome.text = membro.nome;
-            _email.text = membro.email;
-
-            Membro detalhes = await membroApi.detalha(membro.id);
-
-            if (detalhes.telefones?.isNotEmpty ?? false) {
-              _telefone.text = StringUtil.formatTelefone(detalhes.telefones[0]);
-            }
-          },
-          itemBuilder: (context, membro) {
-            return Material(
-              color: Colors.white,
-              child: ListTile(
-                leading: FotoMembro(
-                  membro.foto,
-                  size: 50,
-                ),
-                title: Text(membro.nome),
-                subtitle: Text(membro.email ?? ""),
-              ),
-            );
-          },
-          textFieldConfiguration: TextFieldConfiguration(
-            controller: _nome,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 10,
-              ),
-              labelText: bundle["ebd.nome"],
+          controller: _nome,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 10,
             ),
+            labelText: bundle["culto.nome"],
           ),
         ),
         TextFormField(
@@ -328,7 +290,7 @@ class _FormInscricaoState extends State<FormInscricao> {
               vertical: 20,
               horizontal: 10,
             ),
-            labelText: bundle["ebd.email"],
+            labelText: bundle["culto.email"],
           ),
         ),
         TextFormField(
@@ -349,12 +311,13 @@ class _FormInscricaoState extends State<FormInscricao> {
               vertical: 20,
               horizontal: 10,
             ),
-            labelText: bundle["ebd.telefone"],
+            labelText: bundle["culto.telefone"],
           ),
         ),
-        for (CampoEvento campo in widget.ebd.campos ?? [])
+        for (CampoEvento campo in widget.culto.campos ?? [])
           InputCampoEvento(campo: campo, valor: valores[campo]),
       ],
     );
   }
 }
+

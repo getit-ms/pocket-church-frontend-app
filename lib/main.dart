@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +33,8 @@ void main({bool requestPushPermission = true}) async {
   );
 }
 
-Future<void> Function(BuildContext context) _loadingExecute({bool requestPushPermission = true}) {
+Future<void> Function(BuildContext context) _loadingExecute(
+    {bool requestPushPermission = true}) {
   return (BuildContext context) async {
     print("Inicialização do app");
 
@@ -46,7 +48,7 @@ Future<void> Function(BuildContext context) _loadingExecute({bool requestPushPer
     );
 
     Intl.defaultLocale = 'pt_BR';
-    await initializeDateFormatting();
+    // await initializeDateFormatting();
 
     var min = Future.delayed(const Duration(milliseconds: 2000), () {});
 
@@ -78,9 +80,8 @@ Future<void> Function(BuildContext context) _loadingExecute({bool requestPushPer
 
     // On Resume padrão
     messagingListener.addWhenResume(
-          (notificacao) =>
-          NavigatorUtil.navigate(context,
-              builder: (context) => PageListaNotificacoes()),
+      (notificacao) => NavigatorUtil.navigate(context,
+          builder: (context) => PageListaNotificacoes()),
     );
 
     await min;
@@ -94,8 +95,8 @@ Future<void> Function(BuildContext context) _loadingExecute({bool requestPushPer
         }
       }
 
-      if (acessoBloc.temAcesso(
-          Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA)) {
+      if (acessoBloc
+          .temAcesso(Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA)) {
         try {
           await leituraBloc.init();
         } catch (ex) {
@@ -251,7 +252,13 @@ class PocketChurchApp extends StatelessWidget {
     }
 
     return MaterialApp(
-      locale: const Locale('pt-BR'),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('pt', 'BR'),
+      ],
       debugShowCheckedModeBanner: false,
       theme: Theme.of(context),
       home: home,

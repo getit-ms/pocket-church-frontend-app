@@ -14,7 +14,12 @@ description: Um aplicativo para sua Igreja
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.8.0 <3.0.0"
+
+analyzer:
+  enable-experiment:
+    - spread-collections
+    - control-flow-collections
 
 dependencies:
   flutter:
@@ -41,6 +46,7 @@ dependencies:
   shared_preferences: 0.5.7+2
   json_annotation: 3.0.1
   shimmer: 1.1.1
+  file_picker: ^1.3.5
   image_picker: 0.6.6+4
   badges: 1.1.1
   flutter_search_bar: 2.0.7

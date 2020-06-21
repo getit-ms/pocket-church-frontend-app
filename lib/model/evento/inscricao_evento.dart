@@ -14,6 +14,7 @@ class InscricaoEvento {
   String status;
   bool confirmada;
   bool pendente;
+  List<ValorInscricaoEvento> valores;
 
   InscricaoEvento({
     this.id,
@@ -28,6 +29,7 @@ class InscricaoEvento {
     this.status,
     this.confirmada,
     this.pendente,
+    this.valores,
   });
 
   factory InscricaoEvento.fromJson(Map<String, dynamic> json) => _$InscricaoEventoFromJson(json);

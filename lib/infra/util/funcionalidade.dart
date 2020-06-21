@@ -27,6 +27,7 @@ enum Funcionalidade {
   GALERIA_FOTOS,
   AUDIOS,
   DEVOCIONARIO,
+  REALIZAR_INSCRICAO_CULTO,
 
 
 }

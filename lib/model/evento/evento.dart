@@ -20,6 +20,7 @@ class Evento {
   bool inscricoesAbertas;
   String filename;
   bool comPagamento;
+  List<CampoEvento> campos;
 
   Evento({
     this.id,
@@ -40,6 +41,7 @@ class Evento {
     this.inscricoesAbertas,
     this.filename,
     this.comPagamento,
+    this.campos,
   }) {
     this.dataHoraInicio = dataHoraInicio?.toLocal();
     this.dataHoraTermino = dataHoraTermino?.toLocal();

@@ -110,7 +110,11 @@ class PageLoginState extends State<PageLogin> {
                         title: _buildTitle(),
                       ),
                       ConstrainedBox(
-                        constraints: BoxConstraints(minHeight: mediaQueryData.size.height - kToolbarHeight),
+                        constraints: BoxConstraints(
+                          minHeight: mediaQueryData.size.height -
+                              kToolbarHeight -
+                              mediaQueryData.padding.top,
+                        ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -227,7 +231,7 @@ class PageLoginState extends State<PageLogin> {
           services.TextInputFormatter.withFunction(
               TextFormatUtil.formatTelefone)
         ],
-        onSaved: (val) => _telefone = StringUtil.unformatTelefone(val),
+        onSaved: (val) => _telefone = StringUtil.unformat(val),
       ),
       secondChild: Container(),
       crossFadeState: _page == 'cadastro'

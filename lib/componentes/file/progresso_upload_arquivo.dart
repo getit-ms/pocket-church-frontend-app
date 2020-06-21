@@ -64,7 +64,7 @@ class ProgressoUploadArquivoState extends State<ProgressoUploadArquivo> {
               Icon(
                 Icons.arrow_upward,
                 size: 32,
-                color: tema.primary,
+                color: tema?.primary ?? Colors.black,
               ),
               SizedBox(
                 width: 5,

@@ -1,6 +1,6 @@
 part of pocket_church.api;
 
-enum TipoEvento { EVENTO, EBD }
+enum TipoEvento { EVENTO, EBD, CULTO }
 
 class EventoApi extends ApiBase {
   Future<Pagina<Evento>> consulta(
@@ -49,6 +49,8 @@ class EventoApi extends ApiBase {
       return 'EVENTO';
     } else if (tipoEvento == TipoEvento.EBD) {
       return 'EBD';
+    } else if (tipoEvento == TipoEvento.CULTO) {
+      return 'CULTO';
     }
 
     return null;

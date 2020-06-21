@@ -7,6 +7,7 @@ import 'package:pocket_church/funcionalidade/boletim/boletim.dart';
 import 'package:pocket_church/funcionalidade/calendario/calendario.dart';
 import 'package:pocket_church/funcionalidade/cantico/cantico.dart';
 import 'package:pocket_church/funcionalidade/cifra/cifra.dart';
+import 'package:pocket_church/funcionalidade/culto/culto.dart';
 import 'package:pocket_church/funcionalidade/devocionario/devocionario.dart';
 import 'package:pocket_church/funcionalidade/ebd/edb.dart';
 import 'package:pocket_church/funcionalidade/enquete/enquete.dart';
@@ -52,6 +53,8 @@ Map<Funcionalidade, WidgetBuilder> _pages = {
   Funcionalidade.CHAMADOS: (context) => PageSugestao(),
   Funcionalidade.PREFERENCIAS: (context) => PagePreferencias(),
   Funcionalidade.DEVOCIONARIO: (context) => PageDevocionario(),
+  Funcionalidade.REALIZAR_INSCRICAO_CULTO: (context) => PageListaCultos(),
+
 };
 
 class PageFactory {

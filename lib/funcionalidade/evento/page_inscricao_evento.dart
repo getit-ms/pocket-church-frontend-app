@@ -52,6 +52,7 @@ class _PageInscricaoEventoState extends State<PageInscricaoEvento> {
               ]
                   .followedBy(
                       _inscricoes.map<Widget>((inscricao) => FormInscricao(
+                            widget.evento,
                             inscricao,
                             onRemove: _inscricoes.length > 1
                                 ? () {
@@ -79,7 +80,7 @@ class _PageInscricaoEventoState extends State<PageInscricaoEvento> {
                         label: const IntlText("evento.valor_total"),
                         value: Text(
                           StringUtil.formataCurrency(
-                            (widget.evento.valor ?? 0) * _inscricoes.length),
+                              (widget.evento.valor ?? 0) * _inscricoes.length),
                         ),
                       )
                     : Container(),
@@ -191,10 +192,11 @@ class _PageInscricaoEventoState extends State<PageInscricaoEvento> {
 }
 
 class FormInscricao extends StatefulWidget {
+  final Evento evento;
   final InscricaoEvento inscricao;
   final VoidCallback onRemove;
 
-  const FormInscricao(this.inscricao, {this.onRemove});
+  const FormInscricao(this.evento, this.inscricao, {this.onRemove});
 
   @override
   _FormInscricaoState createState() => _FormInscricaoState();
@@ -204,6 +206,8 @@ class _FormInscricaoState extends State<FormInscricao> {
   TextEditingController _nome;
   TextEditingController _email;
   TextEditingController _telefone;
+
+  Map<CampoEvento, ValorInscricaoEvento> valores = {};
 
   @override
   void initState() {
@@ -218,6 +222,13 @@ class _FormInscricaoState extends State<FormInscricao> {
     _telefone = new TextEditingController(
       text: StringUtil.formatTelefone(widget.inscricao.telefoneInscrito ?? ""),
     );
+
+    if (widget.evento.campos != null) {
+      for (CampoEvento campo in widget.evento.campos) {
+        valores[campo] =
+            ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
+      }
+    }
   }
 
   @override
@@ -330,8 +341,8 @@ class _FormInscricaoState extends State<FormInscricao> {
             services.TextInputFormatter.withFunction(
                 TextFormatUtil.formatTelefone)
           ],
-          onSaved: (val) => widget.inscricao.telefoneInscrito =
-              StringUtil.unformatTelefone(val),
+          onSaved: (val) =>
+              widget.inscricao.telefoneInscrito = StringUtil.unformat(val),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
               vertical: 20,
@@ -340,7 +351,10 @@ class _FormInscricaoState extends State<FormInscricao> {
             labelText: bundle["evento.telefone"],
           ),
         ),
+        for (CampoEvento campo in widget.evento.campos ?? [])
+          InputCampoEvento(campo: campo, valor: valores[campo]),
       ],
     );
   }
 }
+

@@ -9,41 +9,51 @@ class Opcao<T> {
 
 class SelectOpcao<T> extends StatelessWidget {
   final T value;
+  final FormFieldValidator<T> validator;
   final FormFieldSetter<T> onSaved;
   final Function(T value) onChange;
   final List<Opcao<T>> opcoes;
 
-  const SelectOpcao({this.value, this.opcoes, this.onSaved, this.onChange});
+  const SelectOpcao({
+    this.value,
+    this.opcoes,
+    this.onSaved,
+    this.onChange,
+    this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
     return FormField<T>(
       initialValue: value,
+      validator: validator,
       onSaved: onSaved,
       builder: (state) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: opcoes.map((opcao) => IntlBuilder(
-            text: opcao.intlLabel,
-            builder: (context, snapshot) {
-              return InputChip(
-                label: Text(snapshot.data ?? ""),
-                onPressed: () {
-                  state.didChange(opcao.valor);
+          children: opcoes
+              .map((opcao) => IntlBuilder(
+                    text: opcao.intlLabel,
+                    builder: (context, snapshot) {
+                      return InputChip(
+                        label: Text(snapshot.data ?? ""),
+                        onPressed: () {
+                          state.didChange(opcao.valor);
 
-                  if (onChange != null) {
-                    onChange(opcao.valor);
-                  }
-                },
-                selected: state.value == opcao.valor,
-                labelStyle: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black87,
-                ),
-                padding: const EdgeInsets.all(10),
-              );
-            },
-          )).toList(),
+                          if (onChange != null) {
+                            onChange(opcao.valor);
+                          }
+                        },
+                        selected: state.value == opcao.valor,
+                        labelStyle: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black87,
+                        ),
+                        padding: const EdgeInsets.all(10),
+                      );
+                    },
+                  ))
+              .toList(),
         );
       },
     );

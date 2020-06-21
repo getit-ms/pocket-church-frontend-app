@@ -4,10 +4,10 @@ import './infra/infra.dart';
 
 final Configuracao defaultConfig = const Configuracao(
   basePath: "https://getitmobilesolutions.com/app/rest",
-  chaveIgreja: "ipamericas",
+  chaveIgreja: "imb",
   nomeAplicativo: "Igreja das Américas",
   nomeIgreja: "Igreja Presbiteriana das Américas",
-  version: "8.0.8",
+  version: "8.1.0",
 );
 
 final Tema defaultTema = const Tema(

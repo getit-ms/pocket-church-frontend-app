@@ -24,7 +24,7 @@ class StringUtil {
 
   static String formatTelefone(String telefone) {
     String formatado = "";
-    String tel = unformatTelefone(telefone);
+    String tel = unformat(telefone);
 
     if (tel.length > 11) {
       formatado =
@@ -39,6 +39,34 @@ class StringUtil {
       formatado = "(${tel.substring(0, 2)}) ${tel.substring(2)}";
     } else if (tel.length > 0) {
       formatado = "($tel";
+    }
+
+    return formatado;
+  }
+
+  static String formatCpfCnpj(String cpfCnpj) {
+    String formatado = "";
+    String cc = unformat(cpfCnpj);
+
+    if (cc.length > 14) {
+      formatado =
+          "${cc.substring(0, 2)}.${cc.substring(2, 5)}.${cc.substring(5, 8)}/${cc.substring(8, 12)}-${cc.substring(12, 14)}";
+    } else if (cc.length > 12) {
+      formatado =
+          "${cc.substring(0, 2)}.${cc.substring(2, 5)}.${cc.substring(5, 8)}/${cc.substring(8, 12)}-${cc.substring(12)}";
+    } else if (cc.length > 11) {
+      formatado =
+          "${cc.substring(0, 2)}.${cc.substring(2, 5)}.${cc.substring(5, 8)}/${cc.substring(8)}";
+    } else if (cc.length > 9) {
+      formatado =
+          "${cc.substring(0, 3)}.${cc.substring(3, 6)}.${cc.substring(6, 9)}-${cc.substring(9)}";
+    } else if (cc.length > 6) {
+      formatado =
+          "${cc.substring(0, 3)}.${cc.substring(3, 6)}.${cc.substring(6)}";
+    } else if (cc.length > 3) {
+      formatado = "${cc.substring(0, 3)}.${cc.substring(3)}";
+    } else if (cc.length > 0) {
+      formatado = "$cc";
     }
 
     return formatado;
@@ -63,48 +91,64 @@ class StringUtil {
     return formatado;
   }
 
-  static String formatDataLegivel(DateTime data, Bundle bundle, {bool porHora = false, String pattern = "dd MMMM yyyy"}) {
+  static String formatDataString(String data) {
+    String formatado = "";
+
+    if (data != null) {
+      String unformatted = data.replaceAll(RegExp("[^0-9]"), "");
+
+      if (unformatted.length > 8) {
+        formatado =
+            "${unformatted.substring(0, 2)}/${unformatted.substring(2, 4)}/${unformatted.substring(4, 8)}";
+      } else if (unformatted.length > 4) {
+        formatado =
+            "${unformatted.substring(0, 2)}/${unformatted.substring(2, 4)}/${unformatted.substring(4)}";
+      } else if (unformatted.length > 2) {
+        formatado =
+            "${unformatted.substring(0, 2)}/${unformatted.substring(2)}";
+      } else if (unformatted.length > 0) {
+        formatado = unformatted;
+      }
+    }
+
+    return formatado;
+  }
+
+  static String formatDataLegivel(DateTime data, Bundle bundle,
+      {bool porHora = false, String pattern = "dd MMMM yyyy"}) {
     var hoje = DateTime.now().toLocal();
 
     if (porHora) {
       int mins = DateUtil.diferencaMinutos(data, hoje);
 
       if (hoje.isBefore(data)) {
-
         if (mins < 5) {
           return bundle['global.agora'];
         }
 
         if (mins < 60) {
-          return bundle.get('global.em_minutos', args: {
-            'minutos': mins.toString()
-          });
+          return bundle
+              .get('global.em_minutos', args: {'minutos': mins.toString()});
         }
 
         if (mins < 720) {
-          return bundle.get('global.em_horas', args: {
-            'horas': (mins ~/ 60).toString()
-          });
+          return bundle
+              .get('global.em_horas', args: {'horas': (mins ~/ 60).toString()});
         }
-
       } else {
-
         if (mins < 5) {
           return bundle['global.agora'];
         }
 
         if (mins < 60) {
-          return bundle.get('global.ha_minutos', args: {
-            'minutos': mins.toString()
-          });
+          return bundle
+              .get('global.ha_minutos', args: {'minutos': mins.toString()});
         }
 
         if (mins < 720) {
-          return bundle.get('global.ha_horas', args: {
-            'horas': (mins ~/ 60).toString()
-          });
+          return bundle
+              .get('global.ha_horas', args: {'horas': (mins ~/ 60).toString()});
         }
-
       }
     }
 
@@ -133,11 +177,15 @@ class StringUtil {
     return DateFormat(pattern).format(data);
   }
 
+  static DateTime parseData(String data, {String pattern = "dd/MM/yyyy"}) {
+    return DateFormat(pattern).parse(data);
+  }
+
   static String formatEndereco(Endereco endereco) {
     return "${endereco.descricao} - ${endereco.cidade} - ${endereco.estado} - ${formataCep(endereco.cep)}";
   }
 
-  static String unformatTelefone(String telefone) {
+  static String unformat(String telefone) {
     return telefone.replaceAll(RegExp("[^0-9]"), "");
   }
 
@@ -147,9 +195,10 @@ class StringUtil {
     }
 
     return formatData(
-      data.toUtc(),
-      pattern: "yyyy-MM-dd'T'HH:mm:ss.SSS",
-    ) + "Z";
+          data.toUtc(),
+          pattern: "yyyy-MM-dd'T'HH:mm:ss.SSS",
+        ) +
+        "Z";
   }
 
   static primeiroNome(String nomeCompleto) {
