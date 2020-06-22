@@ -8,7 +8,6 @@ class PageEvento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-      deveEstarAutenticado: true,
       title: IntlText("evento.evento"),
       body: Container(
         color: Colors.white,
@@ -22,13 +21,20 @@ class PageEvento extends StatelessWidget {
   }
 }
 
-class EventoContent extends StatelessWidget {
+class EventoContent extends StatefulWidget {
   const EventoContent({
     Key key,
     @required this.evento,
   }) : super(key: key);
 
   final Evento evento;
+
+  @override
+  _EventoContentState createState() => _EventoContentState();
+}
+
+class _EventoContentState extends State<EventoContent> {
+  Key _futureKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +46,14 @@ class EventoContent extends StatelessWidget {
           ListTile(
             contentPadding: const EdgeInsets.all(10),
             title: Text(
-              evento.nome,
+              widget.evento.nome,
               style: TextStyle(
                 color: tema.primary,
                 fontSize: 22,
               ),
             ),
           ),
-          evento.banner != null
+          widget.evento.banner != null
               ? SizedBox(
                   width: double.infinity,
                   child: RawMaterialButton(
@@ -60,11 +66,12 @@ class EventoContent extends StatelessWidget {
                           barrierColor: Colors.black87,
                           pageBuilder: (BuildContext context, _, __) =>
                               PhotoViewPage(
-                            title: const IntlText("evento.edb"),
+                            title: const IntlText("evento.evento"),
                             images: [
                               ImageView(
                                 heroTag: "banner",
-                                image: ArquivoImageProvider(evento.banner.id),
+                                image: ArquivoImageProvider(
+                                    widget.evento.banner.id),
                               )
                             ],
                           ),
@@ -75,7 +82,7 @@ class EventoContent extends StatelessWidget {
                       tag: "banner",
                       child: Image(
                         width: double.infinity,
-                        image: ArquivoImageProvider(evento.banner.id),
+                        image: ArquivoImageProvider(widget.evento.banner.id),
                         fit: BoxFit.fitWidth,
                       ),
                     ),
@@ -85,14 +92,14 @@ class EventoContent extends StatelessWidget {
           ListTile(
             contentPadding: const EdgeInsets.all(10),
             title: Text(
-              evento.descricao ?? "",
+              widget.evento.descricao ?? "",
             ),
           ),
           new ItemEvento(
             label: IntlText("evento.dataHoraInicio"),
             value: Text(
               StringUtil.formatData(
-                evento.dataHoraInicio,
+                widget.evento.dataHoraInicio,
                 pattern: "dd MMMM yyyy HH:mm",
               ),
             ),
@@ -101,7 +108,7 @@ class EventoContent extends StatelessWidget {
             label: IntlText("evento.dataHoraTermino"),
             value: Text(
               StringUtil.formatData(
-                evento.dataHoraTermino,
+                widget.evento.dataHoraTermino,
                 pattern: "dd MMMM yyyy HH:mm",
               ),
             ),
@@ -112,14 +119,14 @@ class EventoContent extends StatelessWidget {
           new ItemEvento(
             label: IntlText("evento.vagas"),
             value: Text(
-              evento.limiteInscricoes.toString(),
+              widget.evento.limiteInscricoes.toString(),
             ),
           ),
           new ItemEvento(
             label: IntlText("evento.dataHoraInicioInscricao"),
             value: Text(
               StringUtil.formatData(
-                evento.dataInicioInscricao,
+                widget.evento.dataInicioInscricao,
                 pattern: "dd MMMM yyyy HH:mm",
               ),
             ),
@@ -128,17 +135,17 @@ class EventoContent extends StatelessWidget {
             label: IntlText("evento.dataHoraTerminoInscricao"),
             value: Text(
               StringUtil.formatData(
-                evento.dataTerminoInscricao,
+                widget.evento.dataTerminoInscricao,
                 pattern: "dd MMMM yyyy HH:mm",
               ),
             ),
           ),
-          evento.exigePagamento
+          widget.evento.exigePagamento
               ? new ItemEvento(
                   label: IntlText("evento.valor"),
                   value: Text(
                     StringUtil.formataCurrency(
-                      evento.valor ?? 0,
+                      widget.evento.valor ?? 0,
                     ),
                   ),
                 )
@@ -148,14 +155,19 @@ class EventoContent extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: RawMaterialButton(
-                onPressed: evento.inscricoesAbertas && evento.vagasRestantes > 0
+                onPressed: widget.evento.inscricoesAbertas &&
+                        widget.evento.vagasRestantes > 0
                     ? () {
                         NavigatorUtil.navigate(
                           context,
                           builder: (context) => PageInscricaoEvento(
-                            evento: evento,
+                            evento: widget.evento,
                           ),
-                        );
+                        ).then((_) {
+                          setState(() {
+                            _futureKey = GlobalKey();
+                          });
+                        });
                       }
                     : null,
                 padding: const EdgeInsets.all(15),
@@ -168,22 +180,27 @@ class EventoContent extends StatelessWidget {
                     color: tema.buttonText,
                   ),
                 ),
-                fillColor: evento.inscricoesAbertas && evento.vagasRestantes > 0
+                fillColor: widget.evento.inscricoesAbertas &&
+                        widget.evento.vagasRestantes > 0
                     ? tema.buttonBackground
                     : Colors.black45,
               ),
             ),
           ),
-          _listaInscricoes()
+          _listaInscricoes(context)
         ],
       ),
     );
   }
 
-  FutureBuilder<Pagina<InscricaoEvento>> _listaInscricoes() {
+  FutureBuilder<Pagina<InscricaoEvento>> _listaInscricoes(
+      BuildContext context) {
+    Tema tema = ConfiguracaoApp.of(context).tema;
+
     return FutureBuilder<Pagina<InscricaoEvento>>(
+      key: _futureKey,
       future: eventoApi.consultaMinhasInscricoes(
-        evento.id,
+        widget.evento.id,
         pagina: 1,
         tamanhoPagina: 50,
       ),
@@ -194,29 +211,72 @@ class EventoContent extends StatelessWidget {
               InfoDivider(
                 child: IntlText("evento.minhas_inscricoes"),
               ),
-            ].followedBy(snapshot.data.resultados.map((inscricao) {
-              return Material(
-                color: Colors.white,
-                shape: Border(
-                  top: BorderSide(
-                    color: Colors.black54,
-                    width: .5,
+              for (InscricaoEvento inscricao in snapshot.data.resultados)
+                Material(
+                  color: Colors.white,
+                  shape: Border(
+                    top: BorderSide(
+                      color: Colors.black54,
+                      width: .5,
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black54,
+                      width: .5,
+                    ),
                   ),
-                  bottom: BorderSide(
-                    color: Colors.black54,
-                    width: .5,
+                  child: ListTile(
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    title: Text(inscricao.nomeInscrito),
+                    subtitle: Text(inscricao.emailInscrito),
+                    trailing:
+                        IntlText("evento.status_inscricao." + inscricao.status),
                   ),
                 ),
-                child: ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  title: Text(inscricao.nomeInscrito),
-                  subtitle: Text(inscricao.emailInscrito),
-                  trailing:
-                      IntlText("evento.status_inscricao." + inscricao.status),
+              if (snapshot.data.resultados
+                  .any((insc) => insc.status == 'CONFIRMADA'))
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: RawMaterialButton(
+                      onPressed: () {
+                        NavigatorUtil.navigate(
+                          context,
+                          builder: (context) => PageComprovantesInscricao(
+                            evento: widget.evento,
+                            inscricoes: snapshot.data.resultados
+                                .where(
+                                  (insc) => insc.status == 'CONFIRMADA',
+                                )
+                                .toList(),
+                          ),
+                        );
+                      },
+                      padding: const EdgeInsets.all(15),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Icon(Icons.description),
+                          const SizedBox(width: 5),
+                          IntlText(
+                            "evento.comprovantes",
+                            style: TextStyle(
+                              color: tema.buttonText,
+                            ),
+                          ),
+                        ],
+                      ),
+                      fillColor: tema.buttonBackground,
+                    ),
+                  ),
                 ),
-              );
-            })).toList(),
+            ],
           );
         }
 
@@ -226,13 +286,13 @@ class EventoContent extends StatelessWidget {
   }
 
   String _textButton() {
-    if (evento.inscricoesFuturas) {
+    if (widget.evento.inscricoesFuturas) {
       return "evento.inscricoes_ainda_nao_disponiveis";
-    } else if (evento.inscricoesPassadas) {
+    } else if (widget.evento.inscricoesPassadas) {
       return "evento.inscricoes_encerradas";
     }
 
-    if (evento.vagasRestantes == 0) {
+    if (widget.evento.vagasRestantes == 0) {
       return "evento.sem_vagas";
     }
 

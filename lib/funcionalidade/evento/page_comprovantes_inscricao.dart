@@ -62,120 +62,186 @@ class ComprovanteInscricaoEvento extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shadows: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 20,
-              ),
-            ],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-          ),
-          margin: EdgeInsets.symmetric(
-            horizontal: 5,
-            vertical: 20,
-          ),
-          padding: EdgeInsets.all(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                evento.nome,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    StringUtil.formatData(
-                      evento.dataHoraInicio,
-                      pattern: "dd MMMM yyyy",
-                    ),
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                    ),
+    Tema tema = configuracaoBloc.currentTema;
+
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 500),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    StringUtil.formatData(
-                          evento.dataHoraInicio,
-                          pattern: 'HH:mm',
-                        ) +
-                        " - " +
-                        StringUtil.formatData(
-                          evento.dataHoraTermino,
-                          pattern: 'HH:mm',
+                  shadows: [
+                    BoxShadow(
+                      color: Colors.black38,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                margin: EdgeInsets.symmetric(
+                  horizontal: 5,
+                  vertical: 20,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: tema.menuBackground,
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                    ),
+                        alignment: Alignment.center,
+                        child: Image(
+                          image: tema.menuLogo,
+                          height: 50,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(30),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(
+                                evento.nome,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Divider(
+                                color: Colors.black26,
+                                indent: 10,
+                                endIndent: 20,
+                                height: 2,
+                              ),
+                              const SizedBox(width: 10),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.event_available,
+                                    color: Colors.black26,
+                                    size: 35,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        StringUtil.formatData(
+                                          evento.dataHoraInicio,
+                                          pattern: "dd MMMM yyyy",
+                                        ),
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        StringUtil.formatData(
+                                              evento.dataHoraInicio,
+                                              pattern: 'HH:mm',
+                                            ) +
+                                            " - " +
+                                            StringUtil.formatData(
+                                              evento.dataHoraTermino,
+                                              pattern: 'HH:mm',
+                                            ),
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(width: 10),
+                              Divider(
+                                color: Colors.black26,
+                                indent: 10,
+                                endIndent: 20,
+                                height: 2,
+                              ),
+                              const SizedBox(width: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.person,
+                                    color: Colors.black26,
+                                    size: 35,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    inscricao.nomeInscrito,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      fontSize: 28,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        color: Colors.black12,
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              StringUtil.formatData(
+                                inscricao.data,
+                                pattern: "dd/MM/yyyy HH:mm",
+                              ),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "#${evento.id.toRadixString(36).toUpperCase()}-${inscricao.id.toRadixString(36).toUpperCase()}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Divider(
-                color: Colors.black26,
-                indent: 10,
-                endIndent: 20,
-                height: 2,
-              ),
-              Text(
-                inscricao.nomeInscrito,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: TextStyle(
-                  fontSize: 28,
                 ),
               ),
-              Divider(
-                color: Colors.black26,
-                indent: 10,
-                endIndent: 20,
-                height: 2,
+              Positioned(
+                bottom: 20,
+                right: 5,
+                child: Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.green.withOpacity(.35),
+                  size: 100,
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _labelValor(
-                    label: IntlText("evento.email"),
-                    valor: inscricao.emailInscrito,
-                  ),
-                  _labelValor(
-                    label: IntlText("evento.telefone"),
-                    valor:
-                        StringUtil.formatTelefone(inscricao.telefoneInscrito),
-                  ),
-                  for (ValorInscricaoEvento valor in inscricao.valores ?? [])
-                    _labelValor(
-                      label: Text(valor.nome),
-                      valor: _valorFormatado(valor),
-                    ),
-                ],
-              )
             ],
           ),
         ),
-        Positioned(
-          bottom: 20,
-          right: 5,
-          child: Icon(
-            Icons.check_circle_outline,
-            color: Colors.green.withOpacity(.54),
-            size: 120,
-          ),
-        )
-      ],
+      ),
     );
   }
 

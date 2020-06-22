@@ -8,7 +8,6 @@ class PageEBD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-      deveEstarAutenticado: true,
       title: IntlText("ebd.ebd"),
       body: Container(
         color: Colors.white,
@@ -22,13 +21,20 @@ class PageEBD extends StatelessWidget {
   }
 }
 
-class EBDContent extends StatelessWidget {
+class EBDContent extends StatefulWidget {
   const EBDContent({
     Key key,
     @required this.ebd,
   }) : super(key: key);
 
   final Evento ebd;
+
+  @override
+  _EBDContentState createState() => _EBDContentState();
+}
+
+class _EBDContentState extends State<EBDContent> {
+  Key _futureKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +46,14 @@ class EBDContent extends StatelessWidget {
           ListTile(
             contentPadding: const EdgeInsets.all(10),
             title: Text(
-              ebd.nome,
+              widget.ebd.nome,
               style: TextStyle(
                 color: tema.primary,
                 fontSize: 22,
               ),
             ),
           ),
-          ebd.banner != null
+          widget.ebd.banner != null
               ? SizedBox(
                   width: double.infinity,
                   child: RawMaterialButton(
@@ -60,11 +66,12 @@ class EBDContent extends StatelessWidget {
                           barrierColor: Colors.black87,
                           pageBuilder: (BuildContext context, _, __) =>
                               PhotoViewPage(
-                            title: const IntlText("ebd.edb"),
+                            title: const IntlText("ebd.ebd"),
                             images: [
                               ImageView(
                                 heroTag: "banner",
-                                image: ArquivoImageProvider(ebd.banner.id),
+                                image:
+                                    ArquivoImageProvider(widget.ebd.banner.id),
                               )
                             ],
                           ),
@@ -75,7 +82,7 @@ class EBDContent extends StatelessWidget {
                       tag: "banner",
                       child: Image(
                         width: double.infinity,
-                        image: ArquivoImageProvider(ebd.banner.id),
+                        image: ArquivoImageProvider(widget.ebd.banner.id),
                         fit: BoxFit.fitWidth,
                       ),
                     ),
@@ -85,14 +92,14 @@ class EBDContent extends StatelessWidget {
           ListTile(
             contentPadding: const EdgeInsets.all(10),
             title: Text(
-              ebd.descricao ?? "",
+              widget.ebd.descricao ?? "",
             ),
           ),
           new ItemEBD(
             label: IntlText("ebd.dataHoraInicio"),
             value: Text(
               StringUtil.formatData(
-                ebd.dataHoraInicio,
+                widget.ebd.dataHoraInicio,
                 pattern: "dd MMMM yyyy HH:mm",
               ),
             ),
@@ -101,7 +108,7 @@ class EBDContent extends StatelessWidget {
             label: IntlText("ebd.dataHoraTermino"),
             value: Text(
               StringUtil.formatData(
-                ebd.dataHoraTermino,
+                widget.ebd.dataHoraTermino,
                 pattern: "dd MMMM yyyy HH:mm",
               ),
             ),
@@ -112,14 +119,14 @@ class EBDContent extends StatelessWidget {
           new ItemEBD(
             label: IntlText("ebd.vagas"),
             value: Text(
-              ebd.limiteInscricoes.toString(),
+              widget.ebd.limiteInscricoes.toString(),
             ),
           ),
           new ItemEBD(
             label: IntlText("ebd.dataHoraInicioInscricao"),
             value: Text(
               StringUtil.formatData(
-                ebd.dataInicioInscricao,
+                widget.ebd.dataInicioInscricao,
                 pattern: "dd MMMM yyyy HH:mm",
               ),
             ),
@@ -128,17 +135,17 @@ class EBDContent extends StatelessWidget {
             label: IntlText("ebd.dataHoraTerminoInscricao"),
             value: Text(
               StringUtil.formatData(
-                ebd.dataTerminoInscricao,
+                widget.ebd.dataTerminoInscricao,
                 pattern: "dd MMMM yyyy HH:mm",
               ),
             ),
           ),
-          ebd.exigePagamento
+          widget.ebd.exigePagamento
               ? new ItemEBD(
                   label: IntlText("ebd.valor"),
                   value: Text(
                     StringUtil.formataCurrency(
-                      ebd.valor ?? 0,
+                      widget.ebd.valor ?? 0,
                     ),
                   ),
                 )
@@ -148,14 +155,19 @@ class EBDContent extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: RawMaterialButton(
-                onPressed: ebd.inscricoesAbertas && ebd.vagasRestantes > 0
+                onPressed: widget.ebd.inscricoesAbertas &&
+                        widget.ebd.vagasRestantes > 0
                     ? () {
                         NavigatorUtil.navigate(
                           context,
                           builder: (context) => PageInscricaoEBD(
-                            ebd: ebd,
+                            ebd: widget.ebd,
                           ),
-                        );
+                        ).then((_) {
+                          setState(() {
+                            _futureKey = GlobalKey();
+                          });
+                        });
                       }
                     : null,
                 padding: const EdgeInsets.all(15),
@@ -168,22 +180,27 @@ class EBDContent extends StatelessWidget {
                     color: tema.buttonText,
                   ),
                 ),
-                fillColor: ebd.inscricoesAbertas && ebd.vagasRestantes > 0
+                fillColor: widget.ebd.inscricoesAbertas &&
+                        widget.ebd.vagasRestantes > 0
                     ? tema.buttonBackground
                     : Colors.black45,
               ),
             ),
           ),
-          _listaInscricoes()
+          _listaInscricoes(context)
         ],
       ),
     );
   }
 
-  FutureBuilder<Pagina<InscricaoEvento>> _listaInscricoes() {
+  FutureBuilder<Pagina<InscricaoEvento>> _listaInscricoes(
+      BuildContext context) {
+    Tema tema = ConfiguracaoApp.of(context).tema;
+
     return FutureBuilder<Pagina<InscricaoEvento>>(
+      key: _futureKey,
       future: eventoApi.consultaMinhasInscricoes(
-        ebd.id,
+        widget.ebd.id,
         pagina: 1,
         tamanhoPagina: 50,
       ),
@@ -194,29 +211,72 @@ class EBDContent extends StatelessWidget {
               InfoDivider(
                 child: IntlText("ebd.minhas_inscricoes"),
               ),
-            ].followedBy(snapshot.data.resultados.map((inscricao) {
-              return Material(
-                color: Colors.white,
-                shape: Border(
-                  top: BorderSide(
-                    color: Colors.black54,
-                    width: .5,
+              for (InscricaoEvento inscricao in snapshot.data.resultados)
+                Material(
+                  color: Colors.white,
+                  shape: Border(
+                    top: BorderSide(
+                      color: Colors.black54,
+                      width: .5,
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black54,
+                      width: .5,
+                    ),
                   ),
-                  bottom: BorderSide(
-                    color: Colors.black54,
-                    width: .5,
+                  child: ListTile(
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    title: Text(inscricao.nomeInscrito),
+                    subtitle: Text(inscricao.emailInscrito),
+                    trailing:
+                        IntlText("ebd.status_inscricao." + inscricao.status),
                   ),
                 ),
-                child: ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  title: Text(inscricao.nomeInscrito),
-                  subtitle: Text(inscricao.emailInscrito),
-                  trailing:
-                      IntlText("ebd.status_inscricao." + inscricao.status),
+              if (snapshot.data.resultados
+                  .any((insc) => insc.status == 'CONFIRMADA'))
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: RawMaterialButton(
+                      onPressed: () {
+                        NavigatorUtil.navigate(
+                          context,
+                          builder: (context) => PageComprovantesInscricao(
+                            ebd: widget.ebd,
+                            inscricoes: snapshot.data.resultados
+                                .where(
+                                  (insc) => insc.status == 'CONFIRMADA',
+                                )
+                                .toList(),
+                          ),
+                        );
+                      },
+                      padding: const EdgeInsets.all(15),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Icon(Icons.description),
+                          const SizedBox(width: 5),
+                          IntlText(
+                            "ebd.comprovantes",
+                            style: TextStyle(
+                              color: tema.buttonText,
+                            ),
+                          ),
+                        ],
+                      ),
+                      fillColor: tema.buttonBackground,
+                    ),
+                  ),
                 ),
-              );
-            })).toList(),
+            ],
           );
         }
 
@@ -226,13 +286,13 @@ class EBDContent extends StatelessWidget {
   }
 
   String _textButton() {
-    if (ebd.inscricoesFuturas) {
+    if (widget.ebd.inscricoesFuturas) {
       return "ebd.inscricoes_ainda_nao_disponiveis";
-    } else if (ebd.inscricoesPassadas) {
+    } else if (widget.ebd.inscricoesPassadas) {
       return "ebd.inscricoes_encerradas";
     }
 
-    if (ebd.vagasRestantes == 0) {
+    if (widget.ebd.vagasRestantes == 0) {
       return "ebd.sem_vagas";
     }
 
