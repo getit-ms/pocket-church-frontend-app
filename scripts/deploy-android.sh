@@ -4,5 +4,7 @@ echo "Capturando screenshots"
 
 flutter pub global run screenshots:main -c screenshots-android.yaml || exit 1
 
-fastlane android beta
+cd android
+
+fastlane android beta || exit 1
 

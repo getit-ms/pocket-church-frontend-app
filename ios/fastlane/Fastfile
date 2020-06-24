@@ -24,7 +24,6 @@ platform :ios do
     gym(xcargs: "-allowProvisioningUpdates", export_method: "app-store")
 
     upload_to_testflight(
-        screenshots_path: './deliver/fastlane/screenshots/pt-BR',
         skip_waiting_for_build_processing: true
     )
   end
