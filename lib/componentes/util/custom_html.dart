@@ -7,17 +7,22 @@ class CustomHtml extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Html(
-      data: "<div>" + html + "</div>",
-      style: {
-        'div': Style(
-          color: Colors.black54,
-          fontSize: FontSize(17),
-        ),
-      },
-      onLinkTap: (link) {
-        LaunchUtil.site(link);
-      },
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        textScaleFactor: 1,
+      ),
+      child: Html(
+        data: "<div>" + html + "</div>",
+        style: {
+          'div': Style(
+            color: Colors.black54,
+            fontSize: FontSize(17),
+          ),
+        },
+        onLinkTap: (link) {
+          LaunchUtil.site(link);
+        },
+      ),
     );
   }
 }
