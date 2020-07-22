@@ -3,11 +3,10 @@ import 'dart:async';
 
 import 'package:flutter_driver/flutter_driver.dart' as drv;
 import 'package:screenshots/screenshots.dart';
-import 'package:vm_service_client/vm_service_client.dart';
 import 'package:test/test.dart';
+import 'package:vm_service_client/vm_service_client.dart';
 
 void main() async {
-
   group('Prints', () {
     drv.FlutterDriver driver;
     VM vm;
@@ -40,19 +39,20 @@ void main() async {
 
       print('iniciando navegação...');
 
-      drv.SerializableFinder tabViewApresentacao = drv.find.byValueKey('tab_view_apresentacao');
+      drv.SerializableFinder tabViewApresentacao =
+          drv.find.byValueKey('tab_view_apresentacao');
 
       await Future.delayed(const Duration(seconds: 5), () => {});
 
       print('passando para aba 2...');
       // Passa pra segunda tab
       await driver.scroll(
-          tabViewApresentacao, -300, 0, const Duration(milliseconds: 500));
+          tabViewApresentacao, -500, 0, const Duration(milliseconds: 750));
 
       print('passando para aba 3...');
       // Passa pra terceira tab
       await driver.scroll(
-          tabViewApresentacao, -300, 0, const Duration(milliseconds: 500));
+          tabViewApresentacao, -500, 0, const Duration(milliseconds: 750));
 
       final opcaoReativa = drv.find.byValueKey("opcao_reativa");
 
