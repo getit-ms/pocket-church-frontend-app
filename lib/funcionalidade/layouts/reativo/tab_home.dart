@@ -586,6 +586,8 @@ class FeedItem extends StatelessWidget {
           ),
           Text(
             feed.titulo,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: tema.primary,
               fontSize: 19,
