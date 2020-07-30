@@ -112,8 +112,6 @@ class _PageInscricaoEventoState extends State<PageInscricaoEvento> {
               inscricoes: _inscricoes,
             ));
 
-            Navigator.of(context).pop();
-
             if (resultado.devePagar) {
               await showCupertinoModalPopup(
                 context: context,
@@ -130,12 +128,9 @@ class _PageInscricaoEventoState extends State<PageInscricaoEvento> {
 
               LaunchUtil.site(
                   "https://pagseguro.uol.com.br/v2/checkout/payment.html?code=${resultado.checkoutPagSeguro}");
-            } else {
-              MessageHandler.success(
-                Scaffold.of(context),
-                const IntlText("mensagens.MSG-001"),
-              );
             }
+
+            Navigator.of(context).pop(true);
           }
         },
       ),
@@ -357,4 +352,3 @@ class _FormInscricaoState extends State<FormInscricao> {
     );
   }
 }
-

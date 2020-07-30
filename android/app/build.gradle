@@ -75,7 +75,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.firebase:firebase-core:16.0.6'
-    implementation 'com.google.firebase:firebase-messaging:17.4.0'
+    implementation 'com.google.firebase:firebase-messaging:20.0.1'
 }
 
 configurations.all {
@@ -83,13 +83,12 @@ configurations.all {
         force 'com.android.support:support-compat:27.1.1'
         force 'com.android.support:support-core-ui:27.1.1'
         force 'com.android.support:support-fragment:27.1.1'
-        force 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-        force 'androidx.drawerlayout:drawerlayout:1.0.0'
-        force 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'
-        force 'androidx.fragment:fragment:1.0.0'
-        force 'androidx.legacy:legacy-support-v4:1.0.0'
-        force 'androidx.core:core:1.0.2'
-        force 'com.google.firebase:firebase-messaging:20.0.1'
+//        force 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+//        force 'androidx.drawerlayout:drawerlayout:1.0.0'
+//        force 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'
+//        force 'androidx.fragment:fragment:1.0.0'
+//        force 'androidx.legacy:legacy-support-v4:1.0.0'
+//        force 'androidx.core:core:1.0.2'
     }
 }
 

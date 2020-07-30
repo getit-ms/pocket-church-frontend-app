@@ -163,10 +163,17 @@ class _CultoContentState extends State<CultoContent> {
                           builder: (context) => PageInscricaoCulto(
                             culto: widget.culto,
                           ),
-                        ).then((_) {
-                          setState(() {
-                            _futureKey = GlobalKey();
-                          });
+                        ).then((sucesso) {
+                          if (sucesso != null && sucesso) {
+                            MessageHandler.success(
+                              Scaffold.of(context),
+                              IntlText("mensagens.MSG-001"),
+                            );
+
+                            setState(() {
+                              _futureKey = GlobalKey();
+                            });
+                          }
                         });
                       }
                     : null,

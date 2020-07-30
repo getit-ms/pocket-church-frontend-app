@@ -111,8 +111,6 @@ class _PageInscricaoCultoState extends State<PageInscricaoCulto> {
               inscricoes: _inscricoes,
             ));
 
-            Navigator.of(context).pop();
-
             if (resultado.devePagar) {
               await showCupertinoModalPopup(
                 context: context,
@@ -129,13 +127,10 @@ class _PageInscricaoCultoState extends State<PageInscricaoCulto> {
 
               LaunchUtil.site(
                   "https://pagseguro.uol.com.br/v2/checkout/payment.html?code=${resultado.checkoutPagSeguro}");
-            } else {
-              MessageHandler.success(
-                Scaffold.of(context),
-                const IntlText("mensagens.MSG-001"),
-              );
             }
           }
+
+          Navigator.of(context).pop(true);
         },
       ),
     );
@@ -228,7 +223,8 @@ class _FormInscricaoState extends State<FormInscricao> {
       widget.inscricao.valores = [];
 
       for (CampoEvento campo in widget.culto.campos) {
-        var valorInscricaoEvento = ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
+        var valorInscricaoEvento =
+            ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
         widget.inscricao.valores.add(valorInscricaoEvento);
         valores[campo] = valorInscricaoEvento;
       }
@@ -320,4 +316,3 @@ class _FormInscricaoState extends State<FormInscricao> {
     );
   }
 }
-

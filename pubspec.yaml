@@ -42,7 +42,7 @@ dependencies:
   uuid: 2.0.4
   path_provider: 1.6.8
   intl: 0.16.1
-  flutter_html: 1.0.0
+  flutter_widget_from_html_core: 0.4.2
   shared_preferences: 0.5.7+2
   json_annotation: 3.0.1
   shimmer: 1.1.1

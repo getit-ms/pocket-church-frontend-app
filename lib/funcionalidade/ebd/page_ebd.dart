@@ -163,10 +163,17 @@ class _EBDContentState extends State<EBDContent> {
                           builder: (context) => PageInscricaoEBD(
                             ebd: widget.ebd,
                           ),
-                        ).then((_) {
-                          setState(() {
-                            _futureKey = GlobalKey();
-                          });
+                        ).then((sucesso) {
+                          if (sucesso != null && sucesso) {
+                            MessageHandler.success(
+                              Scaffold.of(context),
+                              IntlText("mensagens.MSG-001"),
+                            );
+
+                            setState(() {
+                              _futureKey = GlobalKey();
+                            });
+                          }
                         });
                       }
                     : null,

@@ -163,10 +163,17 @@ class _EventoContentState extends State<EventoContent> {
                           builder: (context) => PageInscricaoEvento(
                             evento: widget.evento,
                           ),
-                        ).then((_) {
-                          setState(() {
-                            _futureKey = GlobalKey();
-                          });
+                        ).then((sucesso) {
+                          if (sucesso != null && sucesso) {
+                            MessageHandler.success(
+                              Scaffold.of(context),
+                              const IntlText("mensagens.MSG-001"),
+                            );
+
+                            setState(() {
+                              _futureKey = GlobalKey();
+                            });
+                          }
                         });
                       }
                     : null,

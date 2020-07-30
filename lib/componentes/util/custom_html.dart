@@ -11,15 +11,13 @@ class CustomHtml extends StatelessWidget {
       data: MediaQuery.of(context).copyWith(
         textScaleFactor: 1,
       ),
-      child: Html(
-        data: "<div>" + html + "</div>",
-        style: {
-          'div': Style(
-            color: Colors.black54,
-            fontSize: FontSize(17),
-          ),
-        },
-        onLinkTap: (link) {
+      child: HtmlWidget(
+        html,
+        textStyle: TextStyle(
+          fontSize: 17,
+          color: Colors.black54,
+        ),
+        onTapUrl: (link) {
           LaunchUtil.site(link);
         },
       ),
