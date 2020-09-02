@@ -32,7 +32,13 @@ class InscricaoEvento {
     this.valores,
   });
 
-  factory InscricaoEvento.fromJson(Map<String, dynamic> json) => _$InscricaoEventoFromJson(json);
+  factory InscricaoEvento.fromJson(Map<String, dynamic> json) =>
+      _$InscricaoEventoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$InscricaoEventoToJson(this);
+  Map<String, dynamic> toJson() => {
+        'nomeInscrito': nomeInscrito,
+        'emailInscrito': emailInscrito,
+        'telefoneInscrito': telefoneInscrito,
+        'valores': valores?.map((e) => e.toJson())?.toList(),
+      };
 }

@@ -56,6 +56,9 @@ class InputCampoEvento extends StatelessWidget {
         ),
         labelText: campo.nome,
       ),
+      onChanged: (String value) {
+
+      },
     );
   }
 

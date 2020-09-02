@@ -316,7 +316,7 @@ class _FormInscricaoState extends State<FormInscricao> {
             email(),
             length(max: 150),
           ], bundle: bundle),
-          onSaved: (val) => widget.inscricao.emailInscrito = val,
+          onSaved: (val) => widget.inscricao.emailInscrito = val?.trim(),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
               vertical: 20,

@@ -128,9 +128,9 @@ class _PageInscricaoCultoState extends State<PageInscricaoCulto> {
               LaunchUtil.site(
                   "https://pagseguro.uol.com.br/v2/checkout/payment.html?code=${resultado.checkoutPagSeguro}");
             }
-          }
 
-          Navigator.of(context).pop(true);
+            Navigator.of(context).pop(true);
+          }
         },
       ),
     );
@@ -280,7 +280,7 @@ class _FormInscricaoState extends State<FormInscricao> {
             email(),
             length(max: 150),
           ], bundle: bundle),
-          onSaved: (val) => widget.inscricao.emailInscrito = val,
+          onSaved: (val) => widget.inscricao.emailInscrito = val?.trim(),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
               vertical: 20,
