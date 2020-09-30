@@ -19,7 +19,15 @@ class PageListaPlanos extends StatelessWidget {
 
         leituraBloc.sincroniza();
 
-        Navigator.of(context).pop();
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        } else {
+          NavigatorUtil.navigate(
+            context,
+            builder: (context) => PageLeitura(),
+            replace: true,
+          );
+        }
       },
     );
   }

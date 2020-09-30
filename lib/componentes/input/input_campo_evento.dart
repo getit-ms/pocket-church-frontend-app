@@ -56,9 +56,7 @@ class InputCampoEvento extends StatelessWidget {
         ),
         labelText: campo.nome,
       ),
-      onChanged: (String value) {
-
-      },
+      onChanged: (String value) {},
     );
   }
 
@@ -73,12 +71,16 @@ class InputCampoEvento extends StatelessWidget {
               if (campo.validacao[TipoValidacaoCampo.VALOR_MINIMO] != null ||
                   campo.validacao[TipoValidacaoCampo.VALOR_MAXIMO] != null)
                 dateRange(
-                  min: DateTime.parse(campo
-                      .validacao[TipoValidacaoCampo.VALOR_MINIMO]
-                      .toString()),
-                  max: DateTime.parse(campo
-                      .validacao[TipoValidacaoCampo.VALOR_MAXIMO]
-                      .toString()),
+                  min: campo.validacao[TipoValidacaoCampo.VALOR_MINIMO] != null
+                      ? DateTime.parse(campo
+                          .validacao[TipoValidacaoCampo.VALOR_MINIMO]
+                          .toString())
+                      : null,
+                  max: campo.validacao[TipoValidacaoCampo.VALOR_MAXIMO] != null
+                      ? DateTime.parse(campo
+                          .validacao[TipoValidacaoCampo.VALOR_MAXIMO]
+                          .toString())
+                      : null,
                 ),
             ], bundle: bundle)
           : null,
@@ -106,12 +108,18 @@ class InputCampoEvento extends StatelessWidget {
               if (campo.validacao[TipoValidacaoCampo.VALOR_MINIMO] != null ||
                   campo.validacao[TipoValidacaoCampo.VALOR_MAXIMO] != null)
                 range(
-                    min: double.parse(campo
-                        .validacao[TipoValidacaoCampo.VALOR_MINIMO]
-                        .toString()),
-                    max: double.parse(campo
-                        .validacao[TipoValidacaoCampo.VALOR_MAXIMO]
-                        .toString()),
+                    min:
+                        campo.validacao[TipoValidacaoCampo.VALOR_MINIMO] != null
+                            ? double.parse(campo
+                                .validacao[TipoValidacaoCampo.VALOR_MINIMO]
+                                .toString())
+                            : null,
+                    max:
+                        campo.validacao[TipoValidacaoCampo.VALOR_MAXIMO] != null
+                            ? double.parse(campo
+                                .validacao[TipoValidacaoCampo.VALOR_MAXIMO]
+                                .toString())
+                            : null,
                     toString: (val) {
                       if (campo.formato == FormatoCampoEvento.MONETARIO) {
                         return StringUtil.formataCurrency(val);
@@ -154,12 +162,18 @@ class InputCampoEvento extends StatelessWidget {
                   campo.validacao[TipoValidacaoCampo.COMPRIMENTO_MAXIMO] !=
                       null)
                 length(
-                  min: int.parse(campo
-                      .validacao[TipoValidacaoCampo.COMPRIMENTO_MINIMO]
-                      .toString()),
-                  max: int.parse(campo
-                      .validacao[TipoValidacaoCampo.COMPRIMENTO_MAXIMO]
-                      .toString()),
+                  min: campo.validacao[TipoValidacaoCampo.COMPRIMENTO_MINIMO] !=
+                          null
+                      ? int.parse(campo
+                          .validacao[TipoValidacaoCampo.COMPRIMENTO_MINIMO]
+                          .toString())
+                      : null,
+                  max: campo.validacao[TipoValidacaoCampo.COMPRIMENTO_MAXIMO] !=
+                          null
+                      ? int.parse(campo
+                          .validacao[TipoValidacaoCampo.COMPRIMENTO_MAXIMO]
+                          .toString())
+                      : null,
                 ),
             ], bundle: bundle)
           : null,

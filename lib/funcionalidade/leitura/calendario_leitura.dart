@@ -6,7 +6,6 @@ class CalendarioLeitura extends StatefulWidget {
 }
 
 class _CalendarioLeituraState extends State<CalendarioLeitura> {
-
   PageController _pageController;
   List<DateTime> _datas;
 
@@ -26,9 +25,14 @@ class _CalendarioLeituraState extends State<CalendarioLeitura> {
 
     List<DateTime> datas = [];
 
-    for (DateTime i = periodo.dataInicio;
-    !i.isAfter(periodo.dataTermino);
-    i = DateTime(i.year, i.month, i.day + 1)) {
+    DateTime dataInicio = DateTime(periodo.dataInicio.year,
+        periodo.dataInicio.month, periodo.dataInicio.day);
+    DateTime dataTermino = DateTime(periodo.dataTermino.year,
+        periodo.dataTermino.month, periodo.dataTermino.day);
+
+    for (DateTime i = dataInicio;
+        !i.isAfter(dataTermino);
+        i = DateTime(i.year, i.month, i.day + 1)) {
       datas.add(i);
     }
 
@@ -50,17 +54,18 @@ class _CalendarioLeituraState extends State<CalendarioLeitura> {
           child: PageView(
               physics: const BouncingScrollPhysics(),
               controller: _pageController,
-              children: _datas.map((data) =>
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 10,
-                    ),
-                    child: new CardLeitura(
-                      data: data,
-                      onLido: _proximoNaoLido,
-                    ),)).toList()
-          ),
+              children: _datas
+                  .map((data) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 10,
+                        ),
+                        child: new CardLeitura(
+                          data: data,
+                          onLido: _proximoNaoLido,
+                        ),
+                      ))
+                  .toList()),
         )
       ],
     );
@@ -76,8 +81,9 @@ class _CalendarioLeituraState extends State<CalendarioLeitura> {
         duration: const Duration(milliseconds: 300),
         curve: const Interval(0, 1),
       );
-    } else {
-      _pageController.animateToPage(page,
+    } else if (page >= 0) {
+      _pageController.animateToPage(
+        page,
         duration: const Duration(milliseconds: 1500),
         curve: const ElasticOutCurve(.75),
       );
@@ -100,7 +106,6 @@ class CardLeitura extends StatefulWidget {
 }
 
 class _CardLeituraState extends State<CardLeitura> {
-
   Leitura _leitura;
 
   @override
@@ -122,9 +127,7 @@ class _CardLeituraState extends State<CardLeitura> {
 
   @override
   Widget build(BuildContext context) {
-    Tema tema = ConfiguracaoApp
-        .of(context)
-        .tema;
+    Tema tema = ConfiguracaoApp.of(context).tema;
 
     return RawMaterialButton(
       onPressed: _onPressed,
@@ -171,14 +174,14 @@ class _CardLeituraState extends State<CardLeitura> {
                   ),
                   child: lido
                       ? Icon(
-                    Icons.check,
-                    size: 65,
-                    color: tema.buttonBackground,
-                  )
+                          Icons.check,
+                          size: 65,
+                          color: tema.buttonBackground,
+                        )
                       : const SizedBox(
-                    height: 65,
-                    width: 65,
-                  ),
+                          height: 65,
+                          width: 65,
+                        ),
                 ),
               )
             ],

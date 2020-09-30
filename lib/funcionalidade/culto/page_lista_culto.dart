@@ -51,7 +51,10 @@ class PageListaCultos extends StatelessWidget {
               " - " +
               StringUtil.formatData(
                 culto.dataHoraTermino,
-                pattern: "dd MMMM yyyy HH:mm",
+                pattern: DateUtil.equalsDateOnly(
+                        culto.dataHoraInicio, culto.dataHoraTermino)
+                    ? "HH:mm"
+                    : "dd MMMM yyyy HH:mm",
               ),
         ),
         onTap: () {

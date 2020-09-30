@@ -52,7 +52,10 @@ class PageListaEBDs extends StatelessWidget {
               " - " +
               StringUtil.formatData(
                 evento.dataHoraTermino,
-                pattern: "dd MMMM yyyy HH:mm",
+                pattern: DateUtil.equalsDateOnly(
+                        evento.dataHoraInicio, evento.dataHoraTermino)
+                    ? "HH:mm"
+                    : "dd MMMM yyyy HH:mm",
               ),
         ),
         onTap: () {
