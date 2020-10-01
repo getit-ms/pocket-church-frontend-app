@@ -13,13 +13,22 @@ default_platform(:android)
 
 platform :android do
   lane :beta do
-    # add actions here: https://docs.fastlane.tools/actions
-
-    upload_to_play_store(track: 'beta', aab: '../build/app/outputs/bundle/release/app.aab')
+    supply(
+        track: 'beta',
+        aab: '../build/app/outputs/bundle/release/app.aab',
+        skip_upload_screenshots: true
+    )
   end
 
-  lane :release do
-    upload_to_play_store(
+  lane :prints do
+    supply(
+        track: 'beta',
+        skip_upload_apk: true
+    )
+  end
+
+  lane :rollup do
+    supply(
       track: 'beta',
       skip_upload_apk: true,
       track_promote_to: 'production'
