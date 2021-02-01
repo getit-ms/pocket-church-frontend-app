@@ -7,7 +7,7 @@ final Configuracao defaultConfig = const Configuracao(
   chaveIgreja: "pigv",
   nomeAplicativo: "PIGV",
   nomeIgreja: "Presbitério da Ilha do Governador",
-  version: "8.2.1",
+  version: "8.3.0",
 );
 
 final Tema defaultTema = const Tema(

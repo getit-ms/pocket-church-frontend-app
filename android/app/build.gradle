@@ -40,7 +40,7 @@ android {
     defaultConfig {
         applicationId "br.com.getit.calvin.pigv"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
