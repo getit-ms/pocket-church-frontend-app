@@ -30,7 +30,7 @@ class _TabHomeState extends State<TabHome> {
                   if (snapshot.data?.divulgacao != null) {
                     return Padding(
                       padding: const EdgeInsets.all(20),
-                      child: ElevatedButton(
+                      child: CustomElevatedButton(
                         child: Image(
                           image: ArquivoImageProvider(
                             snapshot.data.divulgacao.id,
@@ -403,7 +403,7 @@ class FeedItem extends StatelessWidget {
       ),
       width: double.infinity,
       height: compact ? 200 : 350,
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: timelineProvider.resolveAction(context, feed),
         child: compact ? _compact(context, tema) : _expanded(context, tema),
       ),

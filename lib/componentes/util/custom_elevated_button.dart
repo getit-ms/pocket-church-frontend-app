@@ -1,21 +1,19 @@
-import 'dart:ui';
+part of pocket_church.componentes;
 
-import 'package:flutter/material.dart';
-
-class ElevatedButton extends StatefulWidget {
+class CustomElevatedButton extends StatefulWidget {
   final Widget child;
   final VoidCallback onPressed;
 
-  const ElevatedButton({
+  const CustomElevatedButton({
     this.child,
     this.onPressed,
   });
 
   @override
-  _ElevatedButtonState createState() => _ElevatedButtonState();
+  _CustomElevatedButtonState createState() => _CustomElevatedButtonState();
 }
 
-class _ElevatedButtonState extends State<ElevatedButton>
+class _CustomElevatedButtonState extends State<CustomElevatedButton>
     with TickerProviderStateMixin {
   AnimationController _animationController;
   Animation<double> _elevation;

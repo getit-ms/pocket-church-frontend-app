@@ -115,7 +115,7 @@ class PageListaAniversariantes extends StatelessWidget {
               children: aniversariantesHoje.map((membro) {
                 return SizedBox(
                   width: 120,
-                  child: ElevatedButton(
+                  child: CustomElevatedButton(
                     onPressed: () {
                       NavigatorUtil.navigate(
                         context,

@@ -64,7 +64,7 @@ class _EventoAgenda extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 10,

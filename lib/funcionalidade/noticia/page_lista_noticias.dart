@@ -39,7 +39,7 @@ class _ItemNoticiaLista extends StatelessWidget {
         horizontal: 5,
         vertical: 10,
       ),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: () {
           NavigatorUtil.navigate(
             context,

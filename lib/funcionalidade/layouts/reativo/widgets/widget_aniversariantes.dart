@@ -45,7 +45,7 @@ class WidgetAniversariantes extends StatelessWidget {
         horizontal: 10,
         vertical: 15,
       ),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         child: Container(
           width: 130,
           padding: const EdgeInsets.all(10),

@@ -69,7 +69,7 @@ class _ItemDiaDevocionarioWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: () {
           NavigatorUtil.navigate(
             context,

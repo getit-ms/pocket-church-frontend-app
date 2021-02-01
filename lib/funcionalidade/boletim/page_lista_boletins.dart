@@ -64,7 +64,7 @@ class _ItemBoletim extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(5),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: () {
           NavigatorUtil.navigate(
             context,

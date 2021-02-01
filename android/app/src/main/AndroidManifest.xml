@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.getit.calvin.ipamericas">
+    package="br.com.getit.calvin.pigv">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -14,9 +14,11 @@
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
     <application
-        android:name="io.flutter.app.FlutterApplication"
-        android:label="Igreja das Américas"
+        android:label="PIGV"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+                android:name="flutterEmbedding"
+                android:value="2" />
 
         <service
                 android:name="com.mythichelm.localnotifications.services.LocalNotificationsService"

@@ -11,7 +11,7 @@ class ItemEstudo extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: () {
           NavigatorUtil.navigate(
             context,

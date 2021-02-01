@@ -14,12 +14,7 @@ description: Um aplicativo para sua Igreja
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.8.0 <3.0.0"
-
-analyzer:
-  enable-experiment:
-    - spread-collections
-    - control-flow-collections
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -42,7 +37,7 @@ dependencies:
   uuid: 2.0.4
   path_provider: 1.6.8
   intl: 0.16.1
-  flutter_widget_from_html_core: 0.4.2
+  flutter_html: ^0.11.1
   shared_preferences: 0.5.7+2
   json_annotation: 3.0.1
   shimmer: 1.1.1
@@ -52,7 +47,7 @@ dependencies:
   flutter_search_bar: 2.0.7
   esys_flutter_share: 1.0.2
   device_calendar: 3.1.0
-  firebase_messaging: 6.0.15
+  firebase_messaging: 7.0.3
   flutter_typeahead: 1.8.1
   flutter_calendar_carousel: 1.4.12
   flutter_plugin_playlist: 0.1.5
@@ -69,7 +64,7 @@ dev_dependencies:
   flutter_launcher_icons: 0.7.2+1
   build_runner: ^1.0.0
   json_serializable: ^3.2.0
-  screenshots: 2.1.1
+  # screenshots: 2.1.1
 
 flutter_icons:
   android: true

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>570004453772-f34a6dj6c5dpb14tt33u098gi4fslvbj.apps.googleusercontent.com</string>
+	<string>808146775143-50flmhrf37vqfkgsmqfo3g3mpreonr70.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.570004453772-f34a6dj6c5dpb14tt33u098gi4fslvbj</string>
+	<string>com.googleusercontent.apps.808146775143-50flmhrf37vqfkgsmqfo3g3mpreonr70</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBXucREjZ2g-Ekx83Hbz_wzTEGW8BPN650</string>
+	<string>AIzaSyD9U3FkTbzkUsMYZRlyhpd92szrGewNc6U</string>
 	<key>GCM_SENDER_ID</key>
-	<string>570004453772</string>
+	<string>808146775143</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>br.com.getit.calvin.ipamericas</string>
+	<string>br.com.getit.calvin.pigv</string>
 	<key>PROJECT_ID</key>
-	<string>ipamericas</string>
+	<string>pigv-7b501</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ipamericas.appspot.com</string>
+	<string>pigv-7b501.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:570004453772:ios:e0b2351554933a52243ea9</string>
-	<key>DATABASE_URL</key>
-	<string>https://ipamericas.firebaseio.com</string>
+	<string>1:808146775143:ios:2b9455871d25f59fc238c2</string>
 </dict>
 </plist>

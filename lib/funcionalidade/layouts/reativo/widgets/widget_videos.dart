@@ -40,7 +40,7 @@ class WidgetVideos extends StatelessWidget {
           placeholderBuilder: (context) {
             return Container(
               margin: const EdgeInsets.all(10),
-              child: ElevatedButton(
+              child: CustomElevatedButton(
                 child: Container(
                   width: 230,
                 ),
@@ -65,7 +65,7 @@ class _ItemVideo extends StatelessWidget {
     return Container(
       width: 250,
       padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: () {
           LaunchUtil.youtube(video.id);
         },

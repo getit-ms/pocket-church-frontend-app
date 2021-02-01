@@ -16,7 +16,7 @@ class ItemAudio extends StatelessWidget {
     return Container(
       width: width,
       padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: () async {
           if (player.audio == audio) {
             if (player.currentStatus == 'playing') {

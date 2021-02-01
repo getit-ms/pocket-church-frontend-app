@@ -117,7 +117,7 @@ class PageDevocionario extends StatelessWidget {
         vertical: 10,
         horizontal: 20,
       ),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: dia.id == null
             ? null
             : () {

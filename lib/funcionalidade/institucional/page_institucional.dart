@@ -38,13 +38,8 @@ class PageInstitucional extends StatelessWidget {
                       width: double.infinity,
                       color: Colors.white,
                       padding: const EdgeInsets.all(15),
-                      child: Text(
-                        snapshot.data.quemSomos,
-                        style: TextStyle(
-                          height: 2,
-                          color: Colors.black54,
-                          fontSize: 17,
-                        ),
+                      child: CustomHtml(
+                        html: snapshot.data.quemSomos,
                       ),
                     ),
                   ],

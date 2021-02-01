@@ -41,7 +41,7 @@ class WidgetNoticias extends StatelessWidget {
   Widget _placeholder() {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         child: Container(
           width: 275,
         ),
@@ -64,7 +64,7 @@ class _ItemNoticiaWidget extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
+      child: CustomElevatedButton(
         onPressed: () {
           NavigatorUtil.navigate(
             context,
