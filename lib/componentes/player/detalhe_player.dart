@@ -47,6 +47,9 @@ class DetalhePlayer extends StatelessWidget {
                   _tituloResumo(),
                   _ilustracaoResumo(context),
                   _controleAudio(),
+                  SizedBox(
+                    height: MediaQuery.of(context).padding.bottom,
+                  )
                 ],
               ),
             ),

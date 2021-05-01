@@ -34,6 +34,12 @@ class EventoApi extends ApiBase {
     );
   }
 
+  Future<void> cancelaInscricao(int evento, int inscricao) async {
+    await delete(
+      '/evento/$evento/cancelar/$inscricao',
+    );
+  }
+
   Future<Pagina<InscricaoEvento>> consultaMinhasInscricoes(int evento,
       {int pagina, int tamanhoPagina}) async {
     return await get(

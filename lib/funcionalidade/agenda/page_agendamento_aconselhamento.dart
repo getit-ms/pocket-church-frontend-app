@@ -293,4 +293,9 @@ class EventoCalendario implements EventInterface {
   @override
   String getTitle() => null;
 
+  @override
+  int getId() {
+    return horario.id ^ date.millisecond;
+  }
+
 }

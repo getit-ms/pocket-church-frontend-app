@@ -14,20 +14,11 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
 
   GlobalKey<FormState> _form = new GlobalKey();
 
-  Map<CampoEvento, ValorInscricaoEvento> valores = {};
-
   @override
   void initState() {
     super.initState();
 
     _preparaInscricao();
-
-    if (widget.ebd.campos != null) {
-      for (CampoEvento campo in widget.ebd.campos) {
-        valores[campo] =
-            ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
-      }
-    }
   }
 
   @override
@@ -228,9 +219,13 @@ class _FormInscricaoState extends State<FormInscricao> {
     );
 
     if (widget.ebd.campos != null) {
+      widget.inscricao.valores = [];
+
       for (CampoEvento campo in widget.ebd.campos) {
-        valores[campo] =
+        var valorInscricaoEvento =
             ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
+        widget.inscricao.valores.add(valorInscricaoEvento);
+        valores[campo] = valorInscricaoEvento;
       }
     }
   }
@@ -263,6 +258,14 @@ class _FormInscricaoState extends State<FormInscricao> {
           ),
         ),
         new TypeAheadFormField<Membro>(
+          noItemsFoundBuilder: (context) => Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(10),
+            child: const IntlText(
+              "global.nenhum_registro_encontrado",
+              textAlign: TextAlign.center,
+            ),
+          ),
           autoFlipDirection: true,
           validator: validate([
             notEmpty(),

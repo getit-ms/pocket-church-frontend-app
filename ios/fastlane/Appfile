@@ -1,4 +1,4 @@
-app_identifier("br.com.getit.calvin.pigv") # The bundle identifier of your app
+app_identifier("br.com.getit.calvin.ipmadalena") # The bundle identifier of your app
 apple_id("getitmobilesolutions@gmail.com") # Your Apple email address
 
 team_id("P8P9CJ7B9G")

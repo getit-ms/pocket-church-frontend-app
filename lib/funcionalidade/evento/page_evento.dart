@@ -194,7 +194,8 @@ class _EventoContentState extends State<EventoContent> {
               ),
             ),
           ),
-          _listaInscricoes(context)
+          _listaInscricoes(context),
+          SizedBox(height: MediaQuery.of(context).padding.bottom),
         ],
       ),
     );
@@ -234,10 +235,77 @@ class _EventoContentState extends State<EventoContent> {
                   child: ListTile(
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    title: Text(inscricao.nomeInscrito),
-                    subtitle: Text(inscricao.emailInscrito),
-                    trailing:
-                        IntlText("evento.status_inscricao." + inscricao.status),
+                    title: Text(
+                      inscricao.nomeInscrito,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Text(
+                      inscricao.emailInscrito,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    leading: Column(
+                      children: [
+                        inscricao.status == 'PENDENTE'
+                            ? Icon(
+                                Icons.pending,
+                                size: 32,
+                                color: Colors.orangeAccent,
+                              )
+                            : inscricao.status == 'CONFIRMADA'
+                                ? Icon(
+                                    Icons.check_circle,
+                                    size: 32,
+                                    color: const Color(0xFF148918),
+                                  )
+                                : Icon(
+                                    Icons.cancel,
+                                    size: 32,
+                                    color: Colors.grey,
+                                  ),
+                        const SizedBox(height: 5),
+                        IntlText(
+                          "evento.status_inscricao." + inscricao.status,
+                          style: TextStyle(fontSize: 9),
+                        ),
+                      ],
+                    ),
+                    trailing: inscricao.status != 'CANCELADA' &&
+                            widget.evento.dataHoraInicio.isAfter(DateTime.now())
+                        ? CommandButton<void>(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            background: Colors.red,
+                            onPressed: (loading) async {
+                              bool confirmado = await NavigatorUtil.confirma(
+                                context,
+                                message: IntlText("mensagens.MSG-067"),
+                                title: IntlText("evento.cancelamento"),
+                              );
+
+                              if (confirmado) {
+                                await loading(eventoApi.cancelaInscricao(
+                                    widget.evento.id, inscricao.id));
+
+                                setState(() {
+                                  inscricao.status = 'CANCELADA';
+                                  widget.evento.vagasRestantes += 1;
+                                });
+                              }
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                                IntlText("global.cancelar"),
+                              ],
+                            ),
+                          )
+                        : null,
                   ),
                 ),
               if (snapshot.data.resultados

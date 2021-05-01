@@ -125,14 +125,18 @@ class _ItemNoticiaWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          noticia.autor.nome,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black45,
+                        Expanded(
+                          child: Text(
+                            noticia.autor.nome,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black45,
+                            ),
                           ),
                         ),
+                        const SizedBox(width: 10),
                         Text(
                           StringUtil.formatDataLegivel(
                             noticia.dataPublicacao,
@@ -140,6 +144,7 @@ class _ItemNoticiaWidget extends StatelessWidget {
                             porHora: true,
                             pattern: 'dd MMM',
                           ),
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

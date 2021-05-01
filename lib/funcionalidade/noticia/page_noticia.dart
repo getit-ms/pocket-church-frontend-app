@@ -82,7 +82,7 @@ class _NoticiaContent extends StatelessWidget {
                                   children: [
                                     Text(noticia.autor.nome),
                                     Text(
-                                      noticia.autor.email,
+                                      noticia.autor.email ?? '',
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: isDark
@@ -106,7 +106,7 @@ class _NoticiaContent extends StatelessWidget {
                               }
 
                               return CustomHtml(
-                                html: snapshot.data.texto,
+                                html: snapshot.data.texto ?? '',
                               );
                             },
                           ),
@@ -125,6 +125,10 @@ class _NoticiaContent extends StatelessWidget {
   }
 
   Widget _ilustracao(BuildContext context) {
+    if (noticia.ilustracao == null) {
+      return Container();
+    }
+
     return InkWell(
       onTap: () {
         NavigatorUtil.navigate(

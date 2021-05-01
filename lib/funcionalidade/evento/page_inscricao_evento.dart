@@ -219,9 +219,13 @@ class _FormInscricaoState extends State<FormInscricao> {
     );
 
     if (widget.evento.campos != null) {
+      widget.inscricao.valores = [];
+
       for (CampoEvento campo in widget.evento.campos) {
-        valores[campo] =
+        var valorInscricaoEvento =
             ValorInscricaoEvento(nome: campo.nome, formato: campo.formato);
+        widget.inscricao.valores.add(valorInscricaoEvento);
+        valores[campo] = valorInscricaoEvento;
       }
     }
   }
