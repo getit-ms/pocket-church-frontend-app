@@ -1,42 +1,35 @@
 {
   "project_info": {
-    "project_number": "91891814012",
-    "firebase_url": "https://ip-madalena.firebaseio.com",
-    "project_id": "ip-madalena",
-    "storage_bucket": "ip-madalena.appspot.com"
+    "project_number": "77700137382",
+    "firebase_url": "https://ipnacional-d8b05.firebaseio.com",
+    "project_id": "ipnacional-d8b05",
+    "storage_bucket": "ipnacional-d8b05.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:91891814012:android:11eda4ec6426b165bb03f9",
+        "mobilesdk_app_id": "1:77700137382:android:dbf6c8d728f718ee2ccf67",
         "android_client_info": {
-          "package_name": "br.com.getit.calvin.ipmadalena"
+          "package_name": "br.com.calvin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "91891814012-0gpk8flsju5u1lqnbmii7go02qjo1d52.apps.googleusercontent.com",
+          "client_id": "77700137382-4m75gf3sq0184fntdt1mov2786u1d875.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDaNdiARBjMauDul3VBhA-Ua717iJbK9j0"
+          "current_key": "AIzaSyB8RM0TmVYd_p9Ko0XBR_X3bpd3DNp7Axo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "91891814012-0gpk8flsju5u1lqnbmii7go02qjo1d52.apps.googleusercontent.com",
+              "client_id": "77700137382-4m75gf3sq0184fntdt1mov2786u1d875.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "91891814012-cfpoaut80fp4h4g4lch3cuuhmkj0njli.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "br.com.getit.calvin.ipmadalena"
-              }
             }
           ]
         }

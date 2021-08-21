@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:pocket_church/bloc/acesso_bloc.dart';
 import 'package:pocket_church/bloc/institucional_bloc.dart';
@@ -19,6 +18,7 @@ import 'bloc/hino_bloc.dart';
 import 'bloc/leitura_bloc.dart';
 import 'componentes/componentes.dart';
 import 'config_values.dart';
+import 'funcionalidade/aceite_termo/aceite_termo_page.dart';
 import 'funcionalidade/notificacao/notificacao.dart';
 import 'model/sugestao/model.dart';
 
@@ -239,18 +239,6 @@ class _PrepareAppState extends State<PrepareApp> {
 class PocketChurchApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var configuracaoApp = ConfiguracaoApp.of(context);
-
-    Configuracao config = configuracaoApp.config;
-
-    Widget home = PageApresentacao();
-
-    if (config.template == 'reativo') {
-      home = LayoutReativo();
-    } else if (config.template == 'tradicional') {
-      home = LayoutTradicional();
-    }
-
     return MaterialApp(
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -261,7 +249,29 @@ class PocketChurchApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       theme: Theme.of(context),
-      home: home,
+      home: StreamBuilder<bool>(
+        initialData: false,
+        stream: acessoBloc.exigeAceiteTermo,
+        builder: (context, snapshot) {
+          if (snapshot.data) {
+            return AceiteTermoPage();
+          } else {
+            var configuracaoApp = ConfiguracaoApp.of(context);
+
+            Configuracao config = configuracaoApp.config;
+
+            Widget home = PageApresentacao();
+
+            if (config.template == 'reativo') {
+              home = LayoutReativo();
+            } else if (config.template == 'tradicional') {
+              home = LayoutTradicional();
+            }
+
+            return home;
+          }
+        },
+      ),
     );
   }
 }

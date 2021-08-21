@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>91891814012-cfpoaut80fp4h4g4lch3cuuhmkj0njli.apps.googleusercontent.com</string>
+	<string>77700137382-pmidff1ikphvf3thjmpr6ku8dsh2abdm.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.91891814012-cfpoaut80fp4h4g4lch3cuuhmkj0njli</string>
+	<string>com.googleusercontent.apps.77700137382-pmidff1ikphvf3thjmpr6ku8dsh2abdm</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDCl5Dp6RYdkbt0GdApY5xZooXBKWgtHZk</string>
+	<string>AIzaSyBxLSypgkSvfD0O1p0v1njKg9ZSPDxf0jE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>91891814012</string>
+	<string>77700137382</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>br.com.getit.calvin.ipmadalena</string>
+	<string>br.com.getit.calvin.ipn</string>
 	<key>PROJECT_ID</key>
-	<string>ip-madalena</string>
+	<string>ipnacional-d8b05</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ip-madalena.appspot.com</string>
+	<string>ipnacional-d8b05.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:91891814012:ios:0681fed5778209aabb03f9</string>
+	<string>1:77700137382:ios:255804c950323d742ccf67</string>
 	<key>DATABASE_URL</key>
-	<string>https://ip-madalena.firebaseio.com</string>
+	<string>https://ipnacional-d8b05.firebaseio.com</string>
 </dict>
 </plist>

@@ -16,10 +16,14 @@ class AcessoBloc {
       new BehaviorSubject<Membro>.seeded(null);
   BehaviorSubject<Menu> _menu =
       new BehaviorSubject<Menu>.seeded(Menu(submenus: []));
+  BehaviorSubject<bool> _exigeAceiteTermo =
+      new BehaviorSubject<bool>.seeded(false);
 
   Stream<Menu> get menu => _menu.stream;
 
   Menu get currentMenu => _menu.value;
+
+  Stream<bool> get exigeAceiteTermo => _exigeAceiteTermo.stream;
 
   Stream<Membro> get membro => _membro.stream;
 
@@ -99,6 +103,7 @@ class AcessoBloc {
       versao: config.version,
     );
 
+    _exigeAceiteTermo.add(acesso.exigeAceiteTermo);
     _membro.add(acesso.membro);
     _menu.add(acesso.menu);
 
@@ -122,6 +127,7 @@ class AcessoBloc {
 
     acessoApi.logout();
 
+    _exigeAceiteTermo.add(false);
     _membro.add(null);
     sprefs.remove(MEMBRO);
 
@@ -149,6 +155,7 @@ class AcessoBloc {
       version: config.version,
     );
 
+    _exigeAceiteTermo.add(acesso.exigeAceiteTermo);
     _membro.add(acesso.membro);
     _menu.add(acesso.menu);
 

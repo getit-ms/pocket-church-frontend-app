@@ -118,8 +118,10 @@ class Acesso {
   Membro membro;
   String auth;
   Menu menu;
+  bool exigeAceiteTermo;
 
   Acesso.fromJson(dynamic json) {
+    exigeAceiteTermo = json['exigeAceiteTermo'] ?? false;
     membro = Membro.fromJson(json['membro']);
     auth = json['auth'];
     menu = Menu.fromJson(json['menu']);
