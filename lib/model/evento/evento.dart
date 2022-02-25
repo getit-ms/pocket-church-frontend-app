@@ -49,7 +49,43 @@ class Evento {
     this.dataTerminoInscricao = dataTerminoInscricao?.toLocal();
   }
 
-  factory Evento.fromJson(Map<String, dynamic> json) => _$EventoFromJson(json);
+  factory Evento.fromJson(Map<String, dynamic> json) {
+    return Evento(
+      id: json['id'] as int,
+      nome: json['nome'] as String,
+      descricao: json['descricao'] as String,
+      limiteInscricoes: json['limiteInscricoes'] as int,
+      tipo: json['tipo'] as String,
+      dataHoraInicio: json['dataHoraInicio'] == null
+          ? null
+          : DateTime.parse(json['dataHoraInicio'] as String).toLocal(),
+      dataHoraTermino: json['dataHoraTermino'] == null
+          ? null
+          : DateTime.parse(json['dataHoraTermino'] as String).toLocal(),
+      valor: (json['valor'] as num)?.toDouble(),
+      exigePagamento: json['exigePagamento'] as bool,
+      dataInicioInscricao: json['dataInicioInscricao'] == null
+          ? null
+          : DateTime.parse(json['dataInicioInscricao'] as String).toLocal(),
+      dataTerminoInscricao: json['dataTerminoInscricao'] == null
+          ? null
+          : DateTime.parse(json['dataTerminoInscricao'] as String).toLocal(),
+      banner: json['banner'] == null
+          ? null
+          : Arquivo.fromJson(json['banner'] as Map<String, dynamic>),
+      vagasRestantes: json['vagasRestantes'] as int,
+      inscricoesFuturas: json['inscricoesFuturas'] as bool,
+      inscricoesPassadas: json['inscricoesPassadas'] as bool,
+      inscricoesAbertas: json['inscricoesAbertas'] as bool,
+      filename: json['filename'] as String,
+      comPagamento: json['comPagamento'] as bool,
+      campos: (json['campos'] as List)
+          ?.map((e) => e == null
+              ? null
+              : CampoEvento.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+    );
+  }
 
   Map<String, dynamic> toJson() => _$EventoToJson(this);
 }

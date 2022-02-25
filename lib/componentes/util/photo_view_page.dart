@@ -53,11 +53,9 @@ class PhotoViewPage extends StatelessWidget {
                 color: Colors.white,
               ),
               title: title,
-              textTheme: Theme.of(context).textTheme.copyWith(
-                    title: Theme.of(context).textTheme.title.copyWith(
-                          color: Colors.white,
-                        ),
-                  ),
+              titleTextStyle: const TextStyle(
+                color: Colors.white,
+              ),
               backgroundColor: Colors.transparent,
               actions: <Widget>[
                 onDownload != null

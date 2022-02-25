@@ -76,7 +76,7 @@ InscricaoEvento _$InscricaoEventoFromJson(Map<String, dynamic> json) {
     telefoneInscrito: json['telefoneInscrito'] as String,
     referenciaCheckout: json['referenciaCheckout'] as String,
     chaveCheckout: json['chaveCheckout'] as String,
-    data: json['data'] == null ? null : DateTime.parse(json['data'] as String),
+    data: json['data'] == null ? null : DateTime.parse(json['data'] as String)?.toLocal(),
     valor: (json['valor'] as num)?.toDouble(),
     status: json['status'] as String,
     confirmada: json['confirmada'] as bool,

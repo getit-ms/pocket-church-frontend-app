@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "77700137382",
-    "firebase_url": "https://ipnacional-d8b05.firebaseio.com",
-    "project_id": "ipnacional-d8b05",
-    "storage_bucket": "ipnacional-d8b05.appspot.com"
+    "project_number": "1018745496027",
+    "firebase_url": "https://ipplanalto-27926.firebaseio.com",
+    "project_id": "ipplanalto-27926",
+    "storage_bucket": "ipplanalto-27926.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:77700137382:android:dbf6c8d728f718ee2ccf67",
+        "mobilesdk_app_id": "1:1018745496027:android:9881c0116903e6597047fe",
         "android_client_info": {
-          "package_name": "br.com.calvin"
+          "package_name": "br.com.getit.calvin.ipplanalto"
         }
       },
       "oauth_client": [
         {
-          "client_id": "77700137382-4m75gf3sq0184fntdt1mov2786u1d875.apps.googleusercontent.com",
+          "client_id": "1018745496027-3rl22cfqnjhn4urecdlgr6f9m5u9rl8h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB8RM0TmVYd_p9Ko0XBR_X3bpd3DNp7Axo"
+          "current_key": "AIzaSyCoeiy8nFXrAVk5i-RYWyHaHRRPSKlRTmM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "77700137382-4m75gf3sq0184fntdt1mov2786u1d875.apps.googleusercontent.com",
+              "client_id": "1018745496027-3rl22cfqnjhn4urecdlgr6f9m5u9rl8h.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1018745496027-4q8i19o545dtsva3r9rb4hgs6oueh061.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.getit.calvin.ipplanalto"
+              }
             }
           ]
         }

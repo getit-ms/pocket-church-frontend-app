@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.calvin">
+    package="br.com.getit.calvin.ipplanalto">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -14,7 +14,7 @@
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
     <application
-        android:label="IPN"
+        android:label="IPP"
         android:icon="@mipmap/ic_launcher">
         <meta-data
                 android:name="flutterEmbedding"

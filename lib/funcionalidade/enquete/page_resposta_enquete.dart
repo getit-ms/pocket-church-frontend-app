@@ -158,9 +158,7 @@ class RespostaFormState extends State<RespostaForm> {
             child: Stepper(
               key: _keyStepper,
               currentStep: index,
-              controlsBuilder: (context, {onStepContinue, onStepCancel}) {
-                return Container();
-              },
+              controlsBuilder: (context, details) => Container(),
               onStepTapped: (idx) {
                 if (idx == 0 || resposta.respostas[idx - 1].opcoes.isNotEmpty) {
                   setState(() {
