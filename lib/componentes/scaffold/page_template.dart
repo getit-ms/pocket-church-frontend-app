@@ -17,7 +17,7 @@ class PageTemplate extends StatefulWidget {
     this.body,
     this.title,
     this.onSearch,
-    this.backgroundColor = const Color(0xFFE9E9E9),
+    this.backgroundColor,
     this.withAppBar = true,
     this.deveEstarAutenticado = false,
   }) : super(key: key);
@@ -92,23 +92,29 @@ class PageTemplateState extends State<PageTemplate> {
       _isRoot = !navigator.canPop();
     }
 
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: widget.withAppBar
-          ? (_searchBar != null
-              ? _searchBar.build(context)
-              : _defaultAppBar(context) as PreferredSizeWidget)
-          : null,
-      backgroundColor: widget.backgroundColor,
-      body: Column(
-        children: <Widget>[
-          Expanded(child: widget.body),
-          const BottomPlayerControl(
-            safeArea: true,
-          )
-        ],
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
+    return AnnotatedRegion<services.SystemUiOverlayStyle>(
+      value: isDark ? services.SystemUiOverlayStyle.light : services.SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: widget.withAppBar
+            ? (_searchBar != null
+                ? _searchBar.build(context)
+                : _defaultAppBar(context) as PreferredSizeWidget)
+            : null,
+        backgroundColor:
+            widget.backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
+        body: Column(
+          children: <Widget>[
+            Expanded(child: widget.body),
+            const BottomPlayerControl(
+              safeArea: true,
+            )
+          ],
+        ),
+        drawer: !_isRoot ? null : MenuDrawer(),
       ),
-      drawer: !_isRoot ? null : MenuDrawer(),
     );
   }
 
@@ -116,7 +122,6 @@ class PageTemplateState extends State<PageTemplate> {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
     return AppBar(
-      centerTitle: true,
       automaticallyImplyLeading: true,
       title: widget.title,
       actions: widget.actions == null && _isRoot
@@ -136,7 +141,6 @@ class PageTemplateState extends State<PageTemplate> {
           hintText: bundle['global.buscar'],
           onChanged: widget.onSearch,
           buildDefaultAppBar: (context) => AppBar(
-            centerTitle: true,
             leading: !_isRoot
                 ? null
                 : IconButton(

@@ -42,10 +42,12 @@ class _PageListaAconselhamentosState extends State<PageListaAconselhamentos> {
       return Container();
     }
 
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? Colors.grey[900] : Colors.white,
         boxShadow: [
           const BoxShadow(offset: Offset(0, -1), blurRadius: 3, color: Colors.black26)
         ],
@@ -176,141 +178,138 @@ class ItemAconselhamento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    return Material(
-      color: Colors.white,
-      shape: const Border(bottom: BorderSide(color: Colors.black12)),
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 5,
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 5,
+      ),
+      title: Text(
+        StringUtil.formatData(item.dataHoraInicio, pattern: "dd MMMM yyyy") +
+            " | " +
+            StringUtil.formatData(item.dataHoraInicio, pattern: "HH:mm") +
+            " - " +
+            StringUtil.formatData(item.dataHoraFim, pattern: "HH:mm"),
+        style: TextStyle(
+          color: tema.primary,
+          fontSize: 20,
         ),
-        title: Text(
-          StringUtil.formatData(item.dataHoraInicio, pattern: "dd MMMM yyyy") +
-              " | " +
-              StringUtil.formatData(item.dataHoraInicio, pattern: "HH:mm") +
-              " - " +
-              StringUtil.formatData(item.dataHoraFim, pattern: "HH:mm"),
-          style: TextStyle(
-            color: tema.primary,
-            fontSize: 20,
-          ),
-        ),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(25)),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(25)),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                    ),
+                    child: FotoMembro(
+                      usuarioPastor
+                          ? item.membro.foto
+                          : item.calendario.pastor.foto,
+                      size: 50,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      DefaultTextStyle(
+                        style: TextStyle(
+                          color: isDark ? Colors.white70 : Colors.black38,
+                        ),
+                        child: usuarioPastor
+                            ? const IntlText("agenda.membro")
+                            : const IntlText("agenda.pastor"),
                       ),
-                      child: FotoMembro(
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text(
                         usuarioPastor
-                            ? item.membro.foto
-                            : item.calendario.pastor.foto,
-                        size: 50,
+                            ? item.membro.nome
+                            : item.calendario.pastor.nome,
+                        style: TextStyle(fontSize: 17),
                       ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        DefaultTextStyle(
-                          style: TextStyle(
-                            color: Colors.black38,
-                          ),
-                          child: usuarioPastor
-                              ? const IntlText("agenda.membro")
-                              : const IntlText("agenda.pastor"),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          usuarioPastor
-                              ? item.membro.nome
-                              : item.calendario.pastor.nome,
-                          style: TextStyle(fontSize: 17),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  IntlText("agenda.status." + item.status),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  onConfirma != null
-                      ? CommandButton<Aconselhamento>(
-                          background: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(5)),
-                              side: BorderSide(
-                                color: Colors.green,
-                                width: 1,
-                              )),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
-                          ),
-                          textStyle: TextStyle(color: Colors.green),
-                          child: Row(
-                            children: <Widget>[
-                              const Icon(
-                                Icons.check,
-                                color: Colors.green,
-                              ),
-                              const IntlText("agenda.confirmar_agendamento")
-                            ],
-                          ),
-                          onPressed: onConfirma,
-                        )
-                      : Container(),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  onCancela != null
-                      ? CommandButton<Aconselhamento>(
-                          background: Colors.white,
-                          shape: RoundedRectangleBorder(
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                IntlText("agenda.status." + item.status),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                onConfirma != null
+                    ? CommandButton<Aconselhamento>(
+                        background: isDark ? Colors.grey[900] : Colors.white,
+                        shape: RoundedRectangleBorder(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(5)),
                             side: BorderSide(
-                              color: Colors.red,
+                              color: Colors.green,
                               width: 1,
+                            )),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        textStyle: TextStyle(color: Colors.green),
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(
+                              Icons.check,
+                              color: Colors.green,
                             ),
+                            const IntlText("agenda.confirmar_agendamento")
+                          ],
+                        ),
+                        onPressed: onConfirma,
+                      )
+                    : Container(),
+                const SizedBox(
+                  width: 5,
+                ),
+                onCancela != null
+                    ? CommandButton<Aconselhamento>(
+                        background: isDark ? Colors.grey[900] : Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                          side: BorderSide(
+                            color: Colors.red,
+                            width: 1,
                           ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
-                          ),
-                          textStyle: TextStyle(color: Colors.red),
-                          child: Row(
-                            children: <Widget>[
-                              const Icon(Icons.close, color: Colors.red),
-                              const IntlText("agenda.cancelar_agendamento")
-                            ],
-                          ),
-                          onPressed: onCancela,
-                        )
-                      : Container()
-                ],
-              )
-            ],
-          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 5,
+                        ),
+                        textStyle: TextStyle(color: Colors.red),
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(Icons.close, color: Colors.red),
+                            const IntlText("agenda.cancelar_agendamento")
+                          ],
+                        ),
+                        onPressed: onCancela,
+                      )
+                    : Container()
+              ],
+            )
+          ],
         ),
       ),
     );

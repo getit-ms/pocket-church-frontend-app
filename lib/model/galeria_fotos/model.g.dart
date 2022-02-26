@@ -6,6 +6,24 @@ part of pocket_church.model.galeria_fotos;
 // JsonSerializableGenerator
 // **************************************************************************
 
+Foto _$FotoFromJson(Map<String, dynamic> json) {
+  return Foto(
+    id: json['id'] as String,
+    server: json['server'] as String,
+    farm: json['farm'] as String,
+    secret: json['secret'] as String,
+    titulo: json['titulo'] as String,
+  );
+}
+
+Map<String, dynamic> _$FotoToJson(Foto instance) => <String, dynamic>{
+      'id': instance.id,
+      'server': instance.server,
+      'farm': instance.farm,
+      'secret': instance.secret,
+      'titulo': instance.titulo,
+    };
+
 GaleriaFotos _$GaleriaFotosFromJson(Map<String, dynamic> json) {
   return GaleriaFotos(
     id: json['id'] as String,
@@ -29,22 +47,4 @@ Map<String, dynamic> _$GaleriaFotosToJson(GaleriaFotos instance) =>
       'dataAtualizacao': instance.dataAtualizacao?.toIso8601String(),
       'fotoPrimaria': instance.fotoPrimaria,
       'quantidadeFotos': instance.quantidadeFotos,
-    };
-
-Foto _$FotoFromJson(Map<String, dynamic> json) {
-  return Foto(
-    id: json['id'] as String,
-    server: json['server'] as String,
-    farm: json['farm'] as String,
-    secret: json['secret'] as String,
-    titulo: json['titulo'] as String,
-  );
-}
-
-Map<String, dynamic> _$FotoToJson(Foto instance) => <String, dynamic>{
-      'id': instance.id,
-      'server': instance.server,
-      'farm': instance.farm,
-      'secret': instance.secret,
-      'titulo': instance.titulo,
     };

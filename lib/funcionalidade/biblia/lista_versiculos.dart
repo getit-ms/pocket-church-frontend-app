@@ -50,71 +50,68 @@ class _ListaVersiculosState extends State<ListaVersiculos> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Column(
       children: <Widget>[
         Expanded(
-          child: Container(
-            color: const Color(0xFFF9F9F9),
-            child: FutureBuilder<List<VersiculoBiblia>>(
-              future: bibliaDAO.findVersiculosByLivroCapituloBiblia(
-                  widget.livro?.livro?.id ?? 0, widget.livro?.capitulo ?? 0),
-              builder: (context, snapshot) {
-                return ListView.builder(
-                  controller: _listController,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
-                  ),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        bottom: 10,
-                      ),
-                      child: Material(
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              _versiculoSelecionado = snapshot.data[index];
-                            });
-                          },
-                          child: RichText(
-                            text: TextSpan(
-                              style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 17,
-                                height: 1.35,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text:
-                                      snapshot.data[index].versiculo.toString(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: " ",
-                                  style: TextStyle(letterSpacing: 20),
-                                ),
-                                TextSpan(
-                                  text: snapshot.data[index].texto,
-                                  style: TextStyle(
-                                    height: 2,
-                                    color: Colors.black54,
-                                    fontSize: 17,
-                                  ),
-                                ),
-                              ],
-                            ),
+          child: FutureBuilder<List<VersiculoBiblia>>(
+            future: bibliaDAO.findVersiculosByLivroCapituloBiblia(
+                widget.livro?.livro?.id ?? 0, widget.livro?.capitulo ?? 0),
+            builder: (context, snapshot) {
+              return ListView.builder(
+                controller: _listController,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _versiculoSelecionado = snapshot.data[index];
+                        });
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            color: isDark ? Colors.white70 : Colors.black87,
+                            fontSize: 17,
+                            height: 1.35,
                           ),
+                          children: [
+                            TextSpan(
+                              text:
+                                  snapshot.data[index].versiculo.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " ",
+                              style: TextStyle(letterSpacing: 20),
+                            ),
+                            TextSpan(
+                              text: snapshot.data[index].texto,
+                              style: TextStyle(
+                                height: 2,
+                                color: isDark ? Colors.white60 : Colors.black54,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                  itemCount: snapshot.data?.length ?? 0,
-                );
-              },
-            ),
+                    ),
+                  );
+                },
+                itemCount: snapshot.data?.length ?? 0,
+              );
+            },
           ),
         ),
         AnimatedCrossFade(

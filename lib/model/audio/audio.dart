@@ -4,7 +4,8 @@ part of pocket_church.model.audio;
 class Audio {
   int id;
   String nome;
-  String autor;
+  String autoria;
+  Membro autor;
   String descricao;
   int tamamnhoArquivo;
   int tempoAudio;
@@ -16,6 +17,7 @@ class Audio {
     this.id,
     this.nome,
     this.autor,
+    this.autoria,
     this.descricao,
     this.tamamnhoArquivo,
     this.tempoAudio,
@@ -31,14 +33,15 @@ class Audio {
   factory Audio.fromJson(Map<String, dynamic> json) => _$AudioFromJson(json);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'id': id,
-    'nome': nome,
-    'autor': autor,
-    'descricao': descricao,
-    'tamamnhoArquivo': tamamnhoArquivo,
-    'tempoAudio': tempoAudio,
-    'capa': capa?.toJson(),
-    'audio': audio?.toJson(),
-    'dataCadastro': dataCadastro?.toIso8601String(),
-  };
+        'id': id,
+        'nome': nome,
+        'autoria': autoria,
+        'autor': autor.toJson(),
+        'descricao': descricao,
+        'tamamnhoArquivo': tamamnhoArquivo,
+        'tempoAudio': tempoAudio,
+        'capa': capa?.toJson(),
+        'audio': audio?.toJson(),
+        'dataCadastro': dataCadastro?.toIso8601String(),
+      };
 }

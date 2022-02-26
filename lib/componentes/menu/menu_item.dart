@@ -119,31 +119,19 @@ class MenuItemState extends State<MenuItem>
           if (widget.menu.link == 'home') {
             NavigatorUtil.navigate(
               context,
+              builder: (context) => PageInicio(),
               replace: true,
-              builder: (context) {
-                Configuracao config = ConfiguracaoApp.of(context).config;
-
-                if (config.template == 'tradicional') {
-                  return LayoutTradicional();
-                } else if (config.template == 'reativo') {
-                  return LayoutReativo();
-                } else {
-                  return PageApresentacao(
-                    trocaTemplate: true,
-                  );
-                }
-              },
             );
           } else {
             NavigatorUtil.navigate(
               context,
-              replace: true,
               builder: (context) => PageFactory.createPage(
                 context,
                 Funcionalidade.values.firstWhere((func) =>
-                    func.toString() ==
+                func.toString() ==
                     "Funcionalidade.${widget.menu.funcionalidade}"),
               ),
+              replace: true,
             );
           }
         }

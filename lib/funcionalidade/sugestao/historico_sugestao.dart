@@ -4,9 +4,10 @@ class HistoricoSugestao extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Container(
-      color: Colors.white,
+      color: isDark ? Colors.grey[900] : Colors.white,
       child: FutureBuilder<Pagina<Sugestao>>(
         future: chamadoApi.consultaMeus(
           pagina: 1,

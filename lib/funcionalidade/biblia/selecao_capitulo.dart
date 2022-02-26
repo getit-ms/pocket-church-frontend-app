@@ -57,6 +57,7 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
     var mediaQueryData = MediaQuery.of(context);
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Container(
       padding: mediaQueryData.padding,
@@ -66,7 +67,7 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: const Color(0xFFE9E9E9),
+              color: isDark ? Colors.grey[900] : const Color(0xFFE9E9E9),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black54,
@@ -91,7 +92,7 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
               ),
               textStyle: TextStyle(
                 fontSize: 17,
-                color: Colors.black87,
+                color: isDark ? Colors.white70 : Colors.black87,
               ),
               onPressed: () {
                 Navigator.of(context).pop(_livro);
@@ -103,7 +104,7 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
           ),
           Container(
             height: 50,
-            color: Colors.white,
+            color: isDark ? Colors.grey[900] : Colors.white,
             child: TabBar(
               controller: _tabController,
               indicatorColor: tema.primary,
@@ -112,7 +113,7 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
                   child: IntlText(
                     "biblia.livros",
                     style: TextStyle(
-                      color: Colors.black87,
+                      color: isDark ? Colors.white70 : Colors.black87,
                     ),
                   ),
                 ),
@@ -120,7 +121,7 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
                   child: IntlText(
                     "biblia.capitulos",
                     style: TextStyle(
-                      color: Colors.black87,
+                      color: isDark ? Colors.white70 : Colors.black87,
                     ),
                   ),
                 ),
@@ -179,13 +180,14 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
 
   Widget _buildButtonLivro(String testamento, LivroBiblia livro) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return RawMaterialButton(
       child: Text(
         livro.nome,
         style: TextStyle(
           fontSize: 16,
-          color: _livro?.livro == livro ? tema.primary : Colors.black87,
+          color: _livro?.livro == livro ? tema.primary : isDark ? Colors.white70 : Colors.black87,
           fontWeight: _livro?.livro == livro ? FontWeight.bold : FontWeight.normal,
         ),
       ),
@@ -205,13 +207,14 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
 
   Widget _buildButtonCapitulo(int capitulo) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return RawMaterialButton(
       child: Text(
         capitulo.toString(),
         style: TextStyle(
           fontSize: 16,
-          color: _livro.capitulo == capitulo ? tema.primary : Colors.black87,
+          color: _livro.capitulo == capitulo ? tema.primary : isDark ? Colors.white70 : Colors.black87,
           fontWeight: _livro.capitulo == capitulo ? FontWeight.bold : FontWeight.normal,
         ),
       ),
@@ -257,15 +260,17 @@ class TestamentoHeader extends SliverPersistentHeaderDelegate{
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Container(
-      color: const Color(0xFFE9E9E9),
+      color: isDark ? Colors.grey[800] : const Color(0xFFE9E9E9),
       alignment: Alignment.center,
       padding: const EdgeInsets.all(10),
       child:  DefaultTextStyle(
         child: child,
         style: TextStyle(
           fontSize: 17,
-          color: Colors.black87,
+          color: isDark ? Colors.white70 : Colors.black87,
           fontWeight: FontWeight.bold,
         ),
       ),

@@ -27,10 +27,7 @@ class PageHino extends StatelessWidget {
                   )
                 : Container()
           ],
-          body: Container(
-            color: Colors.white,
-            child: _buildContent(snapshot.data ?? hino, tema),
-          ),
+          body: _buildContent(context, snapshot.data ?? hino, tema),
         );
       },
     );
@@ -47,14 +44,15 @@ class PageHino extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(Hino hino, Tema tema) {
+  Widget _buildContent(BuildContext context, Hino hino, Tema tema) {
     return Container(
       width: double.infinity,
       child: SingleChildScrollView(
+        padding: const EdgeInsets.all(20) +
+            EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         child: Column(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.all(10),
               width: double.infinity,
               child: Text(
                 hino.nome,
@@ -64,11 +62,9 @@ class PageHino extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: CustomHtml(
-                html: hino.texto ?? "",
-              ),
+            const SizedBox(height: 20),
+            CustomHtml(
+              html: hino.texto ?? "",
             ),
           ],
         ),

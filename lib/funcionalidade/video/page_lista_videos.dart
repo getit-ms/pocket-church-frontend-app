@@ -35,7 +35,7 @@ class PageListaVideos extends StatelessWidget {
                   }
 
                   Video video = snapshot.data[indexHistorico - 1];
-                  return _buildItemHistorico(video, tema);
+                  return _buildItemHistorico(context, video, tema);
                 },
               );
             } else if (snapshot.hasError) {}
@@ -115,9 +115,9 @@ class PageListaVideos extends StatelessWidget {
     );
   }
 
-  RawMaterialButton _buildItemHistorico(Video video, Tema tema) {
+  RawMaterialButton _buildItemHistorico(BuildContext context, Video video, Tema tema) {
     return RawMaterialButton(
-      fillColor: Colors.white,
+      fillColor: Theme.of(context).cardColor,
       onPressed: () =>
           LaunchUtil.youtube(video.id),
       child: Padding(

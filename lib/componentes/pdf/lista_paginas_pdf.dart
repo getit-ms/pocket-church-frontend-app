@@ -8,59 +8,83 @@ class ListaPaginasPDF extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (arquivo == null) {
+      return _rendering(context, null);
+    }
+
     return PDFViewerBuilder(
       arquivo: arquivo,
       builder: (context, snapshot) {
-        if (snapshot.status == PDFRenderingStatus.waiting) {
-          return _waiting();
-        } else if (snapshot.status == PDFRenderingStatus.downloading) {
-          return _downloading(snapshot.statusProgress);
+        if (snapshot.status == PDFRenderingStatus.waiting ||
+            snapshot.status == PDFRenderingStatus.downloading) {
+          return _rendering(context, null);
         } else if (snapshot.status == PDFRenderingStatus.error) {
           return _error(context, snapshot.error);
         } else {
-          return _rendering(snapshot.pdf);
+          return _rendering(context, snapshot.pdf);
         }
       },
     );
   }
 
-  Widget _rendering(ArquivoPDF arquivoPDF) {
+  Widget _rendering(BuildContext context, ArquivoPDF arquivoPDF) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return GridView.builder(
-        itemCount: arquivoPDF.paginas.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio:
-                arquivoPDF.paginas[0].width / arquivoPDF.paginas[0].height),
-        padding: const EdgeInsets.all(10),
-        itemBuilder: (context, index) {
-          return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 3,
-                    color: Colors.black54,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(5),
+      itemCount: arquivoPDF?.paginas?.length ?? 6,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: arquivoPDF == null
+            ? .8
+            : arquivoPDF.paginas[0].width / arquivoPDF.paginas[0].height,
+      ),
+      padding: const EdgeInsets.all(10),
+      itemBuilder: (context, index) {
+        return Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 3,
+                color: Colors.black54,
+              )
+            ],
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: ShimmerPlaceholder(
+            active: arquivoPDF == null,
+            child: _outerPagina(context, arquivoPDF, index),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _outerPagina(BuildContext context, ArquivoPDF arquivoPDF, index) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: InkWell(
+          child: arquivoPDF != null ? _pagina(index, arquivoPDF) : Container(),
+          onTap: arquivoPDF == null
+              ? null
+              : () {
+            NavigatorUtil.navigate(
+              context,
+              builder: (context) => GaleriaPDF(
+                titulo: titulo,
+                arquivo: arquivo,
+                initialPage: index + 1,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: InkWell(
-                  child: _pagina(index, arquivoPDF),
-                  onTap: () {
-                    NavigatorUtil.navigate(context,
-                        builder: (context) => GaleriaPDF(
-                              titulo: titulo,
-                              arquivo: arquivo,
-                              initialPage: index + 1,
-                            ));
-                  },
-                ),
-              ));
-        });
+            );
+          },
+        ),
+      ),
+    );
   }
 
   Widget _pagina(int index, ArquivoPDF arquivoPDF) {
@@ -83,7 +107,7 @@ class ListaPaginasPDF extends StatelessWidget {
           placeholder: MemoryImage(kTransparentImage),
           image: FileImage(file, scale: .5),
           fit: BoxFit.contain,
-        ));
+        ),);
   }
 
   Widget _error(BuildContext context, dynamic ex) {
@@ -108,16 +132,6 @@ class ListaPaginasPDF extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-
-  Widget _downloading(double progress) {
-    return DownloadProgress(progress: progress);
-  }
-
-  Widget _waiting() {
-    return const Center(
-      child: CircularProgressIndicator(),
     );
   }
 }

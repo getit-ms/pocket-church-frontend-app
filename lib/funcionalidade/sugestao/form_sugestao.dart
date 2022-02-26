@@ -47,17 +47,18 @@ class _FormSugestaoState extends State<FormSugestao> {
   @override
   Widget build(BuildContext context) {
     Bundle bundle = ConfiguracaoApp.of(context).bundle;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Container(
       width: double.infinity,
-      color: Colors.white,
+      color: isDark ? Colors.grey[900] : Colors.transparent,
       child: Form(
         key: _form,
         child: Column(
           children: <Widget>[
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(20),
               child: IntlText(
                 "chamado.enunciado",
                 args: {
@@ -65,6 +66,9 @@ class _FormSugestaoState extends State<FormSugestao> {
                       ConfiguracaoApp.of(context).config.nomeAplicativo,
                 },
                 textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
               ),
             ),
             const InfoDivider(

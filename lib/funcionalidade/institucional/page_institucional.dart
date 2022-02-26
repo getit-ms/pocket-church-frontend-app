@@ -36,10 +36,15 @@ class PageInstitucional extends StatelessWidget {
                     ),
                     Container(
                       width: double.infinity,
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(15),
-                      child: CustomHtml(
-                        html: snapshot.data.quemSomos,
+                      padding: const EdgeInsets.all(20),
+                      color: Theme.of(context).cardColor,
+                      child: Text(
+                        snapshot.data.quemSomos,
+                        style: TextStyle(
+                          height: 1.6,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
                     ),
                   ],
@@ -58,7 +63,6 @@ class PageInstitucional extends StatelessWidget {
                       snapshot.data.enderecos != null ||
                       snapshot.data.telefones != null)) {
                 return Material(
-                  color: Colors.white,
                   child: Column(
                     children: <Widget>[
                       InfoDivider(

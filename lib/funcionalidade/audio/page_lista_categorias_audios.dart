@@ -42,10 +42,11 @@ class PageListaCategoriasAudios extends StatelessWidget {
                           return Container(
                             margin: const EdgeInsets.symmetric(horizontal: 5),
                             width: 210,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8))),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
                           );
                         },
                       ),

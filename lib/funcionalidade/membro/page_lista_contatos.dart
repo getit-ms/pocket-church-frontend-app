@@ -13,6 +13,7 @@ class _PageListaContatosState extends State<PageListaContatos> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return PageTemplate(
       title: IntlText("contato.contatos"),
       onSearch: (filtro) {
@@ -49,27 +50,25 @@ class _PageListaContatosState extends State<PageListaContatos> {
                       child: Text(membro.nome[0]),
                     )
                   : Container(),
-              Material(
-                color: Colors.white,
-                child: ListTile(
-                  leading: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(50)),
-                    child: FotoMembro(
-                      membro.foto,
-                      size: 50,
-                    ),
+              ListTile(
+                leading: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(50)),
+                  child: FotoMembro(
+                    membro.foto,
+                    size: 50,
+                    color: isDark ? Colors.white54 : Colors.black12,
                   ),
-                  title: Text(membro.nome),
-                  subtitle: Text(membro.email ?? ""),
-                  onTap: () {
-                    NavigatorUtil.navigate(
-                      context,
-                      builder: (context) => PageContato(
-                        membro: membro,
-                      ),
-                    );
-                  },
                 ),
+                title: Text(membro.nome),
+                subtitle: Text(membro.email ?? ""),
+                onTap: () {
+                  NavigatorUtil.navigate(
+                    context,
+                    builder: (context) => PageContato(
+                      membro: membro,
+                    ),
+                  );
+                },
               ),
             ],
           );

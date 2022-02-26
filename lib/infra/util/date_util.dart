@@ -1,17 +1,23 @@
 part of pocket_church.infra;
 
+extension DateExtension on DateTime {
+  DateTime trunc() {
+    return DateTime(year, month, day);
+  }
+}
+
 class DateUtil {
-  static bool equalsDateOnly(DateTime data1, DateTime data2) {
+  static int _MILLIS_MINUTO = 1000 * 60;
+  static int _MILLIS_HORA = _MILLIS_MINUTO * 60;
+  static int _MILLIS_DIA = _MILLIS_HORA * 24;
+
+  static equalsDateOnly(DateTime data1, DateTime data2) {
     return data1.year == data2.year &&
         data1.month == data2.month &&
         data1.day == data2.day;
   }
 
-  static int diferencaMinutos(DateTime data1, DateTime data2) {
-    return ((data1.millisecondsSinceEpoch - data2.millisecondsSinceEpoch) / 60000).floor().abs();
-  }
-
-  static bool equalsAniversario(DateTime data1, DateTime data2) {
+  static equalsAniversario(DateTime data1, DateTime data2) {
     return data1.month == data2.month && data1.day == data2.day;
   }
 
@@ -19,8 +25,24 @@ class DateUtil {
     return data1.year == data2.year && data1.month == data2.month;
   }
 
-  static int compareDateOnly(DateTime data1, DateTime data2) {
-    return (data1.year * 1000 + data1.month * 100 + data1.day) -
-        (data2.year * 1000 + data2.month * 100 + data2.day);
+  static int diferencaMinutos(DateTime data1, DateTime data2) {
+    return ((data1.millisecondsSinceEpoch - data2.millisecondsSinceEpoch)
+        .abs() /
+        _MILLIS_MINUTO)
+        .ceil();
+  }
+
+  static int diferencaHoras(DateTime data1, DateTime data2) {
+    return ((data1.millisecondsSinceEpoch - data2.millisecondsSinceEpoch)
+        .abs() /
+        _MILLIS_HORA)
+        .ceil();
+  }
+
+  static int diferencaDias(DateTime data1, DateTime data2) {
+    return ((data1.millisecondsSinceEpoch - data2.millisecondsSinceEpoch)
+        .abs() /
+        _MILLIS_DIA)
+        .ceil();
   }
 }

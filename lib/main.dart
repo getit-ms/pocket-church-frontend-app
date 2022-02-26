@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:pocket_church/bloc/acesso_bloc.dart';
 import 'package:pocket_church/bloc/institucional_bloc.dart';
-import 'package:pocket_church/funcionalidade/layouts/reativo/reativo.dart';
-import 'package:pocket_church/funcionalidade/layouts/tradicional/tradicional.dart';
-import 'package:pocket_church/page_apresentacao.dart';
+import 'package:pocket_church/funcionalidade/inicio/inicio.dart';
+import 'package:pocket_church/model/geral/model.dart';
 
 import './infra/infra.dart';
 import 'api/api.dart';
@@ -18,7 +17,6 @@ import 'bloc/hino_bloc.dart';
 import 'bloc/leitura_bloc.dart';
 import 'componentes/componentes.dart';
 import 'config_values.dart';
-import 'funcionalidade/aceite_termo/aceite_termo_page.dart';
 import 'funcionalidade/notificacao/notificacao.dart';
 import 'model/sugestao/model.dart';
 
@@ -48,7 +46,7 @@ Future<void> Function(BuildContext context) _loadingExecute(
     );
 
     Intl.defaultLocale = 'pt_BR';
-    // await initializeDateFormatting();
+    await initializeDateFormatting();
 
     var min = Future.delayed(const Duration(milliseconds: 2000), () {});
 
@@ -220,6 +218,18 @@ class _PrepareAppState extends State<PrepareApp> {
       );
     }
 
+    if (_loading) {
+      Tema tema = configuracaoBloc.currentTema;
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+          systemNavigationBarColor: tema?.primary ?? Colors.black,
+          systemNavigationBarIconBrightness: Brightness.light,
+        ),
+      );
+    }
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -230,46 +240,39 @@ class _PrepareAppState extends State<PrepareApp> {
       child: AnimatedOpacity(
         opacity: _loading ? 0 : 1,
         duration: const Duration(milliseconds: 500),
-        child: widget.child,
+        child: _loading ? Container() : widget.child,
       ),
     );
   }
 }
 
 class PocketChurchApp extends StatelessWidget {
+  const PocketChurchApp();
+
   @override
   Widget build(BuildContext context) {
+    ConfiguracaoAppState config = ConfiguracaoApp.of(context);
     return MaterialApp(
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('pt', 'BR'),
-      ],
+      locale: const Locale('pt-BR'),
       debugShowCheckedModeBanner: false,
-      theme: Theme.of(context),
-      home: StreamBuilder<bool>(
-        initialData: false,
-        stream: acessoBloc.exigeAceiteTermo,
+      theme: config.buildTheme(),
+      darkTheme: config.buildDarkTheme(),
+      home: ActualHome(),
+    );
+  }
+}
+
+class ActualHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+      child: StreamBuilder<Membro>(
+        stream: acessoBloc.membro,
         builder: (context, snapshot) {
-          if (snapshot.data) {
-            return AceiteTermoPage();
-          } else {
-            var configuracaoApp = ConfiguracaoApp.of(context);
-
-            Configuracao config = configuracaoApp.config;
-
-            Widget home = PageApresentacao();
-
-            if (config.template == 'reativo') {
-              home = LayoutReativo();
-            } else if (config.template == 'tradicional') {
-              home = LayoutTradicional();
-            }
-
-            return home;
-          }
+          return const PageInicio();
         },
       ),
     );

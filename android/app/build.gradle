@@ -28,19 +28,22 @@ if (keystorePropertiesFile.exists()) {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 31
 
     lintOptions {
         disable 'InvalidPackage'
     }
 
     defaultConfig {
-        applicationId "br.com.getit.calvin.ipplanalto"
-        minSdkVersion 19
-        targetSdkVersion 29
+        applicationId "br.com.getit.calvin.ipcg"
+        minSdkVersion 28
+        targetSdkVersion 30
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -71,24 +74,10 @@ flutter {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    implementation("com.google.firebase:firebase-iid")
+    implementation 'com.google.firebase:firebase-analytics'
+
 }
 
-configurations.all {
-    resolutionStrategy {
-        force 'com.android.support:support-compat:27.1.1'
-        force 'com.android.support:support-core-ui:27.1.1'
-        force 'com.android.support:support-fragment:27.1.1'
-//        force 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-//        force 'androidx.drawerlayout:drawerlayout:1.0.0'
-//        force 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'
-//        force 'androidx.fragment:fragment:1.0.0'
-//        force 'androidx.legacy:legacy-support-v4:1.0.0'
-//        force 'androidx.core:core:1.0.2'
-    }
-}
-
-apply plugin: 'com.google.gms.google-services'

@@ -46,7 +46,9 @@ class PageListaCategoriasEstudos extends StatelessWidget {
                         placeholderSize: 180,
                         placeholderBuilder: (context) {
                           return Container(
-                            margin: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                            ),
                             width: 160,
                             decoration: BoxDecoration(
                                 color: Colors.white,

@@ -266,7 +266,8 @@ final String BUNDLE = "bundle";
 class ConfiguracaoBloc {
   BehaviorSubject<Configuracao> _config = new BehaviorSubject<Configuracao>();
   BehaviorSubject<Tema> _tema = new BehaviorSubject<Tema>.seeded(defaultTema);
-  BehaviorSubject<Bundle> _bundle = new BehaviorSubject<Bundle>.seeded(Bundle.empty());
+  BehaviorSubject<Bundle> _bundle =
+      new BehaviorSubject<Bundle>.seeded(Bundle.empty());
 
   final IgrejaApi _igrejaApi = new IgrejaApi();
   final AssetsApi _assetsApi = new AssetsApi();
@@ -543,31 +544,105 @@ class ConfiguracaoAppState extends State<ConfiguracaoApp> {
   @override
   Widget build(BuildContext context) {
     if (menu != null && config != null && tema != null) {
-      return Theme(
-        data: ThemeData(
-          brightness: Brightness.light,
-          accentColor: tema.primary,
-          primaryColor: tema.primary,
-          buttonColor: tema.buttonBackground,
-          appBarTheme: AppBarTheme.of(context).copyWith(
-            color: tema.appBarBackground,
-            textTheme: Theme.of(context).primaryTextTheme.apply(
-                  bodyColor: tema.appBarTitle,
-                ),
-            iconTheme: Theme.of(context)
-                .primaryIconTheme
-                .copyWith(color: tema.appBarIcons),
-          ),
-          dividerColor: tema.dividerBackground,
-          iconTheme: Theme.of(context).primaryIconTheme.copyWith(
-                color: tema.iconForeground,
-              ),
-        ),
-        child: widget.child,
-      );
+      return widget.child;
     }
 
     return Container();
+  }
+
+  buildTheme() {
+    return ThemeData(
+      toggleableActiveColor: tema.primary,
+      brightness: Brightness.light,
+      accentColor: tema.primary,
+      primaryColor: tema.primary,
+      buttonColor: tema.buttonBackground,
+      scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: Colors.white,
+        contentTextStyle: TextStyle(
+          color: Colors.black87,
+        ),
+      ),
+      dialogBackgroundColor: const Color(0xFFF5F5F5),
+      tabBarTheme: TabBarTheme(
+        labelColor: tema.primary,
+        indicator: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: tema.primary,
+              width: 2,
+            ),
+          ),
+        ),
+        unselectedLabelColor: Colors.black54,
+      ),
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        color: Colors.white,
+        systemOverlayStyle: services.SystemUiOverlayStyle.light,
+        titleTextStyle: TextStyle(
+          color: tema.primary,
+          fontSize: 20,
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.black54,
+        ),
+      ),
+      dividerColor: tema.dividerBackground,
+      iconTheme: IconThemeData(
+        color: tema.iconForeground,
+      ),
+    );
+  }
+
+  buildDarkTheme() {
+    return ThemeData.dark().copyWith(
+      toggleableActiveColor: tema.primary,
+      brightness: Brightness.dark,
+      canvasColor: Colors.grey[900],
+      cardColor: Colors.grey[900],
+      accentColor: tema.primary,
+      primaryColor: tema.primary,
+      buttonColor: tema.buttonBackground,
+      scaffoldBackgroundColor: Colors.black,
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: Colors.grey[900],
+        contentTextStyle: TextStyle(
+          color: Colors.white70,
+        ),
+      ),
+      dialogBackgroundColor: Colors.black,
+      tabBarTheme: TabBarTheme(
+        labelColor: Colors.white,
+        indicator: BoxDecoration(
+          color: Colors.white.withOpacity(.05),
+          border: Border(
+            bottom: BorderSide(
+              color: tema.primary,
+              width: 2,
+            ),
+          ),
+        ),
+        unselectedLabelColor: Colors.white70,
+      ),
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        color: Colors.grey[900],
+        systemOverlayStyle: services.SystemUiOverlayStyle.dark,
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white70,
+        ),
+      ),
+      dividerColor: tema.dividerBackground,
+      iconTheme: IconThemeData(
+        color: tema.iconForeground,
+      ),
+    );
   }
 }
 

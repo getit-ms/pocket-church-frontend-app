@@ -30,6 +30,8 @@ import 'package:pocket_church/model/termo-aceite/model.dart';
 import 'package:pocket_church/model/video/model.dart';
 import 'package:pocket_church/model/noticia/model.dart';
 import 'package:pocket_church/model/estudo/model.dart';
+import 'package:pocket_church/model/banner/model.dart';
+import 'package:pocket_church/model/item_evento/model.dart';
 
 part 'api_base.dart';
 part 'service/institucional_api.dart';
@@ -57,3 +59,5 @@ part 'service/enquete_api.dart';
 part 'service/chamado_api.dart';
 part 'service/devocionario_api.dart';
 part 'service/termo_aceite_api.dart';
+part 'service/banner_api.dart';
+part 'service/item_evento_api.dart';

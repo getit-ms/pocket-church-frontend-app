@@ -17,6 +17,8 @@ class PageContato extends StatelessWidget {
           future: membroApi.detalha(membro.id),
           builder: (context, snapshot) {
             Endereco endereco = snapshot.data?.endereco ?? membro.endereco;
+            bool isDark =
+                MediaQuery.of(context).platformBrightness == Brightness.dark;
 
             return CustomScrollView(
               slivers: <Widget>[
@@ -28,7 +30,7 @@ class PageContato extends StatelessWidget {
                       maxExtent: MediaQuery.of(context).padding.top + 350,
                       background: FotoMembro(
                         snapshot.data?.foto ?? membro.foto,
-                        placeholder: tema.institucionalBackground,
+                        color: isDark ? Colors.white12 : Colors.black54,
                       ),
                       title: Text(StringUtil.nomeResumido(
                           snapshot.data?.nome ?? membro.nome))),
@@ -160,9 +162,8 @@ class HeaderContato extends SliverPersistentHeaderDelegate {
               decoration: BoxDecoration(
                 gradient: RadialGradient(
                   colors: [
-                    Color.lerp(
-                        tema.appBarBackground, Colors.transparent, factor),
-                    Color.lerp(tema.appBarBackground, Colors.black54, factor),
+                    Color.lerp(Colors.white, Colors.transparent, factor),
+                    Color.lerp(Colors.white, Colors.black54, factor),
                   ],
                   radius: 1.5,
                 ),

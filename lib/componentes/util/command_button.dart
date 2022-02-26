@@ -11,10 +11,12 @@ class CommandButton<T> extends StatefulWidget {
   final Color foreground;
   final ShapeBorder shape;
   final TextStyle textStyle;
+  final double elevation;
 
   const CommandButton({
     Key key,
     this.child,
+    this.elevation = 2.0,
     this.shape,
     this.padding,
     this.onPressed,
@@ -24,10 +26,10 @@ class CommandButton<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CommandButtonState<T> createState() => _CommandButtonState<T>();
+  CommandButtonState<T> createState() => CommandButtonState<T>();
 }
 
-class _CommandButtonState<T> extends State<CommandButton<T>> {
+class CommandButtonState<T> extends State<CommandButton<T>> {
   bool _loading = false;
 
   @override
@@ -35,9 +37,11 @@ class _CommandButtonState<T> extends State<CommandButton<T>> {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
     return RawMaterialButton(
-      shape: widget.shape ?? RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
+      elevation: widget.elevation,
+      shape: widget.shape ??
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
       padding: widget.padding ?? const EdgeInsets.all(15),
       fillColor: widget.onPressed == null || _loading
           ? (widget.background ?? tema.buttonBackground).withOpacity(.5)
@@ -55,14 +59,14 @@ class _CommandButtonState<T> extends State<CommandButton<T>> {
             )
           : DefaultTextStyle(
               child: widget.child,
-              style: widget.textStyle ?? TextStyle(color: widget.foreground ?? tema.buttonText),
+              style: widget.textStyle ??
+                  TextStyle(color: widget.foreground ?? tema.buttonText),
             ),
-      onPressed:
-          widget.onPressed == null || _loading ? null : _processCommand,
+      onPressed: widget.onPressed == null || _loading ? null : processCommand,
     );
   }
 
-  _processCommand() async {
+  processCommand() async {
     widget.onPressed(_processLoading);
   }
 

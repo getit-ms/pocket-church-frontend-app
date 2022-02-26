@@ -19,16 +19,7 @@ class DetalhePlayer extends StatelessWidget {
       child: new BackdropFilter(
         filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
         child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                tema.primary.withOpacity(.75),
-                tema.secondary.withOpacity(.75)
-              ],
-            ),
-          ),
+          color: Colors.black54,
           child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -40,12 +31,13 @@ class DetalhePlayer extends StatelessWidget {
             ),
             body: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  _tituloResumo(),
-                  _ilustracaoResumo(context),
+                  _tituloAudio(),
+                  _ilustracaoAudio(context),
                   _controleAudio(),
                   SizedBox(
                     height: MediaQuery.of(context).padding.bottom,
@@ -168,21 +160,14 @@ class DetalhePlayer extends StatelessWidget {
                             IconButton(
                               iconSize: 60,
                               color: Colors.white,
-                              onPressed: snapshot.waiting ? null : () {
-                                if (snapshot.audio != null && !snapshot.completed) {
+                              onPressed: () {
+                                if (snapshot.audio != null && snapshot.paused) {
                                   player.unpause();
                                 } else {
                                   player.play(player.audio);
                                 }
                               },
-                              icon: snapshot.waiting ? SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation(Colors.white),
-                                  strokeWidth: 4,
-                                ),
-                              ) : Icon(Icons.play_circle_filled),
+                              icon: Icon(Icons.play_circle_filled),
                             ),
                             RawMaterialButton(
                               constraints: const BoxConstraints(
@@ -279,40 +264,50 @@ class DetalhePlayer extends StatelessWidget {
     );
   }
 
-  Widget _tituloResumo() {
+  Widget _tituloAudio() {
     return Container(
       child: Column(
         children: <Widget>[
           Text(
             audio?.nome,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white, fontSize: 25),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+            ),
           ),
           Text(
-            audio?.autor,
+            audio?.autoria,
             textAlign: TextAlign.center,
             style: const TextStyle(
-                color: Colors.white, fontSize: 16, fontStyle: FontStyle.italic),
+              color: Colors.white,
+              fontSize: 16,
+              fontStyle: FontStyle.italic,
+            ),
           )
         ],
       ),
     );
   }
 
-  Widget _ilustracaoResumo(BuildContext context) {
+  Widget _ilustracaoAudio(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
     return Container(
       decoration: const BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          boxShadow: [
-            const BoxShadow(
-                color: Colors.black87, spreadRadius: 1, blurRadius: 2)
-          ]),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        boxShadow: const [
+          const BoxShadow(
+            color: Colors.black87,
+            spreadRadius: 1,
+            blurRadius: 2,
+          )
+        ],
+      ),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         child: Image(
-          height: MediaQuery.of(context).size.height - 530,
+          height: MediaQuery.of(context).size.height - 630,
           image: audio.capa != null
               ? ArquivoImageProvider(audio.capa.id)
               : tema.loginBackground,

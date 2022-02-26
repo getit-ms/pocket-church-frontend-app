@@ -169,6 +169,63 @@ class StringUtil {
     return formatData(data, pattern: pattern);
   }
 
+  static formatCount(int numero) {
+    String format = "";
+
+    while (numero >= 1000) {
+      numero = numero ~/ 1000;
+      format += "K";
+    }
+
+    return numero.toString() + format;
+  }
+
+  static String formatDataLegivelTimeline(DateTime data, Bundle bundle) {
+    var hoje = DateTime.now().toLocal();
+
+    if (DateUtil.equalsDateOnly(data, hoje)) {
+      int diferencaMin = DateUtil.diferencaMinutos(data, hoje);
+      if (diferencaMin < 60) {
+        return bundle.get(
+          'global.a_minutos',
+          args: {'minutos': diferencaMin.toString()},
+        );
+      }
+
+      int diferencaHoras = DateUtil.diferencaHoras(data, hoje);
+      if (diferencaHoras < 12) {
+        return bundle.get(
+          'global.a_horas',
+          args: {'horas': diferencaHoras.toString()},
+        );
+      }
+
+      return bundle.get(
+        'global.hoje_minutos',
+        args: {'minutos': formatData(data, pattern: "HH:mm")},
+      );
+    }
+
+    var ontem = hoje.subtract(Duration(days: 1));
+    if (DateUtil.equalsDateOnly(data, ontem)) {
+      return bundle.get(
+        'global.ontem_minutos',
+        args: {'minutos': formatData(data, pattern: "HH:mm")},
+      );
+    }
+
+    int diferencaDias = DateUtil.diferencaDias(data, hoje);
+    if (diferencaDias < 7) {
+      return formatData(data, pattern: "EEEE");
+    }
+
+    if (data.year == hoje.year) {
+      return formatData(data, pattern: "dd MMM HH:mm");
+    }
+
+    return formatData(data, pattern: "dd MMM yyyy HH:mm");
+  }
+
   static String formataCurrency(double valor) {
     return NumberFormat.currency(locale: 'pt-br', symbol: 'R\$').format(valor);
   }

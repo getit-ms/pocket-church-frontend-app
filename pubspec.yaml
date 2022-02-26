@@ -27,44 +27,44 @@ dependencies:
   cupertino_icons: 0.1.3
   rxdart: 0.24.1
   font_awesome_flutter: 8.8.1
-  dio: any
+  dio: 4.0.0
   photo_view: 0.9.2
-  native_pdf_renderer: any
+  native_pdf_renderer: 2.1.1
   transparent_image: 1.0.0
   synchronized: 2.2.0
   url_launcher: 5.4.7
   sqflite: 1.3.0+1
-  uuid: any
+  uuid: 3.0.4
   path_provider: 1.6.8
+  file_picker: 2.1.7
   intl: 0.17.0
   flutter_html: 0.11.1
   shared_preferences: 0.5.7+2
-  json_annotation: 3.0.1
+  json_annotation: 4.4.0
   shimmer: 1.1.1
-  file_picker: 1.3.5
   image_picker: 0.6.6+4
   badges: 1.1.1
+  esys_flutter_share: 1.0.2
   flutter_search_bar: 2.0.7
-  esys_flutter_share: any
-  device_calendar: any
+  device_calendar: 3.1.0
   firebase_messaging: 7.0.3
-  flutter_typeahead: any
+  flutter_typeahead: 2.0.0
   flutter_calendar_carousel: 2.0.1
   flutter_plugin_playlist: 0.1.5
-  charts_flutter: 0.10.0
+  charts_flutter: 0.12.0
   overlay_support: 1.2.1
+  open_appstore: 1.0.2
+  package_info: 2.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_driver:
-    sdk: flutter
   test: any
 
-  flutter_launcher_icons: any
-  #build_runner: 1.0.0
-  # json_serializable: 3.2.0
-  # screenshots: 2.1.1
+  flutter_launcher_icons:
+  build_runner:
+  json_serializable:
+#  screenshots: 2.1.1
 
 flutter_icons:
   android: true

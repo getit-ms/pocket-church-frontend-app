@@ -10,6 +10,7 @@ class PagePedidoOracao extends StatelessWidget {
           children: <Widget>[
             FormPedidoOracao(),
             HistoricoPedidoOracao(),
+            SizedBox(height: MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

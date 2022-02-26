@@ -53,7 +53,6 @@ class _PageListaNotificacoesState extends State<PageListaNotificacoes> {
               height: 0,
             ),
             secondChild: Material(
-              color: Colors.white,
               shape: Border(
                 bottom: BorderSide(color: Colors.black54, width: .5),
               ),
@@ -166,7 +165,6 @@ class _PageListaNotificacoesState extends State<PageListaNotificacoes> {
             secondChild: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.white,
                 border: Border(
                   top: BorderSide(color: Colors.black54, width: .5),
                 ),
@@ -286,7 +284,7 @@ class ItemNotificacao extends StatelessWidget {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
     return RawMaterialButton(
-      fillColor: Colors.white,
+      fillColor: Theme.of(context).cardColor,
       onPressed: _onTap(context, dto),
       padding: const EdgeInsets.all(10),
       child: Row(

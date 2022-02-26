@@ -36,7 +36,6 @@ class IconNotificacoes extends StatelessWidget {
               ),
               child: Icon(
                 Icons.notifications,
-                color: color ?? tema.iconForeground,
               ),
             );
           }),

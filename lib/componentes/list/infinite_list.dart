@@ -12,21 +12,29 @@ class InfiniteList<T> extends StatefulWidget {
   final WidgetBuilder placeholderBuilder;
   final int placeholderCount;
   final double placeholderSize;
+  final bool placeholderShimmer;
   final int tamanhoPagina;
   final Axis scrollDirection;
   final EdgeInsetsGeometry padding;
   final ListMerge<T> merger;
+  final ScrollController controller;
+  final List<Widget> preChildren;
+  final bool reverse;
 
   const InfiniteList({
     Key key,
     @required this.provider,
     @required this.builder,
     this.merger,
+    this.controller,
+    this.preChildren,
     this.placeholderBuilder,
     this.placeholderCount = 3,
     this.placeholderSize = 250,
+    this.placeholderShimmer = true,
     this.tamanhoPagina = 10,
     this.padding,
+    this.reverse = false,
     this.scrollDirection = Axis.vertical,
   }) : super(key: key);
 
@@ -45,6 +53,7 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
   Widget _error;
   IconData _errorIcon;
 
+  bool _disposeScrollController = false;
   var scrollControllerListener;
 
   @override
@@ -52,8 +61,22 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
     super.initState();
 
     _reset();
+  }
 
-    controller = new ScrollController();
+  _prepareScrolLController() {
+    if (controller != null) return;
+
+    if (widget.controller == null &&
+        identical(widget.scrollDirection, Axis.vertical)) {
+      controller = PrimaryScrollController.of(context);
+    } else {
+      controller = widget.controller;
+    }
+
+    if (controller == null) {
+      controller = new ScrollController();
+      _disposeScrollController = true;
+    }
 
     scrollControllerListener = () {
       if (hasProxima && !_loading) {
@@ -79,11 +102,19 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
 
     controller.removeListener(scrollControllerListener);
 
-    controller.dispose();
+    if (_disposeScrollController) {
+      controller.dispose();
+    }
   }
 
   refresh() async {
     await this._reset();
+  }
+
+  insert(T item, int index) {
+    setState(() {
+      resultados.insert(index, item);
+    });
   }
 
   Future<void> _reset() async {
@@ -98,6 +129,8 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
 
   @override
   Widget build(BuildContext context) {
+    _prepareScrolLController();
+
     return RefreshIndicator(
       child: _buildContent(context),
       onRefresh: _reset,
@@ -133,12 +166,13 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
         }
       });
 
-      if (pagina == 1) {
+      if (pagina == 1 && controller.hasClients && controller.offset > 0) {
         controller.animateTo(0,
             duration: const Duration(milliseconds: 150), curve: Curves.easeOut);
       }
-    } catch (ex) {
+    } catch (ex, stack) {
       print(ex);
+      print(stack);
 
       try {
         setState(() {
@@ -151,59 +185,48 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
   }
 
   _buildContent(BuildContext context) {
-    if (resultados.isEmpty) {
-      if (hasProxima) {
-        if (_error != null) {
-          return _buildError();
-        } else if (!_loading) {
-          _loadMore();
+    int preChildrenLength = (widget.preChildren?.length ?? 0);
+    return ListView.builder(
+      controller: controller,
+      padding: widget.padding,
+      reverse: widget.reverse,
+      scrollDirection: widget.scrollDirection,
+      itemCount: resultados.length + 1 + preChildrenLength,
+      itemBuilder: (context, index) {
+        if (preChildrenLength > index) {
+          return widget.preChildren[index];
         }
 
-        if (widget.placeholderBuilder != null) {
-          return ListView(
-            scrollDirection: widget.scrollDirection,
-            padding: widget.padding,
-            children: <Widget>[_buildLoading(context)],
-          );
-        } else {
-          return _buildLoading(context);
-        }
-      }
-
-      return Container(
-          padding: const EdgeInsets.all(20),
-          alignment: Alignment.center,
-          child: IntlText(
-            "global.nenhum_registro_encontrado",
-            textAlign: TextAlign.center,
-          ));
-    } else {
-      return ListView.builder(
-          controller: controller,
-          padding: widget.padding,
-          scrollDirection: widget.scrollDirection,
-          itemCount: resultados.length + 1,
-          itemBuilder: (context, index) {
-            if (index == resultados.length) {
-              if (hasProxima) {
-                if (_error != null) {
-                  return _buildError();
-                } else if (!_loading) {
-                  _loadMore();
-                }
-
-                return _buildLoading(context);
-              } else {
-                return Container();
-              }
+        if (index == resultados.length + preChildrenLength) {
+          if (hasProxima) {
+            if (_error != null) {
+              return _buildError(context);
+            } else if (!_loading) {
+              _loadMore();
             }
+            return _buildLoading(context);
+          } else if (resultados.isEmpty) {
+            return Container(
+              padding: const EdgeInsets.all(20),
+              alignment: Alignment.center,
+              child: IntlText(
+                "global.nenhum_registro_encontrado",
+                textAlign: TextAlign.center,
+              ),
+            );
+          } else {
+            return Container();
+          }
+        }
 
-            return widget.builder(context, resultados, index);
-          });
-    }
+        return widget.builder(context, resultados, index - preChildrenLength);
+      },
+    );
   }
 
-  Container _buildError() {
+  Container _buildError(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Container(
       padding: EdgeInsets.all(50),
       width: double.infinity,
@@ -212,7 +235,7 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
         children: <Widget>[
           Icon(
             _errorIcon,
-            color: Colors.black38,
+            color: isDark ? Colors.white38 : Colors.black38,
             size: 66,
           ),
           const SizedBox(
@@ -220,7 +243,9 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
           ),
           DefaultTextStyle(
             child: _error,
-            style: TextStyle(color: Colors.black54),
+            style: TextStyle(
+              color: isDark ? Colors.white54 : Colors.black54,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -230,8 +255,8 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
             padding: const EdgeInsets.all(10),
             shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(5)),
-              side: const BorderSide(
-                color: Colors.black54,
+              side: BorderSide(
+                color: isDark ? Colors.white54 : Colors.black54,
                 width: .5,
               ),
             ),
@@ -249,9 +274,8 @@ class InfiniteListState<T> extends State<InfiniteList<T>> {
 
       for (int i = 0; i < widget.placeholderCount; i++) {
         children.add(
-          Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
+          ShimmerPlaceholder(
+            active: widget.placeholderShimmer,
             child: widget.placeholderBuilder(context),
           ),
         );

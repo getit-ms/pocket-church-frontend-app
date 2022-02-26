@@ -88,7 +88,9 @@ class ArquivoService {
   }
 
   Future<String> selecionaArquivo() async {
-    return await FilePicker.getFilePath();
+    var files = await FilePicker.platform.pickFiles();
+
+    return files.paths.isNotEmpty ? files.paths.first : null;
   }
 
   Future<String> selecionaImagem() async {

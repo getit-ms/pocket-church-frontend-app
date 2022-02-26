@@ -4,11 +4,12 @@ class PagePerfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return comp.PageTemplate(
       withAppBar: false,
       deveEstarAutenticado: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).cardColor,
       body: Column(
         children: <Widget>[
           PerfilHeader(),
@@ -32,7 +33,10 @@ class PagePerfil extends StatelessWidget {
               return Text(
                 snapshot.data?.email ?? "",
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18, color: Colors.black54),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: isDark ? Colors.white54 : Colors.black54,
+                ),
               );
             },
           ),
@@ -83,7 +87,7 @@ class PagePerfil extends StatelessWidget {
                   NavigatorUtil.navigate(
                     context,
                     builder: (context) => PagePreferencias(),
-                    replace: true
+                    replace: true,
                   );
                 },
               ),
@@ -140,8 +144,8 @@ class PerfilHeader extends StatelessWidget {
           left: 0,
           right: 0,
           child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
               borderRadius: const BorderRadius.only(
                 topRight: const Radius.circular(50),
                 topLeft: const Radius.circular(50),
@@ -157,8 +161,8 @@ class PerfilHeader extends StatelessWidget {
             height: 180,
             width: 180,
             padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-                color: Colors.white,
+            decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
                 shape: BoxShape.circle,
                 boxShadow: [
                   const BoxShadow(
@@ -182,7 +186,7 @@ class PerfilHeader extends StatelessWidget {
           left: MediaQuery.of(context).size.width / 2 + 25,
           child: RawMaterialButton(
             elevation: 10,
-            fillColor: Colors.white,
+            fillColor: Theme.of(context).cardColor,
             padding: const EdgeInsets.all(15),
             child: Icon(
               Icons.camera_alt,
@@ -228,8 +232,8 @@ class PerfilHeader extends StatelessWidget {
         Positioned(
           left: 0,
           top: MediaQuery.of(context).padding.top,
-          child: const BackButton(
-            color: Colors.white,
+          child: BackButton(
+            color: Colors.white70,
           ),
         )
       ],
@@ -361,14 +365,8 @@ class DialogAlterarSenhaState extends State<DialogAlterarSenha> {
 
                           acessoBloc.logout();
 
-                          Navigator.of(context).popUntil((route) => route.isFirst);
-
-                          await NavigatorUtil.navigate(
-                            context,
-                            builder: (context) => PageLogin(
-                              showMensagemAlteracaoSenha: true,
-                            ),
-                          );
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
                         } catch (ex) {
                           comp.error.handle(Scaffold.of(context), ex);
                         }

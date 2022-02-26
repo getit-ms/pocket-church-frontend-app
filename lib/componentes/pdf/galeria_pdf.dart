@@ -46,60 +46,63 @@ class GaleriaPDFState extends State<GaleriaPDF> with TickerProviderStateMixin {
   }
 
   Widget _template({Widget child}) {
-    return Material(
-      color: Colors.black,
-      child: Stack(
-        children: <Widget>[
-          child,
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                AnimatedCrossFade(
-                  firstChild: Container(),
-                  secondChild: AppBar(
-                    centerTitle: true,
-                    iconTheme: const IconThemeData(
-                      color: Colors.white,
-                    ),
-                    title: Text(
-                      widget.titulo ?? "",
-                      style: const TextStyle(
-                        color: Colors.white,
+    return AnnotatedRegion<services.SystemUiOverlayStyle>(
+      value: services.SystemUiOverlayStyle.light,
+      child: Material(
+        color: Colors.black,
+        child: Stack(
+          children: <Widget>[
+            child,
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  AnimatedCrossFade(
+                    firstChild: Container(),
+                    secondChild: AppBar(
+                      iconTheme: const IconThemeData(
+                        color: Colors.white70,
                       ),
+                      title: Text(
+                        widget.titulo ?? "",
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      brightness: Brightness.dark,
+                      backgroundColor: Colors.transparent,
                     ),
-                    backgroundColor: Colors.transparent,
+                    crossFadeState: showTools
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 300),
                   ),
-                  crossFadeState: showTools
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
-                  duration: const Duration(milliseconds: 300),
-                ),
-                AnimatedCrossFade(
-                  firstChild: Container(),
-                  secondChild: Container(
-                    height:
-                        MediaQuery.of(context).padding.bottom + kToolbarHeight,
-                    color: Colors.black45,
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).padding.bottom,
+                  AnimatedCrossFade(
+                    firstChild: Container(),
+                    secondChild: Container(
+                      height:
+                          MediaQuery.of(context).padding.bottom + kToolbarHeight,
+                      color: Colors.black45,
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).padding.bottom,
+                      ),
+                      child: totalPaginas > 0
+                          ? PageNavigation(
+                              controller: _pageController,
+                              totalPages: totalPaginas,
+                            )
+                          : null,
                     ),
-                    child: totalPaginas > 0
-                        ? PageNavigation(
-                            controller: _pageController,
-                            totalPages: totalPaginas,
-                          )
-                        : null,
-                  ),
-                  crossFadeState: showTools
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
-                  duration: const Duration(milliseconds: 300),
-                )
-              ],
-            ),
-          )
-        ],
+                    crossFadeState: showTools
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 300),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

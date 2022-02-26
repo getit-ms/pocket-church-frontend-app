@@ -44,31 +44,28 @@ class _PageListaCifrasState extends State<PageListaCifras> {
         builder: (context, itens, index) {
           Cantico cifra = itens[index];
 
-          return Material(
-            color: Colors.white,
-            child: ListTile(
-              title: Text(
-                cifra.titulo,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: tema.primary,
-                ),
+          return ListTile(
+            title: Text(
+              cifra.titulo,
+              style: TextStyle(
+                fontSize: 18,
+                color: tema.primary,
               ),
-              subtitle: Text(cifra.autor ?? ""),
-              trailing: IconButton(
-                icon: Icon(Icons.share),
-                onPressed: () => _share(context, cifra),
-              ),
-              onTap: () {
-                NavigatorUtil.navigate(
-                  context,
-                  builder: (context) => GaleriaPDF(
-                    arquivo: cifra.cifra,
-                    titulo: cifra.titulo,
-                  ),
-                );
-              },
             ),
+            subtitle: Text(cifra.autor ?? ""),
+            trailing: IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () => _share(context, cifra),
+            ),
+            onTap: () {
+              NavigatorUtil.navigate(
+                context,
+                builder: (context) => GaleriaPDF(
+                  arquivo: cifra.cifra,
+                  titulo: cifra.titulo,
+                ),
+              );
+            },
           );
         },
       ),

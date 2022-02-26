@@ -44,31 +44,28 @@ class _PageListaCanticosState extends State<PageListaCanticos> {
         builder: (context, itens, index) {
           Cantico cantico = itens[index];
 
-          return Material(
-            color: Colors.white,
-            child: ListTile(
-              title: Text(
-                cantico.titulo,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: tema.primary,
-                ),
+          return ListTile(
+            title: Text(
+              cantico.titulo,
+              style: TextStyle(
+                fontSize: 18,
+                color: tema.primary,
               ),
-              subtitle: Text(cantico.autor ?? ""),
-              trailing: IconButton(
-                icon: Icon(Icons.share),
-                onPressed: () => _share(context, cantico),
-              ),
-              onTap: () {
-                NavigatorUtil.navigate(
-                  context,
-                  builder: (context) => GaleriaPDF(
-                    arquivo: cantico.cifra,
-                    titulo: cantico.titulo,
-                  ),
-                );
-              },
             ),
+            subtitle: Text(cantico.autor ?? ""),
+            trailing: IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () => _share(context, cantico),
+            ),
+            onTap: () {
+              NavigatorUtil.navigate(
+                context,
+                builder: (context) => GaleriaPDF(
+                  arquivo: cantico.cifra,
+                  titulo: cantico.titulo,
+                ),
+              );
+            },
           );
         },
       ),

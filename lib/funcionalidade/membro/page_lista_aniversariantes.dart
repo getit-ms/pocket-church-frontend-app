@@ -103,53 +103,43 @@ class PageListaAniversariantes extends StatelessWidget {
           InfoDivider(
             child: IntlText("global.hoje"),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-              horizontal: 5,
-            ),
+          Card(
             child: Wrap(
-              runSpacing: 15,
-              spacing: 10,
-              alignment: WrapAlignment.center,
+              runSpacing: 20,
+              spacing: 20,
               children: aniversariantesHoje.map((membro) {
                 return SizedBox(
                   width: 120,
-                  child: CustomElevatedButton(
+                  child: RawMaterialButton(
                     onPressed: () {
                       NavigatorUtil.navigate(
                         context,
-                        builder: (context) =>
-                            PageContato(
-                              membro: membro,
-                            ),
+                        builder: (context) => PageContato(
+                          membro: membro,
+                        ),
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 10,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          ClipRRect(
-                            child: FotoMembro(
-                              membro.foto,
-                              size: 100,
-                            ),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(50)),
+                    elevation: 0,
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: <Widget>[
+                        ClipRRect(
+                          child: FotoMembro(
+                            membro.foto,
+                            size: 100,
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            StringUtil.nomeResumido(membro.nome),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16),
-                          )
-                        ],
-                      ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(50)),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          StringUtil.nomeResumido(membro.nome),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16),
+                        )
+                      ],
                     ),
                   ),
                 );
@@ -163,8 +153,8 @@ class PageListaAniversariantes extends StatelessWidget {
     return Container();
   }
 
-  _buildOutrosAniversariantes(BuildContext context,
-      List<Membro> aniversariantes) {
+  _buildOutrosAniversariantes(
+      BuildContext context, List<Membro> aniversariantes) {
     DateTime hoje = DateTime.now().toLocal();
 
     int nivHoje = hoje.month * 100 + hoje.day;
@@ -177,12 +167,14 @@ class PageListaAniversariantes extends StatelessWidget {
 
     List<Membro> grupo = null;
     for (Membro membro in outrosAniversariantes) {
-      if (grupo == null || grupo[0].diaAniversario != membro.diaAniversario) {
+      if (grupo == null ||
+          grupo[0].diaAniversario != membro.diaAniversario) {
         agrupados.add(grupo = [membro]);
       } else {
         grupo.add(membro);
       }
     }
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Container(
       child: Column(
@@ -190,27 +182,28 @@ class PageListaAniversariantes extends StatelessWidget {
           return Container(
             width: double.infinity,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 InfoDivider(
                   child: _buildLabel(grupo[0].diaAniversario),
                 ),
                 Wrap(
+                  alignment: WrapAlignment.start,
+                  runAlignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.start,
                   runSpacing: 5,
                   spacing: 5,
-                  alignment: WrapAlignment.center,
                   children: grupo.map((membro) {
-                    return Container(
+                    return SizedBox(
                       width: 90,
-                      margin: const EdgeInsets.all(5),
                       child: RawMaterialButton(
-                        fillColor: Colors.white,
+                        fillColor: isDark ? Colors.grey[900] : Colors.white,
                         onPressed: () {
                           NavigatorUtil.navigate(
                             context,
-                            builder: (context) =>
-                                PageContato(
-                                  membro: membro,
-                                ),
+                            builder: (context) => PageContato(
+                              membro: membro,
+                            ),
                           );
                         },
                         elevation: 0,
@@ -223,7 +216,7 @@ class PageListaAniversariantes extends StatelessWidget {
                                 size: 50,
                               ),
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(50)),
+                                  const BorderRadius.all(Radius.circular(50)),
                             ),
                             const SizedBox(
                               height: 5,
@@ -253,8 +246,12 @@ class PageListaAniversariantes extends StatelessWidget {
       return IntlText("global.amanha");
     }
 
-    return Text(StringUtil.formatData(
-      DateTime(amanha.year, (diaAniversario / 100).round(), diaAniversario % 100),
-      pattern: "dd MMMM",),);
+    return Text(
+      StringUtil.formatData(
+        DateTime(
+            amanha.year, (diaAniversario / 100).round(), diaAniversario % 100),
+        pattern: "dd MMMM",
+      ),
+    );
   }
 }

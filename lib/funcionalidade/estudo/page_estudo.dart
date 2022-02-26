@@ -22,42 +22,39 @@ class PageEstudo extends StatelessWidget {
                   )
                 : Container()
           ],
-          body: Container(
-            color: Colors.white,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    estudo.titulo,
-                    style: TextStyle(
-                      color: tema.primary,
-                      fontSize: 25,
-                    ),
+          body: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  estudo.titulo,
+                  style: TextStyle(
+                    color: tema.primary,
+                    fontSize: 25,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(estudo.autor),
+                    Text(StringUtil.formatData(estudo.data,
+                        pattern: "dd MMMM yyyy"))
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(estudo.autor),
-                      Text(StringUtil.formatData(estudo.data,
-                          pattern: "dd MMMM yyyy"))
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Expanded(
-                  child: _buildContent(snapshot.data ?? estudo),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: _buildContent(context, snapshot.data ?? estudo),
+              ),
+            ],
           ),
         );
       },
@@ -83,14 +80,13 @@ class PageEstudo extends StatelessWidget {
     }
   }
 
-  Widget _buildContent(Estudo estudo) {
+  Widget _buildContent(BuildContext context, Estudo estudo) {
     if (estudo.tipo == 'TEXTO') {
       return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: CustomHtml(
-            html: estudo.texto ?? "",
-          ),
+        padding: const EdgeInsets.all(10) +
+            EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+        child: CustomHtml(
+          html: estudo.texto ?? "",
         ),
       );
     } else {

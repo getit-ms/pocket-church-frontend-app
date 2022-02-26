@@ -8,9 +8,9 @@ class PageEvento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
+      deveEstarAutenticado: true,
       title: IntlText("evento.evento"),
-      body: Container(
-        color: Colors.white,
+      body: Material(
         child: FutureBuilder<Evento>(
             future: eventoApi.detalha(evento.id),
             builder: (context, snapshot) {

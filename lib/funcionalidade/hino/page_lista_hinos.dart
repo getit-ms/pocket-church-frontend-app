@@ -46,31 +46,28 @@ class _PageListaHinosState extends State<PageListaHinos> {
               builder: (context, itens, index) {
                 Hino hino = itens[index];
 
-                return Material(
-                  color: Colors.white,
-                  child: ListTile(
-                    leading: Text(
-                      hino.numero,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                return ListTile(
+                  leading: Text(
+                    hino.numero,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    title: Text(hino.nome,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: tema.primary,
-                      ),
-                    ),
-                    onTap: () {
-                      NavigatorUtil.navigate(
-                        context,
-                        builder: (context) => PageHino(
-                          hino: hino,
-                        ),
-                      );
-                    },
                   ),
+                  title: Text(hino.nome,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: tema.primary,
+                    ),
+                  ),
+                  onTap: () {
+                    NavigatorUtil.navigate(
+                      context,
+                      builder: (context) => PageHino(
+                        hino: hino,
+                      ),
+                    );
+                  },
                 );
               },
             ),

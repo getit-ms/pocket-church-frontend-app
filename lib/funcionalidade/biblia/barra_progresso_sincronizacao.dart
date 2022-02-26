@@ -4,6 +4,7 @@ class BarraProgressoSincronizacao extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return StreamBuilder<ProgressoSincronismo>(
       stream: bibliaBloc.sincronizacao,
@@ -11,7 +12,7 @@ class BarraProgressoSincronizacao extends StatelessWidget {
         return AnimatedCrossFade(
           firstChild: Container(),
           secondChild: Container(
-            color: Colors.white,
+            color: isDark ? Colors.black : Colors.white,
             padding: const EdgeInsets.all(10),
             child: Column(
               children: <Widget>[

@@ -20,17 +20,15 @@ class PageBoletim extends StatelessWidget {
       body: FutureBuilder(
         future: boletimApi.detalha(boletim.id),
         builder: (context, snapshot) {
-          return Container(
-            color: Colors.white,
-            child: _buildContent(snapshot.data ?? boletim),
-          );
+          return _buildContent(snapshot.data ?? boletim);
         },
       ),
     );
   }
 
   _share(BuildContext context) async {
-    ShareUtil.shareArquivo(context,
+    ShareUtil.shareArquivo(
+      context,
       arquivo: boletim.boletim.id,
       filename: boletim.boletim.filename,
     );

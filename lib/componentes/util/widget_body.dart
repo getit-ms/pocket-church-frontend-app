@@ -48,6 +48,8 @@ class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
   }
 
   Widget _buildBody(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -55,9 +57,14 @@ class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
           margin: const EdgeInsets.only(bottom: 30),
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20,
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: isDark ? Colors.white54 : Colors.black54,
+                      width: .5,
+                    ),
+                  ),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +74,9 @@ class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
                         padding: const EdgeInsets.all(10),
                         child: DefaultTextStyle(
                           style: TextStyle(
-                              fontSize: 22, color: const Color(0xFF393939)),
+                            fontSize: 22,
+                            color: isDark ? Colors.white : Colors.black,
+                          ),
                           child: widget.title,
                         ),
                       ),
@@ -77,12 +86,7 @@ class _WidgetBodyState extends State<WidgetBody> with TickerProviderStateMixin {
                     ),
                     RawMaterialButton(
                       padding: const EdgeInsets.all(0),
-                      child: const IntlText(
-                        "global.mais",
-                        style: TextStyle(
-                          color: const Color(0xFF393939),
-                        ),
-                      ),
+                      child: const IntlText("global.mais"),
                       onPressed: widget.onMore,
                     )
                   ],

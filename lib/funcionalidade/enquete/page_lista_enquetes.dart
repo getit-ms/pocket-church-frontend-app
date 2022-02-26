@@ -19,11 +19,11 @@ class PageListaEnquetes extends StatelessWidget {
 
   Widget _builder(BuildContext context, List<Enquete> itens, int index) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     Enquete item = itens[index];
 
     return Material(
-      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -49,7 +49,7 @@ class PageListaEnquetes extends StatelessWidget {
                       Text(
                         item.descricao,
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: isDark ? Colors.white70 : Colors.black87,
                           fontSize: 14,
                         ),
                       ),
@@ -62,7 +62,7 @@ class PageListaEnquetes extends StatelessWidget {
                 IntlText(
                   item.encerrado ? "votacao.encerrada" : "votacao.em_andamento",
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: isDark ? Colors.white54 : Colors.black54,
                     fontSize: 12,
                   ),
                 ),
@@ -71,36 +71,13 @@ class PageListaEnquetes extends StatelessWidget {
             Container(
               width: double.infinity,
               alignment: Alignment.centerRight,
-              child: item.encerrado
-                  ? CommandButton(
-                      child: const IntlText("votacao.resultado"),
-                      onPressed: (loading) async {
-                        await NavigatorUtil.navigate(
-                          context,
-                          builder: (context) => PageResultadoEnquete(
-                            enquete: item,
-                          ),
-                        );
-                      },
-                    )
-                  : CommandButton(
-                      child: item.respondido
-                          ? const IntlText("votacao.respondida")
-                          : const IntlText("votacao.responder"),
-                      onPressed: item.respondido
-                          ? null
-                          : (loading) async {
-                              await NavigatorUtil.navigate(
-                                context,
-                                builder: (context) => PageRespostaEnquete(
-                                  enquete: item,
-                                ),
-                              );
-
-                              _list.currentState.refresh();
-                            },
-                    ),
-            )
+              child: ButtonEnquete(
+                enquete: item,
+                onRespondido: () {
+                  _list.currentState.refresh();
+                },
+              ),
+            ),
           ],
         ),
       ),

@@ -57,7 +57,7 @@ class PageDevocionario extends StatelessWidget {
                 return _nenhumRegistroEncontrado();
               }
             } else if (snapshot.hasError) {
-              return _buildError(snapshot.error);
+              return _buildError(context, snapshot.error);
             } else {
               return _buildLoading();
             }
@@ -65,7 +65,8 @@ class PageDevocionario extends StatelessWidget {
     );
   }
 
-  Container _buildError(ex) {
+  Container _buildError(BuildContext context, ex) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       padding: EdgeInsets.all(50),
       width: double.infinity,
@@ -74,7 +75,7 @@ class PageDevocionario extends StatelessWidget {
         children: <Widget>[
           Icon(
             error.resolveIcon(ex),
-            color: Colors.black38,
+            color: isDark ? Colors.white70 : Colors.black38,
             size: 66,
           ),
           const SizedBox(
@@ -82,7 +83,7 @@ class PageDevocionario extends StatelessWidget {
           ),
           DefaultTextStyle(
             child: error.resolveMessage(ex),
-            style: TextStyle(color: Colors.black54),
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
             textAlign: TextAlign.center,
           ),
         ],
@@ -117,7 +118,7 @@ class PageDevocionario extends StatelessWidget {
         vertical: 10,
         horizontal: 20,
       ),
-      child: CustomElevatedButton(
+      child: RawMaterialButton(
         onPressed: dia.id == null
             ? null
             : () {
@@ -130,67 +131,75 @@ class PageDevocionario extends StatelessWidget {
                   ),
                 );
               },
-        child: Stack(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.grey[300],
-                    Colors.grey[400],
-                  ],
-                ),
-              ),
-              child: dia.id == null
-                  ? Container()
-                  : Image(
-                      image: ArquivoImageProvider(
-                        dia.thumbnail.id,
-                      ),
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
                   begin: Alignment.topCenter,
-                  end: Alignment.center,
-                  colors: [
-                    Colors.black45,
-                    Colors.transparent,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.white12, Colors.white])),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.grey[300],
+                      Colors.grey[400],
+                    ],
+                  ),
+                ),
+                child: dia.id == null
+                    ? Container()
+                    : Image(
+                        image: ArquivoImageProvider(
+                          dia.thumbnail.id,
+                        ),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.center,
+                    colors: [
+                      Colors.black45,
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+                width: double.infinity,
+                height: double.infinity,
+              ),
+              Positioned(
+                top: 15,
+                right: 15,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      StringUtil.formatData(dia.data, pattern: 'dd'),
+                      style: TextStyle(
+                        fontSize: 55,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      StringUtil.formatData(dia.data, pattern: 'MMM yy'),
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
               ),
-              width: double.infinity,
-              height: double.infinity,
-            ),
-            Positioned(
-              top: 15,
-              right: 15,
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    StringUtil.formatData(dia.data, pattern: 'dd'),
-                    style: TextStyle(
-                      fontSize: 55,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    StringUtil.formatData(dia.data, pattern: 'MMM yy'),
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

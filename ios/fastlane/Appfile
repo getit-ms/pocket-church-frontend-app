@@ -1,5 +1,5 @@
-app_identifier("br.com.getit.calvin.ipplanalto") # The bundle identifier of your app
-apple_id("getitmobilesolutions@gmail.com") # Your Apple email address
+app_identifier("br.org.ipcg") # The bundle identifier of your app
+apple_id("ipcg.app@ipcg.org.br") # Your Apple email address
 
-team_id("P8P9CJ7B9G")
+team_id("9DPF7WX486")
 

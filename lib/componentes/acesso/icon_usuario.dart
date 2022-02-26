@@ -8,7 +8,7 @@ class IconUsuario extends StatelessWidget {
     Key key,
     this.color,
     this.size = 24,
-  }):super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class IconUsuario extends StatelessWidget {
 
         return IconButton(
           iconSize: size,
-          color: color ?? tema.iconForeground,
+          color: color,
           onPressed: () {
             NavigatorUtil.navigate(context, builder: (context) => PageLogin());
           },

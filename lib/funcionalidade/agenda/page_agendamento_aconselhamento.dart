@@ -19,7 +19,6 @@ class _PageAgendamentoAconselhamentoState
       title: const IntlText("agenda.agendamentos"),
       body: Container(
         width: double.infinity,
-        color: Colors.white,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -93,6 +92,7 @@ class _PageAgendamentoAconselhamentoState
 
   Widget _diasCalendario() {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     if (_calendario != null) {
       return FutureBuilder<List<EventoCalendarioAconselhamento>>(
@@ -129,7 +129,7 @@ class _PageAgendamentoAconselhamentoState
                   return Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.black12,
+                      color: isDark ? Colors.white12 : Colors.black12,
                     ),
                     child: Container(
                       margin: EdgeInsets.only(
@@ -150,12 +150,18 @@ class _PageAgendamentoAconselhamentoState
                 selectedDateTime: _dataSelecionada,
                 todayBorderColor: tema.secondary,
                 daysHaveCircularBorder: true,
-                todayButtonColor: Colors.white,
+                todayButtonColor: isDark ? Colors.grey[900] : Colors.white,
                 minSelectedDate:
                     DateTime.now().subtract(const Duration(days: 1)),
                 maxSelectedDate: DateTime.now().add(const Duration(days: 90)),
                 todayTextStyle: TextStyle(
                   color: tema.secondary,
+                ),
+                daysTextStyle: TextStyle(
+                  color: isDark ? Colors.white70 : Colors.black54,
+                ),
+                inactiveDaysTextStyle: TextStyle(
+                  color: isDark ? Colors.white24 : Colors.black12,
                 ),
                 onDayPressed: (date, horarios) {
                   setState(() {

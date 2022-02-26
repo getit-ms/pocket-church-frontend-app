@@ -14,7 +14,6 @@ class ItemEvento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
       shape: Border(
         top: BorderSide(
           color: Colors.black54,

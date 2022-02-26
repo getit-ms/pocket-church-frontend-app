@@ -26,29 +26,24 @@ class PhotoViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: PhotoViewGallery(
-            pageController: pageController,
-            pageOptions: images
-                .map(
-                  (img) => PhotoViewGalleryPageOptions(
-                    imageProvider: img.image,
-                    heroAttributes: PhotoViewHeroAttributes(
-                      tag: img.heroTag,
-                    ),
+        PhotoViewGallery(
+          pageController: pageController,
+          pageOptions: images
+              .map(
+                (img) => PhotoViewGalleryPageOptions(
+                  imageProvider: img.image,
+                  heroAttributes: PhotoViewHeroAttributes(
+                    tag: img.heroTag,
                   ),
-                )
-                .toList(),
-            gaplessPlayback: true,
-            backgroundDecoration: BoxDecoration(color: Colors.black87),
-          ),
+                ),
+              )
+              .toList(),
+          gaplessPlayback: true,
+          backgroundDecoration: BoxDecoration(color: Colors.black87),
         ),
         Column(
           children: <Widget>[
             AppBar(
-              centerTitle: true,
               iconTheme: IconThemeData(
                 color: Colors.white,
               ),
@@ -56,6 +51,7 @@ class PhotoViewPage extends StatelessWidget {
               titleTextStyle: const TextStyle(
                 color: Colors.white,
               ),
+              systemOverlayStyle: services.SystemUiOverlayStyle.dark,
               backgroundColor: Colors.transparent,
               actions: <Widget>[
                 onDownload != null

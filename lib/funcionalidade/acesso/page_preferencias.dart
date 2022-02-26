@@ -36,8 +36,9 @@ class _PagePreferenciasState extends State<PagePreferencias> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return comp.PageTemplate(
-      backgroundColor: Colors.white,
+      backgroundColor: isDark ? Colors.grey[900] : Colors.white,
       key: _pageTemplate,
       title: const IntlText("preferencias.preferencias"),
       body: _content(),
@@ -50,7 +51,7 @@ class _PagePreferenciasState extends State<PagePreferencias> {
     }
 
     _timer = Timer(
-      const Duration(milliseconds: 500),
+      const Duration(milliseconds: 800),
       () async {
         await acessoApi.salvaPreferencias(_preferencias);
 
@@ -81,8 +82,8 @@ class _PagePreferenciasState extends State<PagePreferencias> {
           const InfoDivider(
             child: IntlText("preferencias.outros"),
           ),
-          _templateAplicativo(),
           _politicaPrivacidade(),
+          SizedBox(height: MediaQuery.of(context).padding.bottom)
         ],
       ),
     );
@@ -189,25 +190,6 @@ class _PagePreferenciasState extends State<PagePreferencias> {
     }
 
     return Container();
-  }
-
-  _templateAplicativo() {
-    return RawMaterialButton(
-      onPressed: () {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        NavigatorUtil.navigate(
-          context,
-          replace: true,
-          builder: (context) => PageApresentacao(
-            trocaTemplate: true,
-          ),
-        );
-      },
-      child: ItemPreferencias(
-        icon: Icons.compare_arrows,
-        label: const IntlText("preferencias.trocar_template"),
-      ),
-    );
   }
 
   _versiculoDiario() {
@@ -369,16 +351,18 @@ class ItemPreferencias extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
+      color: Theme.of(context).cardColor,
       child: Row(
         children: <Widget>[
           icon != null
               ? Icon(
                   icon,
                   size: 30,
-                  color: Colors.black38,
+                  color: isDark ? Colors.white54 : Colors.black38,
                 )
               : Container(),
           icon != null

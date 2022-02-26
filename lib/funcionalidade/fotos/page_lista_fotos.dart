@@ -10,68 +10,66 @@ class PageListaFotos extends StatelessWidget {
     return PageTemplate(
       deveEstarAutenticado: true,
       withAppBar: false,
-      body: Container(
-        color: Colors.white,
-        child: SliverInfiniteList<Foto>(
-          provider: (pagina, tamanho) async {
-            return await fotoApi.consulta(
-              galeria: galeria.id,
-              pagina: pagina,
-              tamanhoPagina: tamanho,
+      body: SliverInfiniteList<Foto>(
+        provider: (pagina, tamanho) async {
+          return await fotoApi.consulta(
+            galeria: galeria.id,
+            pagina: pagina,
+            tamanhoPagina: tamanho,
+          );
+        },
+        builder: (context, itens, index) {
+          Foto foto = itens[index];
+
+          if (index % 3 == 0) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                bottom: 10,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: _linkFoto(
+                      context: context,
+                      foto: foto,
+                      onPressed: onClick(context, itens, index),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: index + 1 < itens.length
+                        ? _linkFoto(
+                            context: context,
+                            foto: itens[index + 1],
+                            onPressed: onClick(context, itens, index + 1),
+                          )
+                        : Container(),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: index + 2 < itens.length
+                        ? _linkFoto(
+                            context: context,
+                            foto: itens[index + 2],
+                            onPressed: onClick(context, itens, index + 2),
+                          )
+                        : Container(),
+                  )
+                ],
+              ),
             );
-          },
-          builder: (context, itens, index) {
-            Foto foto = itens[index];
+          }
 
-            if (index % 3 == 0) {
-              return Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 10,
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: _linkFoto(
-                        context: context,
-                        foto: foto,
-                        onPressed: onClick(context, itens, index),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: index + 1 < itens.length
-                          ? _linkFoto(
-                              context: context,
-                              foto: itens[index + 1],
-                              onPressed: onClick(context, itens, index + 1),
-                            )
-                          : Container(),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        child: index + 2 < itens.length
-                            ? _linkFoto(
-                                context: context,
-                                foto: itens[index + 2],
-                                onPressed: onClick(context, itens, index + 2),
-                              )
-                            : Container())
-                  ],
-                ),
-              );
-            }
-
-            return Container();
-          },
-          preSlivers: <Widget>[
-            _header(context),
-            _descricao(),
-          ],
-        ),
+          return Container();
+        },
+        preSlivers: <Widget>[
+          _header(context),
+          _descricao(),
+        ],
       ),
     );
   }
@@ -85,8 +83,7 @@ class PageListaFotos extends StatelessWidget {
         background: Hero(
           tag: "galeria_" + galeria.id,
           child: Image(
-            image: NetworkImage(
-                "https://farm${galeria.fotoPrimaria.farm}.staticflickr.com/${galeria.fotoPrimaria.server}/${galeria.fotoPrimaria.id}_${galeria.fotoPrimaria.secret}_n.jpg"),
+            image: NetworkImage(galeria.fotoPrimaria.urlImagemNormal),
             fit: BoxFit.cover,
           ),
         ),
@@ -125,8 +122,7 @@ class PageListaFotos extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             placeholder: MemoryImage(kTransparentImage),
-            image: NetworkImage(
-                "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_n.jpg"),
+            image: NetworkImage(foto.urlImagemNormal),
             fit: BoxFit.cover,
           ),
         ),
@@ -144,16 +140,14 @@ class PageListaFotos extends StatelessWidget {
           onShare: (index) {
             ShareUtil.shareDownloadedFile(
               context,
-              url:
-                  "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_b.jpg",
+              url: foto.urlImagemGrande,
               filename: "${foto.id}_${foto.secret}_b.jpg",
             );
           },
           pageController: PageController(initialPage: index),
           images: itens
               .map((foto) => ImageView(
-                  image: NetworkImage(
-                      "https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}_b.jpg"),
+                  image: NetworkImage(foto.urlImagemGrande),
                   heroTag: 'foto_' + foto.id))
               .toList(),
           title: Text(galeria.nome),
@@ -181,7 +175,6 @@ class HeaderFotos extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    Tema tema = ConfiguracaoApp.of(context).tema;
     var mediaQueryData = MediaQuery.of(context);
 
     double currentExtent = max(minExtent, maxExtent - shrinkOffset);
@@ -211,9 +204,10 @@ class HeaderFotos extends SliverPersistentHeaderDelegate {
               decoration: BoxDecoration(
                 gradient: RadialGradient(
                   colors: [
-                    Color.lerp(
-                        tema.appBarBackground, Colors.transparent, factor),
-                    Color.lerp(tema.appBarBackground, Colors.black54, factor),
+                    Color.lerp(Theme.of(context).appBarTheme.color,
+                        Colors.transparent, factor),
+                    Color.lerp(Theme.of(context).appBarTheme.color,
+                        Colors.black54, factor),
                   ],
                   radius: 1.5,
                 ),
@@ -225,26 +219,27 @@ class HeaderFotos extends SliverPersistentHeaderDelegate {
             left: 5,
             child: BackButton(
               color: Color.lerp(
-                tema.appBarIcons,
+                Theme.of(context).appBarTheme.iconTheme.color,
                 Colors.white,
                 factor,
               ),
             ),
           ),
           Positioned(
-            bottom: 15,
+            bottom: lerpDouble(5, 15, factor),
             left: lerpDouble(33, 3, factor),
             width: lerpDouble(
               mediaQueryData.size.width - 66,
               mediaQueryData.size.width - 6,
               factor,
             ),
+            height: lerpDouble(kToolbarHeight - 10, 100, factor),
             child: DefaultTextStyle(
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: lerpDouble(21, 32, factor),
                 color: Color.lerp(
-                  tema.appBarTitle,
+                  Theme.of(context).appBarTheme.textTheme.headline6.color,
                   Colors.white,
                   factor,
                 ),

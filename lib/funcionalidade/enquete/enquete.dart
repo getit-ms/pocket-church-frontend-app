@@ -13,3 +13,4 @@ import 'package:charts_flutter/flutter.dart' as charts;
 part 'page_lista_enquetes.dart';
 part 'page_resposta_enquete.dart';
 part 'page_resultado_enquete.dart';
+part 'button_enquete.dart';

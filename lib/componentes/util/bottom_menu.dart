@@ -28,7 +28,10 @@ class BottomMenu extends StatelessWidget {
               (mediaQueryData.size.height - 200 + mediaQueryData.padding.top),
           child: SingleChildScrollView(
             child: Column(
-              children: items.map(_optionSelectFile).toList(),
+              children: [
+                for (var menu in items)
+                  _optionSelectFile(context, menu),
+              ],
             ),
           ),
         );
@@ -36,7 +39,8 @@ class BottomMenu extends StatelessWidget {
     );
   }
 
-  Widget _optionSelectFile(BottomMenuItem menu) {
+  Widget _optionSelectFile(BuildContext context, BottomMenuItem menu) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return SizedBox(
       width: double.infinity,
       child: MaterialButton(
@@ -53,7 +57,7 @@ class BottomMenu extends StatelessWidget {
             Expanded(
               child: DefaultTextStyle(
                 style: TextStyle(
-                  color: Colors.black54,
+                  color: isDark ? Colors.white54 : Colors.black54,
                 ),
                 child: menu.label,
               ),

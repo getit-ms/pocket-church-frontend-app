@@ -133,20 +133,16 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
     }
   }
 
-  Widget _buildPlaceholder() {
+  Widget _buildPlaceholder(BuildContext context) {
     if (hasProxima) {
       if (_error != null) {
-        return _buildError();
+        return _buildError(context);
       } else if (!_loading) {
         _loadMore();
       }
 
       if (widget.placeholderBuilder != null) {
-        return ListView(
-          scrollDirection: widget.scrollDirection,
-          padding: widget.padding,
-          children: <Widget>[_buildLoading(context)],
-        );
+        return widget.placeholderBuilder(context);
       } else {
         return _buildLoading(context);
       }
@@ -168,52 +164,54 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
   _buildContent(BuildContext context) {
     if (resultados.isEmpty) {
       return CustomScrollView(
-        slivers: widget.preSlivers
-            .followedBy(
-              [
-                new SliverList(
-                  delegate: SliverChildListDelegate([_buildPlaceholder()]),
-                ),
-              ],
-            )
-            .followedBy(widget.posSlivers)
-            .toList(),
+        slivers: [
+          ...widget.preSlivers,
+
+          new SliverList(
+            delegate: SliverChildListDelegate([_buildPlaceholder(context)]),
+          ),
+
+          ...widget.posSlivers,
+        ],
       );
     } else {
       return CustomScrollView(
-        slivers: widget.preSlivers
-            .followedBy([
-              new SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    if (index == resultados.length) {
-                      if (hasProxima) {
-                        if (_error != null) {
-                          return _buildError();
-                        } else if (!_loading) {
-                          _loadMore();
-                        }
+        slivers: [
+          ...widget.preSlivers,
 
-                        return _buildLoading(context);
-                      } else {
-                        return Container();
-                      }
-                    } else if (index > resultados.length) {
-                      return null;
+          new SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                if (index == resultados.length) {
+                  if (hasProxima) {
+                    if (_error != null) {
+                      return _buildError(context);
+                    } else if (!_loading) {
+                      _loadMore();
                     }
 
-                    return widget.builder(context, resultados, index);
-                  },
-                ),
-              ),
-            ])
-            .followedBy(widget.posSlivers)
-            .toList(),
+                    return _buildLoading(context);
+                  } else {
+                    return Container();
+                  }
+                } else if (index > resultados.length) {
+                  return null;
+                }
+
+                return widget.builder(context, resultados, index);
+              },
+            ),
+          ),
+
+          ...widget.posSlivers,
+        ],
       );
     }
   }
 
-  Container _buildError() {
+  Container _buildError(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Container(
       padding: EdgeInsets.all(50),
       width: double.infinity,
@@ -222,7 +220,7 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
         children: <Widget>[
           Icon(
             _errorIcon,
-            color: Colors.black38,
+            color: isDark ? Colors.white38 : Colors.black38,
             size: 66,
           ),
           const SizedBox(
@@ -230,7 +228,9 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
           ),
           DefaultTextStyle(
             child: _error,
-            style: TextStyle(color: Colors.black54),
+            style: TextStyle(
+              color: isDark ? Colors.white54 : Colors.black54,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -240,8 +240,8 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
             padding: const EdgeInsets.all(10),
             shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(5)),
-              side: const BorderSide(
-                color: Colors.black54,
+              side: BorderSide(
+                color: isDark ? Colors.white54 : Colors.black54,
                 width: .5,
               ),
             ),
@@ -259,9 +259,8 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
 
       for (int i = 0; i < widget.placeholderCount; i++) {
         children.add(
-          Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
+          ShimmerPlaceholder(
+            active: true,
             child: widget.placeholderBuilder(context),
           ),
         );
@@ -280,11 +279,11 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
             : double.infinity,
         child: widget.scrollDirection == Axis.horizontal
             ? Row(
-                children: children,
-              )
+          children: children,
+        )
             : Column(
-                children: children,
-              ),
+          children: children,
+        ),
       );
     }
 

@@ -142,7 +142,7 @@ class Player {
         new AudioTrack(
           trackId: audio.id.toString(),
           title: audio.nome,
-          artist: audio.autor,
+          artist: audio.autoria,
           album: config.nomeIgreja,
           albumArt: albumArt,
           assetUrl: assetURL,

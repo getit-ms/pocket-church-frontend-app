@@ -26,7 +26,6 @@ class PageListaPublicacoes extends StatelessWidget {
               )
                   : Container(),
               Material(
-                color: Colors.white,
                 child: ListTile(
                   title: Text(publicacao.titulo),
                   onTap: () {

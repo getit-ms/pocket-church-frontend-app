@@ -10,9 +10,7 @@ class PageListaAudios extends StatelessWidget {
     return PageTemplate(
       title: Text(categoria.nome),
       body: InfiniteList(
-        padding: const EdgeInsets.symmetric(
-            vertical: 10
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         provider: _provider,
         builder: _builder,
       ),

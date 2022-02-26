@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1018745496027-4q8i19o545dtsva3r9rb4hgs6oueh061.apps.googleusercontent.com</string>
+	<string>705887064405-2esannb799gtdr8fo551hkjcupsqm3j2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1018745496027-4q8i19o545dtsva3r9rb4hgs6oueh061</string>
+	<string>com.googleusercontent.apps.705887064405-2esannb799gtdr8fo551hkjcupsqm3j2</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDjWwrbAyp2yEAa6DiRbTZjFC7hTSniv5s</string>
+	<string>AIzaSyBOK81GXdwLjefSn2GjZETRq03zFkTifqk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1018745496027</string>
+	<string>705887064405</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>br.com.getit.calvin.ipplanalto</string>
+	<string>br.org.ipcg</string>
 	<key>PROJECT_ID</key>
-	<string>ipplanalto-27926</string>
+	<string>ipcg-987a0</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ipplanalto-27926.appspot.com</string>
+	<string>ipcg-987a0.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1018745496027:ios:e1eb3980af47f9987047fe</string>
+	<string>1:705887064405:ios:10f19b8add0db833badfdc</string>
 	<key>DATABASE_URL</key>
-	<string>https://ipplanalto-27926.firebaseio.com</string>
+	<string>https://ipcg-987a0.firebaseio.com</string>
 </dict>
 </plist>

@@ -7,6 +7,8 @@ class CustomHtml extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         textScaleFactor: 1,
@@ -14,9 +16,11 @@ class CustomHtml extends StatelessWidget {
       child: Html(
         data: html,
         defaultTextStyle: TextStyle(
-          height: 1.6,
-          fontSize: 16,
-          fontWeight: FontWeight.w300,
+          height: 2,
+          color: isDark
+              ? Colors.white70
+              : Colors.black54,
+          fontSize: 17,
         ),
         onLinkTap: LaunchUtil.site,
       ),

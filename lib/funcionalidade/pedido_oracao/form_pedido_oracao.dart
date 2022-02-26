@@ -29,7 +29,7 @@ class _FormPedidoOracaoState extends State<FormPedidoOracao> {
 
     return Container(
       width: double.infinity,
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: Form(
         key: _form,
         child: Column(

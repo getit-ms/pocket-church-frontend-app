@@ -57,7 +57,7 @@ class AudioProgressState extends State<AudioProgress> {
           setState(() {
             _seeking = val;
           });
-        }
+        },
     );
   }
 

@@ -11,7 +11,6 @@ class InfoDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
-
     return Container(
       width: double.infinity,
       color: tema.dividerBackground,

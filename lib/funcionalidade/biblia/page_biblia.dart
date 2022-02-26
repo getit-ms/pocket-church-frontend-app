@@ -26,11 +26,11 @@ class _PageBibliaState extends State<PageBiblia> {
           Expanded(
             child: ListaVersiculos(livro: _livro),
           ),
+          BarraProgressoSincronizacao(),
           BarraNavegacaoBiblia(
             value: _livro,
             onChange: _set,
           ),
-          BarraProgressoSincronizacao(),
         ],
       ),
     );
@@ -92,15 +92,18 @@ class BarraNavegacaoBiblia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       width: double.infinity,
+      color: isDark ? Colors.grey[900] : Colors.white,
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
       child: Row(
         children: <Widget>[
           IconButton(
             onPressed: _anterior,
             icon: Icon(
               Icons.keyboard_arrow_left,
-              color: Colors.black87,
+              color: isDark ? Colors.white70 : Colors.black87,
             ),
           ),
           Expanded(
@@ -121,7 +124,7 @@ class BarraNavegacaoBiblia extends StatelessWidget {
               ),
               textStyle: TextStyle(
                 fontSize: 17,
-                color: Colors.black87,
+                color: isDark ? Colors.white70 : Colors.black87,
               ),
               onPressed: () async {
                 showBottomSheet<LivroCapitulo>(
@@ -138,7 +141,7 @@ class BarraNavegacaoBiblia extends StatelessWidget {
             onPressed: _proximo,
             icon: Icon(
               Icons.keyboard_arrow_right,
-              color: Colors.black87,
+              color: isDark ? Colors.white70 : Colors.black87,
             ),
           ),
         ],

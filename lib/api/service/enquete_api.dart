@@ -25,7 +25,7 @@ class EnqueteApi extends ApiBase {
   responde(RespostaEnquete resposta) async {
     await post(
       "/votacao/voto",
-      body: resposta,
+      body: resposta.toJson(),
     );
   }
 

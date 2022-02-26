@@ -58,9 +58,7 @@ class RespostaFormState extends State<RespostaForm> {
 
   _actionArea() {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
+      color: Theme.of(context).cardColor,
       padding: const EdgeInsets.all(5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -180,40 +178,45 @@ class RespostaFormState extends State<RespostaForm> {
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Column(
-                            children: q.opcoes
-                                .map((o) {
+                            children: q.opcoes.map((o) {
                               var rq = resposta.respostas
                                   .firstWhere((rq) => rq.questao.id == q.id);
 
-                                  return InkWell(
-                                      child: Row(
-                                        children: <Widget>[
-                                          Radio(
-                                            groupValue: rq.opcoes.isEmpty ? null : rq.opcoes[0].opcao,
-                                            value: o,
-                                            activeColor: ConfiguracaoApp.of(context).tema.primary,
-                                            onChanged: (selected) {
-                                              setState(() {
-                                                if (selected != null) {
-                                                  rq.opcoes = [new RespostaOpcao(opcao: selected)];
-                                                } else {
-                                                  rq.opcoes = [];
-                                                }
-                                              });
-                                            },
-                                          ),
-                                          Expanded(
-                                            child: Text(o.opcao),
-                                          )
-                                        ],
+                              return InkWell(
+                                  child: Row(
+                                    children: <Widget>[
+                                      Radio(
+                                        groupValue: rq.opcoes.isEmpty
+                                            ? null
+                                            : rq.opcoes[0].opcao,
+                                        value: o,
+                                        activeColor: ConfiguracaoApp.of(context)
+                                            .tema
+                                            .primary,
+                                        onChanged: (selected) {
+                                          setState(() {
+                                            if (selected != null) {
+                                              rq.opcoes = [
+                                                new RespostaOpcao(
+                                                    opcao: selected)
+                                              ];
+                                            } else {
+                                              rq.opcoes = [];
+                                            }
+                                          });
+                                        },
                                       ),
-                                      onTap: () {
-                                        setState(() {
-                                          rq.opcoes = [new RespostaOpcao(opcao: o)];
-                                        });
-                                      });
-                            })
-                                .toList(),
+                                      Expanded(
+                                        child: Text(o.opcao),
+                                      )
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      rq.opcoes = [new RespostaOpcao(opcao: o)];
+                                    });
+                                  });
+                            }).toList(),
                           ),
                         ),
                       )))

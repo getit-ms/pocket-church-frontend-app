@@ -10,7 +10,8 @@ Audio _$AudioFromJson(Map<String, dynamic> json) {
   return Audio(
     id: json['id'] as int,
     nome: json['nome'] as String,
-    autor: json['autor'] as String,
+    autoria: json['autoria'] as String,
+    autor: json['autor'] == null ? null : Membro.fromJson(json['autor']),
     descricao: json['descricao'] as String,
     tamamnhoArquivo: json['tamamnhoArquivo'] as int,
     tempoAudio: json['tempoAudio'] as int,
@@ -29,7 +30,8 @@ Audio _$AudioFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$AudioToJson(Audio instance) => <String, dynamic>{
       'id': instance.id,
       'nome': instance.nome,
-      'autor': instance.autor,
+      'autoria': instance.autoria,
+      'autor': instance.autor?.toJson(),
       'descricao': instance.descricao,
       'tamamnhoArquivo': instance.tamamnhoArquivo,
       'tempoAudio': instance.tempoAudio,

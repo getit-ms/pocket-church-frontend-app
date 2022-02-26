@@ -25,7 +25,7 @@ class IntlText extends StatelessWidget {
                   args: args,
                 )
               : "",
-          textAlign: textAlign ?? TextAlign.left,
+          textAlign: textAlign ?? DefaultTextStyle.of(context)?.textAlign ?? TextAlign.left,
           style: style,
         );
       },
