@@ -10,7 +10,7 @@ class CardBanners extends StatelessWidget {
       initialData: institucionalBloc.currentBanners,
       builder: (context, snapshot) {
         return TimelineCard(
-          height: MediaQuery.of(context).size.width / 2,
+          height: math.min(MediaQuery.of(context).size.width / 2, 400),
           builder: _buildBanner,
           items: snapshot.data ?? [null, null, null],
         );
@@ -34,15 +34,49 @@ class CardBanners extends StatelessWidget {
       ),
       child: BackdropFilter(
         filter: new ImageFilter.blur(sigmaX: 7.7, sigmaY: 7.5),
-        child: banner == null
-            ? Container()
-            : FadeInImage(
-                placeholder: MemoryImage(kTransparentImage),
-                image: ArquivoImageProvider(banner.banner.id),
-                width: double.infinity,
-                fit: BoxFit.fitHeight,
-              ),
+        child: InkWell(
+          onTap: banner.linkExterno == null
+              ? _zoomBanner(context, banner)
+              : () => LaunchUtil.site(banner.linkExterno),
+          child: Stack(
+            children: [
+              banner == null
+                  ? Container()
+                  : FadeInImage(
+                      placeholder: MemoryImage(kTransparentImage),
+                      image: ArquivoImageProvider(banner.banner.id),
+                      width: double.infinity,
+                      fit: BoxFit.fitHeight,
+                    ),
+              if (banner.linkExterno == null)
+                Positioned(
+                  child: Icon(
+                    Icons.zoom_in,
+                    size: 28,
+                  ),
+                  bottom: 10,
+                  right: 10,
+                ),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  VoidCallback _zoomBanner(BuildContext context, banner.Banner banner) {
+    return () {
+      NavigatorUtil.navigate(
+        context,
+        builder: (context) => PhotoViewPage(
+          images: [
+            ImageView(
+                image: ArquivoImageProvider(banner.banner.id),
+                heroTag: "ilustracao_${banner.banner.id}"),
+          ],
+          title: IntlText("banner.banner"),
+        ),
+      );
+    };
   }
 }

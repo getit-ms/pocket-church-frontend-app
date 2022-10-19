@@ -29,7 +29,7 @@ class HinoDAO {
 
   Future<Pagina<Hino>> findHinosByFiltro({String filtro, int pagina = 1, int tamanhoPagina}) async {
     List<Map> rs = await pcDatabase.database.rawQuery(
-      "SELECT id, numero, nome FROM hino where (numero || nome || texto) like ? order by numero, nome limit ?, ?",
+      "SELECT id, numero, nome, texto FROM hino where (numero || nome || texto) like ? order by numero, nome limit ?, ?",
       ['%' + (filtro ?? "") + '%', (pagina - 1) * tamanhoPagina, tamanhoPagina + 1],
     );
 
@@ -40,6 +40,7 @@ class HinoDAO {
         id: item['id'],
         numero: item['numero'],
         nome: item['nome'],
+        texto: (item['texto'] as String).replaceAll(RegExp("(<[^>]+>|\\s)+"), " "),
       )).toList().sublist(0, math.min(rs.length, tamanhoPagina))
     );
   }

@@ -3,6 +3,10 @@ part of pocket_church.biblia;
 final String _ULTIMO_ESTADO = "page_biblia.ultimo_estado";
 
 class PageBiblia extends StatefulWidget {
+  LivroCapitulo livroCapitulo;
+
+  PageBiblia({this.livroCapitulo});
+
   @override
   _PageBibliaState createState() => _PageBibliaState();
 }
@@ -14,7 +18,11 @@ class _PageBibliaState extends State<PageBiblia> {
   void initState() {
     super.initState();
 
-    _loadUltimoContexto();
+    if (widget.livroCapitulo != null) {
+      _set(widget.livroCapitulo);
+    } else {
+      _loadUltimoContexto();
+    }
   }
 
   @override

@@ -30,6 +30,7 @@ class _PageListaNotificacoesState extends State<PageListaNotificacoes> {
 
   @override
   Widget build(BuildContext context) {
+    var mq = MediaQuery.of(context);
     return PageTemplate(
       title: const IntlText("notificacao.notificacoes"),
       actions: <Widget>[
@@ -163,7 +164,8 @@ class _PageListaNotificacoesState extends State<PageListaNotificacoes> {
               height: 0,
             ),
             secondChild: Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10) +
+              EdgeInsets.only(bottom: mq.padding.bottom),
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(color: Colors.black54, width: .5),

@@ -137,9 +137,36 @@ class BibliaDAO {
         .map((item) => VersiculoBiblia(
               id: item['id'],
               versiculo: item['versiculo'],
-              texto: item['texto'],
+              texto: item['texto'].trim(),
             ))
         .toList();
+  }
+
+  Future<Pagina<VersiculoBiblia>> findVersiculosByFiltro({String filtro, int pagina = 1, int tamanhoPagina}) async {
+    List<Map> rs = await pcDatabase.database.rawQuery(
+      "SELECT v.id as idVersiculo, v.versiculo, v.texto, v.capitulo, lb.id as idLivro, lb.nome as nomeLivro, lb.abreviacao abreviacaoLivro, lb.testamento FROM versiculo_biblia v, livro_biblia lb where v.id_livro = lb.id and (v.texto || lb.nome || ' ' || v.capitulo || ':' || v.versiculo) like ? order by lb.testamento desc, lb.ordem, v.capitulo, v.versiculo limit ?, ?",
+      ['%' + (filtro ?? "") + '%', (pagina - 1) * tamanhoPagina, tamanhoPagina + 1],
+    );
+
+    return Pagina(
+        pagina: pagina,
+        hasProxima: rs.length > tamanhoPagina,
+        resultados: rs.map((item) => VersiculoBiblia(
+          id: item['idVersiculo'],
+          versiculo: item['versiculo'],
+          texto: (item['texto'] as String).replaceAll(RegExp("(<[^>]+>|\\s)+"), " ").trim(),
+          capitulo: item['capitulo'],
+          livroCapitulo: LivroCapitulo(
+            capitulo: item['capitulo'],
+            testamento: item['testamento'],
+            livro: LivroBiblia(
+              id: item['idLivro'],
+              nome: item['nomeLivro'],
+              abreviacao: item['abreviacaoLivro']
+            )
+          )
+        )).toList().sublist(0, math.min(rs.length, tamanhoPagina))
+    );
   }
 
   Future<LivroCapitulo> findProximoCapitulo(

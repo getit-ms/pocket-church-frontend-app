@@ -123,25 +123,25 @@ class PDFService {
     }
   }
 
-  int _parseWidth(int width, int height) {
+  double _parseWidth(double width, double height) {
     if (_width != null) {
-      return _width.toInt();
+      return _width;
     }
 
     if (_height != null) {
-      return ((_height / height) * width).toInt();
+      return ((_height / height) * width);
     }
 
     return width;
   }
 
-  int _parseHeight(int width, int height) {
+  double _parseHeight(double width, double height) {
     if (_height != null) {
-      return _height.toInt();
+      return _height;
     }
 
     if (_width != null) {
-      return ((_width / width) * height).toInt();
+      return ((_width / width) * height);
     }
 
     return height;

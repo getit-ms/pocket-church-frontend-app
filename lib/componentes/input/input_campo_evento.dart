@@ -183,6 +183,9 @@ class InputCampoEvento extends StatelessWidget {
         if (campo.formato == FormatoCampoEvento.CPF_CNPJ)
           services.TextInputFormatter.withFunction(
               TextFormatUtil.formatCpfCnpj),
+        if (campo.formato == FormatoCampoEvento.TELEFONE)
+            services.TextInputFormatter.withFunction(
+                TextFormatUtil.formatTelefone)
       ],
       onSaved: (val) {
         if (campo.formato != FormatoCampoEvento.NENHUM) {

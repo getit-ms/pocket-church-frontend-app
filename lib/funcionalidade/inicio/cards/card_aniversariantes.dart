@@ -5,32 +5,39 @@ class CardAniversariantes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (acessoBloc.temAcesso(Funcionalidade.ANIVERSARIANTES)) {
-      return StreamBuilder<List<Membro>>(
-        stream: institucionalBloc.aniversariantes,
-        initialData: institucionalBloc.currentAniversariantes,
-        builder: (context, snapshot) {
-          bool hasData = snapshot.data?.isNotEmpty ?? false;
-          return AnimatedCrossFade(
-            duration: const Duration(milliseconds: 300),
-            crossFadeState:
-                snapshot.connectionState == ConnectionState.waiting || hasData
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-            firstChild: _aniversariantes(context,
-                membros: hasData ? snapshot.data : [null, null, null]),
-            secondChild: Container(),
-          );
-        },
-      );
-    }
+    return StreamBuilder<bool>(
+      initialData: false,
+      stream: acessoBloc.temAcesso(Funcionalidade.ANIVERSARIANTES),
+      builder: (context, snapshot) {
+        if (!snapshot.data) {
+          return Container();
+        }
 
-    return Container();
+        return StreamBuilder<List<Membro>>(
+          stream: institucionalBloc.aniversariantes,
+          initialData: institucionalBloc.currentAniversariantes,
+          builder: (context, snapshot) {
+            bool hasData = snapshot.data?.isNotEmpty ?? false;
+            return AnimatedCrossFade(
+              duration: const Duration(milliseconds: 300),
+              crossFadeState:
+              snapshot.connectionState == ConnectionState.waiting ||
+                  hasData
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              firstChild: _aniversariantes(context,
+                  membros: hasData ? snapshot.data : [null, null, null]),
+              secondChild: Container(),
+            );
+          },
+        );
+      },);
   }
 
-  Widget _aniversariantes(BuildContext context,
-      {List<Membro> membros}) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+  Widget _aniversariantes(BuildContext context, {List<Membro> membros}) {
+    bool isDark = MediaQuery
+        .of(context)
+        .platformBrightness == Brightness.dark;
 
     return Container(
       width: double.infinity,
@@ -70,7 +77,9 @@ class CardAniversariantes extends StatelessWidget {
   }
 
   Widget _aniversariante(BuildContext context, {Membro membro}) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDark = MediaQuery
+        .of(context)
+        .platformBrightness == Brightness.dark;
 
     return InkWell(
       onTap: () {

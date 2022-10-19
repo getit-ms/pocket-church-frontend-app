@@ -93,8 +93,10 @@ class InstitucionalBloc {
   }
 
   loadEnquetes() async {
-    acessoBloc.membro.listen((membro) async {
-      if (acessoBloc.temAcesso(Funcionalidade.REALIZAR_VOTACAO)) {
+    acessoBloc
+        .temAcesso(Funcionalidade.REALIZAR_VOTACAO)
+        .listen((temAcessoVotacao) async {
+      if (temAcessoVotacao) {
         try {
           Pagina<Enquete> enquetes = await _enqueteApi.consulta();
 
@@ -110,8 +112,10 @@ class InstitucionalBloc {
   }
 
   _loadAniversariantes() async {
-    acessoBloc.membro.listen((membro) async {
-      if (acessoBloc.temAcesso(Funcionalidade.ANIVERSARIANTES)) {
+    acessoBloc
+        .temAcesso(Funcionalidade.ANIVERSARIANTES)
+        .listen((temAcessoAniversariantes) async {
+      if (temAcessoAniversariantes) {
         try {
           List<Membro> enquetes = await _membroApi.buscaAniversariantes();
 

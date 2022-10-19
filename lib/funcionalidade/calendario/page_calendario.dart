@@ -41,8 +41,6 @@ class PageCalendario extends StatelessWidget {
   }
 
   Widget _builder(BuildContext context, List<DiaEvento> itens, int index) {
-    Tema tema = ConfiguracaoApp.of(context).tema;
-
     DiaEvento dia = itens[index];
     return Column(
       children: <Widget>[

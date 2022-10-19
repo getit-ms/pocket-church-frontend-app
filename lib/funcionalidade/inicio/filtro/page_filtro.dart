@@ -71,6 +71,8 @@ class _PageFiltroState extends State<PageFiltro> {
       children: [
         ListaFuncionalidades(bloc: filtroBloc, status: status),
         ListaMembroes(bloc: filtroBloc, status: status),
+        ListaHinos(bloc: filtroBloc, status: status),
+        ListaBiblia(bloc: filtroBloc, status: status),
         ListaItensEvento(bloc: filtroBloc, status: status),
       ],
     );

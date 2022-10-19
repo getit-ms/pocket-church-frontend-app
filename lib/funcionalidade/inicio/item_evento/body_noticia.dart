@@ -9,14 +9,16 @@ class BodyNoticia extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        _navigateNoticia(context, Noticia(
-          id: int.parse(item.id),
-          titulo: item.titulo,
-          autor: item.autor,
-          dataPublicacao: item.dataHoraPublicacao,
-          resumo: item.apresentacao,
-          ilustracao: item.ilustracao,
-        ));
+        _navigateNoticia(
+            context,
+            Noticia(
+              id: int.parse(item.id),
+              titulo: item.titulo,
+              autor: item.autor,
+              dataPublicacao: item.dataHoraPublicacao,
+              resumo: item.apresentacao,
+              ilustracao: item.ilustracao,
+            ));
       },
       child: _content(context),
     );
@@ -32,51 +34,19 @@ class BodyNoticia extends StatelessWidget {
   }
 
   Widget _content(BuildContext context) {
-    if (item.ilustracao == null) {
-      Tema tema = ConfiguracaoApp.of(context).tema;
-
-      return Container(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                item.titulo,
-                style: TextStyle(
-                  color: tema.primary,
-                  fontSize: 22,
-                ),
-              ),
-            ),
-            if (item.apresentacao != null) const SizedBox(height: 10),
-            if (item.apresentacao != null)
-              Text(
-                item.apresentacao,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 14,
-                ),
-              ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      );
-    }
+    Tema tema = ConfiguracaoApp.of(context).tema;
 
     return SizedBox(
-      height: 280,
+      height: double.infinity,
       width: double.infinity,
       child: Stack(
         children: [
           FadeInImage(
             placeholder: MemoryImage(kTransparentImage),
-            image: ArquivoImageProvider(item.ilustracao.id),
-            height: 280,
+            image: item.ilustracao != null
+                ? ArquivoImageProvider(item.ilustracao.id)
+                : tema.institucionalBackground,
+            height: double.infinity,
             width: double.infinity,
             fit: BoxFit.cover,
           ),

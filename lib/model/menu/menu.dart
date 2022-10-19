@@ -9,9 +9,10 @@ class Menu {
   int notificacoes;
   String funcionalidade;
   List<Menu> submenus;
-  
-  
-  Menu({this.nome, this.icone, this.ordem, this.link, this.notificacoes, this.funcionalidade, this.submenus});
+
+  Menu categoria;
+
+  Menu({this.nome, this.icone, this.ordem, this.link, this.notificacoes, this.funcionalidade, this.submenus, this.categoria});
 
   factory Menu.fromJson(Map<String, dynamic> json) => _$MenuFromJson(json);
 

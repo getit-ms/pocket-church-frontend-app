@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>705887064405-2esannb799gtdr8fo551hkjcupsqm3j2.apps.googleusercontent.com</string>
+	<string>936344923382-nee9tafdjo4bqn99tj62e9onnkp6p6qs.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.705887064405-2esannb799gtdr8fo551hkjcupsqm3j2</string>
+	<string>com.googleusercontent.apps.936344923382-nee9tafdjo4bqn99tj62e9onnkp6p6qs</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBOK81GXdwLjefSn2GjZETRq03zFkTifqk</string>
+	<string>AIzaSyA9nyiqO6ROQwghfeb4xK2Sn01WoZj-LYY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>705887064405</string>
+	<string>936344923382</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>br.org.ipcg</string>
+	<string>br.com.getit.calvin.ipbp</string>
 	<key>PROJECT_ID</key>
-	<string>ipcg-987a0</string>
+	<string>ipbp-44193</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ipcg-987a0.appspot.com</string>
+	<string>ipbp-44193.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:705887064405:ios:10f19b8add0db833badfdc</string>
+	<string>1:936344923382:ios:56912aa2073f4e540d10d7</string>
 	<key>DATABASE_URL</key>
-	<string>https://ipcg-987a0.firebaseio.com</string>
+	<string>https://ipbp-44193.firebaseio.com</string>
 </dict>
 </plist>

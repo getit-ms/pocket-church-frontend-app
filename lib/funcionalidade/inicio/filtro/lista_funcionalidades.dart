@@ -59,10 +59,10 @@ class _ItemMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-      return ShimmerPlaceholder(
-        active: menu == null,
-        child: _content(context),
-      );
+    return ShimmerPlaceholder(
+      active: menu == null,
+      child: _content(context),
+    );
   }
 
   Widget _content(BuildContext context) {
@@ -102,18 +102,13 @@ class _ItemMenu extends StatelessWidget {
                   ),
                 ],
               ),
-              child: menu?.icone != null
-                  ? Icon(
-                      IconUtil.fromString(menu.icone),
-                      color: tema.primary,
-                    )
-                  : Text(
-                      menu?.nome?.substring(0, 1) ?? "",
-                      style: TextStyle(
-                        color: tema.primary,
-                        fontSize: 24,
-                      ),
-                    ),
+              child: Text(
+                menu?.nome?.substring(0, 1) ?? "",
+                style: TextStyle(
+                  color: tema.primary,
+                  fontSize: 24,
+                ),
+              ),
             ),
             const SizedBox(height: 10),
             if (menu != null)

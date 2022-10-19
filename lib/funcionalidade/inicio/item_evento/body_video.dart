@@ -16,26 +16,36 @@ class BodyVideo extends StatelessWidget {
       },
       child: Column(
         children: [
-          Stack(
-            children: [
-              FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: item.urlIlustracao,
-                height: 210,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-              Positioned.fill(
-                child: Container(
-                  color: Colors.black26,
-                  alignment: Alignment.center,
-                  child: Icon(
-                    FontAwesomeIcons.youtube,
-                    size: 80,
+          Expanded(
+            child: Stack(
+              children: [
+                FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: item.urlIlustracao,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                Positioned.fill(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black12,
+                          Colors.white12,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      )
+                    ),
+                    child: Icon(
+                      FontAwesomeIcons.youtube,
+                      size: 80,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Container(
             width: double.infinity,

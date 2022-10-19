@@ -97,8 +97,9 @@ class PlayerFeedbackState extends State<PlayerFeedback> {
         });
       }
 
-    } catch (ex) {
+    } catch (ex, stack) {
       print(ex);
+      print(stack);
     }
 
   }

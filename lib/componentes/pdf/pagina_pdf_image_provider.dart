@@ -30,28 +30,28 @@ class PaginaPDFImageProvider extends ImageProvider<PaginaPDFImageProvider> {
     return SynchronousFuture<PaginaPDFImageProvider>(this);
   }
 
-  int _getWidth(int originalWidth, int originalHeight) {
+  double _getWidth(double originalWidth, double originalHeight) {
     if (width != null) {
-      return width.toInt();
+      return width;
     }
 
     if (height != null) {
-      return ((height / originalHeight) * originalWidth).toInt();
+      return ((height / originalHeight) * originalWidth);
     }
 
-    return (originalWidth * scale).toInt();
+    return (originalWidth * scale);
   }
 
-  int _getHeight(int originalWidth, int originalHeight) {
+  double _getHeight(double originalWidth, double originalHeight) {
     if (height != null) {
-      return height.toInt();
+      return height;
     }
 
     if (width != null) {
-      return ((width / originalWidth) * originalHeight).toInt();
+      return ((width / originalWidth) * originalHeight);
     }
 
-    return (originalHeight * scale).toInt();
+    return (originalHeight * scale);
   }
 
   Future<Codec> _loadAsync(PaginaPDFImageProvider key) async {
@@ -61,7 +61,7 @@ class PaginaPDFImageProvider extends ImageProvider<PaginaPDFImageProvider> {
       final page = await document.getPage(numeroPagina);
       try {
         return await page.render(
-            format: PdfPageFormat.JPEG,
+            format: PdfPageImageFormat.jpeg,
             width: _getWidth(page.width, page.height),
             height: _getHeight(page.width, page.height),
             backgroundColor: "#FFFFFFFF"

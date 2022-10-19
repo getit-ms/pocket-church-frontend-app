@@ -9,6 +9,7 @@ class BodyBoletim extends StatelessWidget {
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
 
+    var mediaQuery = MediaQuery.of(context);
     return InkWell(
       onTap: () {
         NavigatorUtil.navigate(
@@ -25,18 +26,18 @@ class BodyBoletim extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.only(
-          right: 10,
-          left: 10,
+          right: 20,
+          left: 20,
           top: 10,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width / 2,
+              alignment: Alignment.centerRight,
+              width: mediaQuery.size.width / 2,
               child: Container(
-                height: 200,
-                width: MediaQuery.of(context).size.width / 2.2,
+                width: mediaQuery.size.width / 2.2,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.only(
@@ -68,17 +69,13 @@ class BodyBoletim extends StatelessWidget {
             ),
             const SizedBox(width: 20),
             Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    item.titulo,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: tema.primary,
-                      fontSize: 25,
-                    ),
-                  ),
-                ],
+              child: Text(
+                item.titulo,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: tema.primary,
+                  fontSize: 25,
+                ),
               ),
             ),
           ],

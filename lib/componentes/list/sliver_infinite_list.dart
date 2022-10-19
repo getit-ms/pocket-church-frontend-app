@@ -120,8 +120,9 @@ class SliverInfiniteListState<T> extends State<SliverInfiniteList<T>> {
           widget.cacheSaver(resultados);
         }
       });
-    } catch (ex) {
+    } catch (ex, stack) {
       print(ex);
+      print(stack);
 
       try {
         setState(() {

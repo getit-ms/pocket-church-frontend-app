@@ -127,11 +127,11 @@ class _ListaVersiculosState extends State<ListaVersiculos> {
   }
 
   Container _opcoesVersiculo() {
-    Tema tema = ConfiguracaoApp.of(context).tema;
+    ThemeData theme = Theme.of(context);
 
     return Container(
       height: 75,
-      color: const Color(0xFFD0D0D0),
+      color: theme.cardColor,
       padding: const EdgeInsets.all(10),
       child: Row(
         children: <Widget>[

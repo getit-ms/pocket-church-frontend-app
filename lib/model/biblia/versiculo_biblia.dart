@@ -7,11 +7,14 @@ class VersiculoBiblia {
   int versiculo;
   String texto;
 
+  LivroCapitulo livroCapitulo;
+
   VersiculoBiblia({
     this.id,
     this.capitulo,
     this.versiculo,
     this.texto,
+    this.livroCapitulo,
   });
 
   factory VersiculoBiblia.fromJson(Map<String, dynamic> json) =>

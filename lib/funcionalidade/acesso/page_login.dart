@@ -125,7 +125,12 @@ class PageLoginState extends State<PageLogin> {
                             SizedBox(
                               height: 20,
                             ),
-                            _buildForm(),
+                            SizedBox(
+                              width: mediaQueryData.size.width > 800
+                                  ? mediaQueryData.size.width * .6
+                                  : double.infinity,
+                              child: _buildForm(),
+                            ),
                           ],
                         ),
                       ),

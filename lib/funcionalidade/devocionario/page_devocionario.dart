@@ -152,7 +152,17 @@ class PageDevocionario extends StatelessWidget {
                   ),
                 ),
                 child: dia.id == null
-                    ? Container()
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: IntlText(
+                          "devocional.nenhum_registro_dia",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
                     : Image(
                         image: ArquivoImageProvider(
                           dia.thumbnail.id,

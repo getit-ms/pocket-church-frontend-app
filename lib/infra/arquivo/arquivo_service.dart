@@ -4,6 +4,7 @@ const MILLIS_7_DIAS = 1000 * 60 * 60 * 24 * 7;
 
 class ArquivoService {
   ArquivoApi arquivoApi = new ArquivoApi();
+  ImagePicker imagePicker = new ImagePicker();
 
   init() async {
     Directory baseDir = Directory(await _baseDir());
@@ -94,7 +95,7 @@ class ArquivoService {
   }
 
   Future<String> selecionaImagem() async {
-    File file = await ImagePicker.pickImage(
+    XFile file = await imagePicker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 40,
     );
@@ -102,7 +103,7 @@ class ArquivoService {
   }
 
   Future<String> tiraFoto() async {
-    File file = await ImagePicker.pickImage(
+    XFile file = await imagePicker.pickImage(
       source: ImageSource.camera,
       imageQuality: 40,
     );

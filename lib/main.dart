@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -36,15 +38,6 @@ Future<void> Function(BuildContext context) _loadingExecute(
   return (BuildContext context) async {
     print("Inicialização do app");
 
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.white54,
-        systemNavigationBarColor: Colors.black,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
-    );
-
     Intl.defaultLocale = 'pt_BR';
     await initializeDateFormatting();
 
@@ -68,11 +61,14 @@ Future<void> Function(BuildContext context) _loadingExecute(
 
     await acessoBloc.init();
 
+    print("Inicializando institucional");
+    institucionalBloc.load();
+
+    await Firebase.initializeApp();
+
     print("Inicializando messaging");
 
     messagingService.init(requestPushPermission: requestPushPermission);
-
-    institucionalBloc.load();
 
     messagingService.register();
 
@@ -84,29 +80,41 @@ Future<void> Function(BuildContext context) _loadingExecute(
 
     await min;
 
-    acessoBloc.menu.listen((meun) async {
-      if (acessoBloc.temAcesso(Funcionalidade.BIBLIA)) {
+    print("Mapeando caches locais");
+
+    acessoBloc.temAcesso(Funcionalidade.BIBLIA).listen((temAcessoBiblia) async {
+      if (temAcessoBiblia) {
         try {
           await bibliaBloc.init();
-        } catch (ex) {
+        } catch (ex, stack) {
           print(ex);
+          print(stack);
         }
       }
+    });
 
-      if (acessoBloc
-          .temAcesso(Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA)) {
+    acessoBloc
+        .temAcesso(Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA)
+        .listen((temAcessoPlanoLeitura) async {
+      if (temAcessoPlanoLeitura) {
         try {
           await leituraBloc.init();
-        } catch (ex) {
+        } catch (ex, stack) {
           print(ex);
+          print(stack);
         }
       }
+    });
 
-      if (acessoBloc.temAcesso(Funcionalidade.CONSULTAR_HINARIO)) {
+    acessoBloc
+        .temAcesso(Funcionalidade.CONSULTAR_HINARIO)
+        .listen((temAcessoHinario) async {
+      if (temAcessoHinario) {
         try {
           await hinoBloc.init();
-        } catch (ex) {
+        } catch (ex, stack) {
           print(ex);
+          print(stack);
         }
       }
     });
@@ -155,17 +163,12 @@ class _PrepareAppState extends State<PrepareApp> {
       });
     }
 
-    SystemChrome.setEnabledSystemUIOverlays([
-      SystemUiOverlay.top,
-      SystemUiOverlay.bottom,
-    ]);
-
     setState(() {
       _loading = false;
     });
   }
 
-  void _notificaErroInicializacao(ex) {
+  _notificaErroInicializacao(ex) async {
     try {
       ChamadoApi chamadoApi = new ChamadoApi();
 
@@ -177,11 +180,12 @@ class _PrepareAppState extends State<PrepareApp> {
         apiConfig.defaultHeaders['Igreja'] = defaultConfig.chaveIgreja;
       }
 
-      chamadoApi.cadastra(new Sugestao(
+      await chamadoApi.cadastra(new Sugestao(
         tipo: 'ERRO',
         descricao: "Falha ao iniciar app: \n$ex",
         nomeSolicitante: 'Chamado Automático',
         emailSolicitante: 'suporte@getitmobilesolutions.com',
+        dataSolicitacao: DateTime.now(),
       ));
     } catch (ex) {
       print("Falha ao notificar erro: $ex");
@@ -191,28 +195,32 @@ class _PrepareAppState extends State<PrepareApp> {
   @override
   Widget build(BuildContext context) {
     if (_error) {
-      return Material(
-        child: Container(
-          color: Colors.white,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: const <Widget>[
-              Icon(
-                FontAwesomeIcons.sadCry,
-                size: 30,
-                color: Colors.black54,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              IntlText(
-                "mensagens.MSG-608",
-                style: TextStyle(
-                  color: Colors.black87,
+      return MaterialApp(
+        home: Material(
+          child: Container(
+            color: Colors.white,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Icon(
+                  FontAwesomeIcons.sadCry,
+                  size: 50,
+                  color: Colors.black54,
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+                IntlText(
+                  "mensagens.MSG-608",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -253,7 +261,6 @@ class PocketChurchApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ConfiguracaoAppState config = ConfiguracaoApp.of(context);
     return MaterialApp(
-      locale: const Locale('pt-BR'),
       debugShowCheckedModeBanner: false,
       theme: config.buildTheme(),
       darkTheme: config.buildDarkTheme(),

@@ -28,8 +28,7 @@ class _PageInscricaoEventoState extends State<PageInscricaoEvento> {
     return PageTemplate(
       deveEstarAutenticado: true,
       title: const IntlText("evento.inscricao"),
-      body: Container(
-        color: Colors.white,
+      body: Material(
         child: Form(
           key: _form,
           child: SingleChildScrollView(

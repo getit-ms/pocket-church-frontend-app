@@ -188,6 +188,7 @@ const _$FormatoCampoEventoEnumMap = {
   FormatoCampoEvento.NENHUM: 'NENHUM',
   FormatoCampoEvento.CEP: 'CEP',
   FormatoCampoEvento.CPF_CNPJ: 'CPF_CNPJ',
+  FormatoCampoEvento.TELEFONE: 'TELEFONE',
   FormatoCampoEvento.NUMERO_INTEIRO: 'NUMERO_INTEIRO',
   FormatoCampoEvento.NUMERO_REAL: 'NUMERO_REAL',
   FormatoCampoEvento.MONETARIO: 'MONETARIO',

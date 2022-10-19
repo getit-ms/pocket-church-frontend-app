@@ -19,6 +19,7 @@ class _PageListaAconselhamentosState extends State<PageListaAconselhamentos> {
 
   @override
   Widget build(BuildContext context) {
+    var mq = MediaQuery.of(context);
     return PageTemplate(
       deveEstarAutenticado: true,
       title: IntlText("agenda.agendamentos"),
@@ -31,7 +32,8 @@ class _PageListaAconselhamentosState extends State<PageListaAconselhamentos> {
               builder: _builder,
             ),
           ),
-          _buildNovoAgendamento(context)
+          _buildNovoAgendamento(context),
+          SizedBox(height: mq.padding.bottom),
         ],
       ),
     );

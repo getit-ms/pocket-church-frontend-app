@@ -76,7 +76,6 @@ class _BodyAudioState extends State<BodyAudio> {
                       child: _loading
                           ? SizedBox(
                               width: 100,
-                              height: 100,
                               child: CircularProgressIndicator(
                                 backgroundColor: Colors.white,
                                 strokeWidth: 10,
@@ -94,18 +93,14 @@ class _BodyAudioState extends State<BodyAudio> {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 20),
             Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    item.titulo,
-                    style: TextStyle(
-                      color: tema.primary,
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
+              child: Text(
+                item.titulo,
+                style: TextStyle(
+                  color: tema.primary,
+                  fontSize: 18,
+                ),
               ),
             ),
           ],

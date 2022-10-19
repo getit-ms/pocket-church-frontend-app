@@ -28,35 +28,33 @@ class ListaPaginasPDF extends StatelessWidget {
   }
 
   Widget _rendering(BuildContext context, ArquivoPDF arquivoPDF) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    return GridView.builder(
-      itemCount: arquivoPDF?.paginas?.length ?? 6,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: arquivoPDF == null
-            ? .8
-            : arquivoPDF.paginas[0].width / arquivoPDF.paginas[0].height,
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Wrap(
+        spacing: 20,
+        runSpacing: 20,
+        children: [
+          for (int index = 0;
+              index < (arquivoPDF?.paginas?.length ?? 6);
+              index++)
+            Container(
+              width: 180,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3,
+                    color: Colors.black54,
+                  )
+                ],
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: ShimmerPlaceholder(
+                active: arquivoPDF?.paginas == null,
+                child: _outerPagina(context, arquivoPDF, index),
+              ),
+            ),
+        ],
       ),
-      padding: const EdgeInsets.all(10),
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 3,
-                color: Colors.black54,
-              )
-            ],
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: ShimmerPlaceholder(
-            active: arquivoPDF == null,
-            child: _outerPagina(context, arquivoPDF, index),
-          ),
-        );
-      },
     );
   }
 
@@ -69,19 +67,23 @@ class ListaPaginasPDF extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: InkWell(
-          child: arquivoPDF != null ? _pagina(index, arquivoPDF) : Container(),
+          child: arquivoPDF != null
+              ? _pagina(index, arquivoPDF)
+              : Container(
+                  height: 250,
+                ),
           onTap: arquivoPDF == null
               ? null
               : () {
-            NavigatorUtil.navigate(
-              context,
-              builder: (context) => GaleriaPDF(
-                titulo: titulo,
-                arquivo: arquivo,
-                initialPage: index + 1,
-              ),
-            );
-          },
+                  NavigatorUtil.navigate(
+                    context,
+                    builder: (context) => GaleriaPDF(
+                      titulo: titulo,
+                      arquivo: arquivo,
+                      initialPage: index + 1,
+                    ),
+                  );
+                },
         ),
       ),
     );
@@ -102,12 +104,13 @@ class ListaPaginasPDF extends StatelessWidget {
     }
 
     return Hero(
-        tag: 'pagina_' + (index + 1).toString(),
-        child: FadeInImage(
-          placeholder: MemoryImage(kTransparentImage),
-          image: FileImage(file, scale: .5),
-          fit: BoxFit.contain,
-        ),);
+      tag: 'pagina_' + (index + 1).toString(),
+      child: FadeInImage(
+        placeholder: MemoryImage(kTransparentImage),
+        image: FileImage(file, scale: .5),
+        fit: BoxFit.contain,
+      ),
+    );
   }
 
   Widget _error(BuildContext context, dynamic ex) {

@@ -1,24 +1,19 @@
 part of pocket_church.infra;
 
-
 class MessagingService {
   BehaviorSubject<AppNotification> _resumeNotificationSubject =
-  new BehaviorSubject<AppNotification>();
+      new BehaviorSubject<AppNotification>();
   BehaviorSubject<AppNotification> _notificationSubject =
-  new BehaviorSubject<AppNotification>();
-
-  final firebase.FirebaseMessaging _firebaseMessaging = new firebase.FirebaseMessaging();
+      new BehaviorSubject<AppNotification>();
 
   init({bool requestPushPermission = true}) {
     if (requestPushPermission) {
-      _firebaseMessaging.requestNotificationPermissions();
+      firebase.FirebaseMessaging.instance.requestPermission();
     }
 
-    _firebaseMessaging.configure(
-      onLaunch: _onLaunch,
-      onMessage: _onMessage,
-      onResume: _onResume,
-    );
+    firebase.FirebaseMessaging.onMessage.listen(_onMessage);
+    firebase.FirebaseMessaging.onMessageOpenedApp.listen(_onResume);
+    firebase.FirebaseMessaging.onBackgroundMessage(_onLaunch);
   }
 
   get onResume => _resumeNotificationSubject.stream;
@@ -28,12 +23,13 @@ class MessagingService {
   register() async {
     Configuracao config = configuracaoBloc.currentConfig;
 
-    var token = await _firebaseMessaging.getToken();
+    var token = await firebase.FirebaseMessaging.instance.getToken();
 
     await acessoApi.registerPush(
       pushkey: token,
       version: config.version,
-      tipoDispositivo: Platform.isIOS ? TipoDispositivo.IOS : TipoDispositivo.ANDROID,
+      tipoDispositivo:
+          Platform.isIOS ? TipoDispositivo.IOS : TipoDispositivo.ANDROID,
     );
   }
 

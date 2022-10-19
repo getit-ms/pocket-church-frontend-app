@@ -304,4 +304,14 @@ class EventoCalendario implements EventInterface {
     return horario.id ^ date.millisecond;
   }
 
+  @override
+  String getDescription() {
+    return "Horário";
+  }
+
+  @override
+  String getLocation() {
+    return null;
+  }
+
 }

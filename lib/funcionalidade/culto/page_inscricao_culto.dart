@@ -27,8 +27,7 @@ class _PageInscricaoCultoState extends State<PageInscricaoCulto> {
 
     return PageTemplate(
       title: const IntlText("culto.inscricao"),
-      body: Container(
-        color: Colors.white,
+      body: Material(
         child: Form(
           key: _form,
           child: SingleChildScrollView(

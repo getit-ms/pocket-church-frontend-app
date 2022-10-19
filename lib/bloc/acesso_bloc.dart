@@ -13,13 +13,58 @@ const String MENU = "menu";
 
 class AcessoBloc {
   BehaviorSubject<Membro> _membro =
-      new BehaviorSubject<Membro>.seeded(null);
+  new BehaviorSubject<Membro>.seeded(null);
   BehaviorSubject<Menu> _menu =
-      new BehaviorSubject<Menu>.seeded(Menu(submenus: []));
+  new BehaviorSubject<Menu>.seeded(Menu(submenus: []));
   BehaviorSubject<bool> _exigeAceiteTermo =
-      new BehaviorSubject<bool>.seeded(false);
+  new BehaviorSubject<bool>.seeded(false);
 
   Stream<Menu> get menu => _menu.stream;
+
+  Stream<List<Menu>> get menuOptions =>
+      _menu.stream.map((menu) {
+        List<Menu> menus = [];
+
+        menu?.submenus
+            ?.where((child) => child.funcionalidade != 'INICIO_APLICATIVO')
+            ?.forEach(
+              (child) {
+            if (child.link != null) {
+              menus.add(Menu(
+                icone: child.icone,
+                link: child.link,
+                funcionalidade: child.funcionalidade,
+                nome: child.nome,
+                notificacoes: child.notificacoes,
+                ordem: child.ordem,
+                categoria: child,
+              ));
+            }
+
+            if (child.submenus != null) {
+              child.submenus
+                  .where((sbm) => child.funcionalidade != 'INICIO_APLICATIVO')
+                  .forEach(
+                    (sbm) {
+                  if (sbm.link != null) {
+                    menus.add(Menu(
+                      icone: sbm.icone,
+                      link: sbm.link,
+                      funcionalidade: sbm.funcionalidade,
+                      nome: sbm.nome,
+                      notificacoes: sbm.notificacoes,
+                      ordem: sbm.ordem,
+                      categoria: child,
+                    ));
+                  }
+                },
+              );
+            }
+          },
+        );
+
+        return menus;
+      });
 
   Menu get currentMenu => _menu.value;
 
@@ -67,7 +112,11 @@ class AcessoBloc {
     }
   }
 
-  bool temAcesso(Funcionalidade func, {Menu menu}) {
+  Stream<bool> temAcesso(Funcionalidade func) {
+    return _menu.stream.map((menu) => _temAcesso(func, menu: menu));
+  }
+
+  bool _temAcesso(Funcionalidade func, {Menu menu}) {
     menu = menu ?? _menu.value;
 
     if (menu != null) {
@@ -77,7 +126,7 @@ class AcessoBloc {
 
       if (menu.submenus?.isNotEmpty ?? false) {
         for (Menu child in menu.submenus) {
-          if (temAcesso(func, menu: child)) {
+          if (_temAcesso(func, menu: child)) {
             return true;
           }
         }
@@ -87,10 +136,8 @@ class AcessoBloc {
     return false;
   }
 
-  Future<Membro> login(
-    String username,
-    String password,
-  ) async {
+  Future<Membro> login(String username,
+      String password,) async {
     var sprefs = await SharedPreferences.getInstance();
 
     Configuracao config = configuracaoBloc.currentConfig;
@@ -99,7 +146,7 @@ class AcessoBloc {
       username: username,
       password: password,
       tipoDispositivo:
-          Platform.isIOS ? TipoDispositivo.IOS : TipoDispositivo.ANDROID,
+      Platform.isIOS ? TipoDispositivo.IOS : TipoDispositivo.ANDROID,
       versao: config.version,
     );
 

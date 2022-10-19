@@ -41,7 +41,6 @@ class BodyEstudo extends StatelessWidget {
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width / 2,
             child: Container(
-              height: 200,
               width: MediaQuery.of(context).size.width / 2.2,
               decoration: BoxDecoration(
                 color: Colors.white,

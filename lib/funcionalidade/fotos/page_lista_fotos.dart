@@ -239,7 +239,7 @@ class HeaderFotos extends SliverPersistentHeaderDelegate {
               style: TextStyle(
                 fontSize: lerpDouble(21, 32, factor),
                 color: Color.lerp(
-                  Theme.of(context).appBarTheme.textTheme.headline6.color,
+                  Theme.of(context).textTheme.headline6.color,
                   Colors.white,
                   factor,
                 ),

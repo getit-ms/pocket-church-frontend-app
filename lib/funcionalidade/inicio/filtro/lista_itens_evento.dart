@@ -21,7 +21,7 @@ class ListaItensEvento extends StatelessWidget {
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
           firstChild: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               HeaderFiltro(
                 title: const IntlText("filtro.conteudo"),

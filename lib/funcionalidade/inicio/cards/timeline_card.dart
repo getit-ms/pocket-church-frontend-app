@@ -53,7 +53,7 @@ class _TimelineCardState<T> extends State<TimelineCard<T>>
       crossFadeState: widget.items.isNotEmpty
           ? CrossFadeState.showFirst
           : CrossFadeState.showSecond,
-      firstChild: _list(context, items: widget.items),
+      firstChild: widget.items.isEmpty ? Container() : _list(context, items: widget.items),
       secondChild: Container(),
     );
   }

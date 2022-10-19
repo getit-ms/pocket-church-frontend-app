@@ -557,6 +557,14 @@ class ConfiguracaoAppState extends State<ConfiguracaoApp> {
       accentColor: tema.primary,
       primaryColor: tema.primary,
       buttonColor: tema.buttonBackground,
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: tema.primary,
+      ),
+      indicatorColor: tema.primary,
+      colorScheme: ThemeData.light().colorScheme.copyWith(
+        primary: tema.primary,
+        secondary: tema.secondary,
+      ),
       scaffoldBackgroundColor: const Color(0xFFF5F5F5),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: Colors.white,
@@ -602,6 +610,14 @@ class ConfiguracaoAppState extends State<ConfiguracaoApp> {
       brightness: Brightness.dark,
       canvasColor: Colors.grey[900],
       cardColor: Colors.grey[900],
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: tema.primary,
+      ),
+      indicatorColor: tema.primary,
+      colorScheme: ThemeData.dark().colorScheme.copyWith(
+        primary: tema.primary,
+        secondary: tema.secondary,
+      ),
       accentColor: tema.primary,
       primaryColor: tema.primary,
       buttonColor: tema.buttonBackground,

@@ -47,6 +47,8 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
     List<int> capitulos =
         await bibliaDAO.findCapitulosLivroBiblia(livro.livro.id);
 
+    print("${livro.livro.id} ${livro.livro.nome} - ${capitulos.length}");
+
     setState(() {
       _livro = livro;
       _capitulos = capitulos;
@@ -131,7 +133,10 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: <Widget>[_tabLivros(), _tabCapitulos()],
+              children: <Widget>[
+                _tabLivros(),
+                _tabCapitulos(),
+              ],
             ),
           )
         ],
@@ -140,41 +145,40 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
   }
 
   Widget _tabLivros() {
-    return Container(
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: const TestamentoHeader(
-              child: const IntlText("biblia.velho_testamento")
-            ),
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: const TestamentoHeader(
+              child: const IntlText("biblia.velho_testamento")),
+        ),
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) =>
+                _buildButtonLivro('VELHO', _livrosAntigo[index]),
+            childCount: _livrosAntigo.length,
           ),
-          SliverGrid(
-            delegate: SliverChildListDelegate(_livrosAntigo
-                .map((livro) => _buildButtonLivro('VELHO', livro))
-                .toList()),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 2,
-            ),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 2,
           ),
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: const TestamentoHeader(
-                child: const IntlText("biblia.novo_testamento")
-            ),
+        ),
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: const TestamentoHeader(
+              child: const IntlText("biblia.novo_testamento")),
+        ),
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => _buildButtonLivro('NOVO', _livrosNovo[index]),
+            childCount: _livrosNovo.length,
           ),
-          SliverGrid(
-            delegate: SliverChildListDelegate(_livrosNovo
-                .map((livro) => _buildButtonLivro('NOVO', livro))
-                .toList()),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 2,
-            ),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 2,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -187,20 +191,23 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
         livro.nome,
         style: TextStyle(
           fontSize: 16,
-          color: _livro?.livro == livro ? tema.primary : isDark ? Colors.white70 : Colors.black87,
-          fontWeight: _livro?.livro == livro ? FontWeight.bold : FontWeight.normal,
+          color: _livro?.livro == livro
+              ? tema.primary
+              : isDark
+                  ? Colors.white70
+                  : Colors.black87,
+          fontWeight:
+              _livro?.livro == livro ? FontWeight.bold : FontWeight.normal,
         ),
       ),
-      onPressed: () {
-        setState(() async {
-          await _seleciona(LivroCapitulo(
-            testamento: testamento,
-            livro: livro,
-            capitulo: 1,
-          ));
+      onPressed: () async {
+        await _seleciona(LivroCapitulo(
+          testamento: testamento,
+          livro: livro,
+          capitulo: 1,
+        ));
 
-          _tabController.animateTo(1);
-        });
+        _tabController.animateTo(1);
       },
     );
   }
@@ -214,59 +221,56 @@ class _SelecaoCapituloState extends State<SelecaoCapitulo>
         capitulo.toString(),
         style: TextStyle(
           fontSize: 16,
-          color: _livro.capitulo == capitulo ? tema.primary : isDark ? Colors.white70 : Colors.black87,
-          fontWeight: _livro.capitulo == capitulo ? FontWeight.bold : FontWeight.normal,
+          color: _livro.capitulo == capitulo
+              ? tema.primary
+              : isDark
+                  ? Colors.white70
+                  : Colors.black87,
+          fontWeight:
+              _livro.capitulo == capitulo ? FontWeight.bold : FontWeight.normal,
         ),
       ),
-      onPressed: () {
-        setState(() async {
-          await _seleciona(LivroCapitulo(
-            testamento: _livro.testamento,
-            livro: _livro?.livro,
-            capitulo: capitulo,
-          ));
+      onPressed: () async {
+        await _seleciona(LivroCapitulo(
+          testamento: _livro.testamento,
+          livro: _livro?.livro,
+          capitulo: capitulo,
+        ));
 
-          Navigator.of(context).pop(_livro);
-          if (widget.onSelected != null) {
-            widget.onSelected(_livro);
-          }
-        });
+        Navigator.of(context).pop(_livro);
+        if (widget.onSelected != null) {
+          widget.onSelected(_livro);
+        }
       },
     );
   }
 
   Widget _tabCapitulos() {
-    return Container(
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverGrid(
-            delegate: SliverChildListDelegate(
-                _capitulos.map(_buildButtonCapitulo).toList()),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              childAspectRatio: 1.5,
-            ),
-          ),
-        ],
+    return GridView.builder(
+      itemBuilder: ((context, index) => index >= _capitulos.length ? null : _buildButtonCapitulo(_capitulos[index])),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        childAspectRatio: 1.5,
       ),
     );
   }
 }
 
-class TestamentoHeader extends SliverPersistentHeaderDelegate{
+class TestamentoHeader extends SliverPersistentHeaderDelegate {
   final Widget child;
 
   const TestamentoHeader({this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Container(
       color: isDark ? Colors.grey[800] : const Color(0xFFE9E9E9),
       alignment: Alignment.center,
       padding: const EdgeInsets.all(10),
-      child:  DefaultTextStyle(
+      child: DefaultTextStyle(
         child: child,
         style: TextStyle(
           fontSize: 17,
@@ -287,5 +291,4 @@ class TestamentoHeader extends SliverPersistentHeaderDelegate{
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
-
 }

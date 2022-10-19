@@ -15,7 +15,8 @@ enum FormatoCampoEvento {
   NUMERO_INTEIRO,
   NUMERO_REAL,
   MONETARIO,
-  IMAGEM
+  IMAGEM,
+  TELEFONE
 }
 
 enum TipoValidacaoCampo {

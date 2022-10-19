@@ -174,22 +174,28 @@ class _PagePreferenciasState extends State<PagePreferencias> {
   }
 
   Widget _receberNotificacoesVideos() {
-    if (acessoBloc.temAcesso(Funcionalidade.YOUTUBE)) {
-      return OpcaoPreferencias(
-        icon: Icons.ondemand_video,
-        label: IntlText("preferencias.deseja_receber_notificacoes_video"),
-        value: _preferencias.desejaReceberNotificacoesVideos ?? false,
-        onChanged: (selected) {
-          setState(() {
-            _preferencias.desejaReceberNotificacoesVideos = selected;
-          });
+    return StreamBuilder<bool>(
+      initialData: false,
+      stream: acessoBloc.temAcesso(Funcionalidade.YOUTUBE),
+      builder: (context, snapshot) {
+        if (!snapshot.data) {
+          return Container();
+        }
 
-          _save();
-        },
-      );
-    }
+        return OpcaoPreferencias(
+          icon: Icons.ondemand_video,
+          label: IntlText("preferencias.deseja_receber_notificacoes_video"),
+          value: _preferencias.desejaReceberNotificacoesVideos ?? false,
+          onChanged: (selected) {
+            setState(() {
+              _preferencias.desejaReceberNotificacoesVideos = selected;
+            });
 
-    return Container();
+            _save();
+          },
+        );
+      },
+    );
   }
 
   _versiculoDiario() {
@@ -240,105 +246,124 @@ class _PagePreferenciasState extends State<PagePreferencias> {
   }
 
   _leituraBiblica() {
-    if (acessoBloc.temAcesso(Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA)) {
-      return Column(
-        children: <Widget>[
-          const SizedBox(
-            height: 20,
-          ),
-          const InfoDivider(
-            child: IntlText("preferencias.leitura_biblica"),
-          ),
-          OpcaoPreferencias(
-            icon: Icons.chrome_reader_mode,
-            label: IntlText("preferencias.deseja_receber_lembrete_leitura"),
-            value: _preferencias.desejaReceberLembreteLeitura ?? false,
-            onChanged: (selected) {
-              setState(() {
-                _preferencias.desejaReceberLembreteLeitura = selected;
-              });
+    return StreamBuilder<bool>(
+        initialData: false,
+        stream: acessoBloc
+            .temAcesso(Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA),
+        builder: (context, snapshot) {
+          if (!snapshot.data) {
+            return Container();
+          }
 
-              _save();
-            },
-          ),
-          AnimatedCrossFade(
-            firstChild: Container(),
-            secondChild: SelectOpcao<String>(
-              value: _preferencias.horaLembreteLeitura,
-              onChange: (hora) {
-                setState(() {
-                  _preferencias.horaLembreteLeitura = hora;
-                });
+          return Column(
+            children: <Widget>[
+              const SizedBox(
+                height: 20,
+              ),
+              const InfoDivider(
+                child: IntlText("preferencias.leitura_biblica"),
+              ),
+              OpcaoPreferencias(
+                icon: Icons.chrome_reader_mode,
+                label: IntlText("preferencias.deseja_receber_lembrete_leitura"),
+                value: _preferencias.desejaReceberLembreteLeitura ?? false,
+                onChanged: (selected) {
+                  setState(() {
+                    _preferencias.desejaReceberLembreteLeitura = selected;
+                  });
 
-                _save();
-              },
-              opcoes: [
-                Opcao(intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
-                Opcao(intlLabel: "preferencias.hora._14_00", valor: "_14_00"),
-                Opcao(intlLabel: "preferencias.hora._20_00", valor: "_20_00"),
-              ],
-            ),
-            crossFadeState: _preferencias.desejaReceberLembreteLeitura
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 300),
-          ),
-        ],
-      );
-    }
+                  _save();
+                },
+              ),
+              AnimatedCrossFade(
+                firstChild: Container(),
+                secondChild: SelectOpcao<String>(
+                  value: _preferencias.horaLembreteLeitura,
+                  onChange: (hora) {
+                    setState(() {
+                      _preferencias.horaLembreteLeitura = hora;
+                    });
 
-    return Container();
+                    _save();
+                  },
+                  opcoes: [
+                    Opcao(
+                        intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
+                    Opcao(
+                        intlLabel: "preferencias.hora._14_00", valor: "_14_00"),
+                    Opcao(
+                        intlLabel: "preferencias.hora._20_00", valor: "_20_00"),
+                  ],
+                ),
+                crossFadeState: _preferencias.desejaReceberLembreteLeitura
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
+                duration: const Duration(milliseconds: 300),
+              ),
+            ],
+          );
+        });
   }
 
   _notificacaoDevocionario() {
-    if (acessoBloc.temAcesso(Funcionalidade.DEVOCIONARIO)) {
-      return Column(
-        children: <Widget>[
-          const SizedBox(
-            height: 20,
-          ),
-          const InfoDivider(
-            child: IntlText("preferencias.devocionario"),
-          ),
-          OpcaoPreferencias(
-            icon: Icons.calendar_today,
-            label: IntlText("preferencias.deseja_receber_lembrete_devocionario"),
-            value: _preferencias.desejaReceberNotificacoesDevocionario ?? false,
-            onChanged: (selected) {
-              setState(() {
-                _preferencias.desejaReceberNotificacoesDevocionario = selected;
-              });
+    return StreamBuilder<bool>(
+      initialData: false,
+      stream: acessoBloc.temAcesso(Funcionalidade.DEVOCIONARIO),
+      builder: (context, snapshot) {
+        if (!snapshot.data) {
+          return Container();
+        }
 
-              _save();
-            },
-          ),
-          AnimatedCrossFade(
-            firstChild: Container(),
-            secondChild: SelectOpcao<String>(
-              value: _preferencias.horaNotificacoesDevocional,
-              onChange: (hora) {
+        return Column(
+          children: <Widget>[
+            const SizedBox(
+              height: 20,
+            ),
+            const InfoDivider(
+              child: IntlText("preferencias.devocionario"),
+            ),
+            OpcaoPreferencias(
+              icon: Icons.calendar_today,
+              label:
+                  IntlText("preferencias.deseja_receber_lembrete_devocionario"),
+              value:
+                  _preferencias.desejaReceberNotificacoesDevocionario ?? false,
+              onChanged: (selected) {
                 setState(() {
-                  _preferencias.horaNotificacoesDevocional = hora;
+                  _preferencias.desejaReceberNotificacoesDevocionario =
+                      selected;
                 });
 
                 _save();
               },
-              opcoes: [
-                Opcao(intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
-                Opcao(intlLabel: "preferencias.hora._14_00", valor: "_14_00"),
-                Opcao(intlLabel: "preferencias.hora._20_00", valor: "_20_00"),
-              ],
             ),
-            crossFadeState: _preferencias.desejaReceberNotificacoesDevocionario ?? false
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 300),
-          ),
-        ],
-      );
-    }
+            AnimatedCrossFade(
+              firstChild: Container(),
+              secondChild: SelectOpcao<String>(
+                value: _preferencias.horaNotificacoesDevocional,
+                onChange: (hora) {
+                  setState(() {
+                    _preferencias.horaNotificacoesDevocional = hora;
+                  });
 
-    return Container();
+                  _save();
+                },
+                opcoes: [
+                  Opcao(intlLabel: "preferencias.hora._08_00", valor: "_08_00"),
+                  Opcao(intlLabel: "preferencias.hora._14_00", valor: "_14_00"),
+                  Opcao(intlLabel: "preferencias.hora._20_00", valor: "_20_00"),
+                ],
+              ),
+              crossFadeState:
+                  _preferencias.desejaReceberNotificacoesDevocionario ?? false
+                      ? CrossFadeState.showSecond
+                      : CrossFadeState.showFirst,
+              duration: const Duration(milliseconds: 300),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

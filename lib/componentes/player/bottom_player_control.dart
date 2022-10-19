@@ -65,7 +65,7 @@ class BottomPlayerControlState extends State<BottomPlayerControl>
                       ? _size.value * MediaQuery.of(context).padding.bottom
                       : 0),
               child: new Stack(
-                overflow: Overflow.visible,
+                clipBehavior: Clip.none,
                 children: <Widget>[
                   new SizedBox(
                     height: _size.value * 55,

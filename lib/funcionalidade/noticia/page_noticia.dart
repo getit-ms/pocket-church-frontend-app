@@ -59,7 +59,7 @@ class _NoticiaContent extends StatelessWidget {
                         ],
                       ),
                     ),
-                    _ilustracao(context),
+                    if (noticia.ilustracao != null) _ilustracao(context),
                     Container(
                       padding: const EdgeInsets.all(20),
                       width: double.infinity,

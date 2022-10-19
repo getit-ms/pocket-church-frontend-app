@@ -28,8 +28,7 @@ class _PageInscricaoEBDState extends State<PageInscricaoEBD> {
     return PageTemplate(
       deveEstarAutenticado: true,
       title: IntlText("ebd.inscricao"),
-      body: Container(
-        color: Colors.white,
+      body: Material(
         child: Form(
           key: _form,
           child: SingleChildScrollView(

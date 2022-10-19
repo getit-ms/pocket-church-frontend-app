@@ -10,16 +10,23 @@ class ItemEventoCard extends StatelessWidget {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return _outer(
-        ShimmerPlaceholder(
-          active: item == null,
-          child: _inner(),
-        ),
-        isDark);
+      context,
+      child: ShimmerPlaceholder(
+        active: item == null,
+        child: _inner(context),
+      ),
+      isDark: isDark,
+    );
   }
 
-  Widget _outer(Widget child, bool isDark) {
+  Widget _outer(BuildContext context, {Widget child, bool isDark}) {
+    var mediaQuery = MediaQuery.of(context);
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10) +
+          (mediaQuery.size.width > 800
+              ? EdgeInsets.symmetric(
+                  horizontal: (mediaQuery.size.width * .2) / 2)
+              : EdgeInsets.zero),
       decoration: BoxDecoration(
         color: isDark ? Colors.grey[900] : Colors.white,
         boxShadow: const [
@@ -33,14 +40,17 @@ class ItemEventoCard extends StatelessWidget {
     );
   }
 
-  Widget _inner() {
+  Widget _inner(BuildContext context) {
     return Column(
       children: [
         _ItemEventoCardHeader(
           item: item,
         ),
         const SizedBox(height: 10),
-        _ItemEventoCardBody(item: item),
+        SizedBox(
+          height: math.min(400, MediaQuery.of(context).size.width * .6),
+          child: _ItemEventoCardBody(item: item),
+        ),
         _ItemEventoCardBottom(
           item: item,
         ),
@@ -75,7 +85,6 @@ class _ItemEventoCardBody extends StatelessWidget {
     if (item == null) {
       return Container(
         color: Colors.white,
-        height: 250,
         width: double.infinity,
       );
     }
@@ -88,11 +97,16 @@ class _ItemEventoCardBody extends StatelessWidget {
       return builder(item);
     }
 
-    return Text(
-      item.titulo,
-      style: TextStyle(
-        color: tema.primary,
-        fontSize: 18,
+    return Center(
+      child: Text(
+        item.titulo,
+        textAlign: TextAlign.center,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: tema.primary,
+          fontSize: 20,
+        ),
       ),
     );
   }
@@ -228,6 +242,7 @@ class _ItemEventoCardHeader extends StatelessWidget {
                     ? const AssetImage("assets/imgs/avatar.png")
                     : tema.menuLogo,
                 color: tema.primary,
+                foreground: item?.autor == null ? Colors.white : Colors.black26,
                 size: 35,
               ),
             ),

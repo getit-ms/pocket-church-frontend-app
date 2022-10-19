@@ -110,8 +110,9 @@ class Player {
 
         _currentTrackSubject.add(newSnapshot);
       }
-    } catch (ex) {
+    } catch (ex, stack) {
       print(ex);
+      print(stack);
     }
 
   }

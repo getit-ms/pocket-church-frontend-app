@@ -3,21 +3,29 @@ part of pocket_church.inicio;
 class CardEnquetes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (acessoBloc.temAcesso(Funcionalidade.REALIZAR_VOTACAO)) {
-      return StreamBuilder<List<Enquete>>(
-        stream: institucionalBloc.enquetes,
-        initialData: institucionalBloc.currentEnquetes,
-        builder: (context, snapshot) {
-          return TimelineCard(
-            height: 250,
-            builder: _buildEnquete,
-            items: snapshot.data ?? [null, null, null],
-          );
-        },
-      );
-    }
+    return StreamBuilder<bool>(
+      initialData: false,
+      stream: acessoBloc.temAcesso(Funcionalidade.REALIZAR_VOTACAO),
+      builder: (context, snapshot) {
+        if (!snapshot.data) {
+          return Container();
+        }
 
-    return Container();
+        return Container(
+          child: StreamBuilder<List<Enquete>>(
+            stream: institucionalBloc.enquetes,
+            initialData: institucionalBloc.currentEnquetes,
+            builder: (context, snapshot) {
+              return TimelineCard(
+                height: 250,
+                builder: _buildEnquete,
+                items: snapshot.data ?? [null, null, null],
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildEnquete(BuildContext context, Enquete enquete) {

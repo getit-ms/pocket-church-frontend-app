@@ -36,13 +36,15 @@ class LeituraDAO {
     PlanoLeitura salvo = await findPlano();
 
     await pcDatabase.database.transaction((txn) async {
-      if (salvo?.id == planoLeitura.id) {
-        await txn.execute(
-          "UPDATE plano_leitura SET descricao = ?",
-          [
-            planoLeitura.descricao,
-          ],
-        );
+      if (salvo?.id == planoLeitura?.id) {
+        if (planoLeitura != null) {
+          await txn.execute(
+            "UPDATE plano_leitura SET descricao = ?",
+            [
+              planoLeitura.descricao,
+            ],
+          );
+        }
       } else {
         await txn.execute("DELETE FROM plano_leitura");
         await txn.execute("DELETE FROM leitura_biblica2");

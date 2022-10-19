@@ -399,7 +399,7 @@ class _SelecaoCalendarioState extends State<SelecaoCalendario>
             color: isDark ? Colors.white54 : Colors.black54,
           ),
           child: Stack(
-            overflow: Overflow.visible,
+            clipBehavior: Clip.none,
             children: <Widget>[
               if (_currentSlidePosition > 0)
                 Positioned(
@@ -462,7 +462,7 @@ class _SelecaoCalendarioState extends State<SelecaoCalendario>
                 month[2][0].month == _selectedDate.month);
 
     return Stack(
-      overflow: Overflow.visible,
+      clipBehavior: Clip.none,
       children: <Widget>[
         if (containsSelectedDate)
           AnimatedPositioned(
@@ -482,20 +482,25 @@ class _SelecaoCalendarioState extends State<SelecaoCalendario>
               height: lerpDouble(kSelecaoCalendarioMinHeight - 8,
                   (kSelecaoCalendarioMaxHeight - 70) / 6, _heightProportion),
               width: widget.width / 7 - 10,
-              decoration: widget.indicator ??
-                  ShapeDecoration(
-                    color:
-                        widget.indicatorColor ?? Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(45)),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Colors.black38,
-                        blurRadius: 5,
+              alignment: Alignment.center,
+              child: Container(
+                height: double.infinity,
+                width: 50,
+                decoration: widget.indicator ??
+                    ShapeDecoration(
+                      color:
+                          widget.indicatorColor ?? Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                    ],
-                  ),
+                      shadows: [
+                        BoxShadow(
+                          color: Colors.black38,
+                          blurRadius: 5,
+                        ),
+                      ],
+                    ),
+              ),
             ),
           ),
         if (_currentHeight > kSelecaoCalendarioMinHeight)
