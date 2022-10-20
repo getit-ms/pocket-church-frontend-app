@@ -167,6 +167,12 @@ class AcessoBloc {
     return _membro.value != null;
   }
 
+  excluiConta() async {
+    await acessoApi.excluiConta();
+
+    await logout();
+  }
+
   logout() async {
     var sprefs = await SharedPreferences.getInstance();
 

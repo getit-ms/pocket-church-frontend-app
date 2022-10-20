@@ -73,18 +73,66 @@ class _PagePreferenciasState extends State<PagePreferencias> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          _indicadorVisibilidadeDados(),
           _receberNotificacoesVideos(),
           _versiculoDiario(),
           _leituraBiblica(),
           _notificacaoDevocionario(),
           _ministeriosNotificacao(),
           const InfoDivider(
-            child: IntlText("preferencias.outros"),
+            child: IntlText("preferencias.politica_privacidade"),
           ),
           _politicaPrivacidade(),
-          SizedBox(height: MediaQuery.of(context).padding.bottom)
+          const InfoDivider(
+            child: IntlText("preferencias.privacidade"),
+          ),
+          _indicadorVisibilidadeDados(),
+          _removeConta(),
+          SizedBox(height: MediaQuery.of(context).padding.bottom),
         ],
+      ),
+    );
+  }
+
+  Widget _removeConta() {
+    return RawMaterialButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: IntlText("preferencias.remover_conta"),
+            content: IntlText("preferencias.confirma_remover_conta"),
+            actions: [
+              ElevatedButton(
+                onPressed: () async {
+                  await acessoBloc.excluiConta();
+
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                },
+                child: IntlText("global.sim"),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: IntlText("global.nao"),
+              ),
+            ],
+          ),
+        );
+      },
+      child: ItemPreferencias(
+        icon: Icons.person_off,
+        label: const IntlText(
+          "preferencias.remover_conta",
+          style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        iconColor: Colors.red,
       ),
     );
   }
@@ -371,8 +419,16 @@ class ItemPreferencias extends StatelessWidget {
   final IconData icon;
   final Widget label;
   final Widget trailing;
+  final Color color;
+  final Color iconColor;
 
-  const ItemPreferencias({this.icon, this.label, this.trailing});
+  const ItemPreferencias({
+    this.icon,
+    this.label,
+    this.trailing,
+    this.color,
+    this.iconColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -380,14 +436,15 @@ class ItemPreferencias extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
-      color: Theme.of(context).cardColor,
+      color: color ?? Theme.of(context).cardColor,
       child: Row(
         children: <Widget>[
           icon != null
               ? Icon(
                   icon,
                   size: 30,
-                  color: isDark ? Colors.white54 : Colors.black38,
+                  color:
+                      iconColor ?? (isDark ? Colors.white54 : Colors.black38),
                 )
               : Container(),
           icon != null

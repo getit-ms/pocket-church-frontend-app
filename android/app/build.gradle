@@ -41,7 +41,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "br.com.getit.calvin.ipbp"
+        applicationId "br.com.calvin"
         minSdkVersion 28
         targetSdkVersion 30
         multiDexEnabled true

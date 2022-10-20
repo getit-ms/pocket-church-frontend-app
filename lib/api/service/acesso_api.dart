@@ -26,6 +26,10 @@ class AcessoApi extends ApiBase {
     await put("/acesso/logout");
   }
 
+  excluiConta() async {
+    await delete("/acesso/conta");
+  }
+
   registerPush({
     String pushkey,
     TipoDispositivo tipoDispositivo,
