@@ -449,7 +449,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 9.1.0;
+				MARKETING_VERSION = 9.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ipn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -581,7 +581,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 9.1.0;
+				MARKETING_VERSION = 9.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ipn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -609,7 +609,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 9.1.0;
+				MARKETING_VERSION = 9.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.getit.calvin.ipn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

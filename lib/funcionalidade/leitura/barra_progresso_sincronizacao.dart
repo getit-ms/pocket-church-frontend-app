@@ -4,6 +4,7 @@ class BarraProgressoSincronizacao extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tema tema = ConfiguracaoApp.of(context).tema;
+    var mq = MediaQuery.of(context);
 
     return StreamBuilder<ProgressoSincronismo>(
       stream: leituraBloc.sincronizacao,
@@ -12,7 +13,9 @@ class BarraProgressoSincronizacao extends StatelessWidget {
           firstChild: Container(
             width: double.infinity,
             color: Colors.white,
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10) + EdgeInsets.only(
+              bottom: mq.padding.bottom
+            ),
             child: CommandButton(
               child: IntlText("leitura.trocar_plano_leitura"),
               onPressed: (loading) {
@@ -25,7 +28,9 @@ class BarraProgressoSincronizacao extends StatelessWidget {
           ),
           secondChild: Container(
             color: Colors.white,
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10) + EdgeInsets.only(
+                bottom: mq.padding.bottom
+            ),
             child: Column(
               children: <Widget>[
                 IntlText(

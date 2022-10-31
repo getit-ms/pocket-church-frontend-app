@@ -53,8 +53,7 @@ Map<Funcionalidade, WidgetBuilder> _pages = {
   Funcionalidade.REALIZAR_INSCRICAO_EBD: (context) => PageListaEBDs(),
   Funcionalidade.REALIZAR_INSCRICAO_CULTO: (context) => PageListaCultos(),
   Funcionalidade.CONSULTAR_HINARIO: (context) => PageListaHinos(),
-  Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA: (context) =>
-      PageListaPlanos(),
+  Funcionalidade.CONSULTAR_PLANOS_LEITURA_BIBLICA: (context) => PageLeitura(),
 };
 
 class PageFactory {
