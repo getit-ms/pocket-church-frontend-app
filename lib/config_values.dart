@@ -7,7 +7,7 @@ final Configuracao defaultConfig = const Configuracao(
   chaveIgreja: "ipn",
   nomeAplicativo: "IPN",
   nomeIgreja: "Igreja Presbiteriana Nacional",
-  version: "9.2.0",
+  version: "9.2.1",
 );
 
 final Tema defaultTema = const Tema(
